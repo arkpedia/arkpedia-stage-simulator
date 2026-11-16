@@ -19,7 +19,7 @@ The earlier sessions ran in a container under `/workspace`. That container, its 
 
 - Simulator: GitHub `arkpedia/arkpedia-stage-simulator`, branch `master`. On the Mac the remote is named **`legacy`** (`origin` there is the unrelated `arkpedia-stage-simulator-standalone`), and work happens in the worktree `~/Projects/Arkpedia/claude-sim/sim-master`, branch `work/enemies-continue`. Push with `git push legacy HEAD:master`.
 - Assets: GitHub `arkpedia/arkpedia-sd-assets`, branch `main`, worktree `~/Projects/Arkpedia/claude-sim/arkpedia-sd-assets`, branch `work/enemies-continue`. Tools and tests expect this checkout as the simulator's sibling `../arkpedia-sd-assets`. Push with `git push origin HEAD:main`.
-- Latest asset commit: **`5adc1e14a97b463ab02734c6ad5dbb26191e2e2c`**, original Hui-Ming enemy models, pushed to main.
+- Latest asset commit: **`292a9eadaaa724cc34791c4ee2d7a378c5403ddf`**, original Hui-Ming Fury models, pushed to main.
 - The latest implementation commit is the one that contains this file; see `git log`.
 - No PR was created. No subagents were used.
 
@@ -39,10 +39,10 @@ node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab'
 
 ## Current coverage and verification
 
-- **775 / 2,163 enemy records admitted; 1,388 remain.**
-- **841 database levels**, **215 runtime kinds**.
+- **777 / 2,163 enemy records admitted; 1,386 remain.**
+- **843 database levels**, **215 runtime kinds**.
 - **970 published stage graphs** remain pinned for the stages phase. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,850 complete models**; simulator original enemy artwork catalogue: 568 models.
+- Asset repository: **3,852 complete models**; simulator original enemy artwork catalogue: 570 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -68,7 +68,7 @@ All listed commits were pushed. Their matching original models were published se
 | `14fd1aee` | Famiglia Casters pair: two-target Arts packets and eight-second channels, eight one-second pulses of five SP, entry-only Asset Liquidation condition, native three-part visuals and shared scheduler callbacks. Coverage 766. |
 | `5d685947` | Famiglia Limos pair: blocked before-zero death mode, original Soldier passengers, scheduler/route reuse, independent killed/direct-destruction results and original death clips. Coverage 768. |
 | Father Agenir batch | One magazine whose rounds buy permanent DEF stacks at arrival, global Skill mode under Asset Liquidation, start-only selected periodic SP link (`selectedSpLink`), silent `ModifySp`/empty `CreateEffect` lowering, CI skeleton-step fix, Chimera test update. Coverage 769. See `docs/ENEMY-FATHER-AGENIR-REVIEW.md`. |
-| Hui-Ming batch | Shared yin/yang attribute account (`arkpedia-hui-ming.js`), opt-in per-recipient `sourceAtkScale` damage event, six plain melee Hui-Ming enemies. Coverage 775. See `docs/ENEMY-HUI-MING-REVIEW.md`. |
+| Hui-Ming batch | Shared yin/yang attribute account (`arkpedia-hui-ming.js`), opt-in per-recipient `sourceAtkScale` damage event, eight melee Hui-Ming enemies including the Fury pair. Coverage 777. See `docs/ENEMY-HUI-MING-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
@@ -117,9 +117,9 @@ Ten records have a single missing reason, an unclaimed native ability: `enemy_50
 - Wrinkles per record: dwarfd swaps its animation keys (Idle plays `Attack`, Attack plays `Idle`); hmotfd has block volume 3 and a limited `buff_swim` marker with lifetime 0; hslrfd keeps the Dockworker `Drown` talent component (`enemy_hvyslr_drown`) without a record talent, and its collector is a common ability; divmfd has two modes; bmbdfd and icedfd attack through `MockCombat`; mstntd has no collector, only visual passives and a death-audio buff (`funlive_mstntd_death[audio]`). smbone and smbtwo are the plain cases: ordinary melee packet, collector, and an `NpcEffect` buff (17 s and 32 s) that on finish leaves a 30-second `funlive_npc_angry_effect` marker.
 - Bodies resolve to existing skeletons (for example `enemy_1159_swfmob`, `enemy_1163_hvymot`, `enemy_1259_durwar`), so the clock wrapper must name the source skeleton, as `funlive-caster-animations.mjs` does, and the models import as explicit aliases.
 
-### Hui-Ming (yin-yang) family: account built, fifteen records left
+### Hui-Ming (yin-yang) family: account built, thirteen records left
 
-The user approved building the shared attribute system on 2026-11-16. `arkpedia-hui-ming.js` holds the account and six plain melee records are admitted; see `docs/ENEMY-HUI-MING-REVIEW.md`. The remaining fifteen `talent:yinyang` records each need one more piece on top of the account: opposite-attribute target priority (`enemy_1124_spbow` pair), attribute-restricted blocking (`1126_spslme`, `1127_sptrkg`), a charged attribute-shifting attack (`1128_spmage`, `15081_dqmage`), an opposite-attribute ATK bonus (`1129_spklr`, `15082_dqklr`), the 'Free' boss (`1517_xi`, `5054_dqxi`) and `15008_dqspsb`. Extend `'talent:yinyang'` in `enemy-features.js` per family; `huiMingAccountNative` and `huiMingBlackboard` are exported for that. Operator attributes come from stage tiles and devices, which is stages-phase work.
+The user approved building the shared attribute system on 2026-11-16. `arkpedia-hui-ming.js` holds the account and eight melee records are admitted (six plain, plus the Fury pair's opposite-attribute scale as an optional `bonus`); see `docs/ENEMY-HUI-MING-REVIEW.md`. The remaining thirteen `talent:yinyang` records each need one more piece on top of the account: opposite-attribute target priority (`enemy_1124_spbow` pair), attribute-restricted blocking (`1126_spslme`, `1127_sptrkg`), a charged attribute-shifting attack (`1128_spmage`, `15081_dqmage`), the 'Free' boss (`1517_xi`, `5054_dqxi`), and `15008_dqspsb` and `15082_dqklr`, whose melee packet sits in a triggered attack slot (`_attack` plus `_attackTrigger`) that the plain gate refuses. Extend `'talent:yinyang'` in `enemy-features.js` per family; `huiMingAccountNative` and `huiMingBlackboard` are exported for that. Operator attributes come from stage tiles and devices, which is stages-phase work.
 
 The private inspections named in earlier versions of this file lived in the old container's ignored cache and are gone. Re-extract with `tools/arkpedia/inspect-native-enemies.py` when needed; they were inspection aids, **not admission**.
 

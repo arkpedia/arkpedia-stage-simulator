@@ -9,7 +9,7 @@ import {withCompiledEnemyRuntime} from '../shared/arkpedia/enemy-runtime-compile
 import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
 import {huiMingOf,setHuiMing,switchHuiMing,huiMingAttribute} from '../server/sim/content/arkpedia-hui-ming.js';
 import {makeBattle,chessRec} from './helpers/battleHarness.js';
-const ids=['enemy_1122_sphond','enemy_1122_sphond_2','enemy_1123_spsbr','enemy_1123_spsbr_2','enemy_1125_spshld','enemy_1125_spshld_2'],same='buff_yinyang[same]',diff='buff_yinyang[diff]';
+const ids=['enemy_1122_sphond','enemy_1122_sphond_2','enemy_1123_spsbr','enemy_1123_spsbr_2','enemy_1125_spshld','enemy_1125_spshld_2','enemy_1129_spklr','enemy_1129_spklr_2'],same='buff_yinyang[same]',diff='buff_yinyang[diff]';
 function fixture({id=ids[0],compiled=true,edit=null}={}){
  const g=chessRec({id:'huiming_guard',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:1},skill:null});
  let source=records.enemies[id].levels[0];if(edit){source=structuredClone(source);edit(source);}
@@ -30,6 +30,18 @@ test('the talent starts as yang, and scales its output by the recipient attribut
   assert.equal(huiMingOf(h.e),'yang');assert.ok(h.e.findBuff('buff_yang[effect]'));assert.ok(h.e.findBuff(same)&&h.e.findBuff(diff));
   near(nextHit(h),h.atk);setHuiMing(h.b,h.guard,'yang');near(nextHit(h),h.atk*.6);
   setHuiMing(h.b,h.guard,'yin');assert.equal(huiMingOf(h.guard),'yin');near(nextHit(h),h.atk*1.4);assert.deepEqual(h.b.errors,[]);}
+});
+test('the Fury talent multiplies a third scale against the opposite attribute only, while its own buff is attached',()=>{
+ for(const id of [ids[6],ids[7]])for(const compiled of [false,true]){const h=fixture({id,compiled});assert.ok(h.e.findBuff('spklr_t'));
+  near(nextHit(h),h.atk);setHuiMing(h.b,h.guard,'yang');near(nextHit(h),h.atk*.6);setHuiMing(h.b,h.guard,'yin');near(nextHit(h),h.atk*1.4*1.8);
+  h.b.removeBuff(h.e,'spklr_t');near(nextHit(h),h.atk*1.4);assert.deepEqual(h.b.errors,[]);}
+ const id=ids[6],r=records.enemies[id].levels[0];
+ for(const edit of[n=>n.AtkUp.find(v=>v._buffs)._buffs[0].templateKey='empty',n=>n.AtkUp.find(v=>v._buffs)._buffs[0].lifeTimeType=1,n=>n.$template('enemy_spklr_t').eventToActions.ON_CALCULATE_DAMAGE[0]._succeedNodes[0]._buffKeys=['buff_yang'],
+  n=>n.$template('enemy_spklr_t').eventToActions.ON_CALCULATE_DAMAGE[0]._failNodes.pop(),n=>n.$ref(n[id].find(v=>v._modes)._modes[0])._generalAbilities[0].m_PathID='5'])
+  {const n=nativeComponents(structuredClone(evidence),id);edit(n);assert.equal(plainHuiMingNative(r,n),false,edit.toString());}
+ const plain=nativeComponents(structuredClone(evidence),ids[0]);plain.AtkUp=[{}];assert.equal(plainHuiMingNative(records.enemies[ids[0]].levels[0],plain),false);
+ const changed=structuredClone(r);changed.talents.bb['atkup.atk_scale']=-1;assert.equal(plainHuiMingNative(changed,nativeComponents(evidence,id)),false);
+ assert.throws(()=>huiMingAttribute.validate({dynamic:1,same:.6,diff:1.4,sameKey:same,diffKey:diff,bonus:{key:same,scale:1.8}}),/Invalid Hui-Ming attribute talent/);
 });
 test('each scale needs its own attached parent buff',()=>{
  const h=fixture();setHuiMing(h.b,h.guard,'yang');h.b.removeBuff(h.e,same);near(nextHit(h),h.atk);setHuiMing(h.b,h.guard,'yin');near(nextHit(h),h.atk*1.4);
@@ -63,7 +75,7 @@ test('the pair scale is per recipient: a shared packet is not rewritten and othe
 });
 test('source gates refuse changed talents, templates, database buffs, packets and clocks',()=>{
  const yy=n=>n.YinYang.find(v=>v._buffs),root=(n,id)=>n[id].find(v=>v._modes);
- for(const id of [ids[0],ids[5]])for(const edit of[
+ for(const id of [ids[0],ids[5],ids[7]])for(const edit of[
   n=>yy(n)._buffs.reverse(),n=>yy(n)._buffs[0].lifeTimeType=2,n=>yy(n)._buffs[1].stripBlackboardParamsWithBuffKey=0,n=>yy(n)._buffs[2].isSilenceable=1,n=>yy(n)._buffs.pop(),
   n=>n.$siblings(yy(n)).find(v=>'_applyTalentScale'in v)._applyTalentScale=1,
   n=>n.$template('buff_yinyang[init]').eventToActions.ON_BUFF_START[0]._conditionNode._valueToCompare=2,

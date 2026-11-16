@@ -1,4 +1,4 @@
-import {isPlainHuiMing,plainHuiMingNative,HUI_MING_ABILITY} from './enemy-hui-ming-features.js';
+import {isPlainHuiMing,plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPTION} from './enemy-hui-ming-features.js';
 import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
@@ -671,6 +671,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:checker': { covers: axeDamageRamp, note: 'Reset damage stacks after four seconds outside attack/combat state.' },
   'talent:atkup': {
     covers: (r, nat) => {
+      if (isHuiMingFury(r)) return plainHuiMingNative(r, nat);
       if (isIcefieldBerserker(r)) return icefieldBerserkerNative(r, nat);
       if (fanaticNative(r, nat)) return true;
       if (axeDamageRamp(r, nat)) return true;
@@ -678,13 +679,13 @@ export const ENEMY_FEATURES = Object.freeze({
       if (sig(r, 'atkup', ['atk']) || sig(r, 'atkup', ['atk', 'hp_ratio'])) return r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text));
       return false;
     },
-    ability: r => isIcefieldBerserker(r) ? { kind: 'atkup', params: r => ({ scale: r.talents.bb['atkup.enemy_krgbsk_t[frozen].atk_scale'] }) }
+    ability: r => isHuiMingFury(r) ? null : isIcefieldBerserker(r) ? { kind: 'atkup', params: r => ({ scale: r.talents.bb['atkup.enemy_krgbsk_t[frozen].atk_scale'] }) }
       : /^enemy_1059_buster(?:_2)?$/.test(r.prefabKey) ? { kind: 'buildingAttack', params: r => ({ scale: r.talents.bb['atkup.atk_scale'] }) }
       : r.prefabKey === 'enemy_2005_axetro' ? axeRampAbility : { kind: 'atkup', params: r => sig(r, 'atkup', ['atk_scale'])
       ? { scale: r.talents.bb['atkup.atk_scale'] }
       : { ratio: r.talents.bb['atkup.hp_ratio'] ?? 0.5, atkPct: r.talents.bb['atkup.atk'] } },
     note: 'Reviewed damage stacks with combat-state reset, ATK ×atk_scale against Frozen, or +atk below the hp_ratio threshold',
-    explains: text => text === AXE_DESCRIPTION || /^A berserker of the icefields whose attack power (greatly )?increases when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
+    explains: text => text === AXE_DESCRIPTION || text === HUI_MING_FURY_DESCRIPTION || /^A berserker of the icefields whose attack power (greatly )?increases when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 

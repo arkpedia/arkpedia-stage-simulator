@@ -40,11 +40,11 @@ export function switchHuiMing(b,unit,options){
  * a recipient holding the same, or the opposite, attribute, and only while
  * its own parent buff is still attached. */
 export function huiMingAttribute(params){
- validate(params);const {dynamic,same,diff,sameKey,diffKey}=params;
+ validate(params);const {dynamic,same,diff,sameKey,diffKey,bonus=null}=params,keys=[sameKey,diffKey,...(bonus?[bonus.key]:[])];
  return{
   spawn(b,e,a){
    const life=e.deploySeq;a.buffs={};
-   for(const key of [sameKey,diffKey]){
+   for(const key of keys){
     const buff=b.addBuff(e,{key,source:e,refresh:'independent',maxStacks:Infinity,admit:u=>live(u)&&u.deploySeq===life});
     if(buff&&e.buffs.includes(buff))a.buffs[key]=buff;
    }
@@ -55,12 +55,16 @@ export function huiMingAttribute(params){
     const mine=huiMingOf(e),theirs=huiMingOf(c.target);if(!mine||!theirs)return;
     const key=mine===theirs?sameKey:diffKey,buff=a.buffs[key];
     if(buff&&e.buffs.includes(buff))c.scale*=mine===theirs?same:diff;
+    // A separate native talent may add its own scale against the opposite attribute.
+    const extra=bonus&&mine!==theirs?a.buffs[bonus.key]:null;
+    if(extra&&e.buffs.includes(extra))c.scale*=bonus.scale;
    },{owner:e});
   },
   death(_c,b,e,a){for(const buff of Object.values(a.buffs??{}))if(e.buffs.includes(buff))b.removeBuff(e,buff);a.buffs={};},
  };
 }
-function validate({dynamic,same,diff,sameKey,diffKey}){
+function validate({dynamic,same,diff,sameKey,diffKey,bonus}){
+ if(bonus!==undefined&&bonus!==null&&(typeof bonus!=='object'||Object.keys(bonus).sort().join()!=='key,scale'||typeof bonus.key!=='string'||!bonus.key||bonus.key.length>256||[sameKey,diffKey,...Object.values(HUI_MING)].includes(bonus.key)||!Number.isFinite(bonus.scale)||bonus.scale<0||bonus.scale>1e3))throw Error('Invalid Hui-Ming attribute talent');
  if(![-1,0,1].includes(dynamic)||![same,diff].every(v=>Number.isFinite(v)&&v>=0&&v<=1e3)
   ||[sameKey,diffKey].some(k=>typeof k!=='string'||!k||k.length>256||Object.values(HUI_MING).includes(k))||sameKey===diffKey)throw Error('Invalid Hui-Ming attribute talent');
 }

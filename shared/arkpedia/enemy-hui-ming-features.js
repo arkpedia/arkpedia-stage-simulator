@@ -4,7 +4,9 @@ import {sameOutcomeValue as same,passiveOutcomeBuff} from './enemy-outcome-contr
 import {ordinaryMeleePacketNative} from './enemy-ordinary-body-contract.js';
 import {nativeUnscaledTalentBinding} from './enemy-talent-binding-contract.js';
 // Plain single-mode melee bodies whose only native talent is the shared Hui-Ming account.
-const attack={enemy_1122_sphond:[30,10],enemy_1122_sphond_2:[30,10],enemy_1123_spsbr:[30,12],enemy_1123_spsbr_2:[30,12],enemy_1125_spshld:[34,19],enemy_1125_spshld_2:[34,19]};
+const attack={enemy_1122_sphond:[30,10],enemy_1122_sphond_2:[30,10],enemy_1123_spsbr:[30,12],enemy_1123_spsbr_2:[30,12],enemy_1125_spshld:[34,19],enemy_1125_spshld_2:[34,19],enemy_1129_spklr:[49,17],enemy_1129_spklr_2:[49,17]};
+export const HUI_MING_FURY_DESCRIPTION='Greatly increases ATK when attacking opposite attribute targets';
+export const isHuiMingFury=r=>!!r&&r.prefabKey.startsWith('enemy_1129_');
 export const isPlainHuiMing=r=>!!r&&Object.hasOwn(attack,r.prefabKey);
 const fields=(v,w)=>!!v&&Object.entries(w).every(([k,x])=>same(v[k],x)),type=name=>`Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
 const zero=v=>v?.m_FileID===0&&v.m_PathID==='0',noAttributes={abnormalFlags:[],abnormalImmunes:[],abnormalAntis:[],abnormalCombos:[],abnormalComboImmunes:[],attributeModifiers:[]};
@@ -45,21 +47,26 @@ export function huiMingBlackboard(r){
 }
 export function plainHuiMingNative(r,n){
  if(!isPlainHuiMing(r)||r.level!==0||r.applyWay!=='MELEE'||r.stats.dmgType!=='phys'||r.stats.motion!=='WALK'||r.skills.length||r.sp||r.notCountInTotal||!huiMingBlackboard(r))return false;
- const guard=r.prefabKey.startsWith('enemy_1125_');
- if(!same(Object.keys(r.talents.groups).sort(),guard?['taunt','yinyang']:['yinyang'])||!same(r.talents.bbStr,{})||Object.keys(r.talents.bb).length!==(guard?4:3)
-  ||!same(r.abilities,guard?[{text:'More likely to be targeted by attacks.',format:'NORMAL'}]:[]))return false;
+ const guard=r.prefabKey.startsWith('enemy_1125_'),fury=isHuiMingFury(r);
+ if(!same(Object.keys(r.talents.groups).sort(),guard?['taunt','yinyang']:fury?['atkup','yinyang']:['yinyang'])||!same(r.talents.bbStr,{})||Object.keys(r.talents.bb).length!==(guard||fury?4:3)||fury&&(!same(r.talents.groups.atkup,['atk_scale'])||!(r.talents.bb['atkup.atk_scale']>=0))
+  ||!same(r.abilities,guard?[{text:'More likely to be targeted by attacks.',format:'NORMAL'}]:fury?[{text:HUI_MING_FURY_DESCRIPTION,format:'NORMAL'}]:[]))return false;
  const root=n[r.prefabKey]?.find(v=>v._modes),mode=n.$ref(root?._modes?.[0]),graphic=n.$ref(root?._animator),clock=clocks.enemies[r.prefabKey];
  if(!fields(root,{m_Script:{m_FileID:1,m_PathID:'-6629209555389654693'},_sideTypeIndex:1,_delayToBorn:0,_onlyDelayToBornOnTileStart:0,_idleWhenBorn:0,_canNotExit:0,_blockVolume:1,_specialBlockCondition:{_type:0,_buffKeyPairs:[],_filterTags:[]},_commonAbilities:[]})
-  ||root._modes.length!==1||root._modes[0].m_FileID!==0||!mode||!zero(mode._attack)||!zero(mode._attackTrigger)||mode._generalAbilities.length||mode._combat.m_FileID!==0
+  ||root._modes.length!==1||root._modes[0].m_FileID!==0||!mode||!zero(mode._attack)||!zero(mode._attackTrigger)||!(fury?mode._generalAbilities.length===1&&zero(mode._generalAbilities[0]):mode._generalAbilities.length===0)||mode._combat.m_FileID!==0
   ||!ordinaryMeleePacketNative(n.$ref(mode._combat))||!huiMingAccountNative(n))return false;
  // The guard pair's separate taunt talent: one permanent blackboard taunt-level addition and nothing else.
  const taunt=n.Taunt?.find(v=>v._buffs),tb=taunt?._buffs?.[0];
  if(guard?!(taunt&&taunt._buffs.length===1&&fields(taunt,{m_Script:{m_FileID:1,m_PathID:'3800760148018415462'},_selector:{m_FileID:0,m_PathID:'0'}})&&nativeUnscaledTalentBinding(n,taunt)
    &&fields(tb,{buffKey:'spshld_t',templateKey:'empty',lifeTimeType:2,blackboard:[],overrideType:0,isSilenceable:0})
    &&same(tb.attributes,{...noAttributes,attributeModifiers:[{attributeType:20,fetchBaseValueFromSourceEntity:0,formulaItem:0,loadFromBlackboard:1,value:0}]})):!!n.Taunt)return false;
+ // The Fury pair's separate talent (its one general-ability slot is an empty reference): one permanent buff scaling output against the opposite attribute.
+ const up=n.AtkUp?.find(v=>v._buffs),ub=up?._buffs?.[0];
+ if(fury?!(up&&up._buffs.length===1&&fields(up,{m_Script:{m_FileID:1,m_PathID:'3800760148018415462'},_selector:{m_FileID:0,m_PathID:'0'},_ignoreIfOwnerDead:0,_interruptAbilityOnDetach:0})
+   &&nativeUnscaledTalentBinding(n,up)&&passiveOutcomeBuff(ub)&&fields(ub,{buffKey:'spklr_t',templateKey:'enemy_spklr_t',blackboard:[],overrideType:0,stripBlackboardParamsWithBuffKey:0,triggerLifeType:0,triggerInterval:-1})
+   &&same(n.$template('enemy_spklr_t'),template('enemy_spklr_t',{ON_CALCULATE_DAMAGE:[{$type:type('IfElse'),_conditionNode:has('BUFF_OWNER','buff_yang'),_succeedNodes:[has('TARGET','buff_yin'),scale],_failNodes:[has('BUFF_OWNER','buff_yin'),has('TARGET','buff_yang'),scale]}]}))):!!n.AtkUp)return false;
  const [duration,release]=attack[r.prefabKey];
  return !!clock&&root._animator.m_FileID===0&&n.$ref(graphic?._skeleton)?.skeletonDataAsset?.m_PathID===clock.source.skeletonDataPathId
   &&graphic._animations.some(v=>v.animKey==='Attack'&&v.animName==='Attack'&&v.speed===1&&!v.loop)
   &&clock.durations.Attack===Math.fround(duration/30)&&same(clock.events.Attack,[{time:Math.fround(release/30),name:'OnAttack',int:0,float:0,string:''}]);
 }
-export const HUI_MING_ABILITY={kind:'huiMingAttribute',params:r=>huiMingBlackboard(r)};
+export const HUI_MING_ABILITY={kind:'huiMingAttribute',params:r=>({...huiMingBlackboard(r),...(isHuiMingFury(r)?{bonus:{key:'spklr_t',scale:r.talents.bb['atkup.atk_scale']}}:{})})};

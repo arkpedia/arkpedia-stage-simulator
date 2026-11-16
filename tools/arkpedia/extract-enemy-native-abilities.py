@@ -34,6 +34,9 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1129_spklr': ['enemy_1129_spklr', 'Default', 'Combat', 'YinYang', 'AtkUp'],
+    'enemy_1129_spklr_2': ['enemy_1129_spklr_2', 'Default', 'Combat', 'YinYang', 'AtkUp'],
+
     'enemy_1122_sphond': ['enemy_1122_sphond', 'Default', 'Combat', 'YinYang'],
     'enemy_1122_sphond_2': ['enemy_1122_sphond_2', 'Default', 'Combat', 'YinYang'],
     'enemy_1123_spsbr': ['enemy_1123_spsbr', 'Default', 'Combat', 'YinYang'],
@@ -489,6 +492,9 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1129_spklr': {'Combat','YinYang','AtkUp'},
+            'enemy_1129_spklr_2': {'Combat','YinYang','AtkUp'},
+
             'enemy_1122_sphond': {'Combat','YinYang'},
             'enemy_1122_sphond_2': {'Combat','YinYang'},
             'enemy_1123_spsbr': {'Combat','YinYang'},
