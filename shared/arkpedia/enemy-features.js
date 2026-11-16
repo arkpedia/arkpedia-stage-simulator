@@ -2,7 +2,7 @@ import {plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPT
 import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
-import {RAPID_CROSSBOWMAN_FEATURES} from './enemy-rapid-crossbowman-features.js';
+import {STRAIGHT_SHOT_FEATURES,AMBUSHER_STEALTH_ABILITY,isCrossbowmanAmbusher,crossbowmanAmbusherNative} from './enemy-straight-shot-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -462,7 +462,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:boomtosame': { matchesRecord: isHuiMingBlaster, covers: huiMingNative },
   'talent:boomtodiff': { matchesRecord: isHuiMingBlaster, covers: huiMingNative },
   ...FAMIGLIA_CASTER_FEATURES,
-  ...RAPID_CROSSBOWMAN_FEATURES,
+  ...STRAIGHT_SHOT_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -549,7 +549,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Drains 1 Life Point when entering the Objective Point': { covers: r => r.stats.lpr === 1, note: 'the engine drains lpr Life Points on a leak' },
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
-  'ability:<$ba.invisible>Invisible</>': { covers: (r,n) => !isFamigliaSilencer(r)||famigliaSilencerNative(r,n), trait:r=>isFamigliaSilencer(r)?null:{ flags: { stealth: true } }, ability:r=>isFamigliaSilencer(r)?FAMIGLIA_SILENCER_STEALTH:null,
+  'ability:<$ba.invisible>Invisible</>': { covers: (r,n) => isFamigliaSilencer(r)?famigliaSilencerNative(r,n):isCrossbowmanAmbusher(r)?crossbowmanAmbusherNative(r,n):true,
+    // The Ambushers' Invisible common ability (claims receive the prefab, not the record).
+    nativeClaim: p => isCrossbowmanAmbusher({ prefabKey: p.rootName }) ? { active: 1 } : {},
+    trait:r=>isFamigliaSilencer(r)||isCrossbowmanAmbusher(r)?null:{ flags: { stealth: true } }, ability:r=>isFamigliaSilencer(r)?FAMIGLIA_SILENCER_STEALTH:isCrossbowmanAmbusher(r)?AMBUSHER_STEALTH_ABILITY:null,
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
   'ability:Attacks two targets simultaneously.': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
   // Talent families. 重生 (Reborn/reborn talent): the first knock-out starts a rebirth of `duration` s, then the

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {timedEnemyCasts} from './arkpedia-enemy-timed-casts.js';
-import {canTargetAlly,sortAllyTargets,evadesGround} from '../targeting.js';
+import {canTargetAlly,sortAllyTargets,evadesGround,stealthOffKey} from '../targeting.js';
 import {ALLY_COLLIDER_RADIUS} from '../constants.js';
 import {segmentCircleEntry} from '../projectile-collision.js';
 
@@ -30,7 +30,8 @@ export function straightShotTargets(b,e,band){
 const passer=(e,u)=>u.alive&&u.deployed&&!u.hidden&&!u.s.flags.untargetable&&!u.s.flags.sleep&&!(u.s.flags.liftoff&&evadesGround(e,u))
  &&(u.kind!=='device'||u.profile?.enemyTargetableDevice||!!u.findBuff?.(STRAIGHT_SHOT_MARKS.cover));
 
-/** One straight bolt from the source toward a point, continuing past it. */
+/** One straight bolt from the source toward a point, continuing past it.
+ * An optional status (the Ambushers' Stun) lands on the body it hits. */
 export function fireStraightBolt(b,e,aim,p,attackId){
  const dx=aim.x-e.x,dy=aim.y-e.y,len=Math.hypot(dx,dy);
  if(!(len>1e-9))return null;
@@ -47,32 +48,46 @@ export function fireStraightBolt(b,e,aim,p,attackId){
    if(hits.length){
     const {u,t}=hits[0];shot.x=previous.x+(end.x-previous.x)*t;shot.y=previous.y+(end.y-previous.y)*t;shot.removed=true;
     b.dealDamage(e,u,{amount:e.alive?e.s.atk*p.scale:cached,type:p.type,isAttack:true,applyWay:'ranged',attackId,tags:['straightShot']});
+    if(p.hitStatus&&u.alive)b.applyStatus(u,p.hitStatus.status,{duration:p.hitStatus.duration,source:e,sourceStatusResistable:2});
    } else if(shot.age>=shot.maxAge-1e-9||end.x<-.5||end.y<-.5||end.x>size.cols-.5||end.y>size.rows-.5)shot.removed=true;
   }});
 }
 
+/** Phases play in order (one plain clip, or Begin/Loop/End); a vertical
+ * target selects the phase's _Up/_Down variant for the whole cast. */
 export function straightShot(p){
  validate(p);
+ const duration=p.phases.reduce((t,v)=>t+v.duration,0);
  const aimOf=c=>{const t=c.targets[0];if(t?.alive&&t.deployed)c.aim={x:t.x,y:t.y};return c.aim;};
- const casts=timedEnemyCasts([{initial:p.initial,cooldown:p.cooldown,clip:p.clip,duration:p.duration,release:p.release,slowDown:true,
+ const phaseAt=elapsed=>{let t=0;for(const v of p.phases){if(elapsed<t+v.duration-1e-9)return v;t+=v.duration;}return p.phases.at(-1);};
+ const show=(e,c)=>{const v=phaseAt(c.elapsed),clip=v.clip+c.suffix;
+  if(e.mem.regularFormVisual?.clip!==clip)e.mem.regularFormVisual={...e.mem.regularFormVisual,clip,loop:!!v.loop,playId:`straightShot:${c.attackId}:${clip}`};};
+ // Native Invisible toggle: off while the cast lasts, back after its restore delay.
+ const stealthOff=(b,e,duration)=>{if(!p.stealth)return;b.removeBuff(e,stealthOffKey(p.stealth.key));
+  if(duration!==0)b.addBuff(e,{key:stealthOffKey(p.stealth.key),...(duration?{duration}:{}),flags:{stealthOff:true}});};
+ const casts=timedEnemyCasts([{initial:p.initial,cooldown:p.cooldown,clip:p.phases[0].clip,duration,release:p.release,slowDown:true,
   select:(b,e)=>straightShotTargets(b,e,p.band),
   start(b,e,c){
-   const t=c.targets[0];c.aim={x:t.x,y:t.y};c.fired=0;c.attackId=++b._attackSeq;e.mem.straightShotCast=c;
-   const dy=t.y-e.y,clip=dy>.1?p.clip+'_Up':dy<-.1?p.clip+'_Down':p.clip;
-   e.mem.regularFormVisual={...e.mem.regularFormVisual,clip};
+   const t=c.targets[0],dy=t.y-e.y;c.aim={x:t.x,y:t.y};c.fired=0;c.attackId=++b._attackSeq;e.mem.straightShotCast=c;
+   c.suffix=dy>.1?'_Up':dy<-.1?'_Down':'';stealthOff(b,e,null);
   },
   // The first bolt leaves at the release event, the others one interval apart, while the cast lasts.
   fire(b,e){const c=e.mem.straightShotCast;if(!c)return;fireStraightBolt(b,e,aimOf(c),p,c.attackId);c.fired=1;},
   visual(b,e,c){
+   show(e,c);
    while(c.fired>0&&c.fired<p.bolts&&c.elapsed+1e-9>=p.release+c.fired*p.interval){fireStraightBolt(b,e,aimOf(c),p,c.attackId);c.fired++;}
   },
-  finish(_b,e){e.mem.straightShotCast=null;}}]);
+  finish(b,e){e.mem.straightShotCast=null;if(e.alive)stealthOff(b,e,p.stealth?.restoreDelay??0);}}]);
  return casts;
 }
 function validate(p){
- const pos=v=>Number.isFinite(v)&&v>0;
- if(!p||!pos(p.cooldown)||!(Number.isFinite(p.initial)&&p.initial>=0)||typeof p.clip!=='string'||!p.clip||!pos(p.duration)||!(Number.isFinite(p.release)&&p.release>=0)
-  ||!Number.isSafeInteger(p.bolts)||p.bolts<1||p.bolts>16||!(Number.isFinite(p.interval)&&p.interval>=0)||p.release+(p.bolts-1)*p.interval>p.duration
-  ||!['phys','arts','true'].includes(p.type)||!pos(p.scale)||!pos(p.speed)||!pos(p.lifetime)||!pos(p.radius)||!pos(p.band))throw Error('Invalid Straight Shot');
+ const pos=v=>Number.isFinite(v)&&v>0,name=v=>typeof v==='string'&&!!v&&v.length<=256;
+ const total=Array.isArray(p?.phases)?p.phases.reduce((t,v)=>t+v?.duration,0):NaN;
+ if(!p||!pos(p.cooldown)||!(Number.isFinite(p.initial)&&p.initial>=0)||!Array.isArray(p.phases)||!p.phases.length||p.phases.length>3
+  ||p.phases.some(v=>!v||!name(v.clip)||!pos(v.duration)||(v.loop!==undefined&&typeof v.loop!=='boolean'))||!(Number.isFinite(p.release)&&p.release>=0)
+  ||!Number.isSafeInteger(p.bolts)||p.bolts<1||p.bolts>16||!(Number.isFinite(p.interval)&&p.interval>=0)||p.release+(p.bolts-1)*p.interval>total
+  ||!['phys','arts','true'].includes(p.type)||!pos(p.scale)||!pos(p.speed)||!pos(p.lifetime)||!pos(p.radius)||!pos(p.band)
+  ||p.hitStatus!==undefined&&(!p.hitStatus||!['stun'].includes(p.hitStatus.status)||!pos(p.hitStatus.duration))
+  ||p.stealth!==undefined&&(!p.stealth||!name(p.stealth.key)||!(Number.isFinite(p.stealth.restoreDelay)&&p.stealth.restoreDelay>=0)))throw Error('Invalid Straight Shot');
 }
 straightShot.validate=validate;

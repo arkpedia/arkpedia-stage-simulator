@@ -6,17 +6,18 @@ import {ENEMY_RECORDS} from './helpers/enemyHarness.js';
 import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
 import {straightShot,STRAIGHT_SHOT_MARKS} from '../server/sim/content/arkpedia-enemy-straight-shot.js';
 import {enemySupport,nativeComponents} from '../shared/arkpedia/enemy-support.js';
-import {RAPID_CROSSBOWMAN_FEATURES,rapidCrossbowmanNative,STRAIGHT_SHOT,FP} from '../shared/arkpedia/enemy-rapid-crossbowman-features.js';
+import {rapidCrossbowmanNative,STRAIGHT_SHOT,FP} from '../shared/arkpedia/enemy-rapid-crossbowman-features.js';
+import {STRAIGHT_SHOT_FEATURES} from '../shared/arkpedia/enemy-straight-shot-features.js';
 import native from '../data/arkpedia-enemy-native-abilities.json' with {type:'json'};
 import clocks from '../data/arkpedia-enemy-clock-source.json' with {type:'json'};
 
 const ids=['enemy_1403_gunsho','enemy_1403_gunsho_2'];
-const feature=RAPID_CROSSBOWMAN_FEATURES['skill:CrossAttack'];
+const shotAbility=r=>STRAIGHT_SHOT_FEATURES['skill:CrossAttack'].ability(r);
 const near=(a,b,eps=1e-6)=>assert.ok(Math.abs(a-b)<eps,`${a} != ${b}`);
 
 /** Enemy held at row 10, col 6; operators placed at [row, col]. */
 function fixture(id=ids[0],positions=[[10,9]]){
- const record=ENEMY_RECORDS.enemies[id].levels[0],p=feature.ability.params(record);
+ const record=ENEMY_RECORDS.enemies[id].levels[0],p=shotAbility(record).params(record);
  const op=chessRec({id:'crossbow_target',stats:{maxHp:100000,atk:0,def:0,blockCnt:0}});
  const h=makeBattle({content:'generic',autoFinish:false,defs:{chess:{[op.chessId]:op},enemies:{[id]:record}},
   units:positions.map((_,i)=>({chessId:op.chessId,row:10,col:3+i,dir:'RIGHT'})),setup:b=>installEnemyFeatures(b)});
@@ -50,7 +51,7 @@ test('the runtime constants are the pinned native values',()=>{
  assert.equal(STRAIGHT_SHOT.speed,parts.find(c=>'_moveType'in c)._speed);assert.equal(STRAIGHT_SHOT.lifetime,parts.find(c=>'_lifeTime'in c)._lifeTime);
  assert.ok(parts.filter(c=>'m_Radius'in c).every(c=>c.m_Radius===STRAIGHT_SHOT.radius));
  assert.equal(STRAIGHT_SHOT.band,FP(filter._offsetMaxX));assert.equal(-STRAIGHT_SHOT.band,FP(filter._offsetMinX));
- assert.throws(()=>straightShot({...feature.ability.params(ENEMY_RECORDS.enemies[ids[0]].levels[0]),bolts:30}),/Invalid Straight Shot/);
+ assert.throws(()=>straightShot({...shotAbility(ENEMY_RECORDS.enemies[ids[0]].levels[0]).params(ENEMY_RECORDS.enemies[ids[0]].levels[0]),bolts:30}),/Invalid Straight Shot/);
 });
 
 test('an aligned unblocked crossbowman fires three bolts on the original clocks',()=>{

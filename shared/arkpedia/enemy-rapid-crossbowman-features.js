@@ -53,11 +53,5 @@ export function rapidCrossbowmanNative(r,n){
 export const STRAIGHT_SHOT={bolts:3,interval:Math.fround(.1),speed:5,lifetime:10,radius:Math.fround(.3),band:.5,scale:1};
 export function straightShotParams(r){
  const clock=clocks.enemies[r.prefabKey],[s]=r.skills;
- return {initial:s.initCooldown,cooldown:s.cooldown,clip:'Skill',duration:clock.durations.Skill,release:clock.events.Skill[0].time,type:'phys',...STRAIGHT_SHOT};
+ return {initial:s.initCooldown,cooldown:s.cooldown,phases:[{clip:'Skill',duration:clock.durations.Skill}],release:clock.events.Skill[0].time,type:'phys',...STRAIGHT_SHOT};
 }
-export const RAPID_CROSSBOWMAN_FEATURES={
- // One wrapper owns the Straight Shot skill; the record's ability text describes it.
- 'skill:CrossAttack':{matchesRecord:isRapidCrossbowman,covers:rapidCrossbowmanNative,nativeClaim:()=>({wrappers:1}),explains:text=>text===STRAIGHT_SHOT_DESCRIPTION,
-  note:'Straight Shot: unblocked, same row or column, three straight bolts that hit the first body in their path',
-  ability:{kind:'straightShot',params:straightShotParams}},
-};
