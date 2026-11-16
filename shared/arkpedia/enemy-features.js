@@ -1,3 +1,4 @@
+import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -405,6 +406,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1281_sgcar:'native:famigliaLimoMelee',enemy_1281_sgcar_2:'native:famigliaLimoMelee',
   enemy_1280_sgmag:'native:famigliaCasterLog',enemy_1280_sgmag_2:'native:famigliaCasterLog',
   enemy_1282_sgelder:'native:famigliaCapoMelee',enemy_1282_sgelder_2:'native:famigliaCapoMelee',
   enemy_1283_sgkill:'native:famigliaSilencerLog',enemy_1283_sgkill_2:'native:famigliaSilencerLog',
@@ -443,6 +445,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...BLOCKER_FEATURES,
   ...RADIOACTIVE_FEATURES,
   ...FAMIGLIA_BASIC_FEATURES,
+  ...FAMIGLIA_LIMO_FEATURES,
   ...FAMIGLIA_CASTER_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
@@ -599,10 +602,10 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'block weight 3; the first blocker takes ATK × Crash.atk_scale', explains: /^Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding/,
   },
   'talent:Crash': { covers: r => sig(r, 'Crash', ['atk_scale']), note: 'collision damage is attached by the handbook-line feature' },
-  'talent:DeathRattle': { covers: (r,n) => isFamigliaBasic(r)?famigliaBasicNative(r,n):sig(r, 'DeathRattle', ['enemy_key']) && /^enemy_[a-z0-9_]+$/.test(r.talents.bbStr['DeathRattle.enemy_key']??''),
-    ability: r=>isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].ability:({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeathRattle.enemy_key'], cnt: 1 }) }),
-    dependsOn: r => [r.talents.bbStr['DeathRattle.enemy_key']].filter(Boolean),
-    nativeClaim:FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].nativeClaim,note: 'source-gated death SP or named crew spawn', explains:(value,r)=>isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].explains(value,r):/will continue battle after the vehicle is destroyed$/.test(value) },
+  'talent:DeathRattle': { covers: (r,n) => isFamigliaLimo(r)?famigliaLimoNative(r,n):isFamigliaBasic(r)?famigliaBasicNative(r,n):sig(r, 'DeathRattle', ['enemy_key']) && /^enemy_[a-z0-9_]+$/.test(r.talents.bbStr['DeathRattle.enemy_key']??''),
+    ability: r=>isFamigliaLimo(r)?FAMIGLIA_LIMO_DEATH:isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].ability:({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeathRattle.enemy_key'], cnt: 1 }) }),
+    dependsOn: r => isFamigliaLimo(r)?[famigliaLimoChild(r)]:[r.talents.bbStr['DeathRattle.enemy_key']].filter(Boolean),
+    nativeClaim:(p,n)=>n.enemy_1281_sgcar||n.enemy_1281_sgcar_2?{active:1}:FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].nativeClaim(p,n),note: 'source-gated death SP or named crew spawn', explains:(value,r)=>isFamigliaLimo(r)?famigliaLimoExplains(value,r):isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].explains(value,r):/will continue battle after the vehicle is destroyed$/.test(value) },
   'talent:Drown': { covers: r => sig(r, 'Drown', ['damage']) && r.abilities.some(a => /^Quickly loses HP while under the effects of 'Erosion'$/.test(a.text)),
     ability: { kind: 'drown', params: r => ({ damage: r.talents.bb['Drown.damage'] }) },
     note: 'takes Drown.damage True damage per second while Erosion is active', explains: /^Quickly loses HP while under the effects of 'Erosion'$/ },

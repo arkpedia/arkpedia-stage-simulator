@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
+    'enemy_1281_sgcar_2': ['enemy_1281_sgcar_2','Default','Special','Combat','Passive','DeathRattle'],
     'enemy_1280_sgmag': ['enemy_1280_sgmag','Default','Attack','Trigger','AddVG','Passive','SelectVg','CooldownTrigger'],
     'enemy_1280_sgmag_2': ['enemy_1280_sgmag_2','Default','Attack','Trigger','AddVG','Passive','SelectVg','CooldownTrigger'],
     'enemy_1282_sgelder': ['enemy_1282_sgelder','Mode','Combat','AuraVG','SelectVg'],
@@ -478,6 +480,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
+            'enemy_1281_sgcar_2': {'Combat','Passive','DeathRattle','Special'},
             'enemy_1280_sgmag': {'Attack','Trigger','AddVG','Passive','SelectVg','CooldownTrigger'},
             'enemy_1280_sgmag_2': {'Attack','Trigger','AddVG','Passive','SelectVg','CooldownTrigger'},
             'enemy_1282_sgelder': {'Combat','AuraVG','SelectVg'},

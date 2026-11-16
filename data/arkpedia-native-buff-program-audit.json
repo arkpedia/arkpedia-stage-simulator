@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "ddec8db8820b5cf0d93be5c71c07da0c8700922324e198d48543489cc980c51a",
-    "data/arkpedia-enemy-support.json": "121bb5db54159f95e2a4a36d33a582ff3f9b891254dc3c8524bf497a2b12c5a8",
+    "data/arkpedia-enemy-native-abilities.json": "e76b7f100a5b5f7ef946f2216fddc47785d60a5190fea02a361cc50cfb0a2fa8",
+    "data/arkpedia-enemy-support.json": "c7d2095fc55e45ac0531491f65a6f2d004e91fec10edd32db694c3eda6c7bf9d",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "31cbcb3d4800bcbfb15fb09798fa2fc5d6ce367c913809f0299e40cf644e8a7b",
     "shared/arkpedia/behavior-program.js": "8f1545ded28d8900adc3099d63d4a50e56c42cc5eab78d8a0a21dd392e44c9ea",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 401,
-  "templates": 245,
+  "retainedPrefabs": 403,
+  "templates": 247,
   "compiled": 21,
-  "refused": 224,
+  "refused": 226,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -432,6 +432,8 @@
         "enemy_1278_sgbow_2",
         "enemy_1280_sgmag",
         "enemy_1280_sgmag_2",
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2",
         "enemy_1282_sgelder",
         "enemy_1282_sgelder_2",
         "enemy_1283_sgkill",
@@ -2082,6 +2084,26 @@
       "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
     },
     {
+      "key": "enemy_sgcar_death",
+      "consumers": [
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BEFORE_TRY_SET_HP_ZERO"
+    },
+    {
+      "key": "enemy_sgcar_death_sum",
+      "consumers": [
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SummonEnemiesFollowMyRoute"
+    },
+    {
       "key": "enemy_sgelder_aura_vg",
       "consumers": [
         "enemy_1282_sgelder",
@@ -2619,6 +2641,8 @@
         "enemy_1278_sgbow_2",
         "enemy_1280_sgmag",
         "enemy_1280_sgmag_2",
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2",
         "enemy_1283_sgkill",
         "enemy_1283_sgkill_2",
         "enemy_1433_dsbasi",
@@ -3155,6 +3179,8 @@
         "enemy_1279_sgbdg_2",
         "enemy_1280_sgmag",
         "enemy_1280_sgmag_2",
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2",
         "enemy_1282_sgelder",
         "enemy_1282_sgelder_2",
         "enemy_1283_sgkill",
@@ -3706,6 +3732,23 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: action SummonEnemiesFollowMyRoute",
+      "templates": [
+        "enemy_rescar_skill[summon]",
+        "enemy_sgcar_death_sum",
+        "harchn[sum_token]"
+      ],
+      "consumers": [
+        "enemy_1133_harchn",
+        "enemy_1133_harchn_2",
+        "enemy_1217_rescar",
+        "enemy_1217_rescar_2",
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: finish owner buffs",
       "templates": [
         "enemy_liberty_listener[warning]",
@@ -3850,20 +3893,6 @@
         "enemy_1356_egun",
         "enemy_1356_egun_2",
         "enemy_2047_smtree"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: action SummonEnemiesFollowMyRoute",
-      "templates": [
-        "enemy_rescar_skill[summon]",
-        "harchn[sum_token]"
-      ],
-      "consumers": [
-        "enemy_1133_harchn",
-        "enemy_1133_harchn_2",
-        "enemy_1217_rescar",
-        "enemy_1217_rescar_2"
       ],
       "unsupportedConsumers": []
     },
@@ -4222,6 +4251,17 @@
       "consumers": [
         "enemy_1216_cansld",
         "enemy_1216_cansld_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_BEFORE_TRY_SET_HP_ZERO",
+      "templates": [
+        "enemy_sgcar_death"
+      ],
+      "consumers": [
+        "enemy_1281_sgcar",
+        "enemy_1281_sgcar_2"
       ],
       "unsupportedConsumers": []
     },
