@@ -7,6 +7,7 @@ import {compileStageRules} from '../shared/arkpedia/stage-rules.js';
 import {StandardBattle} from '../server/sim/arkpedia.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
 import normal from '../data/arkpedia-stage-le-ex-5.json' with {type:'json'};
+import { fileURLToPath } from 'node:url';
 
 test('LE-EX-5 Challenge adds exactly 1.3 ASPD points to scheduled and summoned enemies',async()=>{
  const c=await loadContentContext(),p=await planStage(c,'le-ex-5_challenge_mode');assert.deepEqual(p.blockers,[]);
@@ -26,7 +27,7 @@ test('LE-EX-5 Challenge adds exactly 1.3 ASPD points to scheduled and summoned e
 });
 
 test('additive ASPD preserves scope, signed fractions, and strict parameter validation',async()=>{
- const root=new URL('../',import.meta.url).pathname;
+ const root=fileURLToPath(new URL('../',import.meta.url));
  const {receipt}=await loadStageRuleReceipt(root,'le-ex-5_challenge_mode');
  const source={id:receipt.stageId,variant:{kind:'challenge_mode',of_stage_id:receipt.parentStageId}};
  const r=structuredClone(receipt),rune=r.runes.find(r=>r.key==='enemy_attribute_add');

@@ -11,7 +11,8 @@ import { loadStageRuleReceipt } from '../tools/arkpedia/stage-rule-storage.mjs';
 import { applyStageEnemyTalentMultipliers } from '../shared/arkpedia/stage-enemy-talents.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-const root = new URL('../', import.meta.url).pathname;
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('../', import.meta.url));
 const receiptFor = async id => (await loadStageRuleReceipt(root, id)).receipt;
 const compile = (base, rules) => compileStage({ mvp, records, support, tokenData: { tokens: {} }, rules, geometry: base.geometry,
   source: { id: rules.stageId, code: base.code, name: base.name, stage_type: 'activity', battle: base.battle,

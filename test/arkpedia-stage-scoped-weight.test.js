@@ -7,6 +7,7 @@ import {compileStageRules} from '../shared/arkpedia/stage-rules.js';
 import {StandardBattle} from '../server/sim/arkpedia.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
 import normal from '../data/arkpedia-stage-bh-4.json' with {type:'json'};
+import { fileURLToPath } from 'node:url';
 test('BH-4 Challenge scopes Crownslayer weight and Skullshatterer HP on top of the global challenge modifiers',async()=>{
  const c=await loadContentContext(),p=await planStage(c,'bh-4_challenge_mode');assert.deepEqual(p.blockers,[]);
  const s=p.stage,b=new StandardBattle({...c.mvp,stage:s,enemies:{...c.mvp.enemies,...s.enemies}},
@@ -19,7 +20,7 @@ test('BH-4 Challenge scopes Crownslayer weight and Skullshatterer HP on top of t
  assert.deepEqual(b.errors,[]);
 });
 test('global and scoped weight additions compose while malformed selectors remain blocked',async()=>{
- const {receipt}=await loadStageRuleReceipt(new URL('../',import.meta.url).pathname,'bh-4_challenge_mode');
+ const {receipt}=await loadStageRuleReceipt(fileURLToPath(new URL('../',import.meta.url)),'bh-4_challenge_mode');
  const source={id:receipt.stageId,variant:{kind:'challenge_mode',of_stage_id:receipt.parentStageId}};
  const r=structuredClone(receipt),weight=r.runes.find(r=>r.key==='enemy_weight_add');
  r.runes.push({...weight,blackboard:[{key:'value',value:2,valueStr:null}]});

@@ -6,7 +6,8 @@ import { loadStageRuleReceipt } from '../tools/arkpedia/stage-rule-storage.mjs';
 import { compileStageRules } from '../shared/arkpedia/stage-rules.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-const root = new URL('../', import.meta.url).pathname;
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('../', import.meta.url));
 const rule = key => ({ key, difficultyMask: 'FOUR_STAR', professionMask: 1023, buildableMask: 'ALL' });
 const receiptFor = async id => (await loadStageRuleReceipt(root, id)).receipt;
 const sourceFor = receipt => ({ id: receipt.stageId, variant: { kind: 'challenge_mode', of_stage_id: receipt.parentStageId },

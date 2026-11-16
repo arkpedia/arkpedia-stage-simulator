@@ -20,9 +20,10 @@ import { StubMatch as Match } from '../server/match/StubMatch.js';
 import { Match as RealMatch } from '../server/match/Match.js';
 import { TestClient } from './helpers/wsClient.js';
 import { ERR, MAX_SEATS, MAX_SPECTATORS, PHASE, EMOTES } from '../shared/constants.js';
+import { fileURLToPath } from 'node:url';
 
 const CODE_RE = new RegExp(`^[${CODE_ALPHABET}]{4}$`);
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(new URL(import.meta.url))), '..');
 
 // ---------------------------------------------------------------------------------------------------
 // helpers

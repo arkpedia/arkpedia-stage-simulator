@@ -10,6 +10,7 @@ import { compileStage } from '../tools/arkpedia/build-stage.mjs';
 import { compileStageRules } from '../shared/arkpedia/stage-rules.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
+import { fileURLToPath } from 'node:url';
 const source = { id: receipt.stageId, code: normal.code, name: normal.name, stage_type: 'activity', battle: normal.battle,
   variant: { kind: 'challenge_mode', of_stage_id: receipt.parentStageId } };
 const compile = rules => compileStage({ source, geometry: normal.geometry, rules, mvp, records, support, tokenData: { tokens: {} } });
@@ -55,7 +56,7 @@ test('enemy selectors reject patterns, duplicates, malformed values and unknown 
 test('OF-EX3 Challenge doubles actual enemy ASPD without changing base attack time or ordinary difficulty', async () => {
   const { loadStageRuleReceipt } = await import('../tools/arkpedia/stage-rule-storage.mjs');
   const { default: base } = await import('../data/arkpedia-stage-of-ex3.json', { with: { type: 'json' } });
-  const rules = (await loadStageRuleReceipt(new URL('../', import.meta.url).pathname, 'of-ex3_challenge_mode')).receipt;
+  const rules = (await loadStageRuleReceipt(fileURLToPath(new URL('../', import.meta.url)), 'of-ex3_challenge_mode')).receipt;
   const variant = { id: rules.stageId, code: base.code, name: base.name, stage_type: 'activity', battle: base.battle,
     variant: { kind: 'challenge_mode', of_stage_id: rules.parentStageId } };
   const stage = compileStage({ source: variant, geometry: base.geometry, rules, mvp, records, support, tokenData: { tokens: {} } });

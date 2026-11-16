@@ -10,7 +10,8 @@ import { loadStageRuleReceipt } from '../tools/arkpedia/stage-rule-storage.mjs';
 import { compileStage } from '../tools/arkpedia/build-stage.mjs';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-const receipt = (await loadStageRuleReceipt(new URL('../', import.meta.url).pathname, 'of-ex6_challenge_mode')).receipt;
+import { fileURLToPath } from 'node:url';
+const receipt = (await loadStageRuleReceipt(fileURLToPath(new URL('../', import.meta.url)), 'of-ex6_challenge_mode')).receipt;
 const source = { id: receipt.stageId, code: normal.code, name: normal.name, stage_type: 'activity', battle: normal.battle,
   variant: { kind: 'challenge_mode', of_stage_id: receipt.parentStageId } };
 const compile = (rules = receipt, geometry = normal.geometry) => compileStage({ source, geometry, rules, mvp, records, support, tokenData });
