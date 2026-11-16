@@ -1,4 +1,4 @@
-import {plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPTION,isHuiMingRecord,huiMingNative,isHuiMingArcher,isHuiMingBlockee,HUI_MING_ARCHER_DESCRIPTION,HUI_MING_BLOCK_DESCRIPTION,HUI_MING_BLOCK_ABILITY,isHuiMingBlaster,HUI_MING_BLAST_DESCRIPTION,HUI_MING_BLAST_ABILITY} from './enemy-hui-ming-features.js';
+import {plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPTION,isHuiMingRecord,huiMingNative,isHuiMingArcher,isHuiMingBlockee,HUI_MING_ARCHER_DESCRIPTION,HUI_MING_BLOCK_DESCRIPTION,HUI_MING_BLOCK_ABILITY,isHuiMingBlaster,HUI_MING_BLAST_DESCRIPTION,HUI_MING_BLAST_ABILITY,isHuiMingCharger,HUI_MING_CHARGE_DESCRIPTION,HUI_MING_CHARGE_ABILITY} from './enemy-hui-ming-features.js';
 import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
@@ -529,6 +529,10 @@ export const ENEMY_FEATURES = Object.freeze({
   ...GNAWBEAST_FEATURES,
   ...SUPPLY_ENEMY_FEATURES,
   ...KNIGHT_FEATURES,
+  // Shared skill key: the Withered Knight's charge, or the Hui-Ming 'Envy' charged tile shift.
+  'skill:ChargeAttack': { covers: (r, n) => isHuiMingCharger(r) ? huiMingNative(r, n) : KNIGHT_FEATURES['skill:ChargeAttack'].covers(r, n),
+    nativeClaim: (_p, n) => n.ChargeAttack && n.YinYang ? { wrappers: 1 } : {}, ability: r => isHuiMingCharger(r) ? HUI_MING_CHARGE_ABILITY : null,
+    explains: (text, r) => isHuiMingCharger(r) && text === HUI_MING_CHARGE_DESCRIPTION },
   ...BLADE_FEATURES,
   ...DIRECTIONAL_FEATURES,
   ...PROJECTILE_ENEMY_FEATURES,

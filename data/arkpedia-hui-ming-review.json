@@ -1,28 +1,31 @@
 {
  "schemaVersion": 1,
- "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale, live target-priority comparators, multi-pair block conditions, and the Smarty blast component, and fourteen source-gated Hui-Ming enemies (six plain, the Fury pair, the Stabby archers, the Blindey pair, the Smarty pair). Controlled fixtures only; no Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
+ "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale, live target-priority comparators, multi-pair block conditions, the Smarty blast component, a battle-level Hui-Ming tile controller that no stage installs yet, the Envy charged tile shift, and sixteen source-gated Hui-Ming enemies. Controlled fixtures only; no stage compiled with Hui-Ming tiles, original-stage clear, effects/audio or frame/pixel parity.",
  "sourceSha256": {
-  "server/sim/damage.js": "e011cc01ccb4f8c440e0ef2b0df944d1c52d7a09c9f46f6efc193aa929e7d824",
-  "server/sim/content/arkpedia-hui-ming.js": "7fe1161c5b2eee7d448b8e81e4f061f5b23d06761ed86f1b7eea14e27cefba12",
-  "server/sim/content/arkpedia-enemy-runtime-index.js": "3ad40e2d213190abfef17b522ae19a4afad53e29f5282135f2430653e53d6455",
-  "shared/arkpedia/enemy-hui-ming-features.js": "22b599f58d6782643c5a2409bab1d17ce85721891cb3d4a7426e94c6969edff0",
-  "shared/arkpedia/enemy-features.js": "17aa2548971928300eb74d2aca2318a9c882868b426f68cb8f0d6abc9adee571",
-  "tools/arkpedia/review-hui-ming.mjs": "85d6f0a4bea69f1fed9af32490f962a816ab55d47fe7eb88be6944397120e4d8",
-  "data/arkpedia-enemy-native-abilities.json": "f177bfedc3b0887e753976bdc68c39c9ff90be9630499338e973c00c3639204b",
-  "data/arkpedia-enemy-support.json": "2aa592d2ece8e7cd839af4a2639b4f45fd67398e51cf6073d3c0630fcef1e709",
-  "data/arkpedia-hui-ming-animations.json": "5ea281bd02984d9360a648052313ed1b9ecb4f0c49659be5036040d8e5eed835",
-  "test/arkpedia-hui-ming.test.js": "844c72b078089519a2896f5a33fd15c5cd9e951989e275ea0e6c49b8b0d79ead",
+  "server/sim/damage.js": "cecba6257a013ab1b085f949567a16c7dcf146b26f818082b3b25045659abdda",
+  "server/sim/content/arkpedia-hui-ming.js": "b0bd65a2eb64d67a3bf4b460a01ce403deeff16983842bd68938da3ca553d855",
+  "server/sim/content/arkpedia-enemy-runtime-index.js": "bc72d8876f26d2518f0b1affdefe7ba6cb139963ac6e232a64c1629749d20da3",
+  "shared/arkpedia/enemy-hui-ming-features.js": "a6c2be4e3fff694ac5982602dffd94eefc448db3863ed637f160f50253669f85",
+  "shared/arkpedia/enemy-features.js": "e5a31c677c8a51370102f87d049a244f0e65b988977449575f24a0d05281dd4f",
+  "tools/arkpedia/review-hui-ming.mjs": "20b9b2d420870e99907bb77e68fd2411978983f6e08bd51b298c73c9db469d30",
+  "data/arkpedia-enemy-native-abilities.json": "1bb958188b050245bf01417094cb47230cb4e9504ef2264044d47d959436295d",
+  "data/arkpedia-enemy-support.json": "2b370dcc52795b61f1369f70ae30029addb60c1039b05b769058ea3731fa8792",
+  "data/arkpedia-hui-ming-animations.json": "b9070b1cfe0732f8ee5a776103d562dbe6eed3b519aa6c65d5ad87b56addb886",
+  "test/arkpedia-hui-ming.test.js": "bdfff6952b8197db83b587b7f60493d956d16026e0af9c9ad4632e4cd93be3b5",
   "server/sim/targeting.js": "abbe14bbc7b6179ae1f35e68500e4e6c16489baec3818b7e325b5555fa118195",
   "server/sim/content/arkpedia-enemy-blocker-pairs.js": "7b8cdd2e451ef136cd1596c7d80b2897f10d112240fad4ddacf6de1f16306769",
-  "server/sim/content/arkpedia-hui-ming-blast.js": "40327bcdc4d0a9db113d268d08b826a3cbb1e2ccba3167bcb124dd48bac82fdc"
+  "server/sim/content/arkpedia-hui-ming-blast.js": "40327bcdc4d0a9db113d268d08b826a3cbb1e2ccba3167bcb124dd48bac82fdc",
+  "server/sim/content/arkpedia-hui-ming-tiles.js": "71b163fbdea7588c104686cc7134cc566535153f2f927d60f23aa7af59bae2c5",
+  "server/sim/content/arkpedia-hui-ming-charge.js": "5d93386b2e2e1d37e0a8f93867dfdf73ee6b6a7a6a8975ca0e32f0acf07d9ef2"
  },
  "tests": {
-  "family": 32,
+  "family": 39,
   "focused": {
-   "tests": 446,
-   "passed": 446,
-   "failed": 0,
-   "note": "Repeated after the last Smarty refinements."
+   "tests": 539,
+   "passed": 538,
+   "failed": 1,
+   "failure": "test/arkpedia-stage-withered-altars.test.js, in the committed pre-batch baseline list",
+   "note": "Run before the dot exclusion and the full Envy projectile part list; family tests repeated after."
   },
   "broad": {
    "command": "node --test --test-concurrency=2 test/sim/*.test.js test/content/*.test.js",
@@ -31,7 +34,7 @@
    "skipped": 3,
    "todo": 1,
    "failed": 0,
-   "note": "Measured before the last Smarty refinements, which touch only the blast module, its gate and its tests."
+   "note": "Measured on the final code of this batch."
   }
  },
  "browser": {
@@ -44,6 +47,7 @@
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -117,6 +121,7 @@
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -190,6 +195,7 @@
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -252,9 +258,10 @@
    {
     "viewport": "1440x900 desktop",
     "loaded": [
-     "arkpedia-hui-ming-blast",
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -301,11 +308,60 @@
     }
    },
    {
+    "viewport": "1440x900 desktop",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
+     "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1128_spmage",
+       "special": "charger",
+       "initial": "yang",
+       "occupant": "yin",
+       "scales": true,
+       "charging": true,
+       "clip": "Skill",
+       "model": "enemy/enemy_1128_spmage/default/default",
+       "actor": "BattleActor",
+       "flipped": true,
+       "after": "yang",
+       "arts": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1128_spmage_2",
+       "special": "charger",
+       "initial": "yang",
+       "occupant": "yin",
+       "scales": true,
+       "charging": true,
+       "clip": "Skill",
+       "model": "enemy/enemy_1128_spmage_2/default/default",
+       "actor": "BattleActor",
+       "flipped": true,
+       "after": "yang",
+       "arts": true,
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
     "viewport": "844x390 touch",
     "loaded": [
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -379,6 +435,7 @@
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -452,6 +509,7 @@
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -517,6 +575,7 @@
      "arkpedia-hui-ming",
      "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
      "enemies"
     ],
     "pending": 0,
@@ -557,6 +616,54 @@
         4,
         3
        ],
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
+    "viewport": "844x390 touch",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
+     "arkpedia-enemy-blocker-pairs",
+     "arkpedia-hui-ming-charge",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1128_spmage",
+       "special": "charger",
+       "initial": "yang",
+       "occupant": "yin",
+       "scales": true,
+       "charging": true,
+       "clip": "Skill",
+       "model": "enemy/enemy_1128_spmage/default/default",
+       "actor": "BattleActor",
+       "flipped": true,
+       "after": "yang",
+       "arts": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1128_spmage_2",
+       "special": "charger",
+       "initial": "yang",
+       "occupant": "yin",
+       "scales": true,
+       "charging": true,
+       "clip": "Skill",
+       "model": "enemy/enemy_1128_spmage_2/default/default",
+       "actor": "BattleActor",
+       "flipped": true,
+       "after": "yang",
+       "arts": true,
        "errors": []
       }
      ]
@@ -654,6 +761,20 @@
       "clips": 5,
       "width": 513.8350219726562,
       "height": 243.49864196777344
+     },
+     {
+      "id": "enemy_1128_spmage",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 502.53797912597656,
+      "height": 461.4301242828369
+     },
+     {
+      "id": "enemy_1128_spmage_2",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 502.53797912597656,
+      "height": 461.4301242828369
      },
      {
       "id": "enemy_1129_spklr",
@@ -761,6 +882,20 @@
       "height": 243.49864196777344
      },
      {
+      "id": "enemy_1128_spmage",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 502.53797912597656,
+      "height": 461.4301242828369
+     },
+     {
+      "id": "enemy_1128_spmage_2",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 502.53797912597656,
+      "height": 461.4301242828369
+     },
+     {
       "id": "enemy_1129_spklr",
       "version": "3.8.99",
       "clips": 5,
@@ -780,24 +915,39 @@
    }
   ]
  },
- "assetCommit": "37264536e354ad25406ad528786dec1a671012c9",
+ "assetCommit": "0326075d70f179ceb0c3ceabaa1fa674c68e237e",
  "coverage": {
-  "enemies": 783,
+  "enemies": 785,
   "totalEnemies": 2163,
-  "databaseLevels": 849,
-  "runtimeKinds": 216,
+  "databaseLevels": 851,
+  "runtimeKinds": 217,
   "pinnedStageGraphs": 970
  },
  "stageSmoke": {
   "stages": 970,
   "passed": 970,
-  "scope": "Ten-second runtime smoke, not clears; measured before the last Smarty refinements."
+  "scope": "Ten-second runtime smoke, not clears; run before the last two one-line changes."
  },
  "boundaries": [
-  "Operator attributes are set explicitly in fixtures; Hui-Ming tiles and devices are stages-phase work.",
   "ON_CALCULATE_DAMAGE read as the damage source's event; not established from method bodies.",
   "Derived presentation marker removed with its attribute buff; native finish flag semantics not established.",
   "Archer height-specific attack clips, selector abnormal-flag and secondary-filter values, and the Blindey visual passive are gated but not reproduced.",
-  "Smarty: emitter-to-mode binding read from the prefab hierarchy, not gated; release-time ATK and position; uncredited delayed kill; browser fixture ran before the camouflage-ignoring recipient rule and mode-order gate were added."
- ]
+  "Smarty: emitter-to-mode binding read from the prefab hierarchy, not gated; release-time ATK and position; uncredited delayed kill; browser fixture ran before the camouflage-ignoring recipient rule and mode-order gate were added.",
+  "Tiles: the controller is installed only by tests and the browser fixture; stage compilation does not install it, so on real stages operators hold no attribute and the Envy charge selects no target.",
+  "Envy: damage before tile flip, charge duration, stretched release time and single-target hit box are simulator readings.",
+  "Browser fixture ran before the dot exclusion and the full Envy projectile part list were added."
+ ],
+ "tileInspection": {
+  "scope": "Inspection only: native Hui-Ming tile prefabs read from the pinned CN tile bundle. Not retained evidence and not stage admission.",
+  "bundle": {
+   "path": "battle/prefabs/[uc]tiles.ab",
+   "bytes": 59712,
+   "sha256": "5a913749bb207f004ac0d5f6050dc5b751e3abceb3bf834aea21ff663ff615f0"
+  },
+  "prefabs": {
+   "tile_yinyang_wall": "9f718b3438581321d750453ab872a69b4d29dab676cc3c02e3d013b5cb4fcf48",
+   "tile_yinyang_switch": "9e43274de8eb1301cad3f0c71df53972b2f9ba5b88bfeda69500ed7afe32d6b1",
+   "tile_yinyang_road": "bda8099acdd069cba67e691efb57de59e2b88053c52eed0e8c4b40b3e4f88bb5"
+  }
+ }
 }

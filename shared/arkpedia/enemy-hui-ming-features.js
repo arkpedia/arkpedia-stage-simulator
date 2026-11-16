@@ -2,19 +2,22 @@
 import clocks from '../../data/arkpedia-hui-ming-animations.json' with{type:'json'};
 import {sameOutcomeValue as same,passiveOutcomeBuff} from './enemy-outcome-contracts.js';
 import {ordinaryMeleePacketNative} from './enemy-ordinary-body-contract.js';
+import {ordinaryProjectilePacketNative,ordinaryRangedSelectorNative,linearSingleProjectileNative} from './enemy-ordinary-projectile-contract.js';
 import {nativeUnscaledTalentBinding} from './enemy-talent-binding-contract.js';
 import {compileNativeBuffProgram} from './behavior-native-compiler.js';
 import {nativeBuffProgram} from './native-buff-programs.js';
 // Plain single-mode melee bodies whose only native talent is the shared Hui-Ming account.
 const attack={enemy_1122_sphond:[30,10],enemy_1122_sphond_2:[30,10],enemy_1123_spsbr:[30,12],enemy_1123_spsbr_2:[30,12],enemy_1125_spshld:[34,19],enemy_1125_spshld_2:[34,19],enemy_1129_spklr:[49,17],enemy_1129_spklr_2:[49,17]};
-const special={enemy_1126_spslme:[40,12],enemy_1126_spslme_2:[40,12],enemy_1124_spbow:[30,14],enemy_1124_spbow_2:[30,14],enemy_1127_sptrkg:[24,12],enemy_1127_sptrkg_2:[24,12]};
+const special={enemy_1128_spmage:[60,24],enemy_1128_spmage_2:[60,24],enemy_1126_spslme:[40,12],enemy_1126_spslme_2:[40,12],enemy_1124_spbow:[30,14],enemy_1124_spbow_2:[30,14],enemy_1127_sptrkg:[24,12],enemy_1127_sptrkg_2:[24,12]};
 export const HUI_MING_ARCHER_DESCRIPTION='Prioritize attacking opposite attribute enemies';
 export const HUI_MING_BLOCK_DESCRIPTION="Can only be blocked by player's units of the same attribute.";
 export const isHuiMingArcher=r=>!!r&&r.prefabKey.startsWith('enemy_1124_');
 export const isHuiMingBlockee=r=>!!r&&r.prefabKey.startsWith('enemy_1127_');
 export const isHuiMingBlaster=r=>!!r&&r.prefabKey.startsWith('enemy_1126_');
 export const HUI_MING_BLAST_DESCRIPTION='Explodes upon death, dealing Arts damage to friendly units. Causes even greater damage if similar units of the opposite attribute are in its vicinity';
-export const isHuiMingRecord=r=>isPlainHuiMing(r)||isHuiMingArcher(r)||isHuiMingBlockee(r)||isHuiMingBlaster(r);
+export const isHuiMingCharger=r=>!!r&&r.prefabKey.startsWith('enemy_1128_');
+export const HUI_MING_CHARGE_DESCRIPTION="Can charge its attacks. If not interrupted, causes Arts damage and shifts target's Ming and Hui attribute.";
+export const isHuiMingRecord=r=>isPlainHuiMing(r)||isHuiMingArcher(r)||isHuiMingBlockee(r)||isHuiMingBlaster(r)||isHuiMingCharger(r);
 export const HUI_MING_FURY_DESCRIPTION='Greatly increases ATK when attacking opposite attribute targets';
 export const isHuiMingFury=r=>!!r&&r.prefabKey.startsWith('enemy_1129_');
 export const isPlainHuiMing=r=>!!r&&Object.hasOwn(attack,r.prefabKey);
@@ -181,7 +184,38 @@ export function huiMingBlasterNative(r,n){
   ||!neighbourAura(n,n.BoomTrigger?.find(v=>v._buffs),{buffKey:'spslme_t[to_boom]',templateKey:'enemy_spslme_t[to_boom]',radius:blastTriggerRadius(r),passive:false}))return false;
  return clocked(r,n,root);
 }
-export const huiMingNative=(r,n)=>isHuiMingArcher(r)?huiMingArcherNative(r,n):isHuiMingBlockee(r)?huiMingBlockeeNative(r,n):isHuiMingBlaster(r)?huiMingBlasterNative(r,n):plainHuiMingNative(r,n);
+// 'Envy': ordinary Arts projectiles plus a charged cast that flips the Hui-Ming mark tile under its target.
+const chargeSkill={prefabKey:'ChargeAttack',priority:0,cooldown:60,initCooldown:10,spCost:0,bb:{atk_scale:2,duration:5},bbStr:{}};
+const flipTile=[{_operation:'FLIP_BOOL',_modeIndex:0,_decBbKey:'',_useSwitchResult:false,_specifyTileType:false,_tileType:'REED_TILE',_useOwnerRootTile:false,$type:'Torappu.Battle.Action.Nodes+SwitchDynamicBuffTileMode'}];
+export function huiMingChargerNative(r,n){
+ if(!isHuiMingCharger(r)||r.applyWay!=='RANGED'||r.stats.rangeRadius!==2.5||r.stats.dmgType!=='arts'||r.stats.motion!=='WALK'||r.level!==0||r.sp||r.notCountInTotal||!huiMingBlackboard(r)
+  ||!same(Object.keys(r.talents.groups),['yinyang'])||!same(r.talents.bbStr,{})||Object.keys(r.talents.bb).length!==3||!same(r.abilities,[{text:HUI_MING_CHARGE_DESCRIPTION,format:'NORMAL'}])||!same(r.skills,[chargeSkill]))return false;
+ const root=n[r.prefabKey]?.find(v=>v._modes),mode=n.$ref(root?._modes?.[0]),attack=n.$ref(mode?._attack);
+ if(!fields(root,{...rootFields,_specialBlockCondition:{_type:0,_buffKeyPairs:[],_filterTags:[]},_commonAbilities:[]})||root._modes.length!==1||root._modes[0].m_FileID!==0||!mode||mode._generalAbilities.length
+  ||!same(mode._combat,mode._attack)||mode._attack.m_FileID!==0||mode._attackTrigger.m_FileID!==0||n.AtkUp||n.Taunt||!huiMingAccountNative(n)
+  ||!ordinaryProjectilePacketNative(attack,{projectileKey:'projectile_enemy_spmage',type:2})||!ordinaryRangedSelectorNative(n,n.$ref(mode._attackTrigger),{radius:2,abnormalFlag:20})
+  ||!linearSingleProjectileNative(n,'projectile_enemy_spmage',{speed:10,lifetime:10}))return false;
+ const wrapper=n.ChargeAttack?.find(v=>'_familyMask'in v),cast=n.$siblings(wrapper).find(v=>v.m_Script?.m_PathID==='551713621458524560'),trigger=n.$ref(wrapper?._trigger),siblings=n.$siblings(trigger);let actions;
+ try{actions=JSON.parse(cast?._actions?.SerializedState);}catch{return false;}
+ if(!fields(wrapper,{m_Script:{m_FileID:1,m_PathID:'-5087399121287503180'},_familyMask:3,_checkParentActive:0,_maxTriggerTime:-1,_resetMainAbilityCdWhenCastEnd:1,_resetCdWaitFirstPeriod:1,_overwriteInitCooldown:-1,_ignoreSilence:0,_immuneStunWhenAffecting:0,_addEnemyIdToSignalId:1,_castLikeAttack:0})||wrapper._trigger.m_FileID!==0
+  ||!fields(cast,{_selector:{m_FileID:0,m_PathID:'0'},_actionEvent:2,_overwriteAbilityActions:0,_activeBuffs:[],_affectedBySlowDown:0,_allowNoTarget:0,_alwaysIncludeTarget:1,_animKey:'Skill',_endAnimKey:'Idle',_atkScale:1,_atkScaleKey:'atk_scale',_attackType:1,_cooldown:0,_cooldownKey:'duration',_damageType:2,_elementDamageType:0,_epDamageRatio:0,_extraDamageType:0,_extraProjectileKeys:[],_ignoreIfOwnerDead:0,_interruptAbilityOnDetach:0,_interuptIfTargetDead:0,_maxAnimScale:-1,_preDelay:0,_escapeTime:0,_projectileKey:'projectile_enemy_spmage_s',_resetCdStrategy:1,_selectTargetSource:2,_selectTargetTiming:0,_timeMode:3,_useDynamicAttackType:0,_waitForAttackEvent:1,_waitForProjectileInvalid:0})
+  ||!same(cast._actions.SerializedObjectReferences??[],[])||!same(actions,flipTile)
+  ||!fields(trigger,{m_Script:{m_FileID:1,m_PathID:'8607874384982393801'},_keepTarget:0,_minTargetNum:1,_overrideSearchTargetTick:-1})||siblings.filter(c=>c.m_Script).length!==3
+  ||!siblings.some(c=>fields(c,{m_Script:{m_FileID:1,m_PathID:'6185056810787956083'},_useBlackboardRangeId:0,_extendable:0,_scaleble:0}))||!siblings.some(c=>fields(c,{m_Radius:2,m_Enabled:1,m_Offset:{x:0,y:0}}))
+  // The skill only selects a ground ally holding the tile's same-attribute scale buff, that is, one standing on a mark tile.
+  ||!siblings.some(c=>fields(c,{m_Script:{m_FileID:1,m_PathID:'6959540303033999559'},_targetSide:2,_targetMotion:1,_targetCategory:1,_postFilter:4,_ignoreTargetFree:0,_abnormalFlag:20,_abnormalCombo:2,_ignoreAllyTargetFree:0,_ignoreMotionMode:0,_forceIgnoreCamouflage:0,_excludeAbnormalFlag:46,_limitTargetNum:1,_maxTargetKey:'max_target',_maxNum:1,_excludeOwner:0,_sortByTauntAtLast:0,_ignoreHitRange:0,_checkUnitType:0,_unitTypeMask:0,_tagExcluded:0,_filterTag:'',_filterTagList:[],_buffKeyExcluded:0,_buffKey:'buff_yinyang[same]',_buffs:[],_checkOrInsteadOfAnd:0,_filterBuffSource:0,_filterTokenHost:0})))return false;
+ const parts=n.$projectile('projectile_enemy_spmage_s'),life=parts.find(c=>'_lifeTime'in c),move=parts.find(c=>'_moveType'in c),box=parts.find(c=>'m_Size'in c),select=parts.find(c=>'_onlyCheckHitWhenStop'in c);
+ if(parts.length!==8||!same(parts.map(c=>c.m_Script?.m_PathID??'geometry').sort(),['-1429203677512073985','-7891991905135157257','-8600852259007838266','-8797129986015012478','4158870186494526771','6834194400804168919','geometry','geometry'])||!fields(life,{_lifeTimeType:1,_lifeTime:10,_hitNumType:1,_maxHitNum:1,_randomDelayToBorn:0})||!same(life._actionController?._extraBuffsInTheEnd,[])||!fields(move,{_moveType:1,_speed:10,_delayToStart:0})
+  ||!fields(box,{m_Size:{x:1,y:1},m_Offset:{x:0,y:0},m_Enabled:1})||!fields(select,{_onlyCheckHitWhenStop:1,_onlyCheckHitWhenReachTarget:0,_hitPasserby:0,_exceptSource:0,_exceptTraceTarget:0,_limitedHitTimes:0}))return false;
+ const graphic=n.$ref(root._animator),clock=clocks.enemies[r.prefabKey];
+ return clocked(r,n,root)&&graphic._animations.some(v=>v.animKey==='Skill'&&v.animName==='Skill'&&v.speed===1&&!v.loop)
+  &&clock.durations.Skill===Math.fround(95/30)&&same(clock.events.Skill,[{time:Math.fround(64/30),name:'OnAttack',int:0,float:0,string:''}]);
+}
+export const huiMingNative=(r,n)=>isHuiMingArcher(r)?huiMingArcherNative(r,n):isHuiMingBlockee(r)?huiMingBlockeeNative(r,n):isHuiMingBlaster(r)?huiMingBlasterNative(r,n):isHuiMingCharger(r)?huiMingChargerNative(r,n):plainHuiMingNative(r,n);
+// The charge lasts the skill's blackboard duration; the 95-frame Skill clip and its frame-64 release are stretched to it.
+export const HUI_MING_CHARGE_ABILITY={kind:'huiMingChargedShift',params:r=>{const c=clocks.enemies[r.prefabKey],skill=r.skills[0],stretch=skill.bb.duration/c.durations.Skill;
+ return{attack:{type:'arts',speed:10,lifetime:10,noAir:true,animation:{clip:'Attack',duration:c.durations.Attack,releases:c.events.Attack.map(v=>v.time),maxScale:1}},
+  charge:{type:'arts',initial:skill.initCooldown,cooldown:skill.cooldown,duration:skill.bb.duration,release:c.events.Skill[0].time*stretch,clip:'Skill',clipDuration:c.durations.Skill,scale:skill.bb.atk_scale,speed:10,lifetime:10,requiredBuff:'buff_yinyang[same]'}};}};
 export const HUI_MING_BLAST_ABILITY={kind:'huiMingBlast',params:r=>{const bb=r.talents.bb;return{markerKey:'spslme_t',deathKey:'spslme_t[default_boom]',boomKey:'spslme_t[boom]',warnKey:'spslme_t[mark]',interval:Math.fround(.09),hintRadius:1.5,triggerRadius:blastTriggerRadius(r),killDelay:Math.fround(.1),blastDelay:Math.fround(.2),blockPairs:pairs,
  small:{radius:1.25,none:bb['boom.atk_scale'],same:bb['boomtosame.atk_scale'],diff:bb['boomtodiff.atk_scale']},large:{radius:2,none:bb['boom.atk_scale_2'],same:bb['boomtosame.atk_scale_2'],diff:bb['boomtodiff.atk_scale_2']}};}};
 export const HUI_MING_ABILITY={kind:'huiMingAttribute',params:r=>({...huiMingBlackboard(r),...(isHuiMingFury(r)?{bonus:{key:'spklr_t',scale:r.talents.bb['atkup.atk_scale']}}:{}),...(isHuiMingArcher(r)?{preferOpposite:true}:{})})};

@@ -35,19 +35,34 @@ export function setHuiMing(b,unit,attribute,{source=unit}={}){
 export function switchHuiMing(b,unit,options){
  const current=huiMingOf(unit);return current?setHuiMing(b,unit,other[current],options):null;
 }
-/** A unit's native Hui-Ming talent: the start-only attribute choice and two
- * independent output scales. Each scale applies to damage this unit deals to
- * a recipient holding the same, or the opposite, attribute, and only while
- * its own parent buff is still attached. */
+/** The two native output-scale buffs (and an optional third against the
+ * opposite attribute) on any unit, each active only while its own buff is
+ * attached. Enemy talents and Hui-Ming tiles attach the same pair. Returns the
+ * attached buffs by key and a detach function. */
+export function attachHuiMingScales(b,unit,{same,diff,sameKey,diffKey,bonus=null}){
+ const life=unit.deploySeq,buffs={},keys=[sameKey,diffKey,...(bonus?[bonus.key]:[])];
+ for(const key of keys){
+  const buff=b.addBuff(unit,{key,source:unit,refresh:'independent',maxStacks:Infinity,admit:u=>live(u)&&u.deploySeq===life});
+  if(buff&&unit.buffs.includes(buff))buffs[key]=buff;
+ }
+ const hook=b.on('sourceAtkScale',c=>{
+  if(c.source!==unit||!live(unit)||unit.deploySeq!==life)return;
+  const mine=huiMingOf(unit),theirs=huiMingOf(c.target);if(!mine||!theirs)return;
+  const buff=buffs[mine===theirs?sameKey:diffKey];
+  if(buff&&unit.buffs.includes(buff))c.scale*=mine===theirs?same:diff;
+  // A separate native talent may add its own scale against the opposite attribute.
+  const extra=bonus&&mine!==theirs?buffs[bonus.key]:null;
+  if(extra&&unit.buffs.includes(extra))c.scale*=bonus.scale;
+ },{owner:unit});
+ return{buffs,detach(){b.off(hook);for(const buff of Object.values(buffs))if(unit.buffs.includes(buff))b.removeBuff(unit,buff);}};
+}
+/** A unit's native Hui-Ming talent: the start-only attribute choice and the
+ * output scales, plus the optional opposite-attribute target preference. */
 export function huiMingAttribute(params){
- validate(params);const {dynamic,same,diff,sameKey,diffKey,bonus=null,preferOpposite=false}=params,keys=[sameKey,diffKey,...(bonus?[bonus.key]:[])];
+ validate(params);const {dynamic,preferOpposite=false}=params;
  return{
   spawn(b,e,a){
-   const life=e.deploySeq;a.buffs={};
-   for(const key of keys){
-    const buff=b.addBuff(e,{key,source:e,refresh:'independent',maxStacks:Infinity,admit:u=>live(u)&&u.deploySeq===life});
-    if(buff&&e.buffs.includes(buff))a.buffs[key]=buff;
-   }
+   const life=e.deploySeq;a.scales=attachHuiMingScales(b,e,params);a.buffs=a.scales.buffs;
    if(!live(e)||e.deploySeq!==life)return;
    if(dynamic===0)setHuiMing(b,e,'yin');else if(dynamic===1)setHuiMing(b,e,'yang');
    // Native buff-pair selector: candidates holding the attribute opposite to this unit's current one come first,
@@ -57,15 +72,6 @@ export function huiMingAttribute(params){
     const score=u=>{const mine=huiMingOf(e),theirs=huiMingOf(u);return mine&&theirs&&mine!==theirs?0:1;};
     e.profile.targetPriority=(x,y)=>score(x)-score(y);
    }
-   b.on('sourceAtkScale',c=>{
-    if(c.source!==e||!live(e)||e.deploySeq!==life)return;
-    const mine=huiMingOf(e),theirs=huiMingOf(c.target);if(!mine||!theirs)return;
-    const key=mine===theirs?sameKey:diffKey,buff=a.buffs[key];
-    if(buff&&e.buffs.includes(buff))c.scale*=mine===theirs?same:diff;
-    // A separate native talent may add its own scale against the opposite attribute.
-    const extra=bonus&&mine!==theirs?a.buffs[bonus.key]:null;
-    if(extra&&e.buffs.includes(extra))c.scale*=bonus.scale;
-   },{owner:e});
   },
   death(_c,b,e,a){for(const buff of Object.values(a.buffs??{}))if(e.buffs.includes(buff))b.removeBuff(e,buff);a.buffs={};},
  };

@@ -405,9 +405,10 @@ export function dealDamage(battle, source, target, dmgIn) {
   // Native ON_CALCULATE_DAMAGE AtkScaleUp belongs to one source/recipient pair.
   // It scales the pre-mitigation amount for this recipient only, so a
   // DamageInfo shared by an area attack is never rewritten. Opt-in: without a
-  // listener nothing changes. Sourceless and unmodified damage skip it.
+  // listener nothing changes. Sourceless and unmodified damage skip it, and so
+  // do fixed-value 'dot' packets, which no ATK multiplier touches.
   let pairScale = 1;
-  if (hs && !dmg.unmodified && !dmg.skipSourceAtkScale && battle._hooks.sourceAtkScale) {
+  if (hs && !dmg.unmodified && !dmg.skipSourceAtkScale && !dmg.tags.includes('dot') && battle._hooks.sourceAtkScale) {
     const ctx = { source: hs, target, dmg, credit: source, targetLife, scale: 1 };
     battle.emit('sourceAtkScale', ctx);
     if (!retainsDamageLife(target, targetLife)) return 0;

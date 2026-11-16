@@ -5,6 +5,9 @@ import support from '../data/arkpedia-enemy-support.json' with{type:'json'};
 import evidence from '../data/arkpedia-enemy-native-abilities.json' with{type:'json'};
 import {nativeComponents} from '../shared/arkpedia/enemy-support.js';
 import {huiMingBlast} from '../server/sim/content/arkpedia-hui-ming-blast.js';
+import {installHuiMingTiles,flipHuiMingTileUnder} from '../server/sim/content/arkpedia-hui-ming-tiles.js';
+import {huiMingChargedShift} from '../server/sim/content/arkpedia-hui-ming-charge.js';
+import {huiMingChargerNative} from '../shared/arkpedia/enemy-hui-ming-features.js';
 import {plainHuiMingNative,huiMingAccountNative,huiMingArcherNative,huiMingBlockeeNative,huiMingBlasterNative} from '../shared/arkpedia/enemy-hui-ming-features.js';
 import {withCompiledEnemyRuntime} from '../shared/arkpedia/enemy-runtime-compiler.js';
 import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
@@ -242,4 +245,72 @@ test('blaster gates and parameters refuse changed blasts, auras, templates, proj
  for(const change of[r=>r.talents.bb['boom.atk_scale_2']=-1,r=>delete r.talents.groups.boomtodiff,r=>r.stats.dmgType='phys',r=>r.abilities.pop()]){const r=structuredClone(records.enemies[blasters[0]].levels[0]);change(r);assert.equal(huiMingBlasterNative(r,nativeComponents(evidence,blasters[0])),false);}
  const ok=withCompiledEnemyRuntime(records.enemies[blasters[0]].levels[0]).runtimeFeatures.entries.find(v=>v.ability?.kind==='huiMingBlast').ability.params;huiMingBlast.validate(ok);
  for(const bad of[{interval:0},{triggerRadius:2},{warnKey:ok.markerKey},{blockPairs:[]},{small:{...ok.small,radius:0}},{large:{radius:2,none:1,same:1}}])assert.throws(()=>huiMingBlast.validate({...ok,...bad}),/Invalid Hui-Ming blast talent/);
+});
+
+// Hui-Ming tiles and 'Envy'
+const chargers=['enemy_1128_spmage','enemy_1128_spmage_2'];
+function tileField(id,{compiled=true,guards=[[10,6]],pos=[10,5],marks=[{row:10,col:6,mode:0,same:.6,diff:1.4}],switches=[]}={}){
+ const g=chessRec({id:'huiming_tile_guard',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:0},skill:null});
+ const record=compiled?withCompiledEnemyRuntime(records.enemies[id].levels[0]):records.enemies[id].levels[0];
+ const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{[id]:record},chess:{[g.chessId]:g}},units:guards.map(([row,col])=>({chessId:g.chessId,row,col})),kits:{[g.chessId]:()=>({trait:{noAttack:true}})},setup:installEnemyFeatures});h.b.start();
+ const tiles=marks.length||switches.length?installHuiMingTiles(h.b,{marks,switches}):null,units=h.b.allyUnits,hits=[];assert.ok(units.every(u=>u.alive&&u.deployed));
+ const e=h.b.spawnEnemy(id,{pos});h.b.addBuff(e,{key:'hold',flags:{noMove:true}});
+ h.b.on('damaged',c=>{if(c.source===e)hits.push({target:units.indexOf(c.target),amount:c.amount,type:c.dmg.type,time:h.b.time});});
+ return{...h,e,units,hits,tiles,atk:record.stats.atk};
+}
+test('a mark tile gives its occupant the tile attribute, both output scales and one log entry; flipping swaps the attribute',()=>{
+ const h=tileField(ids[0],{guards:[[10,6],[11,6]],pos:[10,8]}),[on,off]=h.units;h.run(.15);
+ assert.equal(huiMingOf(on),'yin');assert.equal(huiMingOf(off),null);assert.ok(on.findBuff(same)&&on.findBuff(diff));assert.equal(h.b.stageOutcomes.counters.locate_on_tile_yinyang,1);
+ const dealt=[];h.b.on('damaged',c=>{if(c.source===on)dealt.push(c.amount);});const strike=()=>{h.b.dealDamage(on,h.e,{amount:100,type:'true'});return dealt.at(-1);};
+ near(strike(),140);assert.equal(h.tiles.modeAt(10,6),0);assert.equal(h.tiles.flip(10,6),1);assert.equal(huiMingOf(on),'yang');assert.ok(on.findBuff('buff_yin_to_yang[effect]'));near(strike(),60);
+ assert.equal(flipHuiMingTileUnder(h.b,off),null);assert.equal(flipHuiMingTileUnder(h.b,on),0);assert.equal(huiMingOf(on),'yin');h.b.removeBuff(on,same);near(strike(),140);h.b.removeBuff(on,diff);near(strike(),100);
+ h.b.removeBuff(on,'buff_yin');h.run(.15);assert.equal(huiMingOf(on),'yin');h.run(1);assert.equal(h.b.stageOutcomes.counters.locate_on_tile_yinyang,1);assert.deepEqual(h.tiles.resultTiles(),[{row:10,col:6,mode:0}]);assert.deepEqual(h.b.errors,[]);
+});
+test('a switch tile swaps a ground enemy once per entry and leaves an enemy without an attribute alone',()=>{
+ const h=tileField(ids[0],{guards:[[11,8]],pos:[10,4],marks:[],switches:[{row:10,col:6}]});h.run(.2);assert.equal(huiMingOf(h.e),'yang');
+ h.e.x=6;h.run(.15);assert.equal(huiMingOf(h.e),'yin');h.run(.5);assert.equal(huiMingOf(h.e),'yin');h.e.x=7;h.run(.15);assert.equal(huiMingOf(h.e),'yin');h.e.x=6;h.run(.15);assert.equal(huiMingOf(h.e),'yang');
+ h.e.x=4;h.run(.15);h.b.removeBuff(h.e,'buff_yang');h.e.x=6;h.run(.15);assert.equal(huiMingOf(h.e),null);assert.deepEqual(h.b.errors,[]);
+});
+test('tile installation validates its cells and installs once',()=>{
+ const h=tileField(ids[0]);assert.throws(()=>installHuiMingTiles(h.b,{marks:[{row:1,col:1,mode:0,same:.6,diff:1.4}]}),/already installed/);
+ for(const bad of[{marks:[]},{marks:[{row:1,col:1,mode:2,same:.6,diff:1.4}]},{marks:[{row:1,col:1,mode:0,same:-1,diff:1.4}]},{marks:[{row:1,col:1,mode:0,same:.6,diff:1.4}],switches:[{row:1,col:1}]},{switches:[{row:-1,col:1}]},{switches:[{row:1,col:1}],interval:0}])
+  assert.throws(()=>installHuiMingTiles.validate({marks:[],switches:[],interval:.1,logKey:'k',...bad}),/Invalid Hui-Ming tiles/);
+ h.tiles.uninstall();assert.equal(h.b.stageHuiMing,null);
+});
+for(const id of chargers)test(`${id}: ordinary Arts shots, and a charged shot that flips the mark tile under an ally standing on one`,()=>{
+ const r=records.enemies[id].levels[0];assert.ok(huiMingChargerNative(r,nativeComponents(evidence,id)));assert.equal(support.enemies[id].policy,'stats-attacks-and-features');assert.equal(support.enemies[id].native[id].claimedWrappers,1);
+ assert.deepEqual(withCompiledEnemyRuntime(r).runtimeFeatures.entries.filter(v=>v.ability).map(v=>v.ability.kind).sort(),['huiMingAttribute','huiMingChargedShift']);
+ for(const compiled of [false,true]){
+  const h=tileField(id,{compiled,guards:[[10,6],[11,5]]}),[on]=h.units;h.run(9.9);assert.ok(h.hits.length>0&&h.hits.every(v=>v.type==='arts'));assert.equal(huiMingOf(on),'yin');
+  // Ordinary shots against a yin occupant use the opposite scale; the other guard holds no attribute.
+  assert.ok(h.hits.every(v=>Math.abs(v.amount-h.atk*(v.target===0?1.4:1))<1e-6));
+  assert.ok(h.runUntil(()=>h.e.mem.regularFormVisual?.clip==='Skill',1));const started=h.b.time;assert.ok(Math.abs(started-10)<.2);near(h.e.mem.regularFormVisual.speed,(95/30)/5);
+  const before=h.hits.length;assert.ok(h.runUntil(()=>h.tiles.modeAt(10,6)===1,5));const landed=h.b.time,release=64/30*5/(95/30);
+  assert.ok(landed-started>=release-h.b.dt&&landed-started<=release+.3);const shot=h.hits[before];assert.equal(shot.target,0);near(shot.amount,h.atk*2*1.4);assert.equal(h.hits.length,before+1);
+  assert.equal(huiMingOf(on),'yang');h.run(started+5-h.b.time+.1);assert.notEqual(h.e.mem.regularFormVisual?.clip,'Skill');
+  const count=h.hits.length;assert.ok(h.runUntil(()=>h.hits.length>count,6));assert.ok(Math.abs(h.hits[count].amount-h.atk*(h.hits[count].target===0?.6:1))<1e-6);
+  // The sixty-second cooldown runs from the cast start: no second charge follows within the harness's battle clock.
+  h.run(30);assert.equal(h.tiles.modeAt(10,6),1);assert.notEqual(h.e.mem.regularFormVisual?.clip,'Skill');assert.deepEqual(h.b.errors,[]);}
+});
+test('the charge needs an ally on a mark tile, and an interrupted charge releases nothing',()=>{
+ const none=tileField(chargers[0],{marks:[],switches:[{row:9,col:9}]});none.run(20);assert.ok(none.hits.length>0);assert.ok(none.hits.every(v=>Math.abs(v.amount-none.atk)<1e-6));
+ const h=tileField(chargers[0]);h.run(10.5);assert.equal(h.e.mem.regularFormVisual?.clip,'Skill');const count=h.hits.length;h.b.applyStatus(h.e,'stun',{duration:1});assert.equal(h.e.mem.regularFormVisual,null);
+ h.run(8);assert.equal(h.tiles.modeAt(10,6),0);assert.ok(h.hits.slice(count).every(v=>Math.abs(v.amount-h.atk*1.4)<1e-6));assert.deepEqual(h.b.errors,[]);
+});
+test('charger gates and parameters refuse changed skills, selectors, hit actions, projectiles and clocks',()=>{
+ for(const id of chargers)for(const edit of[
+  n=>n.ChargeAttack.find(v=>'_familyMask'in v)._ignoreSilence=1,
+  n=>{const c=n.$siblings(n.ChargeAttack.find(v=>'_familyMask'in v)).find(v=>'_actions'in v);c._actions.SerializedState=c._actions.SerializedState.replace('FLIP_BOOL','SET_TRUE');},
+  n=>{const c=n.$siblings(n.ChargeAttack.find(v=>'_familyMask'in v)).find(v=>'_actions'in v);c._actions.SerializedState=c._actions.SerializedState.replace('"_useOwnerRootTile":false','"_useOwnerRootTile":true');},
+  n=>n.$siblings(n.ChargeAttack.find(v=>'_familyMask'in v)).find(v=>'_actions'in v)._timeMode=0,
+  n=>n.$siblings(n.ChargeAttack.find(v=>'_familyMask'in v)).find(v=>'_actions'in v)._projectileKey='projectile_enemy_spmage',
+  n=>n.$siblings(n.$ref(n.ChargeAttack.find(v=>'_familyMask'in v)._trigger)).find(v=>'_buffKey'in v)._buffKey='',
+  n=>n.$siblings(n.$ref(n.ChargeAttack.find(v=>'_familyMask'in v)._trigger)).find(v=>'m_Radius'in v).m_Radius=5,
+  (n,id)=>n.$ref(n.$ref(n[id].find(v=>v._modes)._modes[0])._attack)._damageType=1,(n,id)=>n[id].find(v=>v._modes)._commonAbilities.push({m_FileID:0,m_PathID:'1'}),
+ ]){const n=nativeComponents(structuredClone(evidence),id);edit(n,id);assert.equal(huiMingChargerNative(records.enemies[id].levels[0],n),false,edit.toString());}
+ for(const change of[r=>r.skills[0].cooldown=30,r=>r.skills[0].bb.duration=3,r=>r.skills.push(r.skills[0]),r=>r.stats.rangeRadius=3,r=>r.abilities=[]]){const r=structuredClone(records.enemies[chargers[0]].levels[0]);change(r);assert.equal(huiMingChargerNative(r,nativeComponents(evidence,chargers[0])),false);}
+ const copy=structuredClone(evidence);const parts=copy.projectiles.projectile_enemy_spmage_s.map(row=>JSON.parse(row.originalJson));parts.find(c=>'m_Size'in c).m_Size.x=3;copy.projectiles.projectile_enemy_spmage_s.forEach((row,i)=>row.originalJson=JSON.stringify(parts[i]));
+ assert.equal(huiMingChargerNative(records.enemies[chargers[0]].levels[0],nativeComponents(copy,chargers[0])),false);
+ const ok=withCompiledEnemyRuntime(records.enemies[chargers[0]].levels[0]).runtimeFeatures.entries.find(v=>v.ability?.kind==='huiMingChargedShift').ability.params;huiMingChargedShift.validate(ok);
+ for(const bad of[{charge:{...ok.charge,release:9}},{charge:{...ok.charge,requiredBuff:''}},{charge:{...ok.charge,cooldown:0}},{attack:{...ok.attack,noAir:false}}])assert.throws(()=>huiMingChargedShift.validate({...ok,...bad}),/Invalid Hui-Ming charged shift/);
 });
