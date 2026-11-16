@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "scope": "Funlive caster timed marker, cross-shaped native Arts transport and explicit shared-model alias; controlled fixtures, not original Funlive scenario controllers.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-funlive-caster-features.js": "1f10a38c891424e3419e93f81a6eb2dc338e3a56f0ebdbc70b1f3606fb1fe284",
+    "shared/arkpedia/enemy-ordinary-projectile-contract.js": "ff4dd9f7bca3a8216f8d1204ac74d38fda59b2ea747dff8c1c9dd84e9a728adf",
+    "server/sim/content/arkpedia-enemy-programmed-projectiles.js": "1502e132576ee73a198087ca01e5669854eaafeb321cd34782bbab795a65e399",
+    "server/sim/content/arkpedia-enemy-projectiles.js": "b704eeff84e7a21edf19156cd8d54a26e8f922b056d05ac87296c98aa609846c",
+    "data/arkpedia-funlive-caster-animations.json": "3e5316d8127e0b8971cefd52f2aa8c9f452e106453da85ceb255d16df9db5759",
+    "data/arkpedia-enemy-native-abilities.json": "9c2e683a1994d956182c8e039c10d258ee6020d2d6610ef0aa5da4b72ebc01bc",
+    "data/arkpedia-enemy-support.json": "270b9c3a1b091a38e7cf7b8929d248a89689aaec5733eb0496ee386a1f6351d4",
+    "data/arkpedia-enemy-runtime-plan-report.json": "682db9bb0652f22cabae0427922046e00767caa30dfab2b6d5a3cb9cf5ca5da4",
+    "test/arkpedia-funlive-caster.test.js": "bc4204e25aeaf56bb302d02fbf1eafbd33ea2cbbe5bad3805b07bb94efa67420"
+  },
+  "tests": {
+    "focusedRegressions": 83,
+    "transportChecks": 56
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Funlive caster timed-marker and projectile fixture; external ATK grant exposes the zero-base-ATK native Arts packet on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-programmed-projectiles"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "hp": 100000,
+          "initialMarker": true,
+          "zeroAttackHp": 100000,
+          "sourceAtk": 0,
+          "hits": [
+            {
+              "time": 1.6,
+              "type": "arts",
+              "loss": 300
+            },
+            {
+              "time": 2.966666666666667,
+              "type": "arts",
+              "loss": 300
+            },
+            {
+              "time": 4.333333333333333,
+              "type": "arts",
+              "loss": 300
+            },
+            {
+              "time": 5.7,
+              "type": "arts",
+              "loss": 300
+            }
+          ],
+          "timeBeforeExpiry": 1.6333333333333333,
+          "expired": false,
+          "attacksAfterExpiry": true,
+          "markerAfterLeak": false
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Funlive caster timed-marker and projectile fixture; external ATK grant exposes the zero-base-ATK native Arts packet on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-programmed-projectiles"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "hp": 100000,
+          "initialMarker": true,
+          "zeroAttackHp": 100000,
+          "sourceAtk": 0,
+          "hits": [
+            {
+              "time": 1.6,
+              "type": "arts",
+              "loss": 300
+            },
+            {
+              "time": 2.966666666666667,
+              "type": "arts",
+              "loss": 300
+            },
+            {
+              "time": 4.333333333333333,
+              "type": "arts",
+              "loss": 300
+            },
+            {
+              "time": 5.7,
+              "type": "arts",
+              "loss": 300
+            }
+          ],
+          "timeBeforeExpiry": 1.6333333333333333,
+          "expired": false,
+          "attacksAfterExpiry": true,
+          "markerAfterLeak": false
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "commit": "ea04f6ed8095a58120ea3ae24e3ee36d975a2838",
+    "assetAlias": "enemy/enemy_1161_tidmag/default/default",
+    "review": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_5021_tmagfd",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 347.2279357910156,
+              "height": 368.48292112350464
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_5021_tmagfd",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 347.2279357910156,
+              "height": 368.48292112350464
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "coverage": {
+    "enemies": 738,
+    "totalEnemies": 2163,
+    "databaseLevels": 803,
+    "runtimeKinds": 202,
+    "publishedStages": 970
+  }
+}

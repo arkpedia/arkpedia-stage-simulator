@@ -41,6 +41,7 @@ export function delayedAreaAttack({ delay, radius, type, priorityBuff = null, st
  * and native predicates own admission. No per-enemy switch or duplicate asset. */
 export function projectileBoxAttack(params) { return projectileAreaAttack({ ...params, type: 'phys', visual: 'mortar' }); }
 export function projectileCircleAttack(params) { return projectileAreaAttack(params); }
+export function projectileTileAttack(params) { return projectileAreaAttack(params); }
 export function projectileSingleAttack(params) { return projectileAreaAttack({ ...params, singleTarget: true }); }
 /** Native animation markers share one ordinary cast sequence. Every captured
  * deployment receives one projectile per release; released shots then belong
@@ -103,7 +104,7 @@ export function projectileBurstAttack({ count, spacing, priorityTag = null, prio
     },
   };
 }
-function projectileAreaAttack({ speed, lifetime, width, height, radius, type, noAir = false, visual = 'enemyArea', singleTarget = false, meleeWhenBlocked = false, onImpact = null, onAcceptedImpact = null, onTileImpact = null, resolveHit = null, damageScale = 1, element = null }) {
+function projectileAreaAttack({ speed, lifetime, width, height, radius, tileOffsets, type, noAir = false, visual = 'enemyArea', singleTarget = false, meleeWhenBlocked = false, onImpact = null, onAcceptedImpact = null, onTileImpact = null, resolveHit = null, damageScale = 1, element = null }) {
   return {
     spawn(_b, e) {
       e.profile.deferHit = true; e.profile.shot = visual;
@@ -122,6 +123,7 @@ function projectileAreaAttack({ speed, lifetime, width, height, radius, type, no
           const targets = new Set();
           for (const unit of singleTarget ? [] : b.allies(null, { includeTargetableDevices: true })) {
             if (!areaSelectable(e, unit) || noAir && unit.isFlying) continue;
+            if(tileOffsets){if(tileOffsets.some(({row,col})=>unit.tileR===Math.round(y)+row&&unit.tileC===Math.round(x)+col))targets.add(unit);continue;}
             if (radius != null) {
               if (Math.hypot(unit.x - x, unit.y - y) <= radius + 1e-9) targets.add(unit);
               continue;
@@ -130,7 +132,7 @@ function projectileAreaAttack({ speed, lifetime, width, height, radius, type, no
           }
           if (locked?.alive && locked.deployed && !locked.hidden && !(noAir && locked.isFlying)) targets.add(locked);
           const amount = e.alive ? e.s.atk * (e.profile.atkScale ?? 1) * damageScale : snapshot;
-          if (!singleTarget) b.fx('explode', { x, y, r: radius ?? Math.max(width, height) / 2, kind: visual });
+          if (!singleTarget) b.fx('explode', { x, y, r: radius ?? (tileOffsets?1:Math.max(width, height) / 2), kind: visual });
           for (const unit of targets) {
             // Some native payloads choose between resource manipulation and
             // damage. They share transport without producing a placeholder hit.

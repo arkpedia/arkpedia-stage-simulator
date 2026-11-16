@@ -8,7 +8,7 @@ Enemy behavior is compiled from source-checked feature data. A stage loads enemy
 - `animatedMeleeAttack`: one ordinary melee cast driven by native animation markers.
 - `markedRangedMeleeAttack`: blocker melee plus a marked ground target using another direct-hit clip.
 - `markedMeleeProjectileAttack`: blocker melee plus marked local/global projectile casts.
-- `programmedProjectileModes`: one source-owned buff program selects among validated projectile modes; each cast captures its packet. Optional native polling owns empty derived markers and removes them by attachment identity.
+- `programmedProjectileModes`: one source-owned buff program selects among validated projectile modes; each cast captures its packet. A finite parent lifetime and validated tile offsets also cover ordinary scenario carriers. Optional native polling owns empty derived markers and removes them by attachment identity.
 - `environmentStatBonus`: an enemy-owned modifier enabled by a stage-provided condition bit.
 - `contactBuffProgram`: source-owned contact bindings that execute a portable native buff program.
 - `stageOutcomeCounter`: native killed/exit result receipts, independent of progression or rewards.
