@@ -2,16 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "b8573f6bfb6267ad96ebc780da5d606389628b433e3e42950290b75b7fb31bff",
-    "data/arkpedia-enemy-support.json": "655ed98bd61f576be252971cb3455d1f4410f7f62f3444172b17cfd9f926ec86",
+    "data/arkpedia-enemy-native-abilities.json": "4c066e3e08ed202d6291ecb4c797ac31608e7082c543fa73fd00daef5616fe0e",
+    "data/arkpedia-enemy-support.json": "392f4efe378015cef6f3b60fdf30b2851e0623a0f0bb9c2b4824bd4791e6b256",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "abd32bcf14335e8b2be3b7ada3cf39e2d454cd9aa1b2b9308a9c663a0081dcf3",
-    "shared/arkpedia/behavior-program.js": "5f60d38fe927e70645d204a6c4c0b489bb6494357eba562d4b83d24190bbd5b7"
+    "shared/arkpedia/behavior-native-compiler.js": "7126462b9bc24ab7aadc12f0390fb7e168462035a20f1579ee32108b92913a49",
+    "shared/arkpedia/behavior-program.js": "aa8fee4423e08ea670b7729bf8485727ba26e37b62fd9ab94a1fe98ac55126fe",
+    "shared/arkpedia/environment-conditions.js": "b0d16739dec4a04e585152dde5fe50128003df29e7b2b51d7adb60db3e494b76"
   },
-  "retainedPrefabs": 369,
-  "templates": 227,
-  "compiled": 7,
-  "refused": 220,
+  "retainedPrefabs": 371,
+  "templates": 229,
+  "compiled": 8,
+  "refused": 221,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -61,6 +62,15 @@
       "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: ordinary source damage"
+    },
+    {
+      "key": "aruarw_night_buff_effect_holder",
+      "consumers": [
+        "enemy_1179_aruarw"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_ABILITY_SPELL_ON"
     },
     {
       "key": "bldrat_t_1[blood]",
@@ -226,7 +236,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action SwitchMode"
+      "reason": "Unsupported native behaviour: mode switch"
     },
     {
       "key": "dsshel_t_1",
@@ -353,6 +363,8 @@
         "enemy_1171_durokt_2",
         "enemy_1178_dscorp",
         "enemy_1178_dscorp_2",
+        "enemy_1179_aruarw",
+        "enemy_1179_aruarw_2",
         "enemy_1187_krghd",
         "enemy_1187_krghd_2",
         "enemy_1188_krgdrn",
@@ -565,6 +577,19 @@
       "compiled": true,
       "programSha256": "ee05dbd538d549817176bc24821a2c975a6da082065fdcbcaa1bf94275a4bdce",
       "bytes": 72,
+      "templateCount": 1,
+      "requiredBlackboard": []
+    },
+    {
+      "key": "enemy_aruarw_check",
+      "consumers": [
+        "enemy_1179_aruarw",
+        "enemy_1179_aruarw_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "cbba85b2483f337d80f879952c849691c12b4cb5b0e0a8df532717b8fd024353",
+      "bytes": 716,
       "templateCount": 1,
       "requiredBlackboard": []
     },
@@ -802,7 +827,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+      "reason": "Unsupported native behaviour: abnormal flag"
     },
     {
       "key": "enemy_crgst[blockee]",
@@ -1232,7 +1257,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
     },
     {
       "key": "enemy_lrchld[finishFx]",
@@ -1561,7 +1586,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+      "reason": "Unsupported native behaviour: predicate FilterByBuffStackCount"
     },
     {
       "key": "enemy_mdrock_s_2[shield][refresh]",
@@ -1989,7 +2014,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+      "reason": "Unsupported native behaviour: predicate CheckHasSp"
     },
     {
       "key": "enemy_spmode_sp_reduce",
@@ -2144,7 +2169,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+      "reason": "Unsupported native behaviour: action FilterByBuffStackCount"
     },
     {
       "key": "fear_buff",
@@ -2358,6 +2383,7 @@
         "enemy_1105_tyokai_2",
         "enemy_1106_byokai",
         "enemy_1178_dscorp",
+        "enemy_1179_aruarw",
         "enemy_1207_sfji_2",
         "enemy_1219_mtrbty",
         "enemy_1254_lypa_2",
@@ -2637,7 +2663,7 @@
         "enemy_1536_ncrmcr"
       ],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action SwitchMode"
+      "reason": "Unsupported native behaviour: mode switch"
     },
     {
       "key": "switch_mode_restart_fsm_when_trigger",
@@ -2647,7 +2673,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action SwitchMode"
+      "reason": "Unsupported native behaviour: mode switch"
     },
     {
       "key": "tile_originum_t_1[dmg]",
@@ -2907,6 +2933,7 @@
         "enemy_1133_harchn",
         "enemy_1133_harchn_2",
         "enemy_1178_dscorp",
+        "enemy_1179_aruarw",
         "enemy_1203_sfhu",
         "enemy_1203_sfhu_2",
         "enemy_1205_sfpin",
@@ -3045,6 +3072,7 @@
         "enemy_axetro_t[checker]",
         "enemy_hlslp[end_sleep_core]",
         "enemy_liberty_force",
+        "enemy_liberty_listener[warning]",
         "enemy_mdrock_s_1[effect_b_creator]",
         "enemy_mdrock_s_1[effect_c_creator]",
         "enemy_mdrock_s_2[shield][refresh]",
@@ -3064,6 +3092,10 @@
         "enemy_1082_soticn_2",
         "enemy_1083_sotiab",
         "enemy_1083_sotiab_2",
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
         "enemy_1121_lifbos",
         "enemy_1121_lifbos_2",
         "enemy_1410_mmelee",
@@ -3176,7 +3208,7 @@
       ]
     },
     {
-      "reason": "Unsupported native behaviour: action SwitchMode",
+      "reason": "Unsupported native behaviour: mode switch",
       "templates": [
         "dscout_t[buff]",
         "switch_mode_no_restore",
@@ -3373,38 +3405,6 @@
       "unsupportedConsumers": []
     },
     {
-      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK",
-      "templates": [
-        "enemy_confinement[atk_cnt]",
-        "enemy_liberty_listener[warning]",
-        "enemy_mdrock_s_1[persistent]",
-        "enemy_spmode_check",
-        "enemy_wdkght_t[switch_mode]"
-      ],
-      "consumers": [
-        "enemy_1103_wdkght",
-        "enemy_1103_wdkght_2",
-        "enemy_1103_wdkght_3",
-        "enemy_1117_liiprr",
-        "enemy_1117_liiprr_2",
-        "enemy_1120_vofwiz",
-        "enemy_1120_vofwiz_2",
-        "enemy_1121_lifbos",
-        "enemy_1121_lifbos_2",
-        "enemy_1213_mtrsnp",
-        "enemy_1213_mtrsnp_2",
-        "enemy_1214_mtrmgc",
-        "enemy_1214_mtrmgc_2",
-        "enemy_1216_cansld",
-        "enemy_1216_cansld_2",
-        "enemy_1219_mtrbty",
-        "enemy_1219_mtrbty_2",
-        "enemy_1511_mdrock",
-        "enemy_5042_dqkght_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
       "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers",
       "templates": [
         "enemy_bigstorm[dmg]",
@@ -3438,11 +3438,18 @@
       "reason": "Unsupported native behaviour: abnormal flag",
       "templates": [
         "dlancer_t_listener[a]",
-        "dlancer_t_listener[b]"
+        "dlancer_t_listener[b]",
+        "enemy_confinement[atk_cnt]"
       ],
       "consumers": [
         "enemy_1072_dlancer",
-        "enemy_1072_dlancer_2"
+        "enemy_1072_dlancer_2",
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
       ],
       "unsupportedConsumers": []
     },
@@ -3607,6 +3614,26 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: predicate CheckHasSp",
+      "templates": [
+        "enemy_nhtank_s_effect[buff]",
+        "enemy_spmode_check"
+      ],
+      "consumers": [
+        "enemy_1213_mtrsnp",
+        "enemy_1213_mtrsnp_2",
+        "enemy_1214_mtrmgc",
+        "enemy_1214_mtrmgc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2",
+        "enemy_1272_nhtank",
+        "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: action AddFearTargetTiles",
       "templates": [
         "fear_buff"
@@ -3767,6 +3794,19 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: action FilterByBuffStackCount",
+      "templates": [
+        "enemy_wdkght_t[switch_mode]"
+      ],
+      "consumers": [
+        "enemy_1103_wdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_5042_dqkght_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: action FinishBuff",
       "templates": [
         "enemy_mainline14[origFx]"
@@ -3863,6 +3903,16 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: event ON_ABILITY_SPELL_ON",
+      "templates": [
+        "aruarw_night_buff_effect_holder"
+      ],
+      "consumers": [
+        "enemy_1179_aruarw"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: event ON_APPLIED_MODIFIER",
       "templates": [
         "enemy_cansld_log"
@@ -3946,17 +3996,6 @@
       "unsupportedConsumers": []
     },
     {
-      "reason": "Unsupported native behaviour: predicate CheckHasSp",
-      "templates": [
-        "enemy_nhtank_s_effect[buff]"
-      ],
-      "consumers": [
-        "enemy_1272_nhtank",
-        "enemy_1272_nhtank_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
       "reason": "Unsupported native behaviour: predicate CheckHeightTypeOfCharacterRootTile",
       "templates": [
         "polluted_area"
@@ -3967,6 +4006,16 @@
         "enemy_1267_nhpbr_2",
         "enemy_1272_nhtank",
         "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate FilterByBuffStackCount",
+      "templates": [
+        "enemy_mdrock_s_1[persistent]"
+      ],
+      "consumers": [
+        "enemy_1511_mdrock"
       ],
       "unsupportedConsumers": []
     },

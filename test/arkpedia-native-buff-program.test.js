@@ -194,3 +194,48 @@ test('compiled source damage uses the ordinary defence, evade and kill pipeline'
  p.run('ON_BUFF_START',{battle:h.b,unit:target,source,damageMissable:false});
  assert.equal(hp-target.hp,250);assert.equal(source.alive,false);assert.deepEqual(h.b.errors,[]);
 });
+
+test('native night-mode programs preserve explicit mode branches and disable transitions',()=>{
+ const p=prepareBehaviorProgram(compile('enemy_aruarw_check')),owner=unit(),changes=[];let mode=0,mask=0;
+ const modeService={get:u=>{assert.equal(u,owner);return mode;},set:(u,index)=>{assert.equal(u,owner);mode=index;changes.push(index);}};
+ const battle={environmentConditions:{maskAt:u=>{assert.equal(u,owner);return mask;}}};
+ assert.deepEqual(p.requiredModeIndices,[0,1]);assert.ok(Object.isFrozen(p.requiredModeIndices));
+ const run=event=>p.run(event,{battle,unit:owner,modeService});
+ run('ON_BEFORE_ATTACK');assert.equal(mode,1);mask=8;run('ON_BEFORE_ATTACK');assert.equal(mode,0);
+ run('ON_BEFORE_ATTACK');assert.deepEqual(changes,[1,0]);owner.s.flags.silence=true;run('ON_BUFF_DISABLE');assert.equal(mode,1);
+ run('ON_BEFORE_ATTACK');assert.equal(mode,1);assert.deepEqual(changes,[1,0,1]);
+});
+test('mode and environment services preflight before earlier effects can mutate combat',()=>{
+ const owner=unit(),calls=[],battle={loseHp:()=>calls.push('loss')};
+ const program={schemaVersion:1,entry:'root',templates:{root:{events:{ON_BUFF_START:[{op:'loss',key:'first'},{op:'switchMode',who:'owner',index:1}]}}}};
+ const p=prepareBehaviorProgram(program);
+ assert.throws(()=>p.run('ON_BUFF_START',{battle,unit:owner,blackboard:{first:1}}),/mode service/);
+ assert.throws(()=>p.run('ON_BUFF_START',{battle,unit:owner,blackboard:{first:1},modeService:{get:()=>NaN,set:()=>{}}}),/current mode/);
+ const environment={schemaVersion:1,entry:'root',templates:{root:{events:{ON_BUFF_START:[{op:'loss',key:'first'},
+  {op:'when',condition:{op:'environmentMask',who:'owner',mask:8},yes:[],no:[]}]}}}};
+ assert.throws(()=>prepareBehaviorProgram(environment).run('ON_BUFF_START',{battle:{...battle,environmentConditions:{maskAt:()=>NaN}},unit:owner,blackboard:{first:1}}),/condition mask/);
+ assert.deepEqual(calls,[]);
+});
+test('native mode compilation refuses implicit defaults, restarted FSMs, dynamic indices and other environment masks',()=>{
+ for(const edit of[
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BEFORE_ATTACK[0]._conditionNode._buildableMask='NIGHT, OTHER',
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BEFORE_ATTACK[0]._conditionNode._ownerType='BUFF_SOURCE',
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BUFF_DISABLE[1]._restartFSM=true,
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BUFF_DISABLE[1]._restoreDefault=true,
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BUFF_DISABLE[1]._loadModeFromBlackboard=true,
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BUFF_DISABLE[0]._checkCurModeIndex=1.5,
+  ts=>ts.enemy_aruarw_check.eventToActions.ON_BUFF_DISABLE[0]._loadCurModeBbKey='dynamic',
+ ]){const ts=structuredClone(evidence.templates);edit(ts);assert.throws(()=>compile('enemy_aruarw_check',ts));}
+});
+test('mode/environment bindings cannot hide in a child whose owner would change after earlier effects',()=>{
+ for(const action of[{op:'switchMode',who:'owner',index:1},{op:'when',condition:{op:'environmentMask',who:'owner',mask:8},yes:[],no:[]}]){
+  const graph={schemaVersion:1,entry:'root',templates:{root:{events:{ON_BUFF_START:[{op:'create',who:'target',key:'child',template:'child',clock:null}]}},child:{events:{ON_BUFF_START:[action]}}}};
+  assert.throws(()=>prepareBehaviorProgram(graph),/child binding/);
+ }
+});
+test('a disable event does not query the removed owner environment required only by before-attack',()=>{
+ const p=prepareBehaviorProgram(compile('enemy_aruarw_check')),owner=unit();let mode=0;
+ const battle={environmentConditions:{maskAt:()=>{throw Error('No tile for removed actor');}}};
+ p.run('ON_BUFF_DISABLE',{battle,unit:owner,modeService:{get:()=>mode,set:(_u,index)=>mode=index}});
+ assert.equal(mode,1);
+});

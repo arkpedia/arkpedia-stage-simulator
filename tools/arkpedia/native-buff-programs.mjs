@@ -51,7 +51,7 @@ export function auditNativeBuffPrograms(evidence,support={}){
 }
 export async function buildNativeBuffProgramAudit(){
   const inputs=['data/arkpedia-enemy-native-abilities.json','data/arkpedia-enemy-support.json','shared/arkpedia/behavior.js',
-    'shared/arkpedia/behavior-native-compiler.js','shared/arkpedia/behavior-program.js'];
+    'shared/arkpedia/behavior-native-compiler.js','shared/arkpedia/behavior-program.js','shared/arkpedia/environment-conditions.js'];
   const bytes=await Promise.all(inputs.map(p=>readFile(new URL(p,root))));
   return{schemaVersion:1,scope:'Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.',
     source:Object.fromEntries(inputs.map((p,i)=>[p,sha(bytes[i])])),...auditNativeBuffPrograms(JSON.parse(bytes[0]),JSON.parse(bytes[1]).enemies)};

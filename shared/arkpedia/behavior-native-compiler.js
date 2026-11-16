@@ -26,6 +26,13 @@ export function compileNativeBuffProgram(entry,templateFor){
         if(typeof node._isUnset!=='boolean')fail('silence');
         exact(node,{$type:type('CheckAbnormalFlag'),_abnormalFlag:'SILENCED',_targetType:node._targetType,_isUnset:node._isUnset},'abnormal flag');
         return{op:'silenced',who:binding(node._targetType),unset:node._isUnset};
+      case 'CheckRootTileAdvBuildableMask':
+        exact(node,{$type:type('CheckRootTileAdvBuildableMask'),_ownerType:'BUFF_OWNER',_buildableMask:'NIGHT'},'night condition');
+        return{op:'environmentMask',who:'owner',mask:8};
+      case 'CheckUnitCurrentMode':
+        if(!Number.isSafeInteger(node._checkCurModeIndex)||node._checkCurModeIndex<0||node._checkCurModeIndex>63)fail('mode index');
+        exact(node,{$type:type('CheckUnitCurrentMode'),_targetType:node._targetType,_checkCurModeIndex:node._checkCurModeIndex,_loadCurModeBbKey:''},'current mode');
+        return{op:'mode',who:binding(node._targetType),index:node._checkCurModeIndex};
       case 'CheckTargetProfession':{
         if(!Array.isArray(node._profession)||!node._profession.length||node._profession.some(x=>typeof x!=='string'))fail('profession');
         exact(node,{$type:type('CheckTargetProfession'),_targetType:node._targetType,_profession:node._profession,
@@ -63,7 +70,7 @@ export function compileNativeBuffProgram(entry,templateFor){
     const guards=[],actions=[];let actionSeen=false;
     for(const node of nodes){
       if(++budget>1024)fail('node budget');const name=actionName(node);
-      if(['CheckContainsBuff','CheckAbnormalFlag','CheckTargetProfession'].includes(name)){
+      if(['CheckContainsBuff','CheckAbnormalFlag','CheckTargetProfession','CheckRootTileAdvBuildableMask','CheckUnitCurrentMode'].includes(name)){
         if(actionSeen)fail('predicate after effect');guards.push(predicate(node));continue;
       }
       if(name==='IfNot'){
@@ -74,6 +81,10 @@ export function compileNativeBuffProgram(entry,templateFor){
       if(name==='IfElse'){
         exact(node,{$type:type(name),_conditionNode:node._conditionNode,_succeedNodes:node._succeedNodes,_failNodes:node._failNodes},'IfElse');
         actions.push({op:'when',condition:predicate(node._conditionNode),yes:sequence(node._succeedNodes,depth+1),no:sequence(node._failNodes,depth+1)});
+      }else if(name==='SwitchMode'){
+        if(!Number.isSafeInteger(node._modeIndex)||node._modeIndex<0||node._modeIndex>63)fail('mode index');
+        exact(node,{$type:type(name),_modeIndex:node._modeIndex,_loadModeFromBlackboard:false,_restoreDefault:false,_restartFSM:false,_targetType:node._targetType},'mode switch');
+        actions.push({op:'switchMode',who:node._targetType==='TARGET'?'target':binding(node._targetType),index:node._modeIndex});
       }else if(name==='ReleaseFromBlocker'){
         exact(node,{$type:type(name),_target:node._target},'release');actions.push({op:'release',who:binding(node._target)});
       }else if(name==='FixedValueDamage'){
@@ -107,7 +118,7 @@ export function compileNativeBuffProgram(entry,templateFor){
     visiting.add(key);const template=templateFor(key);if(template?.templateKey!==key)fail('missing template');
     templates[key]=compileBuffTemplate(template,{dialect:t=>{
       const events={};for(const[event,nodes]of Object.entries(t.eventToActions)){
-        if(!['ON_BUFF_START','ON_BUFF_TRIGGER','ON_AFTER_OUTPUT_DAMAGE'].includes(event))fail(`event ${event}`);
+        if(!['ON_BUFF_START','ON_BUFF_TRIGGER','ON_AFTER_OUTPUT_DAMAGE','ON_BEFORE_ATTACK','ON_BUFF_DISABLE'].includes(event))fail(`event ${event}`);
         if(!Array.isArray(nodes))fail('event nodes');events[event]=sequence(nodes,depth);
       }return{events};
     }});visiting.delete(key);

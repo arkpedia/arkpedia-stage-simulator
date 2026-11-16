@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {NIGHT_ARCHER_FEATURES} from './enemy-night-archer-features.js';
 import {SILVERNWHITE_FEATURES} from './enemy-silvernwhite-features.js';
 import {REDMARK_FEATURE,REDMARK_DESCRIPTION} from './enemy-redmark-features.js';
 import {EXPLETIVE_FEATURE,EXPLETIVE_DESCRIPTION} from './enemy-expletive-features.js';
@@ -395,6 +396,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1364_spnaxe:'native:flayerAttackMode',enemy_1364_spnaxe_2:'native:flayerAttackMode',
+  enemy_1179_aruarw:['native:nightArcherLog'],
   enemy_2047_smtree:['native:silvernwhiteBody','native:silvernwhitePresence'],
   enemy_1178_dscorp:['native:nightCrawlerLog'],
   enemy_10069_ftlsj:['native:treeShieldBody','native:treeShieldMelee'], enemy_10069_ftlsj_2:['native:treeShieldBody','native:treeShieldMelee'],
@@ -412,6 +414,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
+  ...NIGHT_ARCHER_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,

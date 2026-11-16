@@ -8,6 +8,7 @@ Enemy behavior is compiled from source-checked feature data. A stage loads enemy
 - `animatedMeleeAttack`: one ordinary melee cast driven by native animation markers.
 - `markedRangedMeleeAttack`: blocker melee plus a marked ground target using another direct-hit clip.
 - `markedMeleeProjectileAttack`: blocker melee plus marked local/global projectile casts.
+- `programmedProjectileModes`: one source-owned buff program selects among validated projectile modes; each cast captures its packet.
 - `environmentStatBonus`: an enemy-owned modifier enabled by a stage-provided condition bit.
 - `contactBuffProgram`: source-owned contact bindings that execute a portable native buff program.
 - `stageOutcomeCounter`: native killed/exit result receipts, independent of progression or rewards.
@@ -29,4 +30,4 @@ A new runtime kind is appropriate when existing components cannot represent the 
 
 ## Environment ownership
 
-The stage determines lighting, weather, terrain and device markers. The enemy consumes those values and owns its response. `environmentStatBonus` reads `battle.environmentConditions.maskAt(actor)`; missing providers mean no active conditions. Marked attack selectors read native target buff keys. An isolated enemy fixture may inject a provider or marker, but the original stage remains gated until its controller produces that state correctly.
+The stage determines lighting, weather, terrain and device markers. The enemy consumes those values and owns its response. `environmentStatBonus` and the native NIGHT program predicate read `battle.environmentConditions.maskAt(actor)`; missing providers mean no active conditions. Marked attack selectors read native target buff keys. An isolated enemy fixture may inject a provider or marker, but the original stage remains gated until its controller produces that state correctly.

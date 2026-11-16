@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Portable, bounded combat programs. No source templates or executable code.
+import {environmentConditionMask,singleEnvironmentCondition} from './environment-conditions.js';
 import {decodeEnemyRuntimeParameters} from './enemy-runtime-plan.js';
-const EVENTS=new Set(['ON_BUFF_START','ON_BUFF_TRIGGER','ON_AFTER_OUTPUT_DAMAGE']);
+const EVENTS=new Set(['ON_BUFF_START','ON_BUFF_TRIGGER','ON_AFTER_OUTPUT_DAMAGE','ON_BEFORE_ATTACK','ON_BUFF_DISABLE']);
 const BINDINGS=new Set(['owner','source','target']);
 const cache=new WeakMap();
 function fail(label){throw Error(`Invalid behaviour program: ${label}`);}
@@ -18,7 +19,11 @@ export function prepareBehaviorProgram(input){
   fields(input,'schemaVersion entry templates');if(input.schemaVersion!==1)fail('version');string(input.entry);
   if(!object(input.templates))fail('templates');
   const keys=Object.keys(input.templates);if(!keys.length||keys.length>64)fail('template count');
-  let count=0;const required=new Map(),optional=new Set(),edges=new Map();
+  let count=0;const required=new Map(),optional=new Set(),edges=new Map(),modeBindings=new Set(),modeIndices=new Set(),eventRequirements=new Map();
+  let currentTemplate,currentEvent;
+  const requirements=()=>{if(!eventRequirements.has(currentEvent))eventRequirements.set(currentEvent,{modes:new Set(),environment:new Set()});return eventRequirements.get(currentEvent);};
+  const modeIndex=n=>{if(!Number.isSafeInteger(n)||n<0||n>63)fail('mode index');modeIndices.add(n);};
+  const rootBinding=who=>{binding(who);if(currentTemplate!==input.entry)fail('mode/environment child binding');};
   const operand=(key,positive=false)=>{string(key);required.set(key,positive||required.get(key)||false);};
   const visit=(nodes,refs,depth=0)=>{
     if(!Array.isArray(nodes)||depth>16)fail('depth/list');
@@ -27,6 +32,7 @@ export function prepareBehaviorProgram(input){
       switch(n?.op){
         case 'when':fields(n,'op condition yes no');condition(n.condition,depth+1);visit(n.yes,refs,depth+1);visit(n.no,refs,depth+1);break;
         case 'release':fields(n,'op who');binding(n.who);break;
+        case 'switchMode':fields(n,'op who index');rootBinding(n.who);modeIndex(n.index);modeBindings.add(n.who);requirements().modes.add(n.who);break;
         case 'kill':fields(n,'op who');if(n.who!=='source')fail('kill binding');break;
         case 'damage':fields(n,'op type scaleKey defaultScale');if(!['phys','arts','true'].includes(n.type))fail('damage type');string(n.scaleKey);finite(n.defaultScale);optional.add(n.scaleKey);break;
         case 'loss':fields(n,'op key');operand(n.key);break;
@@ -42,6 +48,8 @@ export function prepareBehaviorProgram(input){
   const condition=(n,depth)=>{
     if(!object(n)||++count>1024||depth>16)fail('condition budget');
     switch(n.op){
+      case 'mode':fields(n,'op who index');rootBinding(n.who);modeIndex(n.index);modeBindings.add(n.who);requirements().modes.add(n.who);break;
+      case 'environmentMask':fields(n,'op who mask');rootBinding(n.who);if(!singleEnvironmentCondition(n.mask))fail('environment mask');requirements().environment.add(n.who);break;
       case 'all':fields(n,'op terms');if(!Array.isArray(n.terms)||!n.terms.length)fail('terms');n.terms.forEach(x=>condition(x,depth+1));break;
       case 'not':fields(n,'op value');condition(n.value,depth+1);break;
       case 'buff':fields(n,'op who keys all');binding(n.who);if(typeof n.all!=='boolean'||!Array.isArray(n.keys)||!n.keys.length||n.keys.length>64)fail('buff keys');n.keys.forEach(string);break;
@@ -50,8 +58,8 @@ export function prepareBehaviorProgram(input){
       default:fail('predicate');
     }
   };
-  for(const key of keys){string(key);const t=input.templates[key];fields(t,'events');if(!object(t.events))fail('events');const refs=new Set();edges.set(key,refs);
-    for(const[event,nodes]of Object.entries(t.events)){if(!EVENTS.has(event))fail('event');visit(nodes,refs);}
+  for(const key of keys){currentTemplate=key;string(key);const t=input.templates[key];fields(t,'events');if(!object(t.events))fail('events');const refs=new Set();edges.set(key,refs);
+    for(const[event,nodes]of Object.entries(t.events)){currentEvent=event;if(!EVENTS.has(event))fail('event');visit(nodes,refs);}
   }
   const seen=new Set(),active=new Set(),heights=new Map();
   const walk=key=>{
@@ -91,6 +99,8 @@ export function prepareBehaviorProgram(input){
   const predicate=(n,c)=>{
     const u=c[n.who];
     switch(n.op){
+      case 'mode':return c.modeService.get(u)===n.index;
+      case 'environmentMask':return (environmentConditionMask(c.battle,u)&n.mask)!==0;
       case 'all':return n.terms.every(x=>predicate(x,c));
       case 'not':return !predicate(n.value,c);
       case 'buff':return !!u&&(n.all?n.keys.every(k=>!!u.findBuff(k)):n.keys.some(k=>!!u.findBuff(k)));
@@ -101,6 +111,7 @@ export function prepareBehaviorProgram(input){
   const runNodes=(nodes,c)=>{
     for(const n of nodes){
       if(n.op==='when'){runNodes(predicate(n.condition,c)?n.yes:n.no,c);continue;}
+      if(n.op==='switchMode'){c.modeService.set(c[n.who],n.index);continue;}
       if(n.op==='release'){const u=c[n.who];if(u?.alive&&u.deployed)c.battle._unblock(u);continue;}
       if(n.op==='loss'){if(c.target?.alive&&c.target.deployed)c.battle.loseHp(c.target,c.blackboard[n.key],{source:c.source,tags:[c.buffKey,'dot']});continue;}
       if(n.op==='damage'){if(c.source?.alive&&c.source.deployed&&c.source.deploySeq===c.sourceLife&&c.target?.alive&&c.target.deployed&&c.target.deploySeq===c.targetLife)c.battle.dealDamage(c.source,c.target,{amount:c.source.s.atk*(c.blackboard[n.scaleKey]??n.defaultScale),type:n.type,isAttack:true,isSkill:false,applyWay:'all',canDodge:c.damageMissable,tags:[c.buffKey]});continue;}
@@ -116,13 +127,20 @@ export function prepareBehaviorProgram(input){
       if(attached&&attached!==prior)fire('ON_BUFF_START');
     }
   };
-  const prepared=Object.freeze({graph,requiredBlackboard:Object.freeze([...required.keys()]),validateBlackboard,
-    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true}){
+  const prepared=Object.freeze({graph,requiredBlackboard:Object.freeze([...required.keys()]),requiredModeIndices:Object.freeze([...modeIndices].sort((a,b)=>a-b)),requiredModeBindings:Object.freeze([...modeBindings]),validateBlackboard,
+    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true,modeService=null}){
       if(!EVENTS.has(event))fail('event');
       const bb=validateBlackboard(blackboard);
       if(!battle||!unit||!source)fail('owner/source');
       if(typeof damageMissable!=='boolean')fail('missability');
-      runNodes(graph.templates[graph.entry].events[event]??[],{battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,sourceLife:source.deploySeq,targetLife:target?.deploySeq});
+      const context={battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,modeService,sourceLife:source.deploySeq,targetLife:target?.deploySeq};
+      const needs=eventRequirements.get(event);
+      if(needs?.modes.size){
+        if(!modeService||typeof modeService.get!=='function'||typeof modeService.set!=='function')fail('mode service');
+        for(const who of needs.modes){const actor=context[who],index=actor&&modeService.get(actor);if(!actor||!Number.isSafeInteger(index)||index<0||index>63)fail('current mode');}
+      }
+      for(const who of needs?.environment??[]){if(!context[who])fail('environment owner');environmentConditionMask(battle,context[who]);}
+      runNodes(graph.templates[graph.entry].events[event]??[],context);
     }});
   cache.set(input,prepared);cache.set(graph,prepared);return prepared;
 }

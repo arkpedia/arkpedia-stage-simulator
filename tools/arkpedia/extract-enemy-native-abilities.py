@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1179_aruarw': ['enemy_1179_aruarw','Night','Bright','Attack','Trigger','NightBuff','Passive'],
+    'enemy_1179_aruarw_2': ['enemy_1179_aruarw_2','Night','Bright','Attack','Trigger','NightBuff','Passive'],
     'enemy_2047_smtree': ['enemy_2047_smtree','Default','Attack','Passive'],
     'enemy_1135_redman': ['enemy_1135_redman','Default','Combat','Attack','Trigger','Invi'],
     'enemy_1135_redman_2': ['enemy_1135_redman_2','Default','Combat','Attack','Trigger','Invi'],
@@ -440,6 +442,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1179_aruarw': {'Attack','Trigger','NightBuff','Passive'},
+            'enemy_1179_aruarw_2': {'Attack','Trigger','NightBuff','Passive'},
             'enemy_2047_smtree': {'Attack','Passive'},
             'enemy_1135_redman': {'Combat','Attack','Trigger','Invi'},
             'enemy_1135_redman_2': {'Combat','Attack','Trigger','Invi'},
@@ -558,6 +562,8 @@ for bundle in sorted(wanted):
         # Geometry scopes complement MonoBehaviour sibling scopes. A family's
         # contact contract can retain its original colliders without a new branch.
         geometry_names = {
+            'enemy_1179_aruarw': {'Trigger'},
+            'enemy_1179_aruarw_2': {'Trigger'},
             'enemy_5010_catrdg': {'Crash'},
             'enemy_10053_cjman': {'Selector'},
             'enemy_10053_cjman_2': {'Selector'},
@@ -592,7 +598,7 @@ for o in by.values():
     if o.type.name not in ('MonoBehaviour', 'BoxCollider2D', 'CircleCollider2D'): continue
     d = o.read_typetree()
     name = by[d['m_GameObject']['m_PathID']].read_typetree()['m_Name']
-    if name not in ('projectile_enemy_redman', 'projectile_enemy_hlsttu', 'projectile_enemy_jakill', 'projectile_enemy_jakill_s1', 'projectile_enemy_vofwiz', 'projectile_enemy_liiprr', 'projectile_enemy_liiprr_2', 'projectile_enemy_telex', 'projectile_enemy_stmgun', 'projectile_enemy_stmgun_s', 'projectile_enemy_nhtank', 'projectile_enemy_nhtank_polluted', 'projectile_enemy_nhnrs', 'projectile_enemy_nhnrs_skill', 'projectile_enemy_hlegle', 'projectile_enemy_bbrain_left', 'projectile_enemy_bbrain_right', 'projectile_enemy_bbrain_up', 'projectile_enemy_bbrain_down', 'projectile_enemy_lydrty', 'projectile_enemy_lydrty_2', 'projectile_enemy_lybgpa', 'projectile_enemy_lyengs', 'projectile_enemy_lyengs_charge', 'projectile_enemy_magic_ball', 'projectile_enemy_lyacpa', 'projectile_enemy_ncrmcr', 'projectile_enemy_ncrmcr_2', 'projectile_enemy_ncrmcr_3', 'projectile_enemy_duflm', 'projectile_enemy_duflm_2', 'projectile_enemy_dubmb', 'projectile_enemy_dubmb_2', 'projectile_enemy_skzgds', 'projectile_enemy_krgscr', 'projectile_enemy_krgscr _s1', 'projectile_enemy_ltgtld', 'projectile_enemy_ltswar', 'projectile_enemy_ltmage', 'projectile_enemy_ltsmag', 'projectile_enemy_ltsmag_forward', 'projectile_enemy_ltsmag_backward', 'projectile_enemy_ltbow', 'projectile_enemy_merrpg', 'projectile_enemy_harchn_attack', 'projectile_enemy_harchn_dead', 'projectile_mousek', 'projectile_mousek_s1', 'projectile_mousek_s2', 'projectile_enemy_sfpin', 'projectile_enemy_sfpin_ex', 'projectile_bombd', 'projectile_bombd_2', 'projectile_iced', 'projectile_mortar', 'projectile_sagent_s1', 'projectile_enemy_sfhu', 'projectile_enemy_sfhu_boom', 'projectile_enemy_byokai', 'projectile_enemy_tyokai', 'projectile_enemy_tyokai_2', 'projectile_enemy_dekght', 'projectile_enemy_dekght_s', 'projectile_enemy_axetro', 'projectile_enemy_emppnt', 'projectile_lslime', 'projectile_enemy_snow_magic_ball', 'projectile_enemy_nhpbr_polluted', 'projectile_gansho', 'projectile_enemy_mtrsnp', 'projectile_enemy_mtrsnp_headshot', 'projectile_enemy_mtrmgc', 'projectile_enemy_mtrmgc_headshot', 'projectile_enemy_cansld', 'projectile_enemy_ptrarc', 'projectile_enemy_mtrbty', 'projectile_enemy_rescar', 'projectile_enemy_ltsmer', 'projectile_enemy_ltsmer_charge', 'projectile_enemy_ltlntc', 'projectile_enemy_ltlntc_2', 'projectile_enemy_mdsnpr'): continue
+    if name not in ('projectile_enemy_aruarw_night', 'projectile_enemy_aruarw_bright', 'projectile_enemy_redman', 'projectile_enemy_hlsttu', 'projectile_enemy_jakill', 'projectile_enemy_jakill_s1', 'projectile_enemy_vofwiz', 'projectile_enemy_liiprr', 'projectile_enemy_liiprr_2', 'projectile_enemy_telex', 'projectile_enemy_stmgun', 'projectile_enemy_stmgun_s', 'projectile_enemy_nhtank', 'projectile_enemy_nhtank_polluted', 'projectile_enemy_nhnrs', 'projectile_enemy_nhnrs_skill', 'projectile_enemy_hlegle', 'projectile_enemy_bbrain_left', 'projectile_enemy_bbrain_right', 'projectile_enemy_bbrain_up', 'projectile_enemy_bbrain_down', 'projectile_enemy_lydrty', 'projectile_enemy_lydrty_2', 'projectile_enemy_lybgpa', 'projectile_enemy_lyengs', 'projectile_enemy_lyengs_charge', 'projectile_enemy_magic_ball', 'projectile_enemy_lyacpa', 'projectile_enemy_ncrmcr', 'projectile_enemy_ncrmcr_2', 'projectile_enemy_ncrmcr_3', 'projectile_enemy_duflm', 'projectile_enemy_duflm_2', 'projectile_enemy_dubmb', 'projectile_enemy_dubmb_2', 'projectile_enemy_skzgds', 'projectile_enemy_krgscr', 'projectile_enemy_krgscr _s1', 'projectile_enemy_ltgtld', 'projectile_enemy_ltswar', 'projectile_enemy_ltmage', 'projectile_enemy_ltsmag', 'projectile_enemy_ltsmag_forward', 'projectile_enemy_ltsmag_backward', 'projectile_enemy_ltbow', 'projectile_enemy_merrpg', 'projectile_enemy_harchn_attack', 'projectile_enemy_harchn_dead', 'projectile_mousek', 'projectile_mousek_s1', 'projectile_mousek_s2', 'projectile_enemy_sfpin', 'projectile_enemy_sfpin_ex', 'projectile_bombd', 'projectile_bombd_2', 'projectile_iced', 'projectile_mortar', 'projectile_sagent_s1', 'projectile_enemy_sfhu', 'projectile_enemy_sfhu_boom', 'projectile_enemy_byokai', 'projectile_enemy_tyokai', 'projectile_enemy_tyokai_2', 'projectile_enemy_dekght', 'projectile_enemy_dekght_s', 'projectile_enemy_axetro', 'projectile_enemy_emppnt', 'projectile_lslime', 'projectile_enemy_snow_magic_ball', 'projectile_enemy_nhpbr_polluted', 'projectile_gansho', 'projectile_enemy_mtrsnp', 'projectile_enemy_mtrsnp_headshot', 'projectile_enemy_mtrmgc', 'projectile_enemy_mtrmgc_headshot', 'projectile_enemy_cansld', 'projectile_enemy_ptrarc', 'projectile_enemy_mtrbty', 'projectile_enemy_rescar', 'projectile_enemy_ltsmer', 'projectile_enemy_ltsmer_charge', 'projectile_enemy_ltlntc', 'projectile_enemy_ltlntc_2', 'projectile_enemy_mdsnpr'): continue
     text = canonical(exact(d))
     projectiles.setdefault(name, []).append({'pathId': str(o.path_id), 'sha256': hashlib.sha256(text.encode()).hexdigest(), 'originalJson': text})
 # Shared projectile selectors can reference a range component or asset.
