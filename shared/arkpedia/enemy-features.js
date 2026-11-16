@@ -5,6 +5,7 @@ import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
 import {STRAIGHT_SHOT_FEATURES,AMBUSHER_STEALTH_ABILITY,isCrossbowmanAmbusher,crossbowmanAmbusherNative} from './enemy-straight-shot-features.js';
 import {MATEO_GUARD_FEATURES} from './enemy-mateo-guard-features.js';
 import {SHANHAIZHONG_ASSASSIN_FEATURES} from './enemy-shanhaizhong-assassin-features.js';
+import {NOVA_KNIGHT_FEATURES,isNovaKnight,novaKnightNative} from './enemy-nova-knight-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -412,6 +413,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1284_sgprst:'native:fatherAgenirLog',
+  enemy_1184_cadkgt_3:'native:vivianaLog',
   enemy_1281_sgcar:'native:famigliaLimoMelee',enemy_1281_sgcar_2:'native:famigliaLimoMelee',
   enemy_1280_sgmag:'native:famigliaCasterLog',enemy_1280_sgmag_2:'native:famigliaCasterLog',
   enemy_1282_sgelder:'native:famigliaCapoMelee',enemy_1282_sgelder_2:'native:famigliaCapoMelee',
@@ -535,10 +537,12 @@ export const ENEMY_FEATURES = Object.freeze({
   ...GNAWBEAST_FEATURES,
   ...SUPPLY_ENEMY_FEATURES,
   ...KNIGHT_FEATURES,
-  // Shared skill key: the Withered Knight's charge, or the Hui-Ming 'Envy' charged tile shift.
-  'skill:ChargeAttack': { covers: (r, n) => isHuiMingCharger(r) ? huiMingNative(r, n) : KNIGHT_FEATURES['skill:ChargeAttack'].covers(r, n),
-    nativeClaim: (_p, n) => n.ChargeAttack && n.YinYang ? { wrappers: 1 } : {}, ability: r => isHuiMingCharger(r) ? HUI_MING_CHARGE_ABILITY : null,
-    explains: (text, r) => isHuiMingCharger(r) && text === HUI_MING_CHARGE_DESCRIPTION },
+  // Shared skill key: the Withered Knight's charge, the Hui-Ming 'Envy' charged tile shift, or the Nova Knights' Glimmering Touch.
+  'skill:ChargeAttack': { covers: (r, n) => isHuiMingCharger(r) ? huiMingNative(r, n) : isNovaKnight(r) ? novaKnightNative(r, n) : KNIGHT_FEATURES['skill:ChargeAttack'].covers(r, n),
+    nativeClaim: (p, n) => n.ChargeAttack && n.YinYang || isNovaKnight({ prefabKey: p.rootName }) ? { wrappers: 1 } : {},
+    ability: r => isHuiMingCharger(r) ? HUI_MING_CHARGE_ABILITY : isNovaKnight(r) ? NOVA_KNIGHT_FEATURES['skill:ChargeAttack'].ability : null,
+    explains: (text, r) => isHuiMingCharger(r) && text === HUI_MING_CHARGE_DESCRIPTION || isNovaKnight(r) && NOVA_KNIGHT_FEATURES['skill:ChargeAttack'].explains(text) },
+  'native:vivianaLog': NOVA_KNIGHT_FEATURES['native:vivianaLog'],
   ...BLADE_FEATURES,
   ...DIRECTIONAL_FEATURES,
   ...PROJECTILE_ENEMY_FEATURES,

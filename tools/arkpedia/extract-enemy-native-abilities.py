@@ -65,6 +65,9 @@ SCOPED_OBJECTS = {
     'enemy_1409_bdguad_2': ['enemy_1409_bdguad_2','Default','Combat','Attack','Selector','CrossBomb','DmgResist'],
     'enemy_1299_ymkilr': ['enemy_1299_ymkilr','Default','Combat','Trigger','InvisibleCombat','Invisible'],
     'enemy_1299_ymkilr_2': ['enemy_1299_ymkilr_2','Default','Combat','Trigger','InvisibleCombat','Invisible'],
+    'enemy_1184_cadkgt': ['enemy_1184_cadkgt','Mode','Attack','Trigger','ChargeAttack','Passive'],
+    'enemy_1184_cadkgt_2': ['enemy_1184_cadkgt_2','Mode','Attack','Trigger','ChargeAttack','Passive'],
+    'enemy_1184_cadkgt_3': ['enemy_1184_cadkgt_3','Mode','Attack','Trigger','ChargeAttack','Passive'],
 
     'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
     'enemy_1281_sgcar_2': ['enemy_1281_sgcar_2','Default','Special','Combat','Passive','DeathRattle'],
@@ -543,6 +546,9 @@ for bundle in sorted(wanted):
             'enemy_1409_bdguad_2': {'Combat','Attack','Selector','CrossBomb','DmgResist'},
             'enemy_1299_ymkilr': {'Combat','Trigger','InvisibleCombat','Invisible'},
             'enemy_1299_ymkilr_2': {'Combat','Trigger','InvisibleCombat','Invisible'},
+            'enemy_1184_cadkgt': {'Attack','Trigger','ChargeAttack','Passive'},
+            'enemy_1184_cadkgt_2': {'Attack','Trigger','ChargeAttack','Passive'},
+            'enemy_1184_cadkgt_3': {'Attack','Trigger','ChargeAttack','Passive'},
 
             'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
             'enemy_1281_sgcar_2': {'Combat','Passive','DeathRattle','Special'},
@@ -719,6 +725,9 @@ for bundle in sorted(wanted):
             'enemy_1404_msnip_2': {'Selector'},
             'enemy_1409_bdguad': {'Selector'},
             'enemy_1409_bdguad_2': {'Selector'},
+            'enemy_1184_cadkgt': {'Trigger'},
+            'enemy_1184_cadkgt_2': {'Trigger'},
+            'enemy_1184_cadkgt_3': {'Trigger'},
 
             'enemy_1280_sgmag': {'Trigger'},
             'enemy_1280_sgmag_2': {'Trigger'},
@@ -774,7 +783,7 @@ for o in by.values():
     if o.type.name not in ('MonoBehaviour', 'BoxCollider2D', 'CircleCollider2D', 'Transform'): continue
     d = o.read_typetree()
     name = by[d['m_GameObject']['m_PathID']].read_typetree()['m_Name']
-    if name not in ('projectile_enemy_spmage','projectile_enemy_spmage_s','projectile_enemy_spslme','projectile_enemy_spslme_1','projectile_enemy_spslme_s','projectile_enemy_spslme_s_1','projectile_enemy_sgprst','projectile_enemy_sgprst_s','projectile_enemy_gunsho','projectile_enemy_msnip','projectile_enemy_bdguad','projectile_enemy_sgmag','projectile_enemy_sgkill','projectile_enemy_sgbow','projectile_enemy_sgbow_vg','projectile_enemy_egun', 'projectile_enemy_eslime', 'projectile_enemy_ekulsr', 'projectile_enemy_tidmag', 'projectile_enemy_dhbow_magic', 'projectile_enemy_dhbow_phy', 'projectile_enemy_aruarw_night', 'projectile_enemy_aruarw_bright', 'projectile_enemy_redman', 'projectile_enemy_hlsttu', 'projectile_enemy_jakill', 'projectile_enemy_jakill_s1', 'projectile_enemy_vofwiz', 'projectile_enemy_liiprr', 'projectile_enemy_liiprr_2', 'projectile_enemy_telex', 'projectile_enemy_stmgun', 'projectile_enemy_stmgun_s', 'projectile_enemy_nhtank', 'projectile_enemy_nhtank_polluted', 'projectile_enemy_nhnrs', 'projectile_enemy_nhnrs_skill', 'projectile_enemy_hlegle', 'projectile_enemy_bbrain_left', 'projectile_enemy_bbrain_right', 'projectile_enemy_bbrain_up', 'projectile_enemy_bbrain_down', 'projectile_enemy_lydrty', 'projectile_enemy_lydrty_2', 'projectile_enemy_lybgpa', 'projectile_enemy_lyengs', 'projectile_enemy_lyengs_charge', 'projectile_enemy_magic_ball', 'projectile_enemy_lyacpa', 'projectile_enemy_ncrmcr', 'projectile_enemy_ncrmcr_2', 'projectile_enemy_ncrmcr_3', 'projectile_enemy_duflm', 'projectile_enemy_duflm_2', 'projectile_enemy_dubmb', 'projectile_enemy_dubmb_2', 'projectile_enemy_skzgds', 'projectile_enemy_krgscr', 'projectile_enemy_krgscr _s1', 'projectile_enemy_ltgtld', 'projectile_enemy_ltswar', 'projectile_enemy_ltmage', 'projectile_enemy_ltsmag', 'projectile_enemy_ltsmag_forward', 'projectile_enemy_ltsmag_backward', 'projectile_enemy_ltbow', 'projectile_enemy_merrpg', 'projectile_enemy_harchn_attack', 'projectile_enemy_harchn_dead', 'projectile_mousek', 'projectile_mousek_s1', 'projectile_mousek_s2', 'projectile_enemy_sfpin', 'projectile_enemy_sfpin_ex', 'projectile_bombd', 'projectile_bombd_2', 'projectile_iced', 'projectile_mortar', 'projectile_sagent_s1', 'projectile_enemy_sfhu', 'projectile_enemy_sfhu_boom', 'projectile_enemy_byokai', 'projectile_enemy_tyokai', 'projectile_enemy_tyokai_2', 'projectile_enemy_dekght', 'projectile_enemy_dekght_s', 'projectile_enemy_axetro', 'projectile_enemy_emppnt', 'projectile_lslime', 'projectile_enemy_snow_magic_ball', 'projectile_enemy_nhpbr_polluted', 'projectile_gansho', 'projectile_enemy_mtrsnp', 'projectile_enemy_mtrsnp_headshot', 'projectile_enemy_mtrmgc', 'projectile_enemy_mtrmgc_headshot', 'projectile_enemy_cansld', 'projectile_enemy_ptrarc', 'projectile_enemy_mtrbty', 'projectile_enemy_rescar', 'projectile_enemy_ltsmer', 'projectile_enemy_ltsmer_charge', 'projectile_enemy_ltlntc', 'projectile_enemy_ltlntc_2', 'projectile_enemy_mdsnpr'): continue
+    if name not in ('projectile_enemy_spmage','projectile_enemy_spmage_s','projectile_enemy_spslme','projectile_enemy_spslme_1','projectile_enemy_spslme_s','projectile_enemy_spslme_s_1','projectile_enemy_sgprst','projectile_enemy_sgprst_s','projectile_enemy_gunsho','projectile_enemy_msnip','projectile_enemy_bdguad','projectile_enemy_cadkgt','projectile_enemy_cadkgt_s','projectile_enemy_sgmag','projectile_enemy_sgkill','projectile_enemy_sgbow','projectile_enemy_sgbow_vg','projectile_enemy_egun', 'projectile_enemy_eslime', 'projectile_enemy_ekulsr', 'projectile_enemy_tidmag', 'projectile_enemy_dhbow_magic', 'projectile_enemy_dhbow_phy', 'projectile_enemy_aruarw_night', 'projectile_enemy_aruarw_bright', 'projectile_enemy_redman', 'projectile_enemy_hlsttu', 'projectile_enemy_jakill', 'projectile_enemy_jakill_s1', 'projectile_enemy_vofwiz', 'projectile_enemy_liiprr', 'projectile_enemy_liiprr_2', 'projectile_enemy_telex', 'projectile_enemy_stmgun', 'projectile_enemy_stmgun_s', 'projectile_enemy_nhtank', 'projectile_enemy_nhtank_polluted', 'projectile_enemy_nhnrs', 'projectile_enemy_nhnrs_skill', 'projectile_enemy_hlegle', 'projectile_enemy_bbrain_left', 'projectile_enemy_bbrain_right', 'projectile_enemy_bbrain_up', 'projectile_enemy_bbrain_down', 'projectile_enemy_lydrty', 'projectile_enemy_lydrty_2', 'projectile_enemy_lybgpa', 'projectile_enemy_lyengs', 'projectile_enemy_lyengs_charge', 'projectile_enemy_magic_ball', 'projectile_enemy_lyacpa', 'projectile_enemy_ncrmcr', 'projectile_enemy_ncrmcr_2', 'projectile_enemy_ncrmcr_3', 'projectile_enemy_duflm', 'projectile_enemy_duflm_2', 'projectile_enemy_dubmb', 'projectile_enemy_dubmb_2', 'projectile_enemy_skzgds', 'projectile_enemy_krgscr', 'projectile_enemy_krgscr _s1', 'projectile_enemy_ltgtld', 'projectile_enemy_ltswar', 'projectile_enemy_ltmage', 'projectile_enemy_ltsmag', 'projectile_enemy_ltsmag_forward', 'projectile_enemy_ltsmag_backward', 'projectile_enemy_ltbow', 'projectile_enemy_merrpg', 'projectile_enemy_harchn_attack', 'projectile_enemy_harchn_dead', 'projectile_mousek', 'projectile_mousek_s1', 'projectile_mousek_s2', 'projectile_enemy_sfpin', 'projectile_enemy_sfpin_ex', 'projectile_bombd', 'projectile_bombd_2', 'projectile_iced', 'projectile_mortar', 'projectile_sagent_s1', 'projectile_enemy_sfhu', 'projectile_enemy_sfhu_boom', 'projectile_enemy_byokai', 'projectile_enemy_tyokai', 'projectile_enemy_tyokai_2', 'projectile_enemy_dekght', 'projectile_enemy_dekght_s', 'projectile_enemy_axetro', 'projectile_enemy_emppnt', 'projectile_lslime', 'projectile_enemy_snow_magic_ball', 'projectile_enemy_nhpbr_polluted', 'projectile_gansho', 'projectile_enemy_mtrsnp', 'projectile_enemy_mtrsnp_headshot', 'projectile_enemy_mtrmgc', 'projectile_enemy_mtrmgc_headshot', 'projectile_enemy_cansld', 'projectile_enemy_ptrarc', 'projectile_enemy_mtrbty', 'projectile_enemy_rescar', 'projectile_enemy_ltsmer', 'projectile_enemy_ltsmer_charge', 'projectile_enemy_ltlntc', 'projectile_enemy_ltlntc_2', 'projectile_enemy_mdsnpr'): continue
     if o.type.name == 'Transform' and name not in ('projectile_enemy_ekulsr','projectile_enemy_eslime'): continue
     text = canonical(exact(d))
     projectiles.setdefault(name, []).append({'pathId': str(o.path_id), 'sha256': hashlib.sha256(text.encode()).hexdigest(), 'originalJson': text})
@@ -837,7 +846,7 @@ result = {'schemaVersion': 1,
     'automaticAuxiliaryCandidates': {path: sorted(ids) for path, ids in sorted(automatic_auxiliaries.items())},
     'prefabs': {k: unique_components(v) for k, v in sorted(components.items())},
     'templates': dict(sorted(templates.items())),
-    'ranges': {key: ranges[key] for key in ['x-5', 'x-4', '0-1']},
+    'ranges': {key: ranges[key] for key in ['x-5', 'x-4', '0-1', 'x-1']},
     'buffDatabase': {key: buff_table[key] for key in ['buff_yin', 'buff_yang', 'enemy_confinement', 'enemy_confinement_final', 'disarmed_and_cant_use_skill', 'status_resistance[inf]', 'damage_resistance[inf]', 'fear', 'act28side_energy_buff', 'act28side_over_energy_buff']},
     'projectiles': {k: sorted(v, key=lambda r: int(r['pathId'])) for k, v in sorted(projectiles.items())}}
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
