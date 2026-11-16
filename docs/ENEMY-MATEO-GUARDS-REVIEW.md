@@ -27,6 +27,6 @@ Each grenade deals the skill's `atk_scale` (0.7) × ATK physical damage. It flie
 ## Boundaries
 
 As for the crossbowmen, plus:
-- **Two grenades, not three.** The skill has `_additionalTimes` 2 and its clip has three `OnAttack` events, which could mean three grenades. The ability text ("fires 2 explosives"), the skill blackboard (`times` 2) and the EN wiki ("two grenades") all say two. The blackboard `times` is read as the total, so the first two events fire. **This needs an in-game check.**
+- **Two grenades, not three.** The skill has `_additionalTimes` 2 and its clip has three `OnAttack` events, which could mean three grenades. The ability text ("fires 2 explosives"), the skill blackboard (`times` 2) and the EN wiki ("two grenades") all say two. The blackboard `times` is read as the total, so the first two events fire. The owner confirmed two grenades in game on 2026-11-16.
 - **Blast radius.** The blast selector loads a range whose collider radius is 1 (not scalable). The radius used is the blackboard `projectile_range` (1.1), which matches the EN wiki.
 - **Block checker.** `_useBlockAsMin` is 0 here and 1 on the Surfing Instructor. Both are read as "while unblocked".
