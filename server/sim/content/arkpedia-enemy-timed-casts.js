@@ -3,10 +3,12 @@
  * selection, release effects and source clocks; interruption owns cleanup. */
 export function timedEnemyCasts(specs, { flags = {}, immunities = [], silenceable = true, canCast = () => true, beforeCast = () => {} } = {}) {
   const finish = (b, e, a) => {
+    const cast=a.cast;
     if (a.cast && specs[a.cast.index].cooldownFromEnd) a.clocks[a.cast.index] = specs[a.cast.index].cooldown;
     if (a.cast) e.profile.noAttack = a.cast.previousNoAttack;
     a.cast = null; e.mem.regularFormVisual = null;
     b.removeBuff(e, 'ab:timedCast'); e.skillAnimUntil = b.time;
+    if(cast)specs[cast.index].finish?.(b,e,cast,a);
   };
   return {
     spawn(b, e, a) {
@@ -25,6 +27,7 @@ export function timedEnemyCasts(specs, { flags = {}, immunities = [], silenceabl
           c.released = true; spec.fire(b, e, c.targets);
         }
         e.skillAnimUntil = b.time + Math.max(0, spec.duration - c.elapsed) / (spec.slowDown ? Math.max(.001, e.s.slowDownRate) : 1);
+        spec.visual?.(b,e,c,a);
         if (c.elapsed + 1e-9 >= spec.duration) finish(b, e, a);
         return;
       }
@@ -33,12 +36,13 @@ export function timedEnemyCasts(specs, { flags = {}, immunities = [], silenceabl
         if (a.clocks[i] > 1e-9) continue;
         const s = specs[i], targets = s.select(b, e);
         if (!targets.length && s.requiresTargets !== false) continue;
-        beforeCast(b,e,i);if(!e.alive||!e.deployed)return;
+        beforeCast(b,e,i,a);if(!e.alive||!e.deployed)return;
         a.clocks[i] = s.cooldown; a.cast = { index: i, elapsed: 0, released: false, targets, previousNoAttack: e.profile.noAttack }; a.sequence++;
         e.profile.noAttack = true; e.attackControlEpoch = (e.attackControlEpoch ?? 0) + 1;
         b.addBuff(e, { key: 'ab:timedCast', flags: { noMove: true, ...flags } });
         e.mem.regularFormVisual = { clip: s.clip, loop: false, speed: s.slowDown ? e.s.slowDownRate : 1, playId: `cast:${a.sequence}` };
         e.skillAnimUntil = b.time + s.duration / (s.slowDown ? Math.max(.001, e.s.slowDownRate) : 1);
+        s.start?.(b,e,a.cast,a);if(a.cast)s.visual?.(b,e,a.cast,a);
         break;
       }
     },

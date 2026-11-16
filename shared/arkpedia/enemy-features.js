@@ -1,3 +1,4 @@
+import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -404,6 +405,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1280_sgmag:'native:famigliaCasterLog',enemy_1280_sgmag_2:'native:famigliaCasterLog',
   enemy_1282_sgelder:'native:famigliaCapoMelee',enemy_1282_sgelder_2:'native:famigliaCapoMelee',
   enemy_1283_sgkill:'native:famigliaSilencerLog',enemy_1283_sgkill_2:'native:famigliaSilencerLog',
   enemy_1278_sgbow:'native:famigliaCrossbowLog',enemy_1278_sgbow_2:'native:famigliaCrossbowLog',
@@ -441,6 +443,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...BLOCKER_FEATURES,
   ...RADIOACTIVE_FEATURES,
   ...FAMIGLIA_BASIC_FEATURES,
+  ...FAMIGLIA_CASTER_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,

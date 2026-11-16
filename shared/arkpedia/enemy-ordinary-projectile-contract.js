@@ -11,20 +11,20 @@ export function ordinaryProjectilePacketNative(attack,{projectileKey,type,interr
   _waitForAnimEndWhenProjectileInvalid:0,_projectileDestination:0,_extraDamageType:0,_emitToInputPosWhenTargetIsInvalid:0,
   _emitToInputRootTileWhenTargetIsInvalid:0,_useCachedAtkOnly:0,_transferSource:0,_extraProjectileKeys:[],_fireCreateProjectileEvent:0});
 }
-export function ordinaryRangedSelectorNative(n,trigger,{radius,abnormalFlag,motion=1,scalable=0}){
+export function ordinaryRangedSelectorNative(n,trigger,{radius,abnormalFlag,motion=1,scalable=0,maxTargets=1}){
  if(!fields(trigger,{m_Script:{m_FileID:1,m_PathID:'8607874384982393801'},_keepTarget:0,_minTargetNum:1,_overrideSearchTargetTick:-1}))return false;
  const siblings=n.$siblings(trigger),selector=siblings.find(c=>'_targetSide'in c);
  return siblings.filter(c=>c.m_Script).every(c=>['8607874384982393801','7080728813803358465','6185056810787956083'].includes(c.m_Script.m_PathID))
   &&siblings.some(c=>fields(c,{m_Script:{m_FileID:1,m_PathID:'6185056810787956083'},_useBlackboardRangeId:0,_extendable:0,_scaleble:scalable}))
   &&siblings.some(c=>fields(c,{m_Radius:radius,m_Enabled:1,m_Offset:{x:0,y:0}}))
   &&siblings.some(c=>fields(c,{m_LocalPosition:{x:0,y:0,z:0},m_LocalScale:{x:1,y:1,z:1}}))
-  &&ordinaryAllyFilterNative(selector,{motion,abnormalFlag,limitTargetNum:1});
+  &&ordinaryAllyFilterNative(selector,{motion,abnormalFlag,limitTargetNum:1,maxNum:maxTargets});
 }
-function ordinaryAllyFilterNative(selector,{motion,abnormalFlag,limitTargetNum}){
+function ordinaryAllyFilterNative(selector,{motion,abnormalFlag,limitTargetNum,maxNum=1}){
  return fields(selector,{m_Script:{m_FileID:1,m_PathID:'7080728813803358465'},_targetSide:2,_targetMotion:motion,_targetCategory:1,_postFilter:4,
    _ignoreTargetFree:0,_onlyIgnoreSomeOfTargetFreeCase:0,_abnormalFlag:abnormalFlag,_abnormalCombo:2,_ignoreAllyTargetFree:0,_ignoreHealFree:0,
    _ignoreMotionMode:0,_forceIgnoreCamouflage:0,_needProfessionMask:0,_professionMask:0,_excludeSomeAbnormalFlags:0,_excludeAbnormalFlag:46,
-   _limitTargetNum:limitTargetNum,_maxTargetKey:'max_target',_maxNum:1,_excludeOwner:0,_sortByTauntAtLast:0,_ignoreHitRange:0,_checkUnitType:0,
+   _limitTargetNum:limitTargetNum,_maxTargetKey:'max_target',_maxNum:maxNum,_excludeOwner:0,_sortByTauntAtLast:0,_ignoreHitRange:0,_checkUnitType:0,
    _unitTypeMask:0,_abilityInputTargetAsSortSource:0});
 }
 function linearProjectileTransport(n,key,{speed,lifetime,hitNumType=1}){

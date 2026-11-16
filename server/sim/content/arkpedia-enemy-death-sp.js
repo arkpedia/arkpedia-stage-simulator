@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {prepareBehaviorProgram,decodeBehaviorParameters} from '../../../shared/arkpedia/behavior-program.js';
-import {addDeviceSp} from './arkpedia-device-sp.js';
-import {aggroCmp} from '../targeting.js';
+import {addDeviceSp,selectedDeviceSpTargets} from './arkpedia-device-sp.js';
 import {recordStageOutcome} from './arkpedia-stage-outcomes.js';
 /** Death programs use an existing tagged device's SP implementation. In a
  * stage without the native target, the original selector has no recipients. */
@@ -35,10 +34,3 @@ function validate({parentKey,mods={},selector,blackboard={},log,program,programC
 }
 selectedDeathSp.validate=validate;
 selectedDeathSp.decodeParameters=decodeBehaviorParameters;
-
-/** Shared native tagged-device acquisition, independent of the trigger event. */
-export function selectedDeviceSpTargets(b,e,selector){
- return b.units.filter(u=>u.kind==='device'&&u.tags?.has(selector.tag)&&u.alive&&u.deployed&&!u.hidden&&!u.removed
-  &&(selector.side==='both'||(selector.side==='same')===(u.side===e.side))&&!u.s.flags.untargetable&&!u.s.flags.isolated&&!u.s.flags.sleep
-  &&!(u.side!==e.side&&(u.s.flags.targetFree||u.s.flags.stealth||u.s.flags.camou))).sort(aggroCmp).slice(0,selector.maxTargets);
-}

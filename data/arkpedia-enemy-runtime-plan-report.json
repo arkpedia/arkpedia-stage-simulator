@@ -3,7 +3,7 @@
   "scope": "Compiled execution plans for already-admitted records; source admission remains separate. Plans belong in shared enemy-definition components, not a duplicated global payload.",
   "source": {
     "data/arkpedia-enemy-records.json": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8",
-    "data/arkpedia-enemy-support.json": "093dc0feb6b7fe053af8f2d87e4a2ee7e143809cb13e9e1a70f532c72b3c7ecc",
+    "data/arkpedia-enemy-support.json": "121bb5db54159f95e2a4a36d33a582ff3f9b891254dc3c8524bf497a2b12c5a8",
     "shared/arkpedia/enemy-runtime-compiler.js": "277cdbe67612b39a03bc0ea0cf9dc57a96a05c877e85b3083d5dd2ac67e34bf6",
     "shared/arkpedia/enemy-runtime-plan.js": "61c93dd3049ce13bc241d0c6649bc3c818b635d0b0482a821df550a56fc15a28",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
@@ -28,7 +28,7 @@
     "shared/arkpedia/enemy-silvernwhite-features.js": "72d80bac1fc96fbae3a87582d153106f0038398edcc12b73e5d963a1b7df05af",
     "shared/arkpedia/enemy-night-archer-features.js": "c53b224d27fda2cc38d4947db83b09c82e964c06a8de4009ccb88ba54539ea32",
     "data/arkpedia-night-archers-animations.json": "883a2c1629807c33f25e3947803dc45ae81bfef9eedc1bf44902b29393bbd691",
-    "shared/arkpedia/enemy-ordinary-projectile-contract.js": "38665bd59b306a46a4d0c1f3f2f948cad7d34777e0444d10209f80beedd68636",
+    "shared/arkpedia/enemy-ordinary-projectile-contract.js": "843ea219ed401c3d0e582b73cb42603a667e37e299f34fd3f4c7dfafafc326b4",
     "shared/arkpedia/enemy-cosmetic-marker-contract.js": "44e615a165d2f1680e4764469f7045d249616a6ef98ad03f7e521228cc40c6fa",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7",
     "shared/arkpedia/enemy-mode-program-contract.js": "4b96369988a81f9975c09be069f59f93ad0526818429af31619c9a025a839ddf",
@@ -48,6 +48,9 @@
     "shared/arkpedia/enemy-energy-gunner-contract.js": "31809ac6e1ac2de3d1ae3a0b5e2f532725992359bcdbf7c578416b6be95a9fe8",
     "data/arkpedia-energy-gunners-animations.json": "17caac935a705b985a41b962254f9a2453f6e947ae4d323748f506e7ac848dca",
     "shared/arkpedia/enemy-device-sp-selector-contract.js": "9f282dc2ad607b443988cbe4e72e88fd578bfb04f5aff6819d19fe944cdab72e",
+    "shared/arkpedia/enemy-talent-binding-contract.js": "855c0e3148345fb22f53bcd5692d9be0c703e5e678285e536f837e572eb636c1",
+    "shared/arkpedia/enemy-famiglia-caster-features.js": "d8bafc9875c23e0ff7f7c6a27a7af1c65bcb263b905ffb95d5ece41cf271ea82",
+    "data/arkpedia-famiglia-casters-animations.json": "c44e33231b6d094c2ad2a3b3c139d849f28d5787f3e3f4f2849d14e024173d47",
     "shared/arkpedia/enemy-famiglia-capo-features.js": "f9b44e75ffa5224381c6162807cde71f818cfeb24f95a07a3b6a723449087f97",
     "data/arkpedia-famiglia-capos-animations.json": "453e48cc323fedd4c81138050424f8687d0eb7f29221ca329239b29b741d47bc",
     "shared/arkpedia/enemy-famiglia-silencer-features.js": "09ecc4c7b1f01ed800d1382adc729ce541e2629e38abcceda835a3d54c815b05",
@@ -58,13 +61,13 @@
     "data/arkpedia-famiglia-basics-animations.json": "1566c50c15e3b31c0eea77ed4788ea9a6178dc7b2cfe7ff2f8ab7d06aad11c71"
   },
   "summary": {
-    "records": 829,
-    "entries": 791,
-    "abilities": 736,
-    "traits": 60,
+    "records": 831,
+    "entries": 797,
+    "abilities": 740,
+    "traits": 62,
     "properties": 1,
-    "serializedBytes": 206451,
-    "plansSha256": "c65679ee547b384cbf5167a0381a3e036b7571f375fb1e527c3f3f8bd13b1b43",
+    "serializedBytes": 208613,
+    "plansSha256": "48173f8ba74dc9211c2dd83aecb9d2088cac97d82108f7bc318838c471d8efb4",
     "kinds": [
       {
         "kind": "allyDeathStacks",
@@ -228,6 +231,10 @@
       },
       {
         "kind": "causticSlug",
+        "instances": 2
+      },
+      {
+        "kind": "channelledSpEmitter",
         "instances": 2
       },
       {
@@ -780,7 +787,7 @@
       },
       {
         "kind": "stageOutcomeCounter",
-        "instances": 13
+        "instances": 15
       },
       {
         "kind": "stagePresenceGauge",

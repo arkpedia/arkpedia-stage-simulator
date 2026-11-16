@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {aggroCmp} from '../targeting.js';
 const providers=new WeakMap();
 const live=(u,life)=>u?.alive&&u.deployed&&!u.removed&&u.deploySeq===life;
 const entries=b=>{let map=providers.get(b);if(!map)providers.set(b,map=new WeakMap());return map;};
@@ -19,4 +20,11 @@ export function addDeviceSp(b,unit,amount){
  const entry=providers.get(b)?.get(unit);if(!b.units?.includes(unit)||!live(unit,entry?.life??unit?.deploySeq)||unit.s.flags.noSp)return 0;
  const changed=entry?entry.add(amount):unit.skill?.gainSp(amount,'nativeBuff')??0;
  if(!Number.isFinite(changed)||changed<0)throw Error('Invalid device SP result');return changed;
+}
+
+/** Shared native tagged-device acquisition, independent of the trigger event. */
+export function selectedDeviceSpTargets(b,e,selector){
+ return b.units.filter(u=>u.kind==='device'&&u.tags?.has(selector.tag)&&u.alive&&u.deployed&&!u.hidden&&!u.removed
+  &&(selector.side==='both'||(selector.side==='same')===(u.side===e.side))&&!u.s.flags.untargetable&&!u.s.flags.isolated&&!u.s.flags.sleep
+  &&!(u.side!==e.side&&(u.s.flags.targetFree||u.s.flags.stealth||u.s.flags.camou))).sort(aggroCmp).slice(0,selector.maxTargets);
 }

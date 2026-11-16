@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {OwnedStageAura} from './arkpedia-stage-auras.js';
 import {sameSideEnemyAuraTarget} from './arkpedia-enemy-aura-targets.js';
-import {selectedDeviceSpTargets} from './arkpedia-enemy-death-sp.js';
-import {addDeviceSp} from './arkpedia-device-sp.js';
+import {addDeviceSp,selectedDeviceSpTargets} from './arkpedia-device-sp.js';
 import {bodyInRadius} from '../body.js';
 import {prepareBehaviorProgram,decodeBehaviorParameters} from '../../../shared/arkpedia/behavior-program.js';
 /** Independent source-owned recipient attachments consume a killed event once.
