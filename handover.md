@@ -39,10 +39,10 @@ node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab'
 
 ## Current coverage and verification
 
-- **789 / 2,163 enemy records admitted; 1,374 remain.**
-- **855 database levels**, **218 runtime kinds**.
+- **791 / 2,163 enemy records admitted; 1,372 remain.**
+- **857 database levels**, **218 runtime kinds**.
 - **970 published stage graphs** remain pinned for the stages phase. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,864 complete models**; simulator original enemy artwork catalogue: 582 models.
+- Asset repository: **3,866 complete models**; simulator original enemy artwork catalogue: 584 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -76,6 +76,7 @@ All listed commits were pushed. Their matching original models were published se
 | Hui-Ming batch | Shared yin/yang attribute account (`arkpedia-hui-ming.js`), opt-in per-recipient `sourceAtkScale` damage event, fourteen Hui-Ming enemies: six plain, the Fury pair, the Stabby archers, the Blindey pair and the Smarty pair; live target-priority comparators and multi-pair block conditions; then the 'Smarty' pair's blast chain (`huiMingBlast`), the Hui-Ming tile controller and the 'Envy' pair. Coverage 785. Then Hui-Ming tiles wired into stage compilation and `StandardBattle` (`docs/STAGE-HUI-MING-TILES-REVIEW.md`). See `docs/ENEMY-HUI-MING-REVIEW.md`. |
 | Rapid Crossbowmen batch | Light and Heavy Rapid Crossbowmen (`enemy_1403_gunsho`, `_2`): reusable `straightShot` kind (unblocked, same row or column, global range, a burst of passer-by bolts that hit the first body), extractor follows `_selectorGroup`. Coverage 787. No stage became ready: their stages also need Barricades and other devices. See `docs/ENEMY-RAPID-CROSSBOWMEN-REVIEW.md`. |
 | Crossbowman Ambushers batch | Heavy Crossbowman Ambusher and Hunter (`enemy_1404_msnip`, `_2`): one stunning Arts bolt after a Begin/Loop/End channel; `straightShot` gained phases, an on-hit status and stealth lifted during the cast; `skill:CrossAttack` dispatches by record. Coverage 789. No stage became ready. See `docs/ENEMY-CROSSBOWMAN-AMBUSHERS-REVIEW.md`. |
+| Mateo's guards batch | `enemy_1409_bdguad`, `_2`: two exploding grenades on attack events (blast 1.1, 70% ATK) through `straightShot` (explicit release times, optional blast) and the existing `unblockedSanctuary` for 40% Physical/Arts resistance while unblocked. Coverage 791. Grenade count (2 vs 3) needs an in-game check. See `docs/ENEMY-MATEO-GUARDS-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
@@ -115,7 +116,7 @@ Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249
 
 **How to pick the next family.** Rank unadmitted enemies by how many blocked stages list them (`data/arkpedia-content-inventory.json` blockers) and prefer families whose base and `_2` records share one mechanism. Only 108 blocked stages are blocked by enemies alone; most also need stage mechanics, so stages become ready mostly in the stages phase. Report the inventory's ready count per batch.
 
-**Straight Shot, next.** Both crossbowman pairs are done. Mateo's guards (`enemy_1409_bdguad*`, `CrossBomb`, per the EN wiki two grenades for 70% ATK in radius 1.1) and Captain Mateo (`enemy_1551_bolicp`) use the same line filter; reuse `straightShotTargets` and add their own projectiles. Expose (`enemy_1402_tgshd*`, `enemy_1407_hummbd*`) applies `enemy_tgshd_exposed_mark`, which the selection already honours.
+**Straight Shot, next.** The crossbowmen and Mateo's first two guards are done. Captain Mateo (`enemy_1551_bolicp`) and the ammo-carrying guard `enemy_1409_bdguad_3` (`Support` skill, `BdguadMark` passive) come together. Reuse `straightShotTargets`, `fireStraightBolt` (with `blast`) and explicit `releases`. Expose (`enemy_1402_tgshd*`, `enemy_1407_hummbd*`) applies `enemy_tgshd_exposed_mark`, which the selection already honours.
 
 Father Agenir (`enemy_1284_sgprst`) is done. The remaining Blood Debt actors are gated on material work described below: the Siracusan Civilian needs allied route actors, and the native controller belongs to the stages phase. Continue with other enemy families until one of those is taken up. `data/arkpedia-enemy-support.json` lists every unadmitted record with its missing reasons; 126 records have a single missing reason.
 

@@ -102,6 +102,8 @@ export async function buildEnemySupport() {
       crossbowmanAmbusherFeatures: { path: 'shared/arkpedia/enemy-crossbowman-ambusher-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-crossbowman-ambusher-features.js', root))) },
       crossbowmanAmbusherAnimations: { path: 'data/arkpedia-crossbowman-ambushers-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-crossbowman-ambushers-animations.json', root))) },
       straightShotFeatures: { path: 'shared/arkpedia/enemy-straight-shot-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-straight-shot-features.js', root))) },
+      mateoGuardFeatures: { path: 'shared/arkpedia/enemy-mateo-guard-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-mateo-guard-features.js', root))) },
+      mateoGuardAnimations: { path: 'data/arkpedia-mateo-guards-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-mateo-guards-animations.json', root))) },
       famigliaLimoFeatures: { path: 'shared/arkpedia/enemy-famiglia-limo-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-limo-features.js', root))) },
       famigliaLimoAnimations: { path: 'data/arkpedia-famiglia-limos-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-famiglia-limos-animations.json', root))) },
       famigliaCasterFeatures: { path: 'shared/arkpedia/enemy-famiglia-caster-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-caster-features.js', root))) },

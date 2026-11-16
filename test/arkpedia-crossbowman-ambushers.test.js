@@ -41,10 +41,10 @@ test('both Ambushers are admitted only with the complete native shot, channel, s
 test('Begin, a two-second Loop and End deliver one stunning Arts bolt at the End event',()=>{
  for(const id of ids){
   const h=fixture(id),{p}=h;
-  assert.equal(p.release,p.phases[0].duration+2+Math.fround(2/30));
+  assert.deepEqual(p.releases,[p.phases[0].duration+2+Math.fround(2/30)]);
   h.run(p.initial+.1);assert.equal(h.e.mem.regularFormVisual.clip,'Skill_Begin');
   h.run(1);assert.equal(h.e.mem.regularFormVisual.clip,'Skill_Loop');assert.equal(h.e.mem.regularFormVisual.loop,true);
-  h.run(p.release-1.1-.05);assert.equal(h.hits.length,0);assert.equal(h.e.mem.regularFormVisual.clip,'Skill_End');
+  h.run(p.releases[0]-1.1-.05);assert.equal(h.hits.length,0);assert.equal(h.e.mem.regularFormVisual.clip,'Skill_End');
   h.run(1);assert.equal(h.hits.length,1);
   assert.equal(h.hits[0].type,'arts');assert.equal(h.hits[0].amount,h.record.stats.atk);
   assert.ok(h.targets[0].s.flags.stun);h.run(4.5);assert.ok(h.targets[0].s.flags.stun);h.run(1);assert.ok(!h.targets[0].s.flags.stun);

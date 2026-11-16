@@ -53,5 +53,7 @@ export function rapidCrossbowmanNative(r,n){
 export const STRAIGHT_SHOT={bolts:3,interval:Math.fround(.1),speed:5,lifetime:10,radius:Math.fround(.3),band:.5,scale:1};
 export function straightShotParams(r){
  const clock=clocks.enemies[r.prefabKey],[s]=r.skills;
- return {initial:s.initCooldown,cooldown:s.cooldown,phases:[{clip:'Skill',duration:clock.durations.Skill}],release:clock.events.Skill[0].time,type:'phys',...STRAIGHT_SHOT};
+ const {bolts,interval,...bolt}=STRAIGHT_SHOT,first=clock.events.Skill[0].time;
+ // Without _waitAttackEventForAllAttacks, the further bolts follow the event one _triggerDelta apart.
+ return {initial:s.initCooldown,cooldown:s.cooldown,phases:[{clip:'Skill',duration:clock.durations.Skill}],releases:Array.from({length:bolts},(_,i)=>first+i*interval),type:'phys',...bolt};
 }

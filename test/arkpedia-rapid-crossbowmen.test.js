@@ -51,24 +51,25 @@ test('the runtime constants are the pinned native values',()=>{
  assert.equal(STRAIGHT_SHOT.speed,parts.find(c=>'_moveType'in c)._speed);assert.equal(STRAIGHT_SHOT.lifetime,parts.find(c=>'_lifeTime'in c)._lifeTime);
  assert.ok(parts.filter(c=>'m_Radius'in c).every(c=>c.m_Radius===STRAIGHT_SHOT.radius));
  assert.equal(STRAIGHT_SHOT.band,FP(filter._offsetMaxX));assert.equal(-STRAIGHT_SHOT.band,FP(filter._offsetMinX));
- assert.throws(()=>straightShot({...shotAbility(ENEMY_RECORDS.enemies[ids[0]].levels[0]).params(ENEMY_RECORDS.enemies[ids[0]].levels[0]),bolts:30}),/Invalid Straight Shot/);
+ assert.throws(()=>straightShot({...shotAbility(ENEMY_RECORDS.enemies[ids[0]].levels[0]).params(ENEMY_RECORDS.enemies[ids[0]].levels[0]),releases:[2,1]}),/Invalid Straight Shot/);
 });
 
 test('an aligned unblocked crossbowman fires three bolts on the original clocks',()=>{
  for(const id of ids){
   const h=fixture(id);const {p}=h;
-  h.run(p.initial+p.release-.05);assert.equal(h.hits.length,0);assert.equal(h.e.mem.regularFormVisual.clip,'Skill');
+  h.run(p.initial+p.releases[0]-.05);assert.equal(h.hits.length,0);assert.equal(h.e.mem.regularFormVisual.clip,'Skill');
   h.run(3);assert.equal(h.hits.length,3);
   assert.ok(h.hits.every(x=>x.target===h.targets[0]&&x.amount===h.record.stats.atk&&x.way==='ranged'));
   // Three tiles at speed 5: each bolt lands 0.6 s after leaving, one interval apart.
-  const leave=p.initial+p.release;h.hits.forEach((x,i)=>assert.ok(Math.abs(x.time-(leave+i*p.interval+(3-p.radius)/p.speed))<.1,`${i}: ${x.time}`));
+  assert.deepEqual(p.releases.map(t=>t-p.releases[0]).map(t=>Math.round(t*100)/100),[0,.1,.2]);
+  h.hits.forEach((x,i)=>assert.ok(Math.abs(x.time-(p.initial+p.releases[i]+(3-p.radius)/p.speed))<.1,`${i}: ${x.time}`));
   assert.deepEqual(h.b.errors,[]);
  }
 });
 
 test('bolts stop at the first body in their path and ignore camouflage',()=>{
  const h=fixture(ids[0],[[10,11],[10,8]]);h.b.addBuff(h.targets[1],{key:'hide',flags:{camou:true}});
- h.run(h.p.initial+h.p.release+1);
+ h.run(h.p.initial+h.p.releases[0]+1);
  assert.equal(h.hits.length,3);assert.ok(h.hits.every(x=>x.target===h.targets[1]));assert.deepEqual(h.b.errors,[]);
 });
 

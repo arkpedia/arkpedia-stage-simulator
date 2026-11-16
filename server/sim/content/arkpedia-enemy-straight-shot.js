@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {timedEnemyCasts} from './arkpedia-enemy-timed-casts.js';
-import {canTargetAlly,sortAllyTargets,evadesGround,stealthOffKey} from '../targeting.js';
+import {canTargetAlly,sortAllyTargets,evadesGround,stealthOffKey,areaSelectable} from '../targeting.js';
 import {ALLY_COLLIDER_RADIUS} from '../constants.js';
 import {segmentCircleEntry} from '../projectile-collision.js';
 
@@ -31,7 +31,9 @@ const passer=(e,u)=>u.alive&&u.deployed&&!u.hidden&&!u.s.flags.untargetable&&!u.
  &&(u.kind!=='device'||u.profile?.enemyTargetableDevice||!!u.findBuff?.(STRAIGHT_SHOT_MARKS.cover));
 
 /** One straight bolt from the source toward a point, continuing past it.
- * An optional status (the Ambushers' Stun) lands on the body it hits. */
+ * An optional status (the Ambushers' Stun) lands on the body it hits; an
+ * optional blast (Mateo's guards) replaces that hit with damage to every
+ * selectable ally within its radius of the contact point. */
 export function fireStraightBolt(b,e,aim,p,attackId){
  const dx=aim.x-e.x,dy=aim.y-e.y,len=Math.hypot(dx,dy);
  if(!(len>1e-9))return null;
@@ -47,7 +49,13 @@ export function fireStraightBolt(b,e,aim,p,attackId){
    }).sort((a,z)=>a.t-z.t||a.u.deploySeq-z.u.deploySeq);
    if(hits.length){
     const {u,t}=hits[0];shot.x=previous.x+(end.x-previous.x)*t;shot.y=previous.y+(end.y-previous.y)*t;shot.removed=true;
-    b.dealDamage(e,u,{amount:e.alive?e.s.atk*p.scale:cached,type:p.type,isAttack:true,applyWay:'ranged',attackId,tags:['straightShot']});
+    const amount=e.alive?e.s.atk*p.scale:cached;
+    if(p.blast){
+     for(const v of b.alliesInRadius(shot.x,shot.y,p.blast+ALLY_COLLIDER_RADIUS).filter(v=>areaSelectable(e,v)))
+      b.dealDamage(e,v,{amount,type:p.type,isAttack:true,applyWay:'ranged',attackId,tags:['straightShot','splash']});
+     return;
+    }
+    b.dealDamage(e,u,{amount,type:p.type,isAttack:true,applyWay:'ranged',attackId,tags:['straightShot']});
     if(p.hitStatus&&u.alive)b.applyStatus(u,p.hitStatus.status,{duration:p.hitStatus.duration,source:e,sourceStatusResistable:2});
    } else if(shot.age>=shot.maxAge-1e-9||end.x<-.5||end.y<-.5||end.x>size.cols-.5||end.y>size.rows-.5)shot.removed=true;
   }});
@@ -65,17 +73,17 @@ export function straightShot(p){
  // Native Invisible toggle: off while the cast lasts, back after its restore delay.
  const stealthOff=(b,e,duration)=>{if(!p.stealth)return;b.removeBuff(e,stealthOffKey(p.stealth.key));
   if(duration!==0)b.addBuff(e,{key:stealthOffKey(p.stealth.key),...(duration?{duration}:{}),flags:{stealthOff:true}});};
- const casts=timedEnemyCasts([{initial:p.initial,cooldown:p.cooldown,clip:p.phases[0].clip,duration,release:p.release,slowDown:true,
+ const casts=timedEnemyCasts([{initial:p.initial,cooldown:p.cooldown,clip:p.phases[0].clip,duration,release:p.releases[0],slowDown:true,
   select:(b,e)=>straightShotTargets(b,e,p.band),
   start(b,e,c){
    const t=c.targets[0],dy=t.y-e.y;c.aim={x:t.x,y:t.y};c.fired=0;c.attackId=++b._attackSeq;e.mem.straightShotCast=c;
    c.suffix=dy>.1?'_Up':dy<-.1?'_Down':'';stealthOff(b,e,null);
   },
-  // The first bolt leaves at the release event, the others one interval apart, while the cast lasts.
+  // One bolt per release time (an attack event, or an interval after the first), while the cast lasts.
   fire(b,e){const c=e.mem.straightShotCast;if(!c)return;fireStraightBolt(b,e,aimOf(c),p,c.attackId);c.fired=1;},
   visual(b,e,c){
    show(e,c);
-   while(c.fired>0&&c.fired<p.bolts&&c.elapsed+1e-9>=p.release+c.fired*p.interval){fireStraightBolt(b,e,aimOf(c),p,c.attackId);c.fired++;}
+   while(c.fired>0&&c.fired<p.releases.length&&c.elapsed+1e-9>=p.releases[c.fired]){fireStraightBolt(b,e,aimOf(c),p,c.attackId);c.fired++;}
   },
   finish(b,e){e.mem.straightShotCast=null;if(e.alive)stealthOff(b,e,p.stealth?.restoreDelay??0);}}]);
  return casts;
@@ -84,8 +92,9 @@ function validate(p){
  const pos=v=>Number.isFinite(v)&&v>0,name=v=>typeof v==='string'&&!!v&&v.length<=256;
  const total=Array.isArray(p?.phases)?p.phases.reduce((t,v)=>t+v?.duration,0):NaN;
  if(!p||!pos(p.cooldown)||!(Number.isFinite(p.initial)&&p.initial>=0)||!Array.isArray(p.phases)||!p.phases.length||p.phases.length>3
-  ||p.phases.some(v=>!v||!name(v.clip)||!pos(v.duration)||(v.loop!==undefined&&typeof v.loop!=='boolean'))||!(Number.isFinite(p.release)&&p.release>=0)
-  ||!Number.isSafeInteger(p.bolts)||p.bolts<1||p.bolts>16||!(Number.isFinite(p.interval)&&p.interval>=0)||p.release+(p.bolts-1)*p.interval>total
+  ||p.phases.some(v=>!v||!name(v.clip)||!pos(v.duration)||(v.loop!==undefined&&typeof v.loop!=='boolean'))
+  ||!Array.isArray(p.releases)||!p.releases.length||p.releases.length>16||p.releases.some((t,i)=>!(Number.isFinite(t)&&t>=0&&t<=total)||i&&t<p.releases[i-1])
+  ||p.blast!==undefined&&!pos(p.blast)||p.blast!==undefined&&p.hitStatus!==undefined
   ||!['phys','arts','true'].includes(p.type)||!pos(p.scale)||!pos(p.speed)||!pos(p.lifetime)||!pos(p.radius)||!pos(p.band)
   ||p.hitStatus!==undefined&&(!p.hitStatus||!['stun'].includes(p.hitStatus.status)||!pos(p.hitStatus.duration))
   ||p.stealth!==undefined&&(!p.stealth||!name(p.stealth.key)||!(Number.isFinite(p.stealth.restoreDelay)&&p.stealth.restoreDelay>=0)))throw Error('Invalid Straight Shot');

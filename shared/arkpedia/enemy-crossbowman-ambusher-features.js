@@ -57,8 +57,8 @@ export function crossbowmanAmbusherNative(r,n){
 /** Begin, then the Loop for the skill's duration (the shot's _cooldownKey), then End;
  * the single bolt leaves at End's OnAttack event. The bolt is the Rapid Crossbowmen's. */
 export function ambusherShotParams(r){
- const c=clocks.enemies[r.prefabKey],[s]=r.skills,bb=s.bb;
+ const c=clocks.enemies[r.prefabKey],[s]=r.skills,bb=s.bb,{bolts,interval,...bolt}=STRAIGHT_SHOT;
  return {initial:s.initCooldown,cooldown:s.cooldown,phases:[{clip:"Skill_Begin",duration:c.durations.Skill_Begin},{clip:"Skill_Loop",duration:bb.duration,loop:true},{clip:"Skill_End",duration:c.durations.Skill_End}],
-  release:c.durations.Skill_Begin+bb.duration+c.events.Skill_End[0].time,type:"arts",...STRAIGHT_SHOT,bolts:1,interval:0,scale:bb.atk_scale,
+  releases:[c.durations.Skill_Begin+bb.duration+c.events.Skill_End[0].time],type:"arts",...bolt,scale:bb.atk_scale,
   hitStatus:{status:"stun",duration:bb.stun},stealth:AMBUSHER_STEALTH};
 }
