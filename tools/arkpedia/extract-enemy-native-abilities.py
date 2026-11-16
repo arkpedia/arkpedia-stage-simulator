@@ -63,6 +63,8 @@ SCOPED_OBJECTS = {
     'enemy_1404_msnip_2': ['enemy_1404_msnip_2','Default','Combat','Attack','Selector','CrossAttack','Invisible'],
     'enemy_1409_bdguad': ['enemy_1409_bdguad','Default','Combat','Attack','Selector','CrossBomb','DmgResist'],
     'enemy_1409_bdguad_2': ['enemy_1409_bdguad_2','Default','Combat','Attack','Selector','CrossBomb','DmgResist'],
+    'enemy_1299_ymkilr': ['enemy_1299_ymkilr','Default','Combat','Trigger','InvisibleCombat','Invisible'],
+    'enemy_1299_ymkilr_2': ['enemy_1299_ymkilr_2','Default','Combat','Trigger','InvisibleCombat','Invisible'],
 
     'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
     'enemy_1281_sgcar_2': ['enemy_1281_sgcar_2','Default','Special','Combat','Passive','DeathRattle'],
@@ -539,6 +541,8 @@ for bundle in sorted(wanted):
             'enemy_1404_msnip_2': {'Combat','Attack','Selector','CrossAttack','Invisible'},
             'enemy_1409_bdguad': {'Combat','Attack','Selector','CrossBomb','DmgResist'},
             'enemy_1409_bdguad_2': {'Combat','Attack','Selector','CrossBomb','DmgResist'},
+            'enemy_1299_ymkilr': {'Combat','Trigger','InvisibleCombat','Invisible'},
+            'enemy_1299_ymkilr_2': {'Combat','Trigger','InvisibleCombat','Invisible'},
 
             'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
             'enemy_1281_sgcar_2': {'Combat','Passive','DeathRattle','Special'},

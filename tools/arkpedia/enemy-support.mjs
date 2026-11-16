@@ -104,6 +104,8 @@ export async function buildEnemySupport() {
       straightShotFeatures: { path: 'shared/arkpedia/enemy-straight-shot-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-straight-shot-features.js', root))) },
       mateoGuardFeatures: { path: 'shared/arkpedia/enemy-mateo-guard-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-mateo-guard-features.js', root))) },
       mateoGuardAnimations: { path: 'data/arkpedia-mateo-guards-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-mateo-guards-animations.json', root))) },
+      shanhaizhongAssassinFeatures: { path: 'shared/arkpedia/enemy-shanhaizhong-assassin-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-shanhaizhong-assassin-features.js', root))) },
+      shanhaizhongAssassinAnimations: { path: 'data/arkpedia-shanhaizhong-assassins-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-shanhaizhong-assassins-animations.json', root))) },
       famigliaLimoFeatures: { path: 'shared/arkpedia/enemy-famiglia-limo-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-limo-features.js', root))) },
       famigliaLimoAnimations: { path: 'data/arkpedia-famiglia-limos-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-famiglia-limos-animations.json', root))) },
       famigliaCasterFeatures: { path: 'shared/arkpedia/enemy-famiglia-caster-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-caster-features.js', root))) },

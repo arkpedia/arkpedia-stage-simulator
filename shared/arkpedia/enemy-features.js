@@ -4,6 +4,7 @@ import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNa
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
 import {STRAIGHT_SHOT_FEATURES,AMBUSHER_STEALTH_ABILITY,isCrossbowmanAmbusher,crossbowmanAmbusherNative} from './enemy-straight-shot-features.js';
 import {MATEO_GUARD_FEATURES} from './enemy-mateo-guard-features.js';
+import {SHANHAIZHONG_ASSASSIN_FEATURES} from './enemy-shanhaizhong-assassin-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -465,6 +466,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FAMIGLIA_CASTER_FEATURES,
   ...STRAIGHT_SHOT_FEATURES,
   ...MATEO_GUARD_FEATURES,
+  ...SHANHAIZHONG_ASSASSIN_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
