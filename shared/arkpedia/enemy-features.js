@@ -1,3 +1,4 @@
+import {RADIOACTIVE_FEATURES,isRadioactiveSlug,radioactiveNative} from './enemy-radioactive-features.js';
 import {BLOCKER_FEATURES,isBlocker,blockerNative} from './enemy-blocker-features.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {ENERGY_FEATURES} from './enemy-energy-features.js';
@@ -399,6 +400,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1352_eslime:'native:radioactiveMelee',enemy_1352_eslime_2:'native:radioactiveMelee',
   enemy_1357_erob:['native:energyMeleeAttack'],enemy_1357_erob_2:['native:energyMeleeAttack'],
   enemy_1359_ekulsr:['native:energyGrenadeAttack'],enemy_1359_ekulsr_2:['native:energyGrenadeAttack'],
   enemy_1353_esabr:['native:energyMeleeAttack'],enemy_1353_esabr_2:['native:energyMeleeAttack'],
@@ -429,6 +431,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FUNLIVE_CASTER_FEATURES,
   ...ENERGY_FEATURES,
   ...BLOCKER_FEATURES,
+  ...RADIOACTIVE_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,
@@ -835,14 +838,14 @@ export const ENEMY_FEATURES = Object.freeze({
       || text === 'Releases Corruption, causing your nearby units to continuously lose HP' },
   ...CHIMERA_ENEMY_FEATURES,
   // Caustic Originium Slug: death blast + pollution, and a storm-strength boost when consumed.
-  'talent:Boom': { covers: (r,n) => isExhaustedFlame(r) ? exhaustedFlameNative(r,n) : isFlamecaller(r) ? flamecallerNative(r,n) : (sig(r, 'Boom', ['atk_scale'])
+  'talent:Boom': { covers: (r,n) => isRadioactiveSlug(r)?radioactiveNative(r,n):isExhaustedFlame(r) ? exhaustedFlameNative(r,n) : isFlamecaller(r) ? flamecallerNative(r,n) : (sig(r, 'Boom', ['atk_scale'])
       && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'))
       || sig(r, 'Boom', ['atk_scale', 'ep_damage_ratio']),
-    ability: r => isExhaustedFlame(r) ? EXHAUSTED_FLAME_ABILITY : isFlamecaller(r) ? FLAMECALLER_ABILITY : null,
+    ability: r => isRadioactiveSlug(r)?RADIOACTIVE_FEATURES['talent:Boom'].ability:isExhaustedFlame(r) ? EXHAUSTED_FLAME_ABILITY : isFlamecaller(r) ? FLAMECALLER_ABILITY : null,
     nativeClaim: (_p,n) => n.enemy_1294_duchns ? {active:2} : {},
     note: 'death blast is attached by the handbook-line feature',
     note: 'death blast, pollution and a storm boost when consumed',
-    explains: text => FLAMECALLER_TEXT.includes(text) || text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'
+    explains: text => RADIOACTIVE_FEATURES['talent:Boom'].explains(text)||FLAMECALLER_TEXT.includes(text) || text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'
       || text === 'Increases the strength of an Active Originium Storm when consumed by it.' },
   'talent:DetectStorm': { covers: r => sig(r, 'DetectStorm', ['range_radius']), note: 'the slug detects the storm' },
   // Chalice of Regret: shares a fraction of nearby non-flying enemies' damage.

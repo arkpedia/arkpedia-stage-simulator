@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "scope": "Radioactive Originium Slug Arts melee and delayed stationary death projectile, with native global energy reward before area damage; controlled fixtures, not original battery-stage clears or live-client parity.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-radioactive-features.js": "b82080834e57abe7728d65626907ebbd8db025b1fd3ea9369bb63cdf58feb170",
+    "shared/arkpedia/enemy-ordinary-body-contract.js": "a0f54543e344a7ef0620be11248f38476922398a6cd078e665c4eec28de13502",
+    "server/sim/content/arkpedia-enemy-death-energy.js": "5f1da6302829e2f6d5ff63f1fe69a4f418f2add2f13279897daac09f67039516",
+    "server/sim/content/arkpedia-enemy-attack-sequence.js": "079188908068176fcbd472bf16a68cee5833c628ca6d2b32078cd257d6501110",
+    "server/sim/content/arkpedia-enemy-melee-sequence.js": "48ac6a4d52e66810f47cf98c5531a9e70f13951c212b6b862cbcbc13b069cf2b",
+    "data/arkpedia-radioactive-slugs-animations.json": "c0aa6e030a2bf1c4328dfe674c7e529cc63da021240a542483def1270ea2c188",
+    "data/arkpedia-enemy-native-abilities.json": "c579428d4e6804fab220376e370d572dcb5f83150f943079d45928c829ac5c06",
+    "data/arkpedia-enemy-support.json": "839c3f60db4f7fff66caf8afdb7f71a1897d0588e928612f378b4db81004f7ad",
+    "data/arkpedia-enemy-runtime-plan-report.json": "c17a26a6ff3e895c55ada2eff60b07245ff2a5948a4f1c6dd76e413f1b5724f1",
+    "test/arkpedia-radioactive-slugs.test.js": "2a2dd98159a7210948beb6a2b4f71343506ddf8ff9276b383bbe7f11fef4b71b",
+    "test/arkpedia-ordinary-attack-scale.test.js": "2636f33a89bb2740d173badf50301e056e909083ba2e284f4c1b28d36543d4c4"
+  },
+  "tests": {
+    "focusedRegressions": 59,
+    "finalDamageAndPreflight": 34,
+    "broad": {
+      "tests": 1806,
+      "passed": 1801,
+      "skipped": 3,
+      "knownChimeraFailures": 2
+    }
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Radioactive Originium Slug delayed death damage and global energy fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-death-energy",
+          "arkpedia-enemy-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1352_eslime",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 360,
+          "start": 0,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 360,
+              "donorEnergy": 5,
+              "time": 0.5
+            }
+          ]
+        },
+        {
+          "id": "enemy_1352_eslime_2",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 600,
+          "start": 0.7333333333333333,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 600,
+              "donorEnergy": 5,
+              "time": 1.2333333333333334
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Radioactive Originium Slug delayed death damage and global energy fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-death-energy",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-melee-sequence"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1352_eslime",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 360,
+          "start": 0,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 360,
+              "donorEnergy": 5,
+              "time": 0.5
+            }
+          ]
+        },
+        {
+          "id": "enemy_1352_eslime_2",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 600,
+          "start": 0.7333333333333333,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 600,
+              "donorEnergy": 5,
+              "time": 1.2333333333333334
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1352_eslime",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 308.11981201171875,
+            "height": 219.58799171447754
+          },
+          {
+            "id": "enemy_1352_eslime_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 308.11981201171875,
+            "height": 219.58799171447754
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1352_eslime",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 308.11981201171875,
+            "height": 219.58799171447754
+          },
+          {
+            "id": "enemy_1352_eslime_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 308.11981201171875,
+            "height": 219.58799171447754
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "assetCommit": "d93d3155b8ae3fb272f501bcb9146b69cb137997",
+  "coverage": {
+    "enemies": 752,
+    "totalEnemies": 2163,
+    "databaseLevels": 817,
+    "runtimeKinds": 207,
+    "pinnedStageGraphs": 970
+  },
+  "lifecycleResearch": {
+    "repository": "wfrfred/ArkBattle",
+    "commit": "b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d",
+    "scope": "Read-only secondary research and archived Windows native fallback disassembly; not a new local GameAssembly extraction or live-client/hotfix observation. Pinned CN content is checked separately.",
+    "files": [
+      {
+        "path": "docs/research/cases/07-action-timing-and-animation.md",
+        "sha256": "95057a5c3fe50c00212044fa11745e34d849ea45e6d8ec060b8bf2932b43d52e",
+        "url": "https://github.com/wfrfred/ArkBattle/blob/b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d/docs/research/cases/07-action-timing-and-animation.md"
+      },
+      {
+        "path": "docs/research/cases/16-projectile-motion-and-hit-boundaries.md",
+        "sha256": "81c1d3524ce9c7d126dffbcac8d63e6fc606c9e69244942ff6285880ebdc2884",
+        "url": "https://github.com/wfrfred/ArkBattle/blob/b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d/docs/research/cases/16-projectile-motion-and-hit-boundaries.md"
+      },
+      {
+        "path": "docs/research/cases/17-projectile-stop-and-termination.md",
+        "sha256": "e1d42a16c2805f29cbf543279897a894eb17734b29dc2c581b8ac3501599d469",
+        "url": "https://github.com/wfrfred/ArkBattle/blob/b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d/docs/research/cases/17-projectile-stop-and-termination.md"
+      },
+      {
+        "path": "docs/research/evidence/projectile-boundaries-20261021/movement/71344-OnTick.asm",
+        "sha256": "eb647e82f03056a9dd1d59da4285674ee81b19cff2153d946cd5ad482ac75285",
+        "url": "https://github.com/wfrfred/ArkBattle/blob/b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d/docs/research/evidence/projectile-boundaries-20261021/movement/71344-OnTick.asm"
+      },
+      {
+        "path": "docs/research/evidence/projectile-stop-20261021/order/71366-DealProjectileReached.asm",
+        "sha256": "f7c8fdc8235d1998991346b2ae1d3c96ff91a6018fcedea26e9e147b56ad3541",
+        "url": "https://github.com/wfrfred/ArkBattle/blob/b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d/docs/research/evidence/projectile-stop-20261021/order/71366-DealProjectileReached.asm"
+      },
+      {
+        "path": "docs/research/evidence/projectile-stop-20261021/order/REPORT.md",
+        "sha256": "dec64466316f07c2cae9ed8d4c6b10d8b69fe09ab5fda59f713fe0a708b4c0a1",
+        "url": "https://github.com/wfrfred/ArkBattle/blob/b1cd9b7524c9dd6c8d1cd9d7465df13fe300957d/docs/research/evidence/projectile-stop-20261021/order/REPORT.md"
+      }
+    ]
+  }
+}

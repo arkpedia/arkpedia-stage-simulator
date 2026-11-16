@@ -21,10 +21,10 @@ export function ordinaryMeleeBodyNative(r,n,{clock,birthDelay,idleWhenBorn=0,int
 }
 
 /** Shared native simple-melee packet, including ranged-triggered direct hits. */
-export function ordinaryMeleePacketNative(combat,{interruptOnDetach=0,selectTargetSource=2,clip='Attack',atkScale=1}={}){
+export function ordinaryMeleePacketNative(combat,{interruptOnDetach=0,selectTargetSource=2,clip='Attack',atkScale=1,damageType=1,maxAnimScale=1}={}){
  return fields(combat,{m_Script:{m_FileID:1,m_PathID:'4381884627089348317'},m_Enabled:1,_selector:{m_FileID:0,m_PathID:'0'},
   _interruptAbilityOnDetach:interruptOnDetach,_ignoreIfOwnerDead:0,_forceAsDmgOrHealAbility:0,_waitForAttackEvent:1,_interuptIfTargetDead:0,
   _selectTargetSource:selectTargetSource,_selectTargetTiming:0,_timeMode:0,_alwaysIncludeTarget:1,_allowNoTarget:0,_animKey:clip,_endAnimKey:'Idle',
-  _preDelay:0,_activeBuffs:[],_maxAnimScale:1,_affectedBySlowDown:1,_atkScale:atkScale,_atkScaleKey:'atk_scale',_attackType:1,
-  _damageType:1,_extraDamageType:0,_elementDamageType:0,_epDamageRatio:0,_useDynamicAttackType:0});
+  _preDelay:0,_activeBuffs:[],_maxAnimScale:maxAnimScale,_affectedBySlowDown:1,_atkScale:atkScale,_atkScaleKey:'atk_scale',_attackType:1,
+  _damageType:damageType,_extraDamageType:0,_elementDamageType:0,_epDamageRatio:0,_useDynamicAttackType:0});
 }

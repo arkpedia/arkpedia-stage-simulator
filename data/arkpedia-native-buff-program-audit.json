@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "757777d7ad939558bc0844971332148861f5868f976a02f6ed16ed282a89c3a4",
-    "data/arkpedia-enemy-support.json": "d794347a42830dd244a07055a674b42ac7d6bd427357eda2fccd7ee04a9f61ee",
+    "data/arkpedia-enemy-native-abilities.json": "c579428d4e6804fab220376e370d572dcb5f83150f943079d45928c829ac5c06",
+    "data/arkpedia-enemy-support.json": "839c3f60db4f7fff66caf8afdb7f71a1897d0588e928612f378b4db81004f7ad",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "97dd9969ddb03e5c33246daf0bad1afde7e58f7e64c3ded3206c3f3442852550",
     "shared/arkpedia/behavior-program.js": "1b9c2b014bd61479b66a556d745b02a324fd22d41cec15fbe09c328185ee4f6f",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 385,
-  "templates": 234,
+  "retainedPrefabs": 387,
+  "templates": 236,
   "compiled": 9,
-  "refused": 225,
+  "refused": 227,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -1154,6 +1154,16 @@
       "reason": "Unsupported native behaviour: action CreateBuffInCircleRange"
     },
     {
+      "key": "enemy_esabr_add_energy",
+      "consumers": [
+        "enemy_1352_eslime",
+        "enemy_1352_eslime_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: binding"
+    },
+    {
       "key": "enemy_esabr_clear_energy",
       "consumers": [
         "enemy_1353_esabr",
@@ -1182,6 +1192,16 @@
       "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: binding"
+    },
+    {
+      "key": "enemy_eslime_add_energy_global",
+      "consumers": [
+        "enemy_1352_eslime",
+        "enemy_1352_eslime_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
     },
     {
       "key": "enemy_fake_t_apoptosis",
@@ -2986,6 +3006,7 @@
         "enemy_dead_spawn[sfji]",
         "enemy_dfello_summon[dseed]",
         "enemy_duchns_boom",
+        "enemy_eslime_add_energy_global",
         "enemy_ncrmcr_aura",
         "enemy_sybox_t[logkilled]",
         "enemy_wdkght_t",
@@ -3030,6 +3051,8 @@
         "enemy_1290_duflm",
         "enemy_1290_duflm_2",
         "enemy_1294_duchns",
+        "enemy_1352_eslime",
+        "enemy_1352_eslime_2",
         "enemy_1364_spnaxe",
         "enemy_1364_spnaxe_2",
         "enemy_1433_dsbasi",
@@ -3482,6 +3505,33 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: binding",
+      "templates": [
+        "enemy_bomscr_boom_switch_mode",
+        "enemy_erob_steal_energy",
+        "enemy_esabr_add_energy",
+        "enemy_esabr_clear_energy",
+        "enemy_esheld_dec_energy[trigger]"
+      ],
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2",
+        "enemy_1352_eslime",
+        "enemy_1352_eslime_2",
+        "enemy_1353_esabr",
+        "enemy_1353_esabr_2",
+        "enemy_1354_eghost",
+        "enemy_1354_eghost_2",
+        "enemy_1357_erob",
+        "enemy_1357_erob_2",
+        "enemy_1358_esheld",
+        "enemy_1358_esheld_2",
+        "enemy_1359_ekulsr",
+        "enemy_1359_ekulsr_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers",
       "templates": [
         "enemy_bigstorm[dmg]",
@@ -3493,30 +3543,6 @@
         "enemy_1420_lrmm",
         "enemy_1425_lrcmra",
         "enemy_1425_lrcmra_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: binding",
-      "templates": [
-        "enemy_bomscr_boom_switch_mode",
-        "enemy_erob_steal_energy",
-        "enemy_esabr_clear_energy",
-        "enemy_esheld_dec_energy[trigger]"
-      ],
-      "consumers": [
-        "enemy_1218_bomscr",
-        "enemy_1218_bomscr_2",
-        "enemy_1353_esabr",
-        "enemy_1353_esabr_2",
-        "enemy_1354_eghost",
-        "enemy_1354_eghost_2",
-        "enemy_1357_erob",
-        "enemy_1357_erob_2",
-        "enemy_1358_esheld",
-        "enemy_1358_esheld_2",
-        "enemy_1359_ekulsr",
-        "enemy_1359_ekulsr_2"
       ],
       "unsupportedConsumers": []
     },

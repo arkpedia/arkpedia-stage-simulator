@@ -3,7 +3,7 @@
   "scope": "Compiled execution plans for already-admitted records; source admission remains separate. Plans belong in shared enemy-definition components, not a duplicated global payload.",
   "source": {
     "data/arkpedia-enemy-records.json": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8",
-    "data/arkpedia-enemy-support.json": "d794347a42830dd244a07055a674b42ac7d6bd427357eda2fccd7ee04a9f61ee",
+    "data/arkpedia-enemy-support.json": "839c3f60db4f7fff66caf8afdb7f71a1897d0588e928612f378b4db81004f7ad",
     "shared/arkpedia/enemy-runtime-compiler.js": "b8fc9cfcd426c5e85deaeb24f2daafe756b3bc51f07f93f5fd327bbba0ddcc47",
     "shared/arkpedia/enemy-runtime-plan.js": "61c93dd3049ce13bc241d0c6649bc3c818b635d0b0482a821df550a56fc15a28",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
@@ -15,7 +15,7 @@
     "shared/arkpedia/enemy-inspiration-features.js": "acdbd7afa4b1d07a26afe3f5fdc9a43959dc13ad02c11dd8f10ae9d193a65a23",
     "shared/arkpedia/enemy-siegebreaker-features.js": "1fad499ff58dd72cf818ad7c4109b0fb73d72e2b8fa675549bb53773f64b39bd",
     "data/arkpedia-siegebreaker-animations.json": "6e0c5138e3b8a567a4bc032cd1884787eeda691b4b50826d365564099d137f4b",
-    "shared/arkpedia/enemy-ordinary-body-contract.js": "3356798ef791e13cf37d07c4e3694cfaaeb70168ec113fcf300e9b7aa1628ce5",
+    "shared/arkpedia/enemy-ordinary-body-contract.js": "a0f54543e344a7ef0620be11248f38476922398a6cd078e665c4eec28de13502",
     "shared/arkpedia/enemy-tree-shield-features.js": "d7bdc24c6b35a9b5ea7765aab629959604c7ba43379530b71d9d08de8f8bae49",
     "data/arkpedia-tree-shield-animations.json": "5ee2f1713838fc7242402b58e44fefc53f2099bcb6474730b79d0ec41f49181c",
     "shared/arkpedia/enemy-weaksauce-features.js": "26bb491e10c9b9472daf75d3e26108bde887820d608bddabfb82e192627d3951",
@@ -41,16 +41,18 @@
     "data/arkpedia-energy-grenadiers-animations.json": "9e5550727c758cf0e8a3f2e9358cfe0e978771d4401c1f1d5dfc4cb0f34eaa50",
     "data/arkpedia-energy-siphons-animations.json": "5c4f075e1c1f10f1e4f6864aad80ccb5c6b234c2f90e9bb0ce85ea934897763a",
     "shared/arkpedia/enemy-energy-siphon-contract.js": "d2d029a20a92dadf09afe90d651b3524f83e2f4d0e6f629616d57b68a1f63f81",
-    "shared/arkpedia/enemy-blocker-features.js": "22507c8a88885b966543ae0f6bb4fcb97af5c879dce82b76b4033faadee7af3f"
+    "shared/arkpedia/enemy-blocker-features.js": "22507c8a88885b966543ae0f6bb4fcb97af5c879dce82b76b4033faadee7af3f",
+    "shared/arkpedia/enemy-radioactive-features.js": "b82080834e57abe7728d65626907ebbd8db025b1fd3ea9369bb63cdf58feb170",
+    "data/arkpedia-radioactive-slugs-animations.json": "c0aa6e030a2bf1c4328dfe674c7e529cc63da021240a542483def1270ea2c188"
   },
   "summary": {
-    "records": 815,
-    "entries": 761,
-    "abilities": 706,
+    "records": 817,
+    "entries": 765,
+    "abilities": 710,
     "traits": 60,
     "properties": 1,
-    "serializedBytes": 192393,
-    "plansSha256": "2ee80b07ed871b7b5e49d318203732350793d45123fa2233eefc11163f27b748",
+    "serializedBytes": 193455,
+    "plansSha256": "129ed09831c361f6199dda5581aa3ec7104fd84a224c44d920ca2b2a5dbdae01",
     "kinds": [
       {
         "kind": "allyDeathStacks",
@@ -78,7 +80,7 @@
       },
       {
         "kind": "animatedMeleeAttack",
-        "instances": 10
+        "instances": 12
       },
       {
         "kind": "animatedProjectileAttack",
@@ -275,6 +277,10 @@
       {
         "kind": "deathBoom",
         "instances": 9
+      },
+      {
+        "kind": "deathEnergyPulse",
+        "instances": 2
       },
       {
         "kind": "deathEye",
