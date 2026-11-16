@@ -76,7 +76,10 @@ jobs:
           # Keep the data files byte-identical to the commit on Windows runners too.
           git -C ../arkpedia-data config core.autocrlf false
           # The data repository's wiki cache has file names Windows cannot create (':'); the simulator never reads it.
+          # The sparse rule keeps those files off the disk; Git for Windows still refuses the ':' paths in the index
+          # unless NTFS path protection is off for this one trusted, read-only checkout.
           git -C ../arkpedia-data sparse-checkout set --no-cone '/*' '!/source/data/wiki-cache/'
+          git -C ../arkpedia-data config core.protectNTFS false
           git -C ../arkpedia-data fetch -q --depth 1 https://github.com/arkpedia/arkpedia-data.git "$commit"
           git -C ../arkpedia-data -c advice.detachedHead=false checkout -q FETCH_HEAD
           test "$(git -C ../arkpedia-data rev-parse HEAD)" = "$commit"
