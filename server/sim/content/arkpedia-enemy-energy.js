@@ -16,30 +16,31 @@ export function changeEnemyEnergy(b,unit,delta){
 export function nativeEnergyMeter(params){
  validate(params);const{capacity,initial,perStack,overload,decay}=params;
  const clear=(b,e,s)=>{
-  s.clearing=true;s.count=0;
+  s.clearing=true;s.count=0;s.retryOverload=false;
   if(s.energy)b.removeBuff(e,s.energy);s.energy=null;
   s.clearing=false;
  };
  const startOverload=(b,e,s)=>{
   if(!live(s)||s.overload||s.count<capacity)return;
-  const finish=()=>{s.overload=null;clear(b,e,s);};
+  const finish=()=>{s.overload=null;s.retryOverload=false;if(e.findBuff('blacksteel_energy[mark]'))clear(b,e,s);};
   const attached=b.addBuff(e,{key:'act28side_over_energy_buff',source:e,duration:overload.duration,mods:overload.mods,
    onRemove:finish,onExpire:finish});
-  if(attached&&live(s)&&e.buffs.includes(attached))s.overload=attached;else if(attached)b.removeBuff(e,attached);
+  if(attached&&live(s)&&e.buffs.includes(attached)){s.overload=attached;s.retryOverload=false;}else{if(attached)b.removeBuff(e,attached);s.retryOverload=live(s)&&s.count>=capacity;}
  };
  return{
   spawn(b,e,a){
-   const s=a.energy={unit:e,life:e.deploySeq,capacity,count:0,energy:null,overload:null,marker:null,busy:false,clearing:false,elapsed:0};
+   const s=a.energy={unit:e,life:e.deploySeq,capacity,count:0,energy:null,overload:null,marker:null,busy:false,clearing:false,retryOverload:false,elapsed:0};
    s.change=delta=>{
     if(!live(s)||s.busy||s.overload)return 0;
-    const next=Math.max(0,Math.min(capacity,s.count+delta)),prior=s.count;if(next===prior)return 0;
+    const next=Math.max(0,Math.min(capacity,s.count+delta)),prior=s.count;
     s.busy=true;
     try{
+     if(next===prior){if(next>=capacity)startOverload(b,e,s);return 0;}
      if(next===0){clear(b,e,s);return -prior;}
      if(s.energy&&e.buffs.includes(s.energy)){s.energy.stacks=next;e.markDirty();}
      else{
       const attached=b.addBuff(e,{key:'act28side_energy_buff',source:e,stacks:next,maxStacks:capacity,mods:perStack,
-       onRemove:()=>{s.energy=null;if(!s.clearing)s.count=0;}});
+       onRemove:()=>{s.energy=null;if(!s.clearing){s.count=0;s.retryOverload=false;}}});
       if(!attached||!live(s)||!e.buffs.includes(attached)){if(attached)b.removeBuff(e,attached);return 0;}s.energy=attached;
      }
      s.count=next;startOverload(b,e,s);return next-prior;
@@ -49,8 +50,8 @@ export function nativeEnergyMeter(params){
   },
   tick(b,e,a,dt){
    const s=a.energy;if(!live(s))return;
-   if(decay){s.elapsed+=dt;while(s.elapsed+1e-9>=decay.interval){s.elapsed-=decay.interval;if(!s.overload)s.change(-decay.amount);}}
-   if(!s.busy)startOverload(b,e,s);
+   if(decay){s.elapsed+=dt;while(s.elapsed+1e-9>=decay.interval){s.elapsed-=decay.interval;if(!s.overload&&e.findBuff('blacksteel_energy[mark]'))s.change(-decay.amount);}}
+   if(!s.busy&&s.retryOverload)startOverload(b,e,s);
   },
   death(_c,b,e,a){
    const s=a.energy;if(!s)return;stores.get(b)?.delete(e);

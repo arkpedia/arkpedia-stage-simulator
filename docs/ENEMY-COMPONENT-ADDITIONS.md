@@ -7,11 +7,12 @@ Enemy behavior is compiled from source-checked feature data. A stage loads enemy
 - `passiveEnemyBody`: birth presentation/action gates and passive body flags.
 - `animatedMeleeAttack`: one ordinary melee cast driven by native animation markers.
 - `markedRangedMeleeAttack`: blocker melee plus a marked ground target using another direct-hit clip.
+- `blockedMeleeProjectileModes`: ordinary blocker melee plus an unmarked ranged area projectile; input and blast motion filters are separate.
 - `markedMeleeProjectileAttack`: blocker melee plus marked local/global projectile casts.
 - `programmedProjectileModes`: one source-owned buff program selects among validated projectile modes; each cast captures its packet. A finite parent lifetime and validated tile offsets also cover ordinary scenario carriers. Optional native polling owns empty derived markers and removes them by attachment identity.
 - `environmentStatBonus`: an enemy-owned modifier enabled by a stage-provided condition bit.
 - `contactBuffProgram`: source-owned contact bindings that execute a portable native buff program.
-- `nativeEnergyMeter`: source capacity/initial stacks, shared additive modifiers, timed overload and optional decay; stage/device inputs use `changeEnemyEnergy`.
+- `nativeEnergyMeter`: source capacity/initial stacks, shared additive modifiers, timed overload and optional decay; stage/device inputs use `changeEnemyEnergy`. Native marker guards control decay/finish-clearing; retries are distinct from a fresh explicit update.
 - `stageOutcomeCounter`: native killed/exit result receipts, independent of progression or rewards.
 - `stagePresenceGauge`: a live native passive owns its signed presence count and optional body flags/modifiers together.
 

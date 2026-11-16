@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "scope": "Blacksteel Grenadier energy and captured melee/projectile modes, with native ground-input/all-motion blast separation; controlled fixtures, not original battery stages or native trajectory/frame parity.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-energy-features.js": "ea622c93f6f6a7e8e984d49ce3326fd099e844edc7ae8568a92c72bab8e74dea",
+    "shared/arkpedia/enemy-ordinary-projectile-contract.js": "38665bd59b306a46a4d0c1f3f2f948cad7d34777e0444d10209f80beedd68636",
+    "server/sim/content/arkpedia-enemy-energy.js": "807b14266f0995261efe6a5dc512a71ed895215527fa6781adbc965619044f52",
+    "server/sim/content/arkpedia-enemy-projectiles.js": "7f5f6d0c046058894d2c25376bb6d8b456207cb1d2f25025678cea8e1b690a24",
+    "data/arkpedia-energy-grenadiers-animations.json": "9e5550727c758cf0e8a3f2e9358cfe0e978771d4401c1f1d5dfc4cb0f34eaa50",
+    "data/arkpedia-enemy-native-abilities.json": "63a78e3849ccdd38f143b50eda563eff1952ed095bc94072f6928ba4434930c5",
+    "data/arkpedia-enemy-support.json": "ce6d746fd75d25558442b9dd549ef21dfe5a5638261b5059654bb0d10f61f89a",
+    "data/arkpedia-enemy-runtime-plan-report.json": "4c45eafae1ec1284b711ec5a9227240df93661422f871bf45bf63b1c2271a96a",
+    "test/arkpedia-energy-grenadiers.test.js": "8715cf784b2d72657d65a7e86af97514c2b4598a03dc28206b6a49f6a30c34ca",
+    "test/arkpedia-native-energy.test.js": "c7e00f1746a3c178b1936ac3507ce114ef734bff9270e28b2014bfd45d671297"
+  },
+  "tests": {
+    "focusedRegressions": 103,
+    "markerAndMeterFollowups": 42,
+    "selectedRuntimeAndPreflight": 36,
+    "broad": {
+      "tests": 1806,
+      "passed": 1801,
+      "skipped": 3,
+      "knownChimeraFailures": 2
+    }
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Blacksteel Grenadier fixture; native initial energy, full blocker hit and half-damage blast with flying collateral; no original battery/controller fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-projectiles"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1359_ekulsr",
+          "blocked": false,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1400,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 700,
+              "type": "phys"
+            },
+            {
+              "target": "air-collateral",
+              "amount": 700,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 0,
+              "clip": "Attack"
+            }
+          ],
+          "projectiles": 0
+        },
+        {
+          "id": "enemy_1359_ekulsr",
+          "blocked": true,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1400,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 1400,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 1.6,
+              "clip": "Combat"
+            }
+          ],
+          "projectiles": 0
+        },
+        {
+          "id": "enemy_1359_ekulsr_2",
+          "blocked": false,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1925,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 962.5,
+              "type": "phys"
+            },
+            {
+              "target": "air-collateral",
+              "amount": 962.5,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 2.6,
+              "clip": "Attack"
+            }
+          ],
+          "projectiles": 0
+        },
+        {
+          "id": "enemy_1359_ekulsr_2",
+          "blocked": true,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1925,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 1925,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 4.2,
+              "clip": "Combat"
+            }
+          ],
+          "projectiles": 0
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Blacksteel Grenadier fixture; native initial energy, full blocker hit and half-damage blast with flying collateral; no original battery/controller fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-projectiles",
+          "arkpedia-enemy-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1359_ekulsr",
+          "blocked": false,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1400,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 700,
+              "type": "phys"
+            },
+            {
+              "target": "air-collateral",
+              "amount": 700,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 0,
+              "clip": "Attack"
+            }
+          ],
+          "projectiles": 0
+        },
+        {
+          "id": "enemy_1359_ekulsr",
+          "blocked": true,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1400,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 1400,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 1.6,
+              "clip": "Combat"
+            }
+          ],
+          "projectiles": 0
+        },
+        {
+          "id": "enemy_1359_ekulsr_2",
+          "blocked": false,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1925,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 962.5,
+              "type": "phys"
+            },
+            {
+              "target": "air-collateral",
+              "amount": 962.5,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 2.6,
+              "clip": "Attack"
+            }
+          ],
+          "projectiles": 0
+        },
+        {
+          "id": "enemy_1359_ekulsr_2",
+          "blocked": true,
+          "initial": {
+            "count": 25,
+            "capacity": 30,
+            "overloaded": false
+          },
+          "atk": 1925,
+          "packets": [
+            {
+              "target": "primary",
+              "amount": 1925,
+              "type": "phys"
+            }
+          ],
+          "attacks": [
+            {
+              "time": 4.2,
+              "clip": "Combat"
+            }
+          ],
+          "projectiles": 0
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "commit": "d5b1ac14d8141beef5d6a1b2617f507052c3a6f2",
+    "review": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1359_ekulsr",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 505.24251556396484,
+              "height": 409.7388722896576
+            },
+            {
+              "id": "enemy_1359_ekulsr_2",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 505.24251556396484,
+              "height": 409.7388722896576
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1359_ekulsr",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 505.24251556396484,
+              "height": 409.7388722896576
+            },
+            {
+              "id": "enemy_1359_ekulsr_2",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 505.24251556396484,
+              "height": 409.7388722896576
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "coverage": {
+    "enemies": 746,
+    "totalEnemies": 2163,
+    "databaseLevels": 811,
+    "runtimeKinds": 204,
+    "publishedStages": 970
+  }
+}

@@ -39,3 +39,10 @@ test('rejected energy attachment rolls back; rejected overload retries without d
  const h=fixture();const off=h.b.on('beforeBuff',c=>{if(c.buff.key==='act28side_energy_buff')c.cancel=true;});assert.equal(changeEnemyEnergy(h.b,h.e,3),0);assert.equal(enemyEnergy(h.b,h.e).count,0);h.b.off(off);
  const reject=h.b.on('beforeBuff',c=>{if(c.buff.key==='act28side_over_energy_buff')c.cancel=true;});assert.equal(changeEnemyEnergy(h.b,h.e,10),10);h.run(.1);assert.deepEqual(enemyEnergy(h.b,h.e),{count:10,capacity:10,overloaded:false});h.b.off(reject);h.run(.1);assert.equal(enemyEnergy(h.b,h.e).overloaded,true);assert.deepEqual(h.b.errors,[]);
 });
+test('the retained marker guards decay and overload-finish clearing without restarting an expired overload',()=>{
+ const h=fixture({...spec,initial:4,decay:{interval:1,amount:1}});h.b.removeBuff(h.e,'blacksteel_energy[mark]');h.run(1.1);assert.equal(enemyEnergy(h.b,h.e).count,4);
+ h.b.addBuff(h.e,{key:'blacksteel_energy[mark]'});h.run(1);assert.equal(enemyEnergy(h.b,h.e).count,3);
+ changeEnemyEnergy(h.b,h.e,7);h.b.removeBuff(h.e,'blacksteel_energy[mark]');h.run(10.2);
+ assert.deepEqual(enemyEnergy(h.b,h.e),{count:10,capacity:10,overloaded:false});h.run(1);assert.equal(enemyEnergy(h.b,h.e).overloaded,false);
+ h.b.addBuff(h.e,{key:'blacksteel_energy[mark]'});changeEnemyEnergy(h.b,h.e,1);assert.equal(enemyEnergy(h.b,h.e).overloaded,true);assert.deepEqual(h.b.errors,[]);
+});

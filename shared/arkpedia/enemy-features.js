@@ -398,6 +398,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1359_ekulsr:['native:energyGrenadeAttack'],enemy_1359_ekulsr_2:['native:energyGrenadeAttack'],
   enemy_1353_esabr:['native:energyMeleeAttack'],enemy_1353_esabr_2:['native:energyMeleeAttack'],
   enemy_1358_esheld:['native:energyMeleeAttack'],enemy_1358_esheld_2:['native:energyMeleeAttack'],
   enemy_1354_eghost:['native:energyGhostBody'],enemy_1354_eghost_2:['native:energyGhostBody'],

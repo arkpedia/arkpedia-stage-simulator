@@ -83,6 +83,7 @@ export async function buildEnemySupport() {
       bladeAnimations: { path: 'data/arkpedia-blade-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-blade-animations.json', root))) },
       knightAnimations: { path: 'data/arkpedia-knight-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-knight-animations.json', root))) },
       energyFeatures: { path: 'shared/arkpedia/enemy-energy-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-energy-features.js', root))) },
+      energyGrenadierAnimations: { path: 'data/arkpedia-energy-grenadiers-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-energy-grenadiers-animations.json', root))) },
       energyAnimations: { path: 'data/arkpedia-energy-basics-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-energy-basics-animations.json', root))) },
       funliveCasterFeatures: { path: 'shared/arkpedia/enemy-funlive-caster-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-funlive-caster-features.js', root))) },
       funliveCasterAnimations: { path: 'data/arkpedia-funlive-caster-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-funlive-caster-animations.json', root))) },

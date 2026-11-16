@@ -180,16 +180,40 @@ export function chargedAttacks(ordinary, charged, { initialSp, cost, increment, 
 export function markedMeleeProjectileAttack(params){
  validateMarkedProjectile(params);
  const {targeting,meleeAnimation,rangedAnimation,meleeScale=1,...transport}=params,shot=projectileSingleAttack({...transport,noAir:true});
- const sequence=ordinaryEnemyAttackSequence((_b,e,_a,c)=>c.targets[0]===e.blockedBy?meleeAnimation:rangedAnimation,
-  (b,e,target,cast)=>{
-   if(cast.animation===meleeAnimation)b.dealDamage(e,target,{amount:e.s.atk*meleeScale,type:transport.type,isAttack:true,isSkill:false,attackId:cast.attackId,applyWay:'melee'});
-   else shot.attack({targets:[target],attackId:cast.attackId},b,e);
-  });
+ const sequence=meleeProjectileSequence({meleeAnimation,rangedAnimation,meleeScale,type:transport.type},shot);
  return{...sequence,spawn(b,e,a){sequence.spawn(b,e,a);configureMarkedEnemyTargets(e,targeting);}};
 }
 function validateMarkedProjectile({targeting,meleeAnimation,rangedAnimation,meleeScale=1,type,speed,lifetime}){
- validateMarkedEnemyTargets(targeting);validateEnemyAttackAnimation(meleeAnimation);validateEnemyAttackAnimation(rangedAnimation);
+ validateMarkedEnemyTargets(targeting);validateDualProjectile({meleeAnimation,rangedAnimation,meleeScale,type,speed,lifetime});
+}
+function validateDualProjectile({meleeAnimation,rangedAnimation,meleeScale=1,type,speed,lifetime}){
+ validateEnemyAttackAnimation(meleeAnimation);validateEnemyAttackAnimation(rangedAnimation);
  if(!Number.isFinite(meleeScale)||meleeScale<0||!['phys','arts','true'].includes(type)||!Number.isFinite(speed)||speed<=0||!Number.isFinite(lifetime)||lifetime<=0)
   throw Error('Invalid marked melee projectile attack');
 }
 markedMeleeProjectileAttack.validate=validateMarkedProjectile;
+
+/** Blocking and ranged casts use the same capture/release machinery as marked
+ * carriers, without adding a marker filter to an ordinary native selector. */
+export function blockedMeleeProjectileModes(params){
+ validateBlockedProjectile(params);
+ const{meleeAnimation,rangedAnimation,meleeScale=1,groundOnly,...transport}=params;
+ const sequence=meleeProjectileSequence({meleeAnimation,rangedAnimation,meleeScale,type:transport.type},projectileCircleAttack(transport));
+ return{...sequence,spawn(b,e,a){sequence.spawn(b,e,a);const prior=e.profile.canTarget;
+  e.profile.canTarget=unit=>e.blockedBy?unit===e.blockedBy:(!groundOnly||!unit.isFlying)&&(!prior||prior(unit));}};
+}
+function validateBlockedProjectile(params){
+ validateDualProjectile(params);
+ const circle=params.radius!==undefined;
+ if(params.damageScale!==undefined&&(!Number.isFinite(params.damageScale)||params.damageScale<0)||typeof params.groundOnly!=='boolean'||typeof params.noAir!=='boolean'
+  ||circle&&(!Number.isFinite(params.radius)||params.radius<=0||params.radius>32||params.width!==undefined||params.height!==undefined)
+  ||!circle&&(!Number.isFinite(params.width)||params.width<=0||params.width>64||!Number.isFinite(params.height)||params.height<=0||params.height>64))throw Error('Invalid blocked projectile area');
+}
+blockedMeleeProjectileModes.validate=validateBlockedProjectile;
+function meleeProjectileSequence({meleeAnimation,rangedAnimation,meleeScale=1,type},shot){
+ return ordinaryEnemyAttackSequence((_b,e,_a,c)=>c.targets[0]===e.blockedBy?meleeAnimation:rangedAnimation,
+  (b,e,target,cast)=>{
+   if(cast.animation===meleeAnimation)b.dealDamage(e,target,{amount:e.s.atk*meleeScale,type,isAttack:true,isSkill:false,attackId:cast.attackId,applyWay:'melee'});
+   else shot.attack({targets:[target],attackId:cast.attackId},b,e);
+  });
+}
