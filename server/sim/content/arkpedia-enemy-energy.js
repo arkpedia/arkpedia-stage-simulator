@@ -1,3 +1,4 @@
+import {recordNativeBattleInfo,validateNativeBattleInfo} from './arkpedia-native-battle-info.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {ADD_KEYS,MUL_KEYS} from '../buffs.js';
 const stores=new WeakMap(),allowedMods=new Set([...ADD_KEYS,...MUL_KEYS]);
@@ -25,7 +26,7 @@ export function nativeEnergyMeter(params){
   const finish=()=>{s.overload=null;s.retryOverload=false;if(e.findBuff('blacksteel_energy[mark]'))clear(b,e,s);};
   const attached=b.addBuff(e,{key:'act28side_over_energy_buff',source:e,duration:overload.duration,mods:overload.mods,
    onRemove:finish,onExpire:finish});
-  if(attached&&live(s)&&e.buffs.includes(attached)){s.overload=attached;s.retryOverload=false;}else{if(attached)b.removeBuff(e,attached);s.retryOverload=live(s)&&s.count>=capacity;}
+  if(attached&&live(s)&&e.buffs.includes(attached)){s.overload=attached;s.retryOverload=false;if(overload.log)recordNativeBattleInfo(b,e,overload.log);}else{if(attached)b.removeBuff(e,attached);s.retryOverload=live(s)&&s.count>=capacity;}
  };
  return{
   spawn(b,e,a){
@@ -61,6 +62,7 @@ export function nativeEnergyMeter(params){
 }
 function validate({capacity,initial,perStack,overload,decay}){
  const mods=v=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).length&&Object.entries(v).every(([k,n])=>allowedMods.has(k)&&Number.isFinite(n));
+ if(overload?.log!==undefined)validateNativeBattleInfo(overload.log);
  if(!Number.isSafeInteger(capacity)||capacity<1||capacity>1024||!Number.isSafeInteger(initial)||initial<0||initial>capacity||!mods(perStack)
   ||!overload||!Number.isFinite(overload.duration)||overload.duration<=0||!mods(overload.mods)
   ||decay!==undefined&&(!Number.isFinite(decay.interval)||decay.interval<=0||!Number.isSafeInteger(decay.amount)||decay.amount<1))throw Error('Invalid native energy meter');

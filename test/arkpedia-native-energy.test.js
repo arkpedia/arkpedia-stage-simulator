@@ -46,3 +46,12 @@ test('the retained marker guards decay and overload-finish clearing without rest
  assert.deepEqual(enemyEnergy(h.b,h.e),{count:10,capacity:10,overloaded:false});h.run(1);assert.equal(enemyEnergy(h.b,h.e).overloaded,false);
  h.b.addBuff(h.e,{key:'blacksteel_energy[mark]'});changeEnemyEnergy(h.b,h.e,1);assert.equal(enemyEnergy(h.b,h.e).overloaded,true);assert.deepEqual(h.b.errors,[]);
 });
+test('optional SIMPLE overload counters retain owner/battle identity and do not count rejected attachments',async()=>{
+ const {nativeBattleInfo,recordNativeBattleInfo}=await import('../server/sim/content/arkpedia-native-battle-info.js');
+ const h=fixture({...spec,overload:{...spec.overload,log:{key:'fixture_overload',addition:1}}}),other=fixture(),events=[];h.b.on('nativeBattleInfo',c=>events.push(c));
+ const reject=h.b.on('beforeBuff',c=>{if(c.buff.key==='act28side_over_energy_buff')c.cancel=true;});changeEnemyEnergy(h.b,h.e,10);assert.equal(nativeBattleInfo(h.b,'fixture_overload'),0);h.b.off(reject);h.run(.1);
+ assert.equal(nativeBattleInfo(h.b,'fixture_overload'),1);assert.equal(nativeBattleInfo(h.b,'fixture_overload',h.e),1);assert.equal(nativeBattleInfo(other.b,'fixture_overload'),0);assert.equal(events.length,1);
+ h.b.removeBuff(h.e,'act28side_over_energy_buff');changeEnemyEnergy(h.b,h.e,10);assert.equal(nativeBattleInfo(h.b,'fixture_overload'),2);
+ assert.throws(()=>recordNativeBattleInfo(h.b,null,{key:'fixture_overload',addition:1}),/owner/);assert.equal(nativeBattleInfo(h.b,'fixture_overload'),2);
+ for(const addition of[-1,.5,Infinity])assert.throws(()=>recordNativeBattleInfo(h.b,h.e,{key:'fixture_overload',addition}));assert.deepEqual(h.b.errors,[]);
+});

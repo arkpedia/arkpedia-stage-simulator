@@ -1,3 +1,4 @@
+import {ENERGY_REWARD_TEMPLATE as reward,sourceEnergyGrantBuff} from './enemy-energy-grant-contract.js';
 import {nativeBuffProgram} from './native-buff-programs.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
@@ -8,11 +9,7 @@ export const isRadioactiveSlug=r=>ids.includes(r.prefabKey);
 const fields=(v,w)=>!!v&&Object.entries(w).every(([k,x])=>same(v[k],x));
 const zero=v=>v?.m_FileID===0&&v.m_PathID==='0';
 const type=name=>`Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`,node=(name,fields={})=>({$type:type(name),...fields});
-const contains=key=>node('CheckContainsBuff',{_targetType:'TARGET',_buffKeys:[key],isAND:true,_loadFromBlackboard:false,_checkBuffSource:false,_buffSourceType:'BUFF_SOURCE',_checkSourceHost:false});
-const reward={templateKey:'enemy_esabr_add_energy',effectKey:'',onEventPriority:'DEFAULT',eventToActions:{ON_BUFF_START:[contains('blacksteel_energy[mark]'),contains('act28side_over_energy_buff'),node('IfNot'),
- node('AddAbilityBlackboard',{_blackboardKeys:'blacksteel_energy',_addBlackboardKey:'add_count',_fromOwnerBlackBoard:true,_isMinus:false,_isLimitValue:false,_limitValueKey:null,_limitValue:0,_abilityName:'blacksteel_energy',_abilityOwnerType:'BUFF_OWNER',_isUpdateSelector:false}),
- node('TriggerSpecifiedAbility',{_ownerType:'BUFF_OWNER',_targetType:'BUFF_OWNER',_abilityName:'blacksteel_energy',_checkCanUseAblityFlag:false,_triggerStealAttrAbility:false,_triggerEnergyBuffAbility:true,_triggerProjectileToTileOnceAbilityBySubSelector:false})]}};
-const buff={attributes:{abnormalFlags:null,abnormalImmunes:null,abnormalAntis:null,abnormalCombos:null,abnormalComboImmunes:null,attributeModifiers:null},buffKey:'enemy_esabr_add_energy',loadFromDB:false,isDurableBuff:false,isDamageMissable:false,isSilenceable:false,isStunnable:false,isFreezable:false,isLevitatable:false,statusResistable:'AUTOMATIC',templateKey:'enemy_esabr_add_energy',disableOverride:false,overrideKey:null,overrideType:'DEFAULT',maxStackCnt:1,refreshRemainingTimeWhenStackMax:false,clearAllStackCntWhenTimeUp:false,maxValidStackCnt:-1,independentCharacterSource:false,overrideEffectKey:null,overrideOnEventPriority:false,onEventPriority:'DEFAULT',audioSignal:null,lifeTimeType:'IMMEDIATELY',takeSnapshotWhenExtend:false,durationKey:null,lifeTime:0,triggerLifeType:'IMMEDIATELY',triggerCnt:0,triggerInterval:-1,waitFirstTriggerInterval:true,firstTriggerInterval:-1,priority:-1,priorityBBKeys:null,stripBlackboardParamsWithBuffKey:false,blackboard:null};
+const buff=sourceEnergyGrantBuff();
 const parent={templateKey:'enemy_eslime_add_energy_global',effectKey:'',onEventPriority:'DEFAULT',eventToActions:{ON_OWNER_KILLED:[
  node('CheckAbnormalFlag',{_abnormalFlag:'SILENCED',_targetType:'SOURCE',_isUnset:true}),node('EmitProjectile',{_mountPoint:'MUZZLE',_emitOnRootTile:false,_ev:'ON_REACHED_TARGET',_actions:[
   node('CreateBuffToCertainSideUnits',{_sideMask:'ENEMY',_buff:buff,_isDerivedBuff:false,_noSource:true,_finishDerivedBuffIfParentFinish:false})],_overwriteActions:true,_buffDataList:[],_overwriteBuffs:false,_sourceType:'BUFF_OWNER',_targetType:'TARGET',_targetPosFromBB:false,_projectileKey:'',_useProjectileAsTarget:false,_extraBlackboard:false,_overwriteBlackboard:false,_useTileAsTarget:false,_cacheAtkToActions:false,_useTargetRootTile:false,_useAbilityTileSelector:false,_abilityName:''})]}};

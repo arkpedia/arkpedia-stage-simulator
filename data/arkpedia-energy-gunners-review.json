@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "scope": "Paramilitary Sniper ranged attacks, independently timed periodic energy buff, overload and native SIMPLE counter; controlled fixtures, not original battery-stage clears or exact client-frame arbitration.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-energy-features.js": "21da11d4740cc817c208111d7004901b337f4b81a7c64986d5cd3c36a76d4ad7",
+    "shared/arkpedia/enemy-energy-gunner-contract.js": "31809ac6e1ac2de3d1ae3a0b5e2f532725992359bcdbf7c578416b6be95a9fe8",
+    "shared/arkpedia/enemy-energy-grant-contract.js": "d3e76793c56e74660b49a19cead2dbba55582c04adc2b42ffd7dbdc04c13f574",
+    "shared/arkpedia/enemy-radioactive-features.js": "647852ddbce5e1599615dfcfc05377fb53591839702c99e0a9773de57cc5da30",
+    "server/sim/content/arkpedia-enemy-energy-emitter.js": "5deb0a28356c5978158735311dc93cae25c7330db6354b97a478cac69c0631b2",
+    "server/sim/content/arkpedia-enemy-energy.js": "ddabab396296a7f332a4a4fe14d311e9c18427e0e79a9fe6440fa40c71fec402",
+    "server/sim/content/arkpedia-native-battle-info.js": "6fe24147ffe6de9845da5b4403f42ec383e30b3e97110b8ded677c279b02f195",
+    "server/sim/content/arkpedia-enemy-aura-targets.js": "778f00fb64ba49f45dbb2b62ce760a532cfc779ca8084322a44a371485bfd63a",
+    "server/sim/content/arkpedia-enemy-circle-aura.js": "59091bd619d8abc0ea3ef2ab7615dbe31e5835868c0fe3b25953231545b737bb",
+    "server/sim/content/arkpedia-enemy-projectiles.js": "b1910dfcbddecd248677fdadb3cd42de60ff22c2ec11e7a0f5c8331ea97188fa",
+    "server/sim/content/arkpedia-enemy-timed-casts.js": "49771b4f77f6ba98708de655dee7e0d783c04103c3a3e4601c1d4425e908808b",
+    "data/arkpedia-energy-gunners-animations.json": "17caac935a705b985a41b962254f9a2453f6e947ae4d323748f506e7ac848dca",
+    "data/arkpedia-enemy-native-abilities.json": "ec9cb0ebb7dce67998212a0269dd526d19a6b3823ec8694ea46987aadba0144c",
+    "data/arkpedia-enemy-support.json": "637c19e73f0ff2a8ea75702c6e6bde04b596912ce1ae399567e37a2114c0e8f2",
+    "data/arkpedia-enemy-runtime-plan-report.json": "f63be5be092480fcc3a103e09bcbcd295aec6b4550be5047d72acbd42e9bd613",
+    "test/arkpedia-energy-gunners.test.js": "0fc78d820669a55da9122ae21bc32e202590311c602ea34ad694b14de268e103",
+    "test/arkpedia-native-energy.test.js": "2866a9026c909e1f4b9f1467191a0c8da3f9559620f2d359e02dc252cb119e54"
+  },
+  "tests": {
+    "focusedRegressions": 133,
+    "broad": {
+      "tests": 1806,
+      "passed": 1801,
+      "skipped": 3,
+      "knownChimeraFailures": 2
+    }
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Paramilitary Sniper projectile, independent periodic grant, overload and native counter fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-energy-emitter"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1356_egun",
+          "beforeGrant": 0,
+          "firstGrant": 1,
+          "firstDonor": 5,
+          "finished": 5,
+          "donorFinished": 9,
+          "grantExpired": true,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 200,
+              "time": 0.5666666666666667,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 200,
+              "time": 3.6,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 220.00000000000003,
+              "time": 6.633333333333333,
+              "grant": true
+            },
+            {
+              "type": "phys",
+              "amount": 280,
+              "time": 9.666666666666666,
+              "grant": true
+            }
+          ],
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "counter": 1
+        },
+        {
+          "id": "enemy_1356_egun_2",
+          "beforeGrant": 0,
+          "firstGrant": 1,
+          "firstDonor": 5,
+          "finished": 5,
+          "donorFinished": 9,
+          "grantExpired": true,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 250,
+              "time": 11.166666666666666,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 250,
+              "time": 14.2,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 275,
+              "time": 17.233333333333334,
+              "grant": true
+            },
+            {
+              "type": "phys",
+              "amount": 350,
+              "time": 20.266666666666666,
+              "grant": true
+            }
+          ],
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "counter": 1
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Paramilitary Sniper projectile, independent periodic grant, overload and native counter fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-energy-emitter"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1356_egun",
+          "beforeGrant": 0,
+          "firstGrant": 1,
+          "firstDonor": 5,
+          "finished": 5,
+          "donorFinished": 9,
+          "grantExpired": true,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 200,
+              "time": 0.5666666666666667,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 200,
+              "time": 3.6,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 220.00000000000003,
+              "time": 6.633333333333333,
+              "grant": true
+            },
+            {
+              "type": "phys",
+              "amount": 280,
+              "time": 9.666666666666666,
+              "grant": true
+            }
+          ],
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "counter": 1
+        },
+        {
+          "id": "enemy_1356_egun_2",
+          "beforeGrant": 0,
+          "firstGrant": 1,
+          "firstDonor": 5,
+          "finished": 5,
+          "donorFinished": 9,
+          "grantExpired": true,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 250,
+              "time": 11.166666666666666,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 250,
+              "time": 14.2,
+              "grant": false
+            },
+            {
+              "type": "phys",
+              "amount": 275,
+              "time": 17.233333333333334,
+              "grant": true
+            },
+            {
+              "type": "phys",
+              "amount": 350,
+              "time": 20.266666666666666,
+              "grant": true
+            }
+          ],
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "counter": 1
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1356_egun",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 343.06529235839844,
+            "height": 364.0722850561142
+          },
+          {
+            "id": "enemy_1356_egun_2",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 343.06529235839844,
+            "height": 364.0722850561142
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1356_egun",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 343.06529235839844,
+            "height": 364.0722850561142
+          },
+          {
+            "id": "enemy_1356_egun_2",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 343.06529235839844,
+            "height": 364.0722850561142
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "assetCommit": "00bc5e8543e90359987c40dbdfc835011d3c4ff4",
+  "coverage": {
+    "enemies": 754,
+    "totalEnemies": 2163,
+    "databaseLevels": 819,
+    "runtimeKinds": 208,
+    "pinnedStageGraphs": 970
+  },
+  "timingEvidence": {
+    "enumSource": "https://github.com/AdoreJc/ArknightsDB/blob/95ce0f0823f233389fa97e0d7fc9d1759e58464e/source/dump/TimeMode.md",
+    "scope": "Enum declaration confirms FROM_ANIMATION=1. Timings and buff clocks come from separately pinned original CN content.",
+    "nativeBodyResearch": "data/arkpedia-radioactive-slugs-review.json lifecycleResearch records archived projectile target/arrival and animation evidence; not a fresh extraction or live-client recording."
+  }
+}

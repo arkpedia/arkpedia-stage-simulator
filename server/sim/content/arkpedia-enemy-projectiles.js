@@ -49,8 +49,9 @@ export function projectileSingleAttack(params) { return projectileAreaAttack({ .
 export function animatedProjectileAttack({animation,...transport}){
   validateProjectileAnimation({animation});
   const shot=projectileSingleAttack(transport);
-  return ordinaryEnemyAttackSequence(()=>animation,(b,e,target,cast)=>
+  const sequence=ordinaryEnemyAttackSequence(()=>animation,(b,e,target,cast)=>
     shot.attack({targets:[target],attackId:cast.attackId},b,e));
+  return {...sequence,spawn(b,e,a){shot.spawn(b,e);sequence.spawn(b,e,a);}};
 }
 const validateProjectileAnimation=({animation})=>validateEnemyAttackAnimation(animation);
 animatedProjectileAttack.validate=validateProjectileAnimation;

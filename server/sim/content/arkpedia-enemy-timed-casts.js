@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /** Prioritized independent cooldowns with one active cast. Content supplies
  * selection, release effects and source clocks; interruption owns cleanup. */
-export function timedEnemyCasts(specs, { flags = {}, immunities = [], silenceable = true, canCast = () => true } = {}) {
+export function timedEnemyCasts(specs, { flags = {}, immunities = [], silenceable = true, canCast = () => true, beforeCast = () => {} } = {}) {
   const finish = (b, e, a) => {
     if (a.cast && specs[a.cast.index].cooldownFromEnd) a.clocks[a.cast.index] = specs[a.cast.index].cooldown;
     if (a.cast) e.profile.noAttack = a.cast.previousNoAttack;
@@ -33,6 +33,7 @@ export function timedEnemyCasts(specs, { flags = {}, immunities = [], silenceabl
         if (a.clocks[i] > 1e-9) continue;
         const s = specs[i], targets = s.select(b, e);
         if (!targets.length && s.requiresTargets !== false) continue;
+        beforeCast(b,e,i);if(!e.alive||!e.deployed)return;
         a.clocks[i] = s.cooldown; a.cast = { index: i, elapsed: 0, released: false, targets, previousNoAttack: e.profile.noAttack }; a.sequence++;
         e.profile.noAttack = true; e.attackControlEpoch = (e.attackControlEpoch ?? 0) + 1;
         b.addBuff(e, { key: 'ab:timedCast', flags: { noMove: true, ...flags } });

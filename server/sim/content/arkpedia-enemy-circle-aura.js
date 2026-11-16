@@ -1,3 +1,4 @@
+import {sameSideEnemyAuraTarget} from './arkpedia-enemy-aura-targets.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {OwnedStageAura} from './arkpedia-stage-auras.js';
 import {ADD_KEYS,MUL_KEYS} from '../buffs.js';
@@ -9,8 +10,7 @@ export function nativeCircleStatAura(params){
  const update=(b,e,a)=>{
   if(!a.aura)return;
   const active=e.alive&&e.deployed&&!e.hidden&&!e.removed&&e.deploySeq===a.life&&!(silenceable&&e.s.flags.silence);
-  a.aura.update(active?b.units.filter(u=>u!==e&&u.side===e.side&&u.alive&&u.deployed&&!u.hidden&&!u.removed
-   &&(u.kind!=='device'||includeDevices&&!u.obstacle)&&!u.s.flags.untargetable&&!u.s.flags.isolated&&!u.s.flags.sleep
+  a.aura.update(active?b.units.filter(u=>u!==e&&sameSideEnemyAuraTarget(e,u,{includeDevices})
    &&bodyInRadius(u,e.x,e.y,radius)):[]);
   if(!e.alive||!e.deployed||e.deploySeq!==a.life)a.aura.clear();
  };
