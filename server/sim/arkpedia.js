@@ -42,6 +42,8 @@ import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 import { installEnemyFeatures,enemyRuntimeFor } from './content/arkpedia-enemy-runtime.js';
 import { sealsStageRoute } from './content/arkpedia-stage-route-blocking.js';
 import { StageReeds } from './content/arkpedia-stage-reeds.js';
+import { installHuiMingTiles } from './content/arkpedia-hui-ming-tiles.js';
+import { validateHuiMingProgram } from '../../shared/arkpedia/stage-hui-ming.js';
 import { StageMire } from './content/arkpedia-stage-mire.js';
 import { StageWater } from './content/arkpedia-stage-water.js';
 import { configureStageObstacle } from './content/arkpedia-stage-obstacles.js';
@@ -322,6 +324,8 @@ export class StandardBattle extends Battle {
     this._installHighTide(data.stage.tide);
     this._installDeepWater(data.stage.deepWater);
     this.stageReeds = data.stage.reeds ? new StageReeds(this, data.stage.reeds) : null;
+    // Hui-Ming mark and switch tiles: one battle-level controller over the shared attribute account.
+    if (data.stage.huiMing) { const p = validateHuiMingProgram(data.stage.huiMing); installHuiMingTiles(this, { marks: p.marks, switches: p.switches, interval: p.scanInterval }); }
     this.stageMire = data.stage.mire ? new StageMire(this, data.stage.mire) : null;
     this.stageWater = data.stage.water ? new StageWater(this, data.stage.water) : null;
     this.unitLimit = config.unit_limit;

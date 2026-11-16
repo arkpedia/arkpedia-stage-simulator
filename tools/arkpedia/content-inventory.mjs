@@ -22,6 +22,7 @@ import { prepareStageWaves } from './stage-waves.mjs';
 import { prepareStageBranches } from './stage-branches.mjs';
 import { prepareStageMode } from './stage-mode-rules.mjs';
 import { prepareStageReeds } from './stage-reeds.mjs';
+import { prepareStageHuiMing } from './stage-hui-ming.mjs';
 import { prepareStageMire } from './stage-mire.mjs';
 import { prepareStageWater } from './stage-water.mjs';
 import { groupStageBlockers } from './content-priorities.mjs';
@@ -115,6 +116,11 @@ export async function planStage(context, id, { compile = true, waves = false } =
     const prepared = await prepareStageReeds({ root: context.root, rules, compiledRules, geometry });
     reeds = prepared.reeds; localSources.push(...prepared.sources);
   } catch (error) { blockers.push({ kind: 'stage-data', id: 'Reeds terrain', message: error.message }); }
+  let huiMing;
+  try {
+    const prepared = await prepareStageHuiMing({ root: context.root, geometry });
+    huiMing = prepared.huiMing; localSources.push(...prepared.sources);
+  } catch (error) { blockers.push({ kind: 'stage-data', id: 'Hui-Ming tiles', message: error.message }); }
   let mire;
   try {
     const prepared = await prepareStageMire({ root: context.root, rules, geometry, devices });
@@ -226,7 +232,7 @@ export async function planStage(context, id, { compile = true, waves = false } =
     } catch (error) { blockers.push({ kind: 'wave-program', id, message: error.message }); }
   }
   if (compile && blockers.length === 0) {
-    try { stage = compileStage({ ...context, records, support, source, geometry, devices, deviceInstances, conditional, rules, environment, waveProgram, mode, water, mire, reeds, enemyBlackboards, enemyAttributes, enemyAliases: localEnemies.aliases }); }
+    try { stage = compileStage({ ...context, records, support, source, geometry, devices, deviceInstances, conditional, rules, environment, waveProgram, mode, water, mire, reeds, huiMing, enemyBlackboards, enemyAttributes, enemyAliases: localEnemies.aliases }); }
     catch (error) { blockers.push({ kind: 'compile', id, message: error.message }); }
   }
   const uniqueLocalSources = new Map();

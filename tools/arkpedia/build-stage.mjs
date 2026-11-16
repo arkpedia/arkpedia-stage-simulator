@@ -17,6 +17,8 @@ import { powerArmorDeviceDefinition } from '../../shared/arkpedia/stage-power-ar
 import { enemyRuntimeRecord } from '../../shared/arkpedia/enemy-features.js';
 import { prepareStageEnemyBlackboards } from './stage-enemy-blackboards.mjs';
 import { prepareStageReeds } from './stage-reeds.mjs';
+import { prepareStageHuiMing } from './stage-hui-ming.mjs';
+import { hasHuiMingTiles } from '../../shared/arkpedia/stage-hui-ming.js';
 import { REED_TILE_KEYS } from '../../shared/arkpedia/stage-reeds.js';
 import { prepareStageMire } from './stage-mire.mjs';
 import { prepareStageWater } from './stage-water.mjs';
@@ -63,13 +65,14 @@ export const STANDARD_STAGE_MODES = new Set(['main', 'sub', 'activity', 'event',
 /** Compile one stage without mutating inputs or writing files. Unsupported content
  * fails before an addition can reach the catalogue. */
 export function compileStage({ source, geometry: inputGeometry, playback = {}, mvp, records, support,
-  tokenData, supportOperators = { operators: {} }, devices = [], deviceInstances = {}, conditional = [], rules = null, environment = [], waveProgram, mode = null, water = null, mire = null, reeds = null, enemyAliases = {}, enemyBlackboards = {}, enemyAttributes = null }) {
+  tokenData, supportOperators = { operators: {} }, devices = [], deviceInstances = {}, conditional = [], rules = null, environment = [], waveProgram, mode = null, water = null, mire = null, reeds = null, huiMing = null, enemyAliases = {}, enemyBlackboards = {}, enemyAttributes = null }) {
   for (const key of ['code', 'name']) if (typeof source[key] !== 'string' || !source[key].trim())
     throw Error(`Missing stage ${key}`);
   const compiledRules = compileStageRules(source, rules);
   if (Object.keys(compiledRules?.predefinedOperators ?? {}).length && !waveProgram?.predefined)
     throw Error('Predefined-operator rules require the original actor/card program');
   if (inputGeometry.tileLegend.some(t => REED_TILE_KEYS.includes(t.key)) && !reeds) throw Error('Missing original Reeds terrain program');
+  if (hasHuiMingTiles(inputGeometry) !== !!huiMing) throw Error(huiMing ? 'Hui-Ming tile program has no matching terrain' : 'Missing reviewed Hui-Ming tile program');
   if ((devices.some(d => d.key === 'trap_098_mire') || inputGeometry.tileLegend.some(t => t.key === 'tile_mire')) && !mire) throw Error('Missing original Mire controller program');
   if (devices.some(d => d.key === 'trap_042_tidectrl') && !water) throw Error('Missing original water controller program');
   if (devices.some(d => stageDeviceSpec(d)?.scheduled) && !waveProgram) throw Error('Scheduled devices require the original wave program');
@@ -159,6 +162,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     ...(water ? { water } : {}),
     ...(mire ? { mire } : {}),
     ...(reeds ? { reeds } : {}),
+    ...(huiMing ? { huiMing } : {}),
     ...(waveProgram ? { waveProgram } : {}),
     ...(environment.length ? { environment: structuredClone(environment) } : {}),
     ...(Object.keys(enemyAliases).length ? { enemyAliases } : {}),
@@ -330,9 +334,10 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const deviceInstances = {};
   ({ devices } = await prepareStageDeviceInstances({ root, rules, compiledRules: compileStageRules(source, rules), devices, instances: deviceInstances }));
   const { reeds } = await prepareStageReeds({ root, rules, compiledRules: compileStageRules(source, rules), geometry });
+  const { huiMing } = await prepareStageHuiMing({ root, geometry });
   const { mire } = await prepareStageMire({ root, rules, geometry, devices });
   const { water } = await prepareStageWater({ root, rules, geometry, devices });
-  const stage = compileStage({ source, geometry, playback, mvp, records, support, tokenData, supportOperators, devices, deviceInstances, conditional, rules, environment, water, mire, reeds, enemyBlackboards, enemyAttributes });
+  const stage = compileStage({ source, geometry, playback, mvp, records, support, tokenData, supportOperators, devices, deviceInstances, conditional, rules, environment, water, mire, reeds, huiMing, enemyBlackboards, enemyAttributes });
   await writeFile(args.out, JSON.stringify(stage, null, 1) + '\n');
   console.log(`Built ${stage.code}: ${stage.geometry.rows}x${stage.geometry.cols}, ${stage.geometry.waves.length} waves, ${Object.keys(stage.enemies).length} enemies -> ${args.out}`);
 }
