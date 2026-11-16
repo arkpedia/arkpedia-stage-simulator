@@ -1,4 +1,4 @@
-import {plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPTION,isHuiMingRecord,huiMingNative,isHuiMingArcher,isHuiMingBlockee,HUI_MING_ARCHER_DESCRIPTION,HUI_MING_BLOCK_DESCRIPTION,HUI_MING_BLOCK_ABILITY} from './enemy-hui-ming-features.js';
+import {plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPTION,isHuiMingRecord,huiMingNative,isHuiMingArcher,isHuiMingBlockee,HUI_MING_ARCHER_DESCRIPTION,HUI_MING_BLOCK_DESCRIPTION,HUI_MING_BLOCK_ABILITY,isHuiMingBlaster,HUI_MING_BLAST_DESCRIPTION,HUI_MING_BLAST_ABILITY} from './enemy-hui-ming-features.js';
 import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
@@ -454,7 +454,12 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:yinyang': { matchesRecord: isHuiMingRecord, covers: huiMingNative, ability: HUI_MING_ABILITY, note: 'shared Hui-Ming attribute account',
     explains: (text, r) => isHuiMingArcher(r) && text === HUI_MING_ARCHER_DESCRIPTION },
   // 'Blindey': same-attribute block admission plus the blocker-side release check; claims the checker toggle and the visual passive.
-  [`ability:${HUI_MING_BLOCK_DESCRIPTION}`]: { matchesRecord: isHuiMingBlockee, covers: huiMingNative, nativeClaim: () => ({ active: 2 }), ability: HUI_MING_BLOCK_ABILITY },
+  [`ability:${HUI_MING_BLOCK_DESCRIPTION}`]: { matchesRecord: r => isHuiMingBlockee(r) || isHuiMingBlaster(r), covers: huiMingNative, nativeClaim: (_p, n) => n.BlockableTick ? { active: 2 } : {},
+    ability: r => isHuiMingBlaster(r) ? null : HUI_MING_BLOCK_ABILITY },
+  // 'Smarty': the blast component owns block admission, the death blast, the neighbour auras and all three scale talents.
+  [`ability:${HUI_MING_BLAST_DESCRIPTION}`]: { matchesRecord: isHuiMingBlaster, covers: huiMingNative, ability: HUI_MING_BLAST_ABILITY },
+  'talent:boomtosame': { matchesRecord: isHuiMingBlaster, covers: huiMingNative },
+  'talent:boomtodiff': { matchesRecord: isHuiMingBlaster, covers: huiMingNative },
   ...FAMIGLIA_CASTER_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
@@ -1280,8 +1285,8 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'other enemies within range_radius gain DEF +def (zero for Frost)', explains: /^Increases the DEF of surrounding enemy units$/ },
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
-  'talent:boom': { covers: (r, n) => coversDeathBlast(r, 'boom') || cartNative(r, n) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].covers(r, n),
-    ability: r => r.prefabKey.startsWith('enemy_1089_ltlntc') ? GRAMOPHONE_ENEMY_FEATURES['talent:boom'].ability
+  'talent:boom': { covers: (r, n) => isHuiMingBlaster(r) ? huiMingNative(r, n) : coversDeathBlast(r, 'boom') || cartNative(r, n) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].covers(r, n),
+    ability: r => isHuiMingBlaster(r) ? null : r.prefabKey.startsWith('enemy_1089_ltlntc') ? GRAMOPHONE_ENEMY_FEATURES['talent:boom'].ability
       : cart(r) ? cartAbility : { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
     stageAdditions: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0 },
     stageMultipliers: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0,

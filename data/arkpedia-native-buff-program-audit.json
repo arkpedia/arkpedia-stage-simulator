@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "b520a742e37952ff99b53a2c2c7c45e0110f6cb413e0a9c959fe8eb521e7aace",
-    "data/arkpedia-enemy-support.json": "1772240840c6283442d84c09a55113841bf6b1b109faa9a4d6b2caff4136acf5",
+    "data/arkpedia-enemy-native-abilities.json": "f177bfedc3b0887e753976bdc68c39c9ff90be9630499338e973c00c3639204b",
+    "data/arkpedia-enemy-support.json": "2aa592d2ece8e7cd839af4a2639b4f45fd67398e51cf6073d3c0630fcef1e709",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "718ae4f625a406cd8bbee2fd9014f2b4d38f5415c0cda900bc48238e299dd501",
     "shared/arkpedia/behavior-program.js": "8f1545ded28d8900adc3099d63d4a50e56c42cc5eab78d8a0a21dd392e44c9ea",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 416,
-  "templates": 257,
+  "retainedPrefabs": 418,
+  "templates": 262,
   "compiled": 23,
-  "refused": 234,
+  "refused": 239,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -138,6 +138,8 @@
         "enemy_1124_spbow_2",
         "enemy_1125_spshld",
         "enemy_1125_spshld_2",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1127_sptrkg",
         "enemy_1127_sptrkg_2",
         "enemy_1129_spklr",
@@ -158,6 +160,8 @@
         "enemy_1124_spbow_2",
         "enemy_1125_spshld",
         "enemy_1125_spshld_2",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1127_sptrkg",
         "enemy_1127_sptrkg_2",
         "enemy_1129_spklr",
@@ -178,6 +182,8 @@
         "enemy_1124_spbow_2",
         "enemy_1125_spshld",
         "enemy_1125_spshld_2",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1127_sptrkg",
         "enemy_1127_sptrkg_2",
         "enemy_1129_spklr",
@@ -432,6 +438,8 @@
         "enemy_1121_lifbos_2",
         "enemy_1125_spshld",
         "enemy_1125_spshld_2",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1127_sptrkg",
         "enemy_1127_sptrkg_2",
         "enemy_1135_redman",
@@ -2393,6 +2401,46 @@
       "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
     },
     {
+      "key": "enemy_spslme_t[boom]",
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: source kill"
+    },
+    {
+      "key": "enemy_spslme_t[default_boom]",
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_spslme_t[detect]",
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff"
+    },
+    {
+      "key": "enemy_spslme_t[to_boom]",
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff"
+    },
+    {
       "key": "enemy_sptrkg_t",
       "consumers": [
         "enemy_1127_sptrkg",
@@ -2918,6 +2966,16 @@
       "reason": "Unsupported native behaviour: predicate CheckHeightTypeOfCharacterRootTile"
     },
     {
+      "key": "projectile_on_buff_start",
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: binding"
+    },
+    {
       "key": "projectile_on_killed",
       "consumers": [
         "enemy_1089_ltlntc",
@@ -3242,6 +3300,8 @@
         "enemy_1124_spbow_2",
         "enemy_1125_spshld",
         "enemy_1125_spshld_2",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1127_sptrkg",
         "enemy_1127_sptrkg_2",
         "enemy_1129_spklr",
@@ -3282,6 +3342,7 @@
         "enemy_sgbdg_death_rattle",
         "enemy_sgelder_aura_vg",
         "enemy_sgman_death_rattle",
+        "enemy_spslme_t[default_boom]",
         "enemy_sybox_t[logkilled]",
         "enemy_wdkght_t",
         "log_killed",
@@ -3301,6 +3362,8 @@
         "enemy_1105_tyokai",
         "enemy_1105_tyokai_2",
         "enemy_1106_byokai",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1133_harchn",
         "enemy_1133_harchn_2",
         "enemy_1178_dscorp",
@@ -3854,6 +3917,24 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff",
+      "templates": [
+        "enemy_ducrb_checker",
+        "enemy_dumcy_checker",
+        "enemy_spslme_t[detect]",
+        "enemy_spslme_t[to_boom]"
+      ],
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
+        "enemy_1286_dumcy",
+        "enemy_1286_dumcy_2",
+        "enemy_1287_ducrb",
+        "enemy_1287_ducrb_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: fixed HP loss",
       "templates": [
         "fixed_value_damage_ontrigger[pure]",
@@ -3932,20 +4013,6 @@
         "enemy_1171_durokt",
         "enemy_1171_durokt_2",
         "enemy_2070_skzfbx"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff",
-      "templates": [
-        "enemy_ducrb_checker",
-        "enemy_dumcy_checker"
-      ],
-      "consumers": [
-        "enemy_1286_dumcy",
-        "enemy_1286_dumcy_2",
-        "enemy_1287_ducrb",
-        "enemy_1287_ducrb_2"
       ],
       "unsupportedConsumers": []
     },
@@ -4063,6 +4130,20 @@
         "enemy_1288_duskls_2",
         "enemy_1292_duskld",
         "enemy_1292_duskld_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: binding",
+      "templates": [
+        "enemy_bomscr_boom_switch_mode",
+        "projectile_on_buff_start"
+      ],
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
       ],
       "unsupportedConsumers": []
     },
@@ -4389,17 +4470,6 @@
       "unsupportedConsumers": []
     },
     {
-      "reason": "Unsupported native behaviour: binding",
-      "templates": [
-        "enemy_bomscr_boom_switch_mode"
-      ],
-      "consumers": [
-        "enemy_1218_bomscr",
-        "enemy_1218_bomscr_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
       "reason": "Unsupported native behaviour: event ON_ABILITY_SPELL_ON",
       "templates": [
         "aruarw_night_buff_effect_holder"
@@ -4531,6 +4601,8 @@
         "enemy_1124_spbow_2",
         "enemy_1125_spshld",
         "enemy_1125_spshld_2",
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2",
         "enemy_1127_sptrkg",
         "enemy_1127_sptrkg_2",
         "enemy_1129_spklr",
@@ -4556,6 +4628,17 @@
       "consumers": [
         "enemy_1271_nhkodo",
         "enemy_1271_nhkodo_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: source kill",
+      "templates": [
+        "enemy_spslme_t[boom]"
+      ],
+      "consumers": [
+        "enemy_1126_spslme",
+        "enemy_1126_spslme_2"
       ],
       "unsupportedConsumers": []
     }

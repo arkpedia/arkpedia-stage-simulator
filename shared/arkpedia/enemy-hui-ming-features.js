@@ -7,12 +7,14 @@ import {compileNativeBuffProgram} from './behavior-native-compiler.js';
 import {nativeBuffProgram} from './native-buff-programs.js';
 // Plain single-mode melee bodies whose only native talent is the shared Hui-Ming account.
 const attack={enemy_1122_sphond:[30,10],enemy_1122_sphond_2:[30,10],enemy_1123_spsbr:[30,12],enemy_1123_spsbr_2:[30,12],enemy_1125_spshld:[34,19],enemy_1125_spshld_2:[34,19],enemy_1129_spklr:[49,17],enemy_1129_spklr_2:[49,17]};
-const special={enemy_1124_spbow:[30,14],enemy_1124_spbow_2:[30,14],enemy_1127_sptrkg:[24,12],enemy_1127_sptrkg_2:[24,12]};
+const special={enemy_1126_spslme:[40,12],enemy_1126_spslme_2:[40,12],enemy_1124_spbow:[30,14],enemy_1124_spbow_2:[30,14],enemy_1127_sptrkg:[24,12],enemy_1127_sptrkg_2:[24,12]};
 export const HUI_MING_ARCHER_DESCRIPTION='Prioritize attacking opposite attribute enemies';
 export const HUI_MING_BLOCK_DESCRIPTION="Can only be blocked by player's units of the same attribute.";
 export const isHuiMingArcher=r=>!!r&&r.prefabKey.startsWith('enemy_1124_');
 export const isHuiMingBlockee=r=>!!r&&r.prefabKey.startsWith('enemy_1127_');
-export const isHuiMingRecord=r=>isPlainHuiMing(r)||isHuiMingArcher(r)||isHuiMingBlockee(r);
+export const isHuiMingBlaster=r=>!!r&&r.prefabKey.startsWith('enemy_1126_');
+export const HUI_MING_BLAST_DESCRIPTION='Explodes upon death, dealing Arts damage to friendly units. Causes even greater damage if similar units of the opposite attribute are in its vicinity';
+export const isHuiMingRecord=r=>isPlainHuiMing(r)||isHuiMingArcher(r)||isHuiMingBlockee(r)||isHuiMingBlaster(r);
 export const HUI_MING_FURY_DESCRIPTION='Greatly increases ATK when attacking opposite attribute targets';
 export const isHuiMingFury=r=>!!r&&r.prefabKey.startsWith('enemy_1129_');
 export const isPlainHuiMing=r=>!!r&&Object.hasOwn(attack,r.prefabKey);
@@ -116,6 +118,71 @@ export function huiMingBlockeeNative(r,n){
  try{if(!same(compileNativeBuffProgram('enemy_sptrkg_t',k=>n.$template(k)),releaseProgram))return false;}catch{return false;}
  return clocked(r,n,root);
 }
-export const huiMingNative=(r,n)=>isHuiMingArcher(r)?huiMingArcherNative(r,n):isHuiMingBlockee(r)?huiMingBlockeeNative(r,n):plainHuiMingNative(r,n);
+// 'Smarty': attribute-dependent blasts on death and on meeting an opposite-attribute Smarty.
+// The elite variant must come closer before it sets a neighbour off.
+const blastTriggerRadius=r=>r.prefabKey.endsWith('_2')?Math.fround(.8):1;
+const blastGroups={yinyang:['buff_yinyang[diff].atk_scale','buff_yinyang[same].atk_scale','dynamic'],boom:['atk_scale','atk_scale_2'],boomtosame:['atk_scale','atk_scale_2'],boomtodiff:['atk_scale','atk_scale_2']};
+const blastDamage=scaleVar=>({_sourceType:'SOURCE',_targetType:'TARGET',_damageType:'MAGICAL',_atkScaleVar:scaleVar,_defaultAtkScale:1,_applyWay:'NONE',_baseOnHostAtk:false,_emitSourceOnCalculateDamage:false,_attackType:'SPLASH',_forceUseProjectileCachedAtk:false,_ignoreForSp:false,_ignoreMissFlag:'NONE',_ignoreCancelReasonMask:'NONE',_modifierKey:'',_assignRealDamageToBB:false,_assignFinalDamageToBB:false,_skipModifierEvent:false,_noSource:false,_onlyUseSourceOnCalculateDamage:false,_getCachedAtkFromBlackboard:false,_cachedAtkKey:'atk',_useSourceWhenUseCachedAtk:false,_setSharedFlag:false,_sharedFlagIndex:'IS_CONTINUOUS',$type:'Torappu.Battle.Action.Nodes+AdvancedApplyDamage'});
+const holds=keys=>({_targetType:'TARGET',_buffKeys:keys,isAND:false,_loadFromBlackboard:false,_checkBuffSource:false,_buffSourceType:'BUFF_SOURCE',_checkSourceHost:false,$type:'Torappu.Battle.Action.Nodes+CheckContainsBuff'});
+const blastAbility=(c,{buffKey,projectile,actions})=>{let parsed;try{parsed=JSON.parse(c?._projectileActions?.SerializedState);}catch{return false;}
+ return fields(c,{m_Script:{m_FileID:1,m_PathID:'2574888870568471093'},_selector:{m_FileID:0,m_PathID:'0'},_ignoreIfOwnerDead:0,_interruptAbilityOnDetach:0,_projectileBuffs:[],_ignoredProjectileEvents:[]})&&same(c._projectileActions.SerializedObjectReferences??[],[])
+  &&c._buffs.length===1&&same(c._buffs[0].attributes,noAttributes)&&fields(c._buffs[0],{buffKey,templateKey:'projectile_on_buff_start',lifeTimeType:2,loadFromDB:0,isSilenceable:0,overrideType:0,maxStackCnt:1,triggerLifeType:0,triggerInterval:-1,stripBlackboardParamsWithBuffKey:0,blackboard:[{key:'projectile',value:0,valueStr:projectile}]})&&same(parsed,actions);};
+const blastProjectile=(n,key,radius,effects)=>{const parts=n.$projectile(key),life=parts.find(c=>'_lifeTime'in c),area=parts.find(c=>'_targetOptions'in c);
+ return parts.length===(effects?4:3)&&!parts.some(c=>'_speed'in c||'_moveType'in c)&&parts.some(c=>fields(c,{m_Radius:radius,m_Enabled:1,m_Offset:{x:0,y:0}}))
+  &&fields(life,{m_Script:{m_FileID:1,m_PathID:'-8797129986015012478'},_lifeTimeType:1,_lifeTime:Math.fround(.2),_hitNumType:2,_alwaysReachInTheEnd:1,_randomDelayToBorn:0})&&same(life._actionController?._extraBuffsInTheEnd,[])
+  &&fields(area,{_onlyCheckHitWhenReachTarget:1,_goThroughWall:1,_ignoreCamouflage:1,_rangeToLoad:{m_FileID:0,m_PathID:'0'}})&&fields(area._targetOptions,{targetSide:2,targetMotion:1,targetCategory:1,enableAdvancedOptions:1,ignoreTargetFree:0,ignoreAllyTargetFree:0,professionMask:0,abnormalFlag:0,excludeAbnormalFlag:0});};
+const neighbourAura=(n,c,{buffKey,templateKey,radius,passive})=>{const siblings=n.$siblings(c),validator=n.$ref(c?._targetValidator);
+ return fields(c,{m_Script:{m_FileID:1,m_PathID:'9073738633337710967'},_selector:{m_FileID:0,m_PathID:'0'},_selfOption:2,_removeBuffWhenTargetLeave:1,_removeBuffWhenAbilityDetached:1,_onlyAddBuffOnceForEachTarget:0,_ignoreOwnerFakeDeath:0,_ignoreIfOwnerDead:0})&&c._targetValidator.m_FileID===0&&nativeUnscaledTalentBinding(n,c)
+  &&c._buffs.length===1&&passiveOutcomeBuff(c._buffs[0])&&fields(c._buffs[0],{buffKey,templateKey,blackboard:[],disableOverride:1,overrideType:0,triggerLifeType:2,triggerInterval:Math.fround(.09),waitFirstTriggerInterval:1,firstTriggerInterval:-1})
+  &&(passive?c._passiveBuffs.length===1&&passiveOutcomeBuff(c._passiveBuffs[0])&&fields(c._passiveBuffs[0],{buffKey:'spslme_t',templateKey:'empty',blackboard:[],overrideType:0,triggerLifeType:0}):c._passiveBuffs.length===0)
+  &&siblings.some(v=>fields(v,{m_Radius:radius,m_Enabled:1,m_IsTrigger:true,m_Offset:{x:0,y:0}}))&&siblings.some(v=>fields(v,{m_LocalPosition:{x:0,y:0,z:0},m_LocalScale:{x:1,y:1,z:1}}))
+  &&fields(validator,{m_Script:{m_FileID:1,m_PathID:'-5482140055134904783'},_excludeKey:0,_buffs:['spslme_t'],_filterBuffSource:0})
+  &&fields(validator._targetOptions,{targetSide:1,targetMotion:3,targetCategory:1,enableAdvancedOptions:1,ignoreTargetFree:1,ignoreAllyTargetFree:1,ignoreHealFree:0,ignoreMotionMode:0,ignoreTargetSide:0,excludeSomeAbnormalFlags:0,containSomeAbnormalFlags:0,excludeAbnormalFlag:0,containAbnormalFlag:0,purposeMask:0,professionMask:0,checkUnitType:0,unitTypeMask:0,onlyIgnoreSomeOfTargetFreeCase:0,abnormalFlag:0,abnormalCombo:0});};
+const modeSwitch=index=>({$type:type('SwitchMode'),_modeIndex:index,_loadModeFromBlackboard:false,_restoreDefault:false,_restartFSM:false,_targetType:'TARGET'});
+const byAttribute=(yin,yang)=>({$type:type('IfElse'),_conditionNode:has('BUFF_OWNER','buff_yin'),_succeedNodes:[modeSwitch(yin)],_failNodes:[has('BUFF_OWNER','buff_yang'),modeSwitch(yang)]});
+const finishDerived={$type:type('FinishDerivedBuff'),_updateOverrideMap:true};
+const neighbourBuff=(key,extra)=>({attributes:noAttributes,buffKey:key,loadFromDB:false,isDurableBuff:false,isDamageMissable:false,isSilenceable:false,isStunnable:false,isFreezable:false,isLevitatable:false,statusResistable:'AUTOMATIC',disableOverride:false,overrideKey:'',overrideType:'DEFAULT',maxStackCnt:1,refreshRemainingTimeWhenStackMax:false,clearAllStackCntWhenTimeUp:false,maxValidStackCnt:-1,independentCharacterSource:false,overrideOnEventPriority:false,onEventPriority:'DEFAULT',audioSignal:'',lifeTimeType:'INFINITY',takeSnapshotWhenExtend:false,durationKey:'',lifeTime:0,waitFirstTriggerInterval:true,firstTriggerInterval:-1,priority:-1,priorityBBKeys:[],stripBlackboardParamsWithBuffKey:false,blackboard:[],...extra});
+// One polled neighbour template: act only when the aura source and the neighbour hold opposite attributes.
+const neighbourTemplate=(templateKey,key,buff,derived)=>{const create=[{$type:type('CheckContainsDerviedBuff'),_derviedBuffKey:key},{$type:type('IfNot')},{$type:type('CreateBuff'),_buff:buff,_buffOwner:'BUFF_OWNER',_isDerivedBuff:derived,_finishDerivedBuffIfParentFinish:false}];
+ const branch=(mine,theirs,otherwise)=>({$type:type('IfElse'),_conditionNode:has('BUFF_SOURCE',mine),_succeedNodes:[{$type:type('IfElse'),_conditionNode:has('BUFF_OWNER',theirs),_succeedNodes:create,_failNodes:[finishDerived]}],_failNodes:otherwise});
+ return template(templateKey,{ON_BUFF_TRIGGER:[branch('buff_yin','buff_yang',[branch('buff_yang','buff_yin',[finishDerived])])]});};
+const blastTemplates={
+ 'enemy_spslme_t[default_boom]':template('enemy_spslme_t[default_boom]',{ON_OWNER_KILLED:[byAttribute(1,2)]}),
+ 'enemy_spslme_t[boom]':template('enemy_spslme_t[boom]',{ON_BUFF_START:[byAttribute(3,4)],ON_BUFF_TRIGGER:[{$type:type('InstantKill'),_targetType:'TARGET',_killSource:false,_noSource:false,_withdrawIfRallyPoint:false,_resultIfInRallyPointMode:false,_skipReborn:false,_noReason:false,_markReachExit:false,_switchState:false}]}),
+ 'enemy_spslme_t[detect]':neighbourTemplate('enemy_spslme_t[detect]','spslme_t[mark]',neighbourBuff('spslme_t[mark]',{templateKey:'empty',overrideEffectKey:'enemy_spslme_warning_buff',triggerLifeType:'IMMEDIATELY',triggerCnt:0,triggerInterval:-1}),true),
+ 'enemy_spslme_t[to_boom]':neighbourTemplate('enemy_spslme_t[to_boom]','spslme_t[boom]',neighbourBuff('spslme_t[boom]',{templateKey:'enemy_spslme_t[boom]',overrideEffectKey:'',triggerLifeType:'LIMITED',triggerCnt:1,triggerInterval:Math.fround(.1)}),false),
+ projectile_on_buff_start:template('projectile_on_buff_start',{ON_BUFF_START:[{$type:type('CheckAbnormalFlag'),_abnormalFlag:'SILENCED',_targetType:'SOURCE',_isUnset:true},{$type:type('EmitProjectile'),_mountPoint:'MUZZLE',_emitOnRootTile:false,_ev:'ON_HIT_OBJECT',_actions:[],_overwriteActions:false,_buffDataList:[],_overwriteBuffs:false,_sourceType:'BUFF_OWNER',_targetType:'TARGET',_targetPosFromBB:false,_projectileKey:'',_useProjectileAsTarget:false,_extraBlackboard:false,_overwriteBlackboard:false,_useTileAsTarget:false,_cacheAtkToActions:false,_useTargetRootTile:false,_useAbilityTileSelector:false,_abilityName:''}]}),
+};
+export function huiMingBlasterNative(r,n){
+ const bb=r.talents?.bb??{},scales=['boom.atk_scale','boom.atk_scale_2','boomtosame.atk_scale','boomtosame.atk_scale_2','boomtodiff.atk_scale','boomtodiff.atk_scale_2'];
+ if(!isHuiMingBlaster(r)||r.level!==0||r.applyWay!=='MELEE'||r.stats.dmgType!=='arts'||r.stats.motion!=='WALK'||r.skills.length||r.sp||r.notCountInTotal||!huiMingBlackboard(r)||!same(r.talents.groups,blastGroups)||!same(r.talents.bbStr,{})
+  ||Object.keys(bb).length!==9||scales.some(k=>!(bb[k]>=0))||!same(r.abilities,[{text:HUI_MING_BLOCK_DESCRIPTION,format:'NORMAL'},{text:HUI_MING_BLAST_DESCRIPTION,format:'NORMAL'}]))return false;
+ const root=n[r.prefabKey]?.find(v=>v._modes);
+ if(!fields(root,{...rootFields,_specialBlockCondition:{_type:1,_buffKeyPairs:pairs,_filterTags:[]},_commonAbilities:[]})||root._modes.length!==5||n.AtkUp||n.Taunt||!huiMingAccountNative(n))return false;
+ // The templates switch by index, so the five modes must sit in this order.
+ if(!['Default','DefaultBoomFromYin','DefaultBoomFromYang','BoomFromYin','BoomFromYang'].every((name,i)=>n[name]?.length===1&&n[name][0]===n.$ref(root._modes[i])))return false;
+ // Every mode keeps the same ordinary Arts melee packet and no general ability; the blasts are mode-scoped talents.
+ for(const ref of root._modes){const mode=n.$ref(ref);if(ref.m_FileID!==0||!mode||!zero(mode._attack)||!zero(mode._attackTrigger)||mode._generalAbilities.length||mode._combat.m_FileID!==0||!zero(mode._animatorHooker)||!ordinaryMeleePacketNative(n.$ref(mode._combat),{damageType:2}))return false;}
+ const death=(n.Boom??[]).filter(v=>v.m_Script?.m_PathID==='3800760148018415462'),emitters=name=>(n[name]??[]).filter(v=>'_projectileActions'in v);
+ if(death.length!==1||!nativeUnscaledTalentBinding(n,death[0])||death[0]._buffs.length!==1||!same(death[0]._buffs[0].attributes,noAttributes)
+  // The retained descriptor carries an unused trigger count of 2 with no trigger clock.
+  ||!fields(death[0]._buffs[0],{buffKey:'spslme_t[default_boom]',templateKey:'enemy_spslme_t[default_boom]',blackboard:[],overrideType:0,overrideKey:'',loadFromDB:0,lifeTimeType:2,lifeTime:0,maxStackCnt:1,isSilenceable:0,isStunnable:0,isFreezable:0,isLevitatable:0,isDurableBuff:0,triggerLifeType:0,triggerInterval:-1,triggerCnt:2})
+  ||(n.Boom??[]).length!==5||(n.BoomToSame??[]).length!==4||(n.BoomToDiff??[]).length!==4)return false;
+ // Four blast modes: small or large, entered holding yin or yang. Each owns one emitter per recipient class.
+ for(const [suffix,scaleVar]of [['','atk_scale'],['_s','atk_scale_2']]){
+  const expect=(name,buffKey,projectile,actions)=>emitters(name).filter(c=>blastAbility(c,{buffKey,projectile,actions})&&nativeUnscaledTalentBinding(n,c)).length;
+  if(expect('Boom','spslme_t[boom_to_normal]',`projectile_enemy_spslme${suffix}_1`,[holds(['buff_yin','buff_yang']),{$type:'Torappu.Battle.Action.Nodes+IfNot'},blastDamage(scaleVar)])!==2)return false;
+  for(const name of ['BoomToSame','BoomToDiff'])for(const attribute of ['yin','yang'])
+   if(expect(name,`spslme_t[boom_to_${attribute}]`,`projectile_enemy_spslme${suffix}`,[holds([`buff_${attribute}`]),blastDamage(scaleVar)])!==1)return false;
+ }
+ if(!Object.entries(blastTemplates).every(([key,value])=>same(n.$template(key),value))
+  ||!blastProjectile(n,'projectile_enemy_spslme',1.25,false)||!blastProjectile(n,'projectile_enemy_spslme_1',1.25,true)||!blastProjectile(n,'projectile_enemy_spslme_s',2,false)||!blastProjectile(n,'projectile_enemy_spslme_s_1',2,true)
+  ||!neighbourAura(n,n.BoomHint?.find(v=>v._buffs),{buffKey:'spslme_t[detect]',templateKey:'enemy_spslme_t[detect]',radius:1.5,passive:true})
+  ||!neighbourAura(n,n.BoomTrigger?.find(v=>v._buffs),{buffKey:'spslme_t[to_boom]',templateKey:'enemy_spslme_t[to_boom]',radius:blastTriggerRadius(r),passive:false}))return false;
+ return clocked(r,n,root);
+}
+export const huiMingNative=(r,n)=>isHuiMingArcher(r)?huiMingArcherNative(r,n):isHuiMingBlockee(r)?huiMingBlockeeNative(r,n):isHuiMingBlaster(r)?huiMingBlasterNative(r,n):plainHuiMingNative(r,n);
+export const HUI_MING_BLAST_ABILITY={kind:'huiMingBlast',params:r=>{const bb=r.talents.bb;return{markerKey:'spslme_t',deathKey:'spslme_t[default_boom]',boomKey:'spslme_t[boom]',warnKey:'spslme_t[mark]',interval:Math.fround(.09),hintRadius:1.5,triggerRadius:blastTriggerRadius(r),killDelay:Math.fround(.1),blastDelay:Math.fround(.2),blockPairs:pairs,
+ small:{radius:1.25,none:bb['boom.atk_scale'],same:bb['boomtosame.atk_scale'],diff:bb['boomtodiff.atk_scale']},large:{radius:2,none:bb['boom.atk_scale_2'],same:bb['boomtosame.atk_scale_2'],diff:bb['boomtodiff.atk_scale_2']}};}};
 export const HUI_MING_ABILITY={kind:'huiMingAttribute',params:r=>({...huiMingBlackboard(r),...(isHuiMingFury(r)?{bonus:{key:'spklr_t',scale:r.talents.bb['atkup.atk_scale']}}:{}),...(isHuiMingArcher(r)?{preferOpposite:true}:{})})};
 export const HUI_MING_BLOCK_ABILITY={kind:'pairedBlockerBuffs',params:()=>({pairs,checkBuffKey:'enemy_sptrkg_t',interval:Math.fround(.1),immediate:false,program:nativeBuffProgram('enemy_sptrkg_t')})};

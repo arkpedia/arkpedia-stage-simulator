@@ -1,26 +1,28 @@
 {
  "schemaVersion": 1,
- "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale, live target-priority comparators, multi-pair block conditions, and twelve source-gated Hui-Ming enemies (six plain, the Fury pair, the Stabby archers, the Blindey pair). Controlled fixtures only; no Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
+ "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale, live target-priority comparators, multi-pair block conditions, and the Smarty blast component, and fourteen source-gated Hui-Ming enemies (six plain, the Fury pair, the Stabby archers, the Blindey pair, the Smarty pair). Controlled fixtures only; no Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
  "sourceSha256": {
-  "server/sim/damage.js": "4fd9624b605d74cb240591dc035cb0a37089b8b89c0e662292f444d5e372bcd4",
+  "server/sim/damage.js": "e011cc01ccb4f8c440e0ef2b0df944d1c52d7a09c9f46f6efc193aa929e7d824",
   "server/sim/content/arkpedia-hui-ming.js": "7fe1161c5b2eee7d448b8e81e4f061f5b23d06761ed86f1b7eea14e27cefba12",
-  "server/sim/content/arkpedia-enemy-runtime-index.js": "8af73447daf045537f0097c2db40dea011ebd6777ce2dcea07bda6b4e3b90ac7",
-  "shared/arkpedia/enemy-hui-ming-features.js": "3195df9dbc3ce78e920643aa9baeaaa0c007a6eaa9dac092de7ea19188c1877b",
-  "shared/arkpedia/enemy-features.js": "8d1ce91319a6c8d1f0fc67f02aedaae7d6a5d7ce565dcc715eb4368dda2ca5a2",
-  "tools/arkpedia/review-hui-ming.mjs": "7aaaae5e536b03cfee9aa37fa5e0a8ec16976683435e6126048e431a37afebfa",
-  "data/arkpedia-enemy-native-abilities.json": "b520a742e37952ff99b53a2c2c7c45e0110f6cb413e0a9c959fe8eb521e7aace",
-  "data/arkpedia-enemy-support.json": "1772240840c6283442d84c09a55113841bf6b1b109faa9a4d6b2caff4136acf5",
-  "data/arkpedia-hui-ming-animations.json": "d7c65d01c0586ec0a96594002bfcd8e6a4067fd104b7a3fa7252fe9615894e6d",
-  "test/arkpedia-hui-ming.test.js": "c24e6c8ad64a264687ed6783aaca28ac807f59b478252472ee88bc32b9862099",
+  "server/sim/content/arkpedia-enemy-runtime-index.js": "3ad40e2d213190abfef17b522ae19a4afad53e29f5282135f2430653e53d6455",
+  "shared/arkpedia/enemy-hui-ming-features.js": "22b599f58d6782643c5a2409bab1d17ce85721891cb3d4a7426e94c6969edff0",
+  "shared/arkpedia/enemy-features.js": "17aa2548971928300eb74d2aca2318a9c882868b426f68cb8f0d6abc9adee571",
+  "tools/arkpedia/review-hui-ming.mjs": "85d6f0a4bea69f1fed9af32490f962a816ab55d47fe7eb88be6944397120e4d8",
+  "data/arkpedia-enemy-native-abilities.json": "f177bfedc3b0887e753976bdc68c39c9ff90be9630499338e973c00c3639204b",
+  "data/arkpedia-enemy-support.json": "2aa592d2ece8e7cd839af4a2639b4f45fd67398e51cf6073d3c0630fcef1e709",
+  "data/arkpedia-hui-ming-animations.json": "5ea281bd02984d9360a648052313ed1b9ecb4f0c49659be5036040d8e5eed835",
+  "test/arkpedia-hui-ming.test.js": "844c72b078089519a2896f5a33fd15c5cd9e951989e275ea0e6c49b8b0d79ead",
   "server/sim/targeting.js": "abbe14bbc7b6179ae1f35e68500e4e6c16489baec3818b7e325b5555fa118195",
-  "server/sim/content/arkpedia-enemy-blocker-pairs.js": "7b8cdd2e451ef136cd1596c7d80b2897f10d112240fad4ddacf6de1f16306769"
+  "server/sim/content/arkpedia-enemy-blocker-pairs.js": "7b8cdd2e451ef136cd1596c7d80b2897f10d112240fad4ddacf6de1f16306769",
+  "server/sim/content/arkpedia-hui-ming-blast.js": "40327bcdc4d0a9db113d268d08b826a3cbb1e2ccba3167bcb124dd48bac82fdc"
  },
  "tests": {
-  "family": 22,
+  "family": 32,
   "focused": {
-   "tests": 436,
-   "passed": 436,
-   "failed": 0
+   "tests": 446,
+   "passed": 446,
+   "failed": 0,
+   "note": "Repeated after the last Smarty refinements."
   },
   "broad": {
    "command": "node --test --test-concurrency=2 test/sim/*.test.js test/content/*.test.js",
@@ -29,7 +31,7 @@
    "skipped": 3,
    "todo": 1,
    "failed": 0,
-   "note": "Measured on the final code of this batch."
+   "note": "Measured before the last Smarty refinements, which touch only the blast module, its gate and its tests."
   }
  },
  "browser": {
@@ -40,6 +42,7 @@
     "viewport": "1440x900 desktop",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
@@ -112,6 +115,7 @@
     "viewport": "1440x900 desktop",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
@@ -184,6 +188,7 @@
     "viewport": "1440x900 desktop",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
@@ -245,9 +250,61 @@
     }
    },
    {
+    "viewport": "1440x900 desktop",
+    "loaded": [
+     "arkpedia-hui-ming-blast",
+     "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1126_spslme",
+       "special": "blaster",
+       "initial": "yang",
+       "marker": true,
+       "model": "enemy/enemy_1126_spslme/default/default",
+       "actor": "BattleActor",
+       "smallHits": 1,
+       "calm": true,
+       "chained": true,
+       "largeHits": 2,
+       "modes": [
+        4,
+        3
+       ],
+       "errors": []
+      },
+      {
+       "id": "enemy_1126_spslme_2",
+       "special": "blaster",
+       "initial": "yang",
+       "marker": true,
+       "model": "enemy/enemy_1126_spslme_2/default/default",
+       "actor": "BattleActor",
+       "smallHits": 1,
+       "calm": true,
+       "chained": true,
+       "largeHits": 2,
+       "modes": [
+        4,
+        3
+       ],
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
     "viewport": "844x390 touch",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
@@ -320,6 +377,7 @@
     "viewport": "844x390 touch",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
@@ -392,6 +450,7 @@
     "viewport": "844x390 touch",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
      "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
@@ -447,6 +506,57 @@
        "released": true,
        "model": "enemy/enemy_1127_sptrkg_2/default/default",
        "actor": "BattleActor",
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
+    "viewport": "844x390 touch",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "arkpedia-hui-ming-blast",
+     "arkpedia-enemy-blocker-pairs",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1126_spslme",
+       "special": "blaster",
+       "initial": "yang",
+       "marker": true,
+       "model": "enemy/enemy_1126_spslme/default/default",
+       "actor": "BattleActor",
+       "smallHits": 1,
+       "calm": true,
+       "chained": true,
+       "largeHits": 2,
+       "modes": [
+        4,
+        3
+       ],
+       "errors": []
+      },
+      {
+       "id": "enemy_1126_spslme_2",
+       "special": "blaster",
+       "initial": "yang",
+       "marker": true,
+       "model": "enemy/enemy_1126_spslme_2/default/default",
+       "actor": "BattleActor",
+       "smallHits": 1,
+       "calm": true,
+       "chained": true,
+       "largeHits": 2,
+       "modes": [
+        4,
+        3
+       ],
        "errors": []
       }
      ]
@@ -516,6 +626,20 @@
       "clips": 5,
       "width": 602.0984954833984,
       "height": 442.00690269470215
+     },
+     {
+      "id": "enemy_1126_spslme",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 347.8282928466797,
+      "height": 369.1443557739258
+     },
+     {
+      "id": "enemy_1126_spslme_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 347.8282928466797,
+      "height": 369.1443557739258
      },
      {
       "id": "enemy_1127_sptrkg",
@@ -609,6 +733,20 @@
       "height": 442.00690269470215
      },
      {
+      "id": "enemy_1126_spslme",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 347.8282928466797,
+      "height": 369.1443557739258
+     },
+     {
+      "id": "enemy_1126_spslme_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 347.8282928466797,
+      "height": 369.1443557739258
+     },
+     {
       "id": "enemy_1127_sptrkg",
       "version": "3.8.99",
       "clips": 5,
@@ -642,23 +780,24 @@
    }
   ]
  },
- "assetCommit": "a8528275b7b9d4b183c50bd891b2600676354341",
+ "assetCommit": "37264536e354ad25406ad528786dec1a671012c9",
  "coverage": {
-  "enemies": 781,
+  "enemies": 783,
   "totalEnemies": 2163,
-  "databaseLevels": 847,
-  "runtimeKinds": 215,
+  "databaseLevels": 849,
+  "runtimeKinds": 216,
   "pinnedStageGraphs": 970
  },
  "stageSmoke": {
   "stages": 970,
   "passed": 970,
-  "scope": "Ten-second runtime smoke, not clears; measured on the final code of this batch."
+  "scope": "Ten-second runtime smoke, not clears; measured before the last Smarty refinements."
  },
  "boundaries": [
   "Operator attributes are set explicitly in fixtures; Hui-Ming tiles and devices are stages-phase work.",
   "ON_CALCULATE_DAMAGE read as the damage source's event; not established from method bodies.",
   "Derived presentation marker removed with its attribute buff; native finish flag semantics not established.",
-  "Archer height-specific attack clips, selector abnormal-flag and secondary-filter values, and the Blindey visual passive are gated but not reproduced."
+  "Archer height-specific attack clips, selector abnormal-flag and secondary-filter values, and the Blindey visual passive are gated but not reproduced.",
+  "Smarty: emitter-to-mode binding read from the prefab hierarchy, not gated; release-time ATK and position; uncredited delayed kill; browser fixture ran before the camouflage-ignoring recipient rule and mode-order gate were added."
  ]
 }

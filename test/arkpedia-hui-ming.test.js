@@ -4,7 +4,8 @@ import records from '../data/arkpedia-enemy-records.json' with{type:'json'};
 import support from '../data/arkpedia-enemy-support.json' with{type:'json'};
 import evidence from '../data/arkpedia-enemy-native-abilities.json' with{type:'json'};
 import {nativeComponents} from '../shared/arkpedia/enemy-support.js';
-import {plainHuiMingNative,huiMingAccountNative,huiMingArcherNative,huiMingBlockeeNative} from '../shared/arkpedia/enemy-hui-ming-features.js';
+import {huiMingBlast} from '../server/sim/content/arkpedia-hui-ming-blast.js';
+import {plainHuiMingNative,huiMingAccountNative,huiMingArcherNative,huiMingBlockeeNative,huiMingBlasterNative} from '../shared/arkpedia/enemy-hui-ming-features.js';
 import {withCompiledEnemyRuntime} from '../shared/arkpedia/enemy-runtime-compiler.js';
 import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
 import {huiMingOf,setHuiMing,switchHuiMing,huiMingAttribute} from '../server/sim/content/arkpedia-hui-ming.js';
@@ -147,4 +148,98 @@ test('archer and blockee gates refuse changed selectors, packets, block conditio
  ]){const n=nativeComponents(structuredClone(evidence),id);edit(n);assert.equal(huiMingBlockeeNative(records.enemies[id].levels[0],n),false,edit.toString());}
  for(const [id,gate] of [[archers[0],huiMingArcherNative],[blockees[0],huiMingBlockeeNative]])for(const change of[r=>r.abilities=[],r=>r.stats.rangeRadius=9,r=>r.talents.groups.taunt=['taunt_level'],r=>r.applyWay='NONE'])
   {const r=structuredClone(records.enemies[id].levels[0]);change(r);if(id===blockees[0]&&change.toString().includes('rangeRadius'))continue;assert.equal(gate(r,nativeComponents(evidence,id)),false,change.toString());}
+});
+
+// 'Smarty'
+const blasters=['enemy_1126_spslme','enemy_1126_spslme_2'];
+function blastField(id,{compiled=true,guards=[[10,6]],count=1}={}){
+ const g=chessRec({id:'huiming_blast_guard',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:1},skill:null});
+ const record=compiled?withCompiledEnemyRuntime(records.enemies[id].levels[0]):records.enemies[id].levels[0];
+ const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{[id]:record},chess:{[g.chessId]:g}},units:guards.map(([row,col])=>({chessId:g.chessId,row,col})),kits:{[g.chessId]:()=>({trait:{noAttack:true}})},setup:installEnemyFeatures});h.b.start();
+ const units=h.b.allyUnits,hits=[];assert.equal(units.length,guards.length);assert.ok(units.every(u=>u.alive&&u.deployed));
+ const spawn=(x,y=10)=>{const e=h.b.spawnEnemy(id,{pos:[y,Math.round(x)]});h.b.addBuff(e,{key:'hold',flags:{noMove:true}});e.x=x;e.y=y;return e;};
+ h.b.on('damaged',c=>{if(c.dmg.tags.includes('huiMingBlast'))hits.push({target:units.indexOf(c.target),amount:c.amount,type:c.dmg.type,time:h.b.time,source:c.source});});
+ return{...h,units,hits,spawn,atk:record.stats.atk,bb:record.talents.bb,enemies:Array.from({length:count},(_,i)=>spawn(6+i*5))};
+}
+for(const id of blasters)test(`${id}: death blasts scale by the recipient attribute and skip the account's own output scales`,()=>{
+ const r=records.enemies[id].levels[0];assert.ok(huiMingBlasterNative(r,nativeComponents(evidence,id)));assert.equal(support.enemies[id].policy,'stats-attacks-and-features');
+ assert.deepEqual(withCompiledEnemyRuntime(r).runtimeFeatures.entries.filter(v=>v.ability).map(v=>v.ability.kind).sort(),['huiMingAttribute','huiMingBlast']);
+ for(const compiled of [false,true]){
+  // Guards: no attribute, the blaster's attribute, the opposite, one outside 1.25 and one flying inside.
+  const h=blastField(id,{compiled,guards:[[10,7],[11,6],[9,6],[10,8],[10,5]]}),[e]=h.enemies,[plain,alike,opposite,far,flying]=h.units;
+  setHuiMing(h.b,alike,'yang');setHuiMing(h.b,opposite,'yin');setHuiMing(h.b,far,'yin');flying.motion='FLY';
+  const t0=h.b.time;h.b.kill(e);assert.equal(h.hits.length,0);h.run(.15);assert.equal(h.hits.length,0);h.run(.1);
+  const by=Object.fromEntries(h.hits.map(v=>[v.target,v]));assert.deepEqual(Object.keys(by).sort(),['0','1','2']);
+  near(by[0].amount,h.atk*h.bb['boom.atk_scale']);near(by[1].amount,h.atk*3.6);near(by[2].amount,h.atk*4.4);assert.ok(h.hits.every(v=>v.type==='arts'&&Math.abs(v.time-t0-.2)<h.b.dt*2));
+  assert.equal(e.mem.huiMingBlastMode,2);h.run(1);assert.equal(h.hits.length,3);assert.deepEqual(h.b.errors,[]);}
+});
+test('no blast without an attribute, when silenced, without the death talent buff, or on an exit',()=>{
+ const id=blasters[0];
+ for(const prepare of[h=>h.b.removeBuff(h.enemies[0],'buff_yang'),h=>{h.b.addBuff(h.enemies[0],{key:'test:silence',flags:{silence:true}});assert.ok(h.enemies[0].s.flags.silence);},h=>h.b.removeBuff(h.enemies[0],'spslme_t[default_boom]'),null]){
+  const h=blastField(id,{guards:[[10,7]]});if(prepare){prepare(h);h.b.kill(h.enemies[0]);}else h.b.leak(h.enemies[0]);h.run(.5);assert.equal(h.hits.length,0);assert.deepEqual(h.b.errors,[]);}
+ const yin=blastField(id,{guards:[[10,7]]});switchHuiMing(yin.b,yin.enemies[0]);setHuiMing(yin.b,yin.units[0],'yin');yin.b.kill(yin.enemies[0]);yin.run(.3);near(yin.hits[0].amount,yin.atk*3.6);assert.equal(yin.enemies[0].mem.huiMingBlastMode,1);
+});
+for(const id of blasters)test(`${id}: opposite-attribute neighbours warn inside 1.5 and set each other off inside the trigger radius`,()=>{
+ for(const compiled of [false,true]){
+  const h=blastField(id,{compiled,guards:[[10,6],[11,7]],count:0}),a=h.spawn(6.2),b=h.spawn(7.6),[plain,second]=h.units,radius=id.endsWith('_2')?.8:1;
+  h.run(.3);assert.equal(a.findBuff('spslme_t[mark]'),null);assert.ok(a.findBuff('spslme_t')&&b.findBuff('spslme_t'));
+  switchHuiMing(h.b,b);h.run(.2);assert.ok(a.findBuff('spslme_t[mark]')&&b.findBuff('spslme_t[mark]'));assert.ok(a.alive&&b.alive);
+  b.x=8;h.run(.2);assert.equal(a.findBuff('spslme_t[mark]'),null);assert.equal(b.findBuff('spslme_t[mark]'),null);
+  b.x=6.2+radius+.05;h.run(.3);assert.ok(a.alive&&b.alive&&a.findBuff('spslme_t[mark]'));assert.equal(a.findBuff('spslme_t[boom]'),null);
+  setHuiMing(h.b,second,'yin');b.x=6.2+radius-.05;const t0=h.b.time;assert.ok(h.runUntil(()=>!!a.findBuff('spslme_t[boom]')||!a.alive,.2));const started=h.b.time;
+  assert.ok(started-t0<=.09+h.b.dt*2);assert.ok(a.alive&&b.alive);assert.equal(a.mem.huiMingBlastMode,4);assert.equal(b.mem.huiMingBlastMode,3);
+  h.run(.1+h.b.dt*2);assert.ok(!a.alive&&!b.alive);h.run(.2);
+  // Both large blasts land 0.2 s after release; no small death blast follows.
+  const large=key=>h.atk*h.bb[key];const hitsOn=i=>h.hits.filter(v=>v.target===i).map(v=>Math.round(v.amount)).sort((x,y)=>x-y);
+  assert.deepEqual(hitsOn(0),[large('boom.atk_scale_2'),large('boom.atk_scale_2')].map(Math.round));
+  assert.deepEqual(hitsOn(1),[large('boomtosame.atk_scale_2'),large('boomtodiff.atk_scale_2')].map(Math.round).sort((x,y)=>x-y));
+  assert.ok(h.hits.every(v=>Math.abs(v.time-started-.2)<h.b.dt*3));assert.equal(h.hits.length,4);h.run(1);assert.equal(h.hits.length,4);assert.deepEqual(h.b.errors,[]);}
+});
+test('a blast reaches a stealthed ground ally but not a target-free one, and the two trigger radii differ in a mixed pair',()=>{
+ const h=blastField(blasters[0],{guards:[[10,7],[11,6]]}),[hidden,free]=h.units;h.b.addBuff(hidden,{key:'test:stealth',flags:{stealth:true}});h.b.addBuff(free,{key:'test:free',flags:{targetFree:true}});
+ h.b.kill(h.enemies[0]);h.run(.3);assert.deepEqual(h.hits.map(v=>v.target),[0]);
+ const g=chessRec({id:'huiming_mixed_guard',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:1},skill:null}),defs=Object.fromEntries(blasters.map(id=>[id,withCompiledEnemyRuntime(records.enemies[id].levels[0])]));
+ const m=makeBattle({content:'none',autoFinish:false,defs:{enemies:defs,chess:{[g.chessId]:g}},units:[{chessId:g.chessId,row:11,col:6}],kits:{[g.chessId]:()=>({trait:{noAttack:true}})},setup:installEnemyFeatures});m.b.start();
+ const place=(id,x)=>{const e=m.b.spawnEnemy(id,{pos:[10,Math.round(x)]});m.b.addBuff(e,{key:'hold',flags:{noMove:true}});e.x=x;e.y=10;return e;};
+ const normal=place(blasters[0],6),elite=place(blasters[1],6.9);switchHuiMing(m.b,elite);m.run(.5);
+ // 0.9 apart: inside the normal body's radius 1, outside the elite's 0.8. Only the elite is set off.
+ assert.equal(elite.alive,false);assert.equal(normal.alive,true);assert.equal(normal.findBuff('spslme_t[boom]'),null);assert.deepEqual(m.b.errors,[]);
+});
+test('the mode order is gated by name',()=>{
+ for(const id of blasters){const n=nativeComponents(structuredClone(evidence),id),modes=n[id].find(v=>v._modes)._modes;[modes[1],modes[3]]=[modes[3],modes[1]];assert.equal(huiMingBlasterNative(records.enemies[id].levels[0],n),false);}
+});
+test('same-attribute neighbours, silenced blasters and other families do not chain',()=>{
+ const id=blasters[0],h=blastField(id,{guards:[[10,7]],count:0}),a=h.spawn(6),b=h.spawn(6.5);h.run(.5);assert.ok(a.alive&&b.alive);assert.equal(a.findBuff('spslme_t[mark]'),null);
+ h.b.removeBuff(b,'spslme_t');switchHuiMing(h.b,b);h.run(.3);assert.ok(a.alive&&b.alive);
+ const quiet=blastField(id,{guards:[[10,7]],count:0}),c=quiet.spawn(6),d=quiet.spawn(6.5);quiet.b.addBuff(c,{key:'test:silence',flags:{silence:true}});switchHuiMing(quiet.b,d);quiet.run(.6);
+ assert.ok(!c.alive&&!d.alive);assert.ok(quiet.hits.length>0&&quiet.hits.every(v=>v.source===d));assert.deepEqual(quiet.b.errors,[]);
+});
+test("a Smarty is blocked only by a blocker of its own attribute and its Arts melee keeps the account's scales",()=>{
+ const id=blasters[0],g=chessRec({id:'huiming_blast_blocker',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:1},skill:null}),record=records.enemies[id].levels[0];
+ const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{[id]:record},chess:{[g.chessId]:g}},units:[{chessId:g.chessId,row:10,col:6}],kits:{[g.chessId]:()=>({trait:{noAttack:true}})},setup:installEnemyFeatures});h.b.start();
+ const e=h.b.spawnEnemy(id,{pos:[10,6]}),guard=h.b.allyUnits[0],hits=[];h.b.addBuff(e,{key:'hold',flags:{noMove:true}});h.b.on('damaged',c=>{if(c.source===e)hits.push(c);});
+ h.run(.3);assert.equal(e.blockedBy,null);setHuiMing(h.b,guard,'yin');h.run(.3);assert.equal(e.blockedBy,null);setHuiMing(h.b,guard,'yang');h.run(.2);assert.equal(e.blockedBy,guard);
+ assert.ok(h.runUntil(()=>hits.length>0,8));assert.equal(hits[0].dmg.type,'arts');near(hits[0].amount,record.stats.atk*.6);
+ setHuiMing(h.b,guard,'yin');h.run(.5);assert.equal(e.blockedBy,guard);assert.deepEqual(h.b.errors,[]);
+});
+test('blaster gates and parameters refuse changed blasts, auras, templates, projectiles and scales',()=>{
+ for(const id of blasters)for(const edit of[
+  n=>n.Boom.find(v=>'_projectileActions'in v)._buffs[0].blackboard[0].valueStr='projectile_enemy_spslme',
+  n=>{const c=n.BoomToSame.find(v=>'_projectileActions'in v);c._projectileActions.SerializedState=c._projectileActions.SerializedState.replace('"_emitSourceOnCalculateDamage":false','"_emitSourceOnCalculateDamage":true');},
+  n=>{const c=n.BoomToDiff.find(v=>'_projectileActions'in v);c._projectileActions.SerializedState=c._projectileActions.SerializedState.replace('MAGICAL','PHYSICAL');},
+  n=>n.BoomToDiff.pop(),n=>n.Boom.find(v=>v.m_Script.m_PathID==='3800760148018415462')._buffs[0].templateKey='empty',
+  n=>n.$siblings(n.BoomTrigger.find(v=>v._buffs)).find(v=>'m_Radius'in v).m_Radius=3,n=>n.$siblings(n.BoomHint.find(v=>v._buffs)).find(v=>'m_Radius'in v).m_Radius=1,
+  n=>n.$ref(n.BoomTrigger.find(v=>v._buffs)._targetValidator)._buffs=[],n=>n.$ref(n.BoomHint.find(v=>v._buffs)._targetValidator)._targetOptions.targetSide=2,
+  n=>n.BoomTrigger.find(v=>v._buffs)._buffs[0].triggerInterval=1,n=>n.BoomHint.find(v=>v._buffs)._passiveBuffs=[],
+  n=>n.$template('enemy_spslme_t[boom]').eventToActions.ON_BUFF_TRIGGER=[],n=>n.$template('enemy_spslme_t[default_boom]').eventToActions.ON_OWNER_KILLED[0]._succeedNodes[0]._modeIndex=3,
+  n=>n.$template('enemy_spslme_t[to_boom]').eventToActions.ON_BUFF_TRIGGER[0]._succeedNodes[0]._succeedNodes[2]._buff.triggerInterval=1,
+  n=>n.$template('projectile_on_buff_start').eventToActions.ON_BUFF_START.shift(),n=>n.$template('enemy_spslme_t[detect]').eventToActions.ON_BUFF_TRIGGER[0]._conditionNode._buffKeys=['buff_yang'],
+  (n,id)=>n[id].find(v=>v._modes)._modes.pop(),(n,id)=>n[id].find(v=>v._modes)._specialBlockCondition._type=0,(n,id)=>n.$ref(n.$ref(n[id].find(v=>v._modes)._modes[3])._combat)._damageType=1,
+ ]){const n=nativeComponents(structuredClone(evidence),id);edit(n,id);assert.equal(huiMingBlasterNative(records.enemies[id].levels[0],n),false,edit.toString());}
+ for(const key of ['projectile_enemy_spslme','projectile_enemy_spslme_s_1'])for(const edit of[p=>p.find(c=>'m_Radius'in c).m_Radius=5,p=>p.find(c=>'_lifeTime'in c)._lifeTime=1,p=>p.find(c=>'_targetOptions'in c)._targetOptions.targetMotion=3]){
+  const copy=structuredClone(evidence);const parts=copy.projectiles[key].map(row=>JSON.parse(row.originalJson));edit(parts);copy.projectiles[key].forEach((row,i)=>row.originalJson=JSON.stringify(parts[i]));
+  assert.equal(huiMingBlasterNative(records.enemies[blasters[0]].levels[0],nativeComponents(copy,blasters[0])),false);}
+ for(const change of[r=>r.talents.bb['boom.atk_scale_2']=-1,r=>delete r.talents.groups.boomtodiff,r=>r.stats.dmgType='phys',r=>r.abilities.pop()]){const r=structuredClone(records.enemies[blasters[0]].levels[0]);change(r);assert.equal(huiMingBlasterNative(r,nativeComponents(evidence,blasters[0])),false);}
+ const ok=withCompiledEnemyRuntime(records.enemies[blasters[0]].levels[0]).runtimeFeatures.entries.find(v=>v.ability?.kind==='huiMingBlast').ability.params;huiMingBlast.validate(ok);
+ for(const bad of[{interval:0},{triggerRadius:2},{warnKey:ok.markerKey},{blockPairs:[]},{small:{...ok.small,radius:0}},{large:{radius:2,none:1,same:1}}])assert.throws(()=>huiMingBlast.validate({...ok,...bad}),/Invalid Hui-Ming blast talent/);
 });

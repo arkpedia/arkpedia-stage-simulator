@@ -118,6 +118,9 @@ export function makeDamageInfo(d = {}) {
     tags: d.tags ?? [],
     cancel: false,
     noSp: !!d.noSp,
+    // Native AdvancedApplyDamage with _emitSourceOnCalculateDamage false: the source's own
+    // ON_CALCULATE_DAMAGE scales (the per-recipient sourceAtkScale event) are not asked.
+    skipSourceAtkScale: d.skipSourceAtkScale === true,
     // Native NoSourceDamage._damageWithoutModify: already resolved HP damage.
     // Protection, hit-count targets, shields, HP floors and receipts still apply.
     unmodified: d.unmodified === true && type === 'true' && d.sourceless === true,
@@ -404,7 +407,7 @@ export function dealDamage(battle, source, target, dmgIn) {
   // DamageInfo shared by an area attack is never rewritten. Opt-in: without a
   // listener nothing changes. Sourceless and unmodified damage skip it.
   let pairScale = 1;
-  if (hs && !dmg.unmodified && battle._hooks.sourceAtkScale) {
+  if (hs && !dmg.unmodified && !dmg.skipSourceAtkScale && battle._hooks.sourceAtkScale) {
     const ctx = { source: hs, target, dmg, credit: source, targetLife, scale: 1 };
     battle.emit('sourceAtkScale', ctx);
     if (!retainsDamageLife(target, targetLife)) return 0;
