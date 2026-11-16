@@ -2974,6 +2974,89 @@
         "machine"
       ]
     },
+    "enemy_1160_hvyslr_2": {
+      "key": "enemy_1160_hvyslr_2",
+      "prefabKey": "enemy_1160_hvyslr_2",
+      "name": "Dockworker Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 14000,
+        "atk": 1000,
+        "def": 1000,
+        "res": 20,
+        "moveSpeed": 0.7,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "<$ba.stun>Stuns</> allied units after several attacks",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Quickly loses HP while under the effects of 'Erosion'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Drown.damage": 1400
+        },
+        "bbStr": {},
+        "groups": {
+          "Drown": [
+            "damage"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 3,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 3,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    },
     "enemy_1158_divman_2": {
       "key": "enemy_1158_divman_2",
       "prefabKey": "enemy_1158_divman_2",
@@ -3106,6 +3189,67 @@
       "tags": [
         "machine"
       ]
+    },
+    "enemy_1161_tidmag_2": {
+      "key": "enemy_1161_tidmag_2",
+      "prefabKey": "enemy_1161_tidmag_2",
+      "name": "Tidal Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 8000,
+        "atk": 260,
+        "def": 220,
+        "res": 60,
+        "moveSpeed": 0.7,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal damage to the target and all allied units in the target's four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EpDamage.attack@ep_damage_ratio": 0.8
+        },
+        "bbStr": {},
+        "groups": {
+          "EpDamage": [
+            "attack@ep_damage_ratio"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
     }
   },
   "deepWater": {

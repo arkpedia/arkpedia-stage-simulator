@@ -13,7 +13,8 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 const root = new URL('../../', import.meta.url);
 const INDEX = new URL('data/arkpedia-stages.json', root);
 const DATA = new URL('data/', root);
-const isStageFile = name => /^arkpedia-stage-.+\.json$/.test(name);
+// Review receipts share the stage prefix but are evidence, not battle bundles.
+export const isStageFile = name => /^arkpedia-stage-.+\.json$/.test(name) && !name.endsWith('-review.json');
 
 export async function buildStageIndex() {
   const current = JSON.parse(await readFile(INDEX, 'utf8'));

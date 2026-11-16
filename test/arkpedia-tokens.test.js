@@ -37,7 +37,7 @@ test('a roadblock token deploys as a blocking crate and spends DP', () => {
   const [row, col] = (() => {
     for (let r = 0; r < stage.geometry.rows; r++)
       for (let c = 0; c < stage.geometry.cols; c++)
-        if (battle.grid.groundPassable(r, c, true)) return [r, c];
+        if (battle.grid.groundPassable(r, c, true) && battle.tokenPlacementError('trap_001_crate', r, c) === '') return [r, c]; // deployable ground, not a spawn or exit tile
     throw new Error('no ground tile');
   })();
   const dp = battle.getPlayer('arkpedia').dp;

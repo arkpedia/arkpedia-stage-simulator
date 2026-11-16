@@ -11,6 +11,7 @@ import { compileStage } from '../tools/arkpedia/build-stage.mjs';
 import { writeJSONAtomic } from '../tools/arkpedia/write-json.mjs';
 import { buildStageLibrary } from '../tools/arkpedia/stage-library.mjs';
 import { createStageLibraryLoader } from '../shared/arkpedia/stage-library.js';
+import { withCompiledEnemyRuntime } from '../shared/arkpedia/enemy-runtime-compiler.js';
 import ruleReceipt from '../data/stage-rules/5-4_challenge_mode.json' with { type: 'json' };
 
 const [mvp, records, support, tokenData, supportOperators] = await Promise.all([
@@ -77,7 +78,9 @@ test('the library discovers a source stage and round-trips the shared compiler w
   assert.equal(library.manifest.stages.length, 1);
   assert.equal(library.manifest.defaultStage, id);
   const loader = createStageLibraryLoader(async url => new Response(library.objects.get(url.split('/').at(-1).slice(0, -5))));
-  assert.deepEqual(await loader.load(library.manifest.stages[0]), JSON.parse(JSON.stringify(expected.stage)));
+  // Library enemy definitions carry their compiled runtime plans; the battle would compile the same plan from a raw record.
+  const compiled = { ...expected.stage, enemies: Object.fromEntries(Object.entries(expected.stage.enemies).map(([id, record]) => [id, withCompiledEnemyRuntime(record)])) };
+  assert.deepEqual(await loader.load(library.manifest.stages[0]), JSON.parse(JSON.stringify(compiled)));
   assert.equal(context.index.stages.some(entry => entry.id === id), false);
   assert.equal((await readdir(join(root, 'data'))).includes(`arkpedia-stage-${id}.json`), false);
 });

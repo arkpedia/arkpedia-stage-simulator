@@ -6,7 +6,7 @@ import { readdirSync, readFileSync, mkdtempSync, mkdirSync, copyFileSync, writeF
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { testFilesForShard } from '../tools/run-tests.mjs';
+import { testFilesForShard, testFileBatches } from '../tools/run-tests.mjs';
 import { STAGE_SMOKE_GROUPS, publicSmokeStages, stageSmokeCases } from '../tools/stage-smoke.mjs';
 
 import { STAGE_FILE_GROUPS, fileBackedStages, stageFileCases } from '../tools/stage-files.mjs';
@@ -21,6 +21,17 @@ for (const total of [2, 3, 5]) {
     assert.deepEqual([...new Set(seen)].sort(), ALL);
   });
 }
+
+test('each shard launches in ordered batches that stay within the Windows command line limit', () => {
+  for (const index of [0, 1]) {
+    const files = testFilesForShard(2, index).map(name => `test/${name}`);
+    const batches = testFileBatches(files);
+    assert.deepEqual(batches.flat(), files);
+    assert.ok(batches.every(batch => batch.length && batch.join(' ').length * 2 < 32767 - 1000));
+  }
+  assert.deepEqual(testFileBatches(['a', 'b', 'c'], 10), [['a', 'b'], ['c']]);
+  assert.throws(() => testFileBatches(['x'.repeat(10)], 10), /exceeds launch budget/);
+});
 
 test('stage smoke groups cover every public stage exactly once within bounded files', () => {
   const groups = Array.from({ length: STAGE_SMOKE_GROUPS }, (_, group) => stageSmokeCases(group));

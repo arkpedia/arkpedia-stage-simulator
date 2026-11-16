@@ -157,12 +157,15 @@ test('off-axis Ray S1 uses retained reduction1 while other directional pushes re
   assert.ok(k >= 0); const x = k % 21, y = Math.floor(k / 21);
   const a = enemy(f.b, { x, y, mass: 2 });
   const from = { x, y: y - 1 }, dir = { x: 1, y: 0 };
-  const ordinary = f.b.push(a, 2, { from, dir });
+  // Regular stages accept a push and integrate it over its duration: measure the settled displacement.
+  const settle = () => { for (let i = 0; i < Math.ceil(1.5 / f.b.dt); i++) f.b.step(); return Math.hypot(a.x - x, a.y - y); };
+  assert.ok(f.b.push(a, 2, { from, dir })); const ordinary = settle();
   a.x = x; a.y = y;
-  const ray = f.b.push(a, 2, { from, dir, directionalReduction: 1 });
+  assert.ok(f.b.push(a, 2, { from, dir, directionalReduction: 1 })); const ray = settle();
   assert.ok(ray > ordinary, JSON.stringify({ ray, ordinary, weight: a.s.massLevel,
     tile: f.b.grid.tile(1, 5), displaceable: f.b._displaceable(a) }));
-  near(ordinary, .12); near(ray, .44);
+  // The reviewed 30 Hz friction distances for these two force grades (test/arkpedia-displacement.test.js).
+  near(ordinary, .118883333333); near(ray, .441566666667);
 });
 test('S2 activates from sixteen accepted natural attacks, never from reload, and stays indefinite', () => {
   const f = make({ skill: 2 }), e = enemy(f.b, { hp: 1000000 });

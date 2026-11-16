@@ -5,7 +5,11 @@ import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild, recordFor } from '../shared/arkpedia/loadout.js';
 import { acquireTargets, effectiveProfile } from '../server/sim/ai.js';
-import { PUSH_TILES, PULL_STOP_RADIUS, PULL_CRAWL } from '../server/sim/constants.js';
+import { PULL_STOP_RADIUS } from '../server/sim/constants.js';
+// Standard stages integrate force with the reviewed 30 Hz friction model; these are its settled push
+// distances by force grade (test/arkpedia-displacement.test.js). A push settles within 35 frames.
+const FRICTION_PUSH_TILES = Object.freeze({ '-2': .118883333333, '-1': .441566666667, 0: 1.698333333333, 1: 2.1399, 2: 2.9524, 3: 3.5265 });
+const SETTLE = 1.5;
 
 const near = (a,b) => assert.ok(Math.abs(a-b)<1e-6, `${a} != ${b}`);
 function advance(b,seconds) {
@@ -180,8 +184,8 @@ test('Shaw S1 source force moves light enemies by the correct projectile push di
     const[light,heavy,immune]=b.enemies,bb=bbAt(source,id,0,rank);
     heavy.base.massLevel=bb.force+3;heavy.markDirty();b.addBuff(immune,{key:'test:immune',flags:{noDisplace:true}});
     activate(b,u);const hp=b.enemies.map(e=>e.hp);b.forceAttack(u,b.enemies);
-    near(light.x,3.6);near(light.hp,hp[0]);advance(b,.2);
-    near(light.x,3.6+PUSH_TILES[bb.force]);near(heavy.x,3.7);near(immune.x,3.8);
+    near(light.x,3.6);near(light.hp,hp[0]);advance(b,SETTLE);
+    near(light.x,3.6+FRICTION_PUSH_TILES[bb.force]);near(heavy.x,3.7);near(immune.x,3.8);
     for(let i=0;i<3;i++)near(hp[i]-b.enemies[i].hp,u.s.atk*bb.atk_scale);
     assert.equal(u.skill.active,false);
   }
@@ -189,8 +193,9 @@ test('Shaw S1 source force moves light enemies by the correct projectile push di
 
 test('Shaw directional push applies the off-angle/near-source force penalty and stops at walls',()=>{
   const id='char_277_sqrrel';const{b}=make(id,{enemies:3});const u=deploy(b,id,3,5);pin(b,[[4.4,3],[5.1,3],[7.2,3]]);
-  activate(b,u);const[side,nearby,wall]=b.enemies;b.forceAttack(u,b.enemies);advance(b,.3);
-  near(side.x,4.4-1.7);near(side.y,3);near(nearby.x,5.1+1.7);
+  activate(b,u);const[side,nearby,wall]=b.enemies;b.forceAttack(u,b.enemies);advance(b,SETTLE);
+  // Force 2 less the off-angle/near-source penalty of 2 is grade 0.
+  near(side.x,4.4-FRICTION_PUSH_TILES[0]);near(side.y,3);near(nearby.x,5.1+FRICTION_PUSH_TILES[0]);
   assert.ok(wall.x<7.5);assert.ok(wall.x>=7.2);
 });
 
@@ -213,20 +218,25 @@ test('Rope physical dodge follows source promotion/potential and does not apply 
 
 test('Rope S1 damages on hook impact and source force pulls to front or only partway for heavier enemies',()=>{
   const id='char_236_rope';
-  for(const rank of[1,7,10]) for(const extra of[0,1,2,3]) {
+  for(const rank of[1,7,10]) {
+  const settled=[],pulled=[];
+  for(const extra of[0,1,2,3]) {
     const{b,source}=make(id,{rank,enemies:1});const u=deploy(b,id);pin(b);
     const e=b.enemies[0],bb=bbAt(source,id,0,rank);e.base.massLevel=bb.force+extra;e.markDirty();
     const hp=e.hp;activate(b,u);b.forceAttack(u,[e]);near(e.hp,hp);near(e.x,6);
-    advance(b,.4);near(hp-e.hp,u.s.atk*bb.atk_scale);
-    const expected=extra===0?3+PULL_STOP_RADIUS:extra===1?6-(6-3.5)*.35:extra===2?6-PULL_CRAWL:6;
-    near(e.x,expected);assert.equal(u.skill.active,false);
+    advance(b,.4);near(hp-e.hp,u.s.atk*bb.atk_scale);advance(b,SETTLE);
+    // The reviewed model pins a full pull (to the owner's circle) and no pull at grade -3; weaker
+    // grades move part of the way, less as the enemy gets heavier.
+    settled[extra]=e.x;assert.equal(u.skill.active,false);
+  }
+  near(settled[0],3+PULL_STOP_RADIUS);assert.ok(settled[0]<settled[1]&&settled[1]<settled[2]&&settled[2]<6,JSON.stringify(settled));near(settled[3],6);
   }
 });
 
 test('Rope S2 selects only two enemies in extended range, starts their hooks on activation, and spends a targetless cast without leaving a pending skill',()=>{
   const id='char_236_rope';const{b}=make(id,{skill:1,enemies:3});const u=deploy(b,id);pin(b,[[6.4,3],[6.6,3],[6.8,3]]);
   const hp=b.enemies.map(e=>e.hp);activate(b,u);assert.equal(u.stats.attacks,1);assert.equal(u.skill.active,false);
-  advance(b,.5);assert.equal(b.enemies.filter((e,i)=>e.hp<hp[i]).length,2);
+  advance(b,.5);assert.equal(b.enemies.filter((e,i)=>e.hp<hp[i]).length,2);advance(b,SETTLE);
   assert.ok(b.enemies.filter((e,i)=>e.hp<hp[i]).every(e=>Math.abs(e.x-(3+PULL_STOP_RADIUS))<1e-6));
   const empty=make(id,{skill:1}),v=deploy(empty.b,id);activate(empty.b,v);
   assert.equal(v.skill.pending,false);assert.equal(v.skill.active,false);near(v.skill.sp,0);

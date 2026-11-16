@@ -40,7 +40,8 @@ test('every enemy spawns, walks and fights on the flat harness stage without eng
   for (const key of keys) {
     const h = spawnAny(key, { seconds: 12 });
     assert.deepEqual(h.b.errors ?? [], [], key);
-    assert.ok(h.b.units.some(u => u.side === 'enemy' && u.defId === key), `${key} spawned`);
+    // Some admitted actors are compiled as neutral (for example the effect-only Mark of Epoch).
+    assert.ok(h.b.units.some(u => u.side !== 'ally' && u.defId === key), `${key} spawned`);
   }
 });
 test('the catalogue matches the pinned source tables when they are present', { skip: !existsSync(new URL('../.cache/arkpedia/enemy_handbook_table.json', import.meta.url)) }, async () => {

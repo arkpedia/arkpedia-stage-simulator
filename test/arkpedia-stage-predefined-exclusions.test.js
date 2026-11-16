@@ -13,7 +13,7 @@ test('3-6 Challenge removes the actual source Detectors while preserving map ter
  assert.deepEqual(p.stage.devices,[]);assert.deepEqual(p.stage.tokens,[]);assert.equal(p.stage.rules.excludePredefinedTraps,true);
  assert.deepEqual(p.stage.geometry.tileGrid,a.stage.geometry.tileGrid);assert.deepEqual(p.stage.geometry.tileLegend,a.stage.geometry.tileLegend);
  const make=s=>new StandardBattle({...c.mvp,stage:s,enemies:{...c.mvp.enemies,...s.enemies}},{operators:[defaultBuild(c.mvp.operators.char_123_fang)]});
- const normal=make(a.stage),challenge=make(p.stage);assert.equal(normal.manualStageDevices.entries.size,2);assert.equal(challenge.manualStageDevices.entries.size,0);
+ const normal=make(a.stage),challenge=make(p.stage);assert.equal(normal.manualStageDevices.entries.size,2);assert.equal(challenge.manualStageDevices,null,'a stage without manual devices loads no manual device runtime');
  assert.equal(challenge.units.some(u=>u.defId==='trap_005_sensor'),false);assert.ok(challenge.bench.char_123_fang);
  assert.deepEqual(challenge.errors,[]);assert.ok(p.localSources.some(s=>s.path.includes('original-level')));
 });

@@ -63,6 +63,45 @@ jobs:
         if: ${{ inputs.scope != 'atomic-json' }}
         run: node tools/arkpedia/test-assets.mjs
 
+      # Stage tests read the raw stage sources from a sibling arkpedia-data checkout, at the exact commit the
+      # committed stage library and content inventory were compiled from (data/arkpedia-library.json source.commit).
+      - name: Check out the pinned arkpedia-data snapshot beside the simulator
+        if: ${{ inputs.scope != 'atomic-json' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          commit=$(node -p "require('./data/arkpedia-library.json').source.commit")
+          [[ "$commit" =~ ^[0-9a-f]{40}$ ]]
+          git init -q ../arkpedia-data
+          # Keep the data files byte-identical to the commit on Windows runners too.
+          git -C ../arkpedia-data config core.autocrlf false
+          git -C ../arkpedia-data fetch -q --depth 1 https://github.com/arkpedia/arkpedia-data.git "$commit"
+          git -C ../arkpedia-data -c advice.detachedHead=false checkout -q FETCH_HEAD
+          test "$(git -C ../arkpedia-data rev-parse HEAD)" = "$commit"
+
+      # Original level files are downloaded from their pinned commit and verified against the Git blob and SHA-256
+      # recorded in data/stage-rules/levels (tools/arkpedia/original-level.mjs). Fetch all of them before the tests,
+      # so no test waits on the network, and save the cache even when a later test fails.
+      - name: Restore verified original level files
+        id: original-levels
+        if: ${{ inputs.scope != 'atomic-json' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/arkpedia/original-level-blobs
+          key: original-levels-${{ hashFiles('data/stage-rules/levels/*.json') }}
+          restore-keys: original-levels-
+
+      - name: Fetch and verify every pinned original level
+        if: ${{ inputs.scope != 'atomic-json' }}
+        run: node tools/arkpedia/fetch-original-levels.mjs --concurrency 8
+
+      - name: Save verified original level files
+        if: ${{ always() && inputs.scope != 'atomic-json' && steps.original-levels.outputs.cache-hit != 'true' && hashFiles('.cache/arkpedia/original-level-blobs/*.json') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/arkpedia/original-level-blobs
+          key: original-levels-${{ hashFiles('data/stage-rules/levels/*.json') }}
+
       - name: Unit & integration tests
         if: ${{ inputs.scope != 'atomic-json' }}
         env:
