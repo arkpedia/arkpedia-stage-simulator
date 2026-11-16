@@ -119,6 +119,11 @@ export function canTargetAlly(e, a, ranged) {
   return true;
 }
 
+/** Global selectors are runtime state; portable enemy statistics remain finite. */
+export function enemyAttackRadius(e){
+ return (e.profile?.melee??e.def.applyWay==='MELEE')?0:e.profile?.globalRange?Infinity:e.base.rangeRadius;
+}
+
 /** Ordinary enemy attack candidates, shared by attack execution and combat-state abilities. */
 export function enemyAttackTargets(b, e, radius) {
   const reach = radius > 0 ? radius + ALLY_COLLIDER_RADIUS : 0;

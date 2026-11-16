@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {REDMARK_FEATURE,REDMARK_DESCRIPTION} from './enemy-redmark-features.js';
 import {EXPLETIVE_FEATURE,EXPLETIVE_DESCRIPTION} from './enemy-expletive-features.js';
 import {NIGHT_CRAWLER_FEATURES} from './enemy-night-crawler-features.js';
 import {WEAKSAUCE_FEATURE} from './enemy-weaksauce-features.js';
@@ -409,6 +410,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
+  [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,
   ...NIGHT_CRAWLER_FEATURES,
   'ability:-':WEAKSAUCE_FEATURE,

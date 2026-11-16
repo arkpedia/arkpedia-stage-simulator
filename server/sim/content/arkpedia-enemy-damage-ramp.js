@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { enemyAttackTargets } from '../targeting.js';
+import { enemyAttackTargets,enemyAttackRadius } from '../targeting.js';
 
 /** Damage-driven stacks; the rest timer measures disengagement, not attack interval. */
 export function stackingDamageRamp({ atkPct, aspd, maxStacks, resetAfter, key = 'ab:axeStack' }) {
@@ -11,7 +11,7 @@ export function stackingDamageRamp({ atkPct, aspd, maxStacks, resetAfter, key = 
     },
     tick(b, e, a, dt) {
       const f = e.s.flags, p = e.profile;
-      const radius = (p?.melee ?? e.def.applyWay === 'MELEE') ? 0 : e.base.rangeRadius;
+      const radius = enemyAttackRadius(e);
       const engaged = e.canAct && !e.hidden && !p?.noAttack && !f.disarm && !f.fear
         && !(f.tremble && e.blockedBy) && enemyAttackTargets(b, e, radius).length > 0;
       a.idle = engaged ? 0 : (a.idle ?? 0) + dt;

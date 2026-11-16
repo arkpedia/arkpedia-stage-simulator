@@ -26,7 +26,7 @@
 // both re-plan the route when released (恐惧 outranks 诱导).
 
 import { ATTACK_PAUSE, ALLY_COLLIDER_RADIUS, MOVE_SCALE, PROJECTILE_SPEEDS, PROJECTILE_SPEED, BOOMERANG_RETURN_SPEED, COLS, CHAIN_RADIUS } from './constants.js';
-import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, enemyAttackTargets, tileKeyOf, characterLikeTarget } from './targeting.js';
+import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, enemyAttackTargets, enemyAttackRadius, tileKeyOf, characterLikeTarget } from './targeting.js';
 import { reduceElement } from './damage.js';
 import { straightClear } from './grid.js';
 import { moveFeared, endFear } from './fear.js';
@@ -824,7 +824,7 @@ function enemyAttack(b, e) {
   // 宿主士兵 2.5, 深池伙友卫队 1.4 … — that radius belongs to their abilities/splash, handled by content).
   // Content may flip it with `e.profile.melee = false`.
   const melee = e.profile?.melee ?? def.applyWay === 'MELEE';
-  const radius = melee ? 0 : e.base.rangeRadius;
+  const radius = enemyAttackRadius(e);
   // the range circle takes an ally whose 0.25 collider touches it (PRTS 作战机制 §碰撞体积: 索敌 uses the colliders)
   const reach = radius > 0 ? radius + ALLY_COLLIDER_RADIUS : 0;
   // `e.profile.canTarget(ally)`: the enemy's own target rule (只攻击地面单位, 不会攻击飞行单位 …; content/enemies.js),

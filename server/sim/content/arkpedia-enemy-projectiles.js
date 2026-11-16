@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {configureMarkedEnemyTargets,validateMarkedEnemyTargets} from './arkpedia-enemy-marked-targets.js';
 import {ordinaryEnemyAttackSequence,validateEnemyAttackAnimation} from './arkpedia-enemy-attack-sequence.js';
 import { ALLY_COLLIDER_RADIUS } from '../constants.js';
 import { areaSelectable } from '../targeting.js';
@@ -171,3 +172,22 @@ export function chargedAttacks(ordinary, charged, { initialSp, cost, increment, 
     },
   };
 }
+
+/** The ordinary cast clock and projectile lifecycle are composed once; data
+ * supplies the selected marker, global/local scope and two original clips. */
+export function markedMeleeProjectileAttack(params){
+ validateMarkedProjectile(params);
+ const {targeting,meleeAnimation,rangedAnimation,meleeScale=1,...transport}=params,shot=projectileSingleAttack({...transport,noAir:true});
+ const sequence=ordinaryEnemyAttackSequence((_b,e,_a,c)=>c.targets[0]===e.blockedBy?meleeAnimation:rangedAnimation,
+  (b,e,target,cast)=>{
+   if(cast.animation===meleeAnimation)b.dealDamage(e,target,{amount:e.s.atk*meleeScale,type:transport.type,isAttack:true,isSkill:false,attackId:cast.attackId,applyWay:'melee'});
+   else shot.attack({targets:[target],attackId:cast.attackId},b,e);
+  });
+ return{...sequence,spawn(b,e,a){sequence.spawn(b,e,a);configureMarkedEnemyTargets(e,targeting);}};
+}
+function validateMarkedProjectile({targeting,meleeAnimation,rangedAnimation,meleeScale=1,type,speed,lifetime}){
+ validateMarkedEnemyTargets(targeting);validateEnemyAttackAnimation(meleeAnimation);validateEnemyAttackAnimation(rangedAnimation);
+ if(!Number.isFinite(meleeScale)||meleeScale<0||!['phys','arts','true'].includes(type)||!Number.isFinite(speed)||speed<=0||!Number.isFinite(lifetime)||lifetime<=0)
+  throw Error('Invalid marked melee projectile attack');
+}
+markedMeleeProjectileAttack.validate=validateMarkedProjectile;
