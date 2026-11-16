@@ -1,3 +1,4 @@
+import {isPlainHuiMing,plainHuiMingNative,HUI_MING_ABILITY} from './enemy-hui-ming-features.js';
 import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
@@ -449,6 +450,8 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FAMIGLIA_BASIC_FEATURES,
   ...FAMIGLIA_LIMO_FEATURES,
   ...FATHER_AGENIR_FEATURES,
+  // Hui-Ming (yin/yang): start-only attribute choice and same/opposite output scales through the shared account.
+  'talent:yinyang': { matchesRecord: isPlainHuiMing, covers: plainHuiMingNative, ability: HUI_MING_ABILITY, note: 'shared Hui-Ming attribute account' },
   ...FAMIGLIA_CASTER_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,

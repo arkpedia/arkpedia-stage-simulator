@@ -93,6 +93,8 @@ export async function buildEnemySupport() {
       deviceSpSelector: { path: 'shared/arkpedia/enemy-device-sp-selector-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-device-sp-selector-contract.js', root))) },
       talentBindingContract: { path: 'shared/arkpedia/enemy-talent-binding-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-talent-binding-contract.js', root))) },
       routeSummonContract: { path: 'shared/arkpedia/enemy-route-summon-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-route-summon-contract.js', root))) },
+      huiMingFeatures: { path: 'shared/arkpedia/enemy-hui-ming-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-hui-ming-features.js', root))) },
+      huiMingAnimations: { path: 'data/arkpedia-hui-ming-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-hui-ming-animations.json', root))) },
       fatherAgenirFeatures: { path: 'shared/arkpedia/enemy-father-agenir-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-father-agenir-features.js', root))) },
       fatherAgenirAnimations: { path: 'data/arkpedia-father-agenir-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-father-agenir-animations.json', root))) },
       famigliaLimoFeatures: { path: 'shared/arkpedia/enemy-famiglia-limo-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-limo-features.js', root))) },

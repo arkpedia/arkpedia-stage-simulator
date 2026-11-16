@@ -399,8 +399,20 @@ export function dealDamage(battle, source, target, dmgIn) {
   // 无来源 damage (element bursts) takes nothing from its source's stats; the source still gets the credit below
   const ss = source && source.s && !dmg.sourceless ? source.s : null;
   let final = originalAmount;
+  // Native ON_CALCULATE_DAMAGE AtkScaleUp belongs to one source/recipient pair.
+  // It scales the pre-mitigation amount for this recipient only, so a
+  // DamageInfo shared by an area attack is never rewritten. Opt-in: without a
+  // listener nothing changes. Sourceless and unmodified damage skip it.
+  let pairScale = 1;
+  if (hs && !dmg.unmodified && battle._hooks.sourceAtkScale) {
+    const ctx = { source: hs, target, dmg, credit: source, targetLife, scale: 1 };
+    battle.emit('sourceAtkScale', ctx);
+    if (!retainsDamageLife(target, targetLife)) return 0;
+    if (!Number.isFinite(ctx.scale) || ctx.scale < 0) throw Error('Invalid source ATK scale');
+    pairScale = ctx.scale; ts = target.s;
+  }
   if (!dmg.unmodified) {
-    final = mitigate(dmg.amount, type, ts, {
+    final = mitigate(dmg.amount * pairScale, type, ts, {
       defIgnorePct: dmg.defIgnorePct + (ss ? ss.defIgnorePct : 0),
       defIgnoreFlat: dmg.defIgnoreFlat + (ss ? ss.defIgnoreFlat : 0),
       resIgnorePct: dmg.resIgnorePct + (ss ? ss.resIgnorePct : 0),

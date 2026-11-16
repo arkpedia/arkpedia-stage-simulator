@@ -34,6 +34,13 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1122_sphond': ['enemy_1122_sphond', 'Default', 'Combat', 'YinYang'],
+    'enemy_1122_sphond_2': ['enemy_1122_sphond_2', 'Default', 'Combat', 'YinYang'],
+    'enemy_1123_spsbr': ['enemy_1123_spsbr', 'Default', 'Combat', 'YinYang'],
+    'enemy_1123_spsbr_2': ['enemy_1123_spsbr_2', 'Default', 'Combat', 'YinYang'],
+    'enemy_1125_spshld': ['enemy_1125_spshld', 'Default', 'Combat', 'YinYang', 'Taunt'],
+    'enemy_1125_spshld_2': ['enemy_1125_spshld_2', 'Default', 'Combat', 'YinYang', 'Taunt'],
+
     'enemy_1284_sgprst': ['enemy_1284_sgprst','Default','VG','Attack','Trigger','Passive','SelectVg'],
 
     'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
@@ -402,7 +409,7 @@ for path, p in index['prefabs'].items():
                 or c['pathId'] in automatic_auxiliaries.get(path, set())):
             wanted.setdefault(p['bundle'], []).append((path, c))
 components = {}
-used_templates = {'tile_originum_t_1[dmg]', 'fear_buff', 'enemy_durcar_hit_blocker'}
+used_templates = {'tile_originum_t_1[dmg]', 'fear_buff', 'enemy_durcar_hit_blocker', 'buff_yin', 'buff_yang'}
 for bundle in sorted(wanted):
     row = bundles[bundle]
     raw = (C / 'bundles' / bundle).read_bytes()
@@ -482,6 +489,13 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1122_sphond': {'Combat','YinYang'},
+            'enemy_1122_sphond_2': {'Combat','YinYang'},
+            'enemy_1123_spsbr': {'Combat','YinYang'},
+            'enemy_1123_spsbr_2': {'Combat','YinYang'},
+            'enemy_1125_spshld': {'Combat','YinYang','Taunt'},
+            'enemy_1125_spshld_2': {'Combat','YinYang','Taunt'},
+
             'enemy_1284_sgprst': {'Attack','Trigger','Passive','SelectVg'},
 
             'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
@@ -761,7 +775,7 @@ result = {'schemaVersion': 1,
     'prefabs': {k: unique_components(v) for k, v in sorted(components.items())},
     'templates': dict(sorted(templates.items())),
     'ranges': {key: ranges[key] for key in ['x-5', 'x-4', '0-1']},
-    'buffDatabase': {key: buff_table[key] for key in ['enemy_confinement', 'enemy_confinement_final', 'disarmed_and_cant_use_skill', 'status_resistance[inf]', 'damage_resistance[inf]', 'fear', 'act28side_energy_buff', 'act28side_over_energy_buff']},
+    'buffDatabase': {key: buff_table[key] for key in ['buff_yin', 'buff_yang', 'enemy_confinement', 'enemy_confinement_final', 'disarmed_and_cant_use_skill', 'status_resistance[inf]', 'damage_resistance[inf]', 'fear', 'act28side_energy_buff', 'act28side_over_energy_buff']},
     'projectiles': {k: sorted(v, key=lambda r: int(r['pathId'])) for k, v in sorted(projectiles.items())}}
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 if '--check' in sys.argv:
