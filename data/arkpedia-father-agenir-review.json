@@ -1,0 +1,410 @@
+{
+ "schemaVersion": 1,
+ "scope": "Source-gated Father Agenir: one shared magazine whose rounds buy permanent flat DEF stacks at arrival, half-second Asset Liquidation polling between the ordinary 1.9-radius Attack packet and the global Skill packet, and a start-only selected periodic SP link to a tagged controller. Controlled fixtures only; no native Blood Debt controller, original-stage clear, effects/audio or frame/pixel parity.",
+ "sourceSha256": {
+  "shared/arkpedia/enemy-father-agenir-features.js": "d63e6c305fd050a4d25153f3e2518cd4a2779656d62266bcb7bf06f033abfaaa",
+  "shared/arkpedia/behavior-native-compiler.js": "718ae4f625a406cd8bbee2fd9014f2b4d38f5415c0cda900bc48238e299dd501",
+  "server/sim/content/arkpedia-enemy-programmed-projectiles.js": "70cb9ae227920e3e02a3081d371c731cfee3fd0f8854489ec5531033be0a79fe",
+  "server/sim/content/arkpedia-enemy-ammo.js": "4b2552fc0ab5647a86058f81c819a0529da8c66464345ee1220df66735f8c585",
+  "server/sim/content/arkpedia-enemy-sp-link.js": "3f3087f1f4fcc980f646904fdf5f5b5a4fd6e133e72ec0427e9b0d84926bddec",
+  "server/sim/content/arkpedia-enemy-runtime-index.js": "0c3d52625175dd21e840f0d58cc0a7e9d2715719b34faeb884a8332607774962",
+  "tools/arkpedia/test-assets.mjs": "64c86d36c8f3efc8af29bf0ff280cf2a00195638facb5c8ccdd19ad52afbdbaf",
+  "tools/arkpedia/review-father-agenir.mjs": "c1b0712445e401aac4e7004b080bf550255838c58d4e02eaf0a6c3c2037cb25d",
+  "data/arkpedia-enemy-native-abilities.json": "0bb6c335deadd7325cbae52b6b32b25d2bb73691df8f29aa3c7a507f1351cd21",
+  "data/arkpedia-enemy-support.json": "37cfe006e7edbe5f0d5c02b00afa14e939859a388db5b5812b429a516aa9902d",
+  "data/arkpedia-father-agenir-animations.json": "ff7d331703bff483b763249d8e680abf14ca698608e036328ffcef3a58b9f951",
+  "test/arkpedia-father-agenir.test.js": "df6deb920cb9920e5c836112e6e2d2589cf4aabf1d6974f4b32c3de48260272a"
+ },
+ "tests": {
+  "family": 13,
+  "focusedRegressions": 385,
+  "broad": {
+   "command": "node --test --test-concurrency=2 test/sim/*.test.js test/content/*.test.js",
+   "tests": 1806,
+   "passed": 1801,
+   "skipped": 3,
+   "failed": 2,
+   "failures": "The two known Chimera expectations in test/content/feedback1d-solvent.test.js, unchanged from the recorded baseline.",
+   "afterwards": "Those two tests were then brought in line with the reviewed controller (0.5 s detection, 56/30 s transformation, no start while stunned) and the shared pollution registry (sourceless tagged packets). That file alone was rerun: 16 tests, 15 pass, 1 todo, 0 fail. The todo keeps the unresolved hurt-SP expectation visible; the broad suite was not rerun after that edit."
+  }
+ },
+ "browser": {
+  "scope": "Controlled Father Agenir fixture on the default compiled stage geometry with an explicit tagged SP receiver, explicit aura marker and explicit target body; no native Blood Debt controller, original-stage clear, effects/audio or frame/pixel parity.",
+  "browser": "Chrome/156.0.8078.80",
+  "runs": [
+   {
+    "viewport": "1440x900 desktop",
+    "level": 0,
+    "loadedBefore": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "loadedAfter": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": {
+      "id": "char_124_kroos",
+      "kind": "op"
+     },
+     "record": {
+      "hp": 22000,
+      "atk": 900
+     },
+     "ammo": [
+      10
+     ],
+     "linked": true,
+     "firstPulse": 2,
+     "outOfRange": {
+      "hits": 0,
+      "sp": 12,
+      "mode": 0,
+      "marker": true
+     },
+     "model": "enemy/enemy_1284_sgprst/default/default",
+     "actor": "BattleActor",
+     "global": {
+      "mode": 1,
+      "range": true,
+      "marker": true,
+      "closed": false
+     },
+     "cast": true,
+     "skillClip": "Skill",
+     "globalHit": true,
+     "afterGlobal": {
+      "stacks": 1,
+      "defFlat": -300,
+      "def": 0,
+      "expectedDef": 0,
+      "ammo": 9,
+      "type": "phys"
+     },
+     "returned": {
+      "mode": 0,
+      "range": false,
+      "marker": true
+     },
+     "nearCast": true,
+     "attackClip": "Attack",
+     "nearHit": true,
+     "afterNear": {
+      "stacks": 2,
+      "ammo": 9
+     },
+     "killed": 2,
+     "unlinked": true,
+     "spAfterDeath": 0,
+     "pulseClock": [
+      0.967,
+      1.967,
+      2.967,
+      3.967,
+      4.967
+     ],
+     "errors": []
+    }
+   },
+   {
+    "viewport": "1440x900 desktop",
+    "level": 1,
+    "loadedBefore": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "loadedAfter": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": {
+      "id": "char_124_kroos",
+      "kind": "op"
+     },
+     "record": {
+      "hp": 30000,
+      "atk": 1100
+     },
+     "ammo": [
+      10
+     ],
+     "linked": true,
+     "firstPulse": 2,
+     "outOfRange": {
+      "hits": 0,
+      "sp": 12,
+      "mode": 0,
+      "marker": true
+     },
+     "model": "enemy/enemy_1284_sgprst/default/default",
+     "actor": "BattleActor",
+     "global": {
+      "mode": 1,
+      "range": true,
+      "marker": true,
+      "closed": false
+     },
+     "cast": true,
+     "skillClip": "Skill",
+     "globalHit": true,
+     "afterGlobal": {
+      "stacks": 1,
+      "defFlat": -300,
+      "def": 0,
+      "expectedDef": 0,
+      "ammo": 9,
+      "type": "phys"
+     },
+     "returned": {
+      "mode": 0,
+      "range": false,
+      "marker": true
+     },
+     "nearCast": true,
+     "attackClip": "Attack",
+     "nearHit": true,
+     "afterNear": {
+      "stacks": 2,
+      "ammo": 9
+     },
+     "killed": 2,
+     "unlinked": true,
+     "spAfterDeath": 0,
+     "pulseClock": [
+      0.967,
+      1.967,
+      2.967,
+      3.967,
+      4.967
+     ],
+     "errors": []
+    }
+   },
+   {
+    "viewport": "844x390 touch",
+    "level": 0,
+    "loadedBefore": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "loadedAfter": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": {
+      "id": "char_124_kroos",
+      "kind": "op"
+     },
+     "record": {
+      "hp": 22000,
+      "atk": 900
+     },
+     "ammo": [
+      10
+     ],
+     "linked": true,
+     "firstPulse": 2,
+     "outOfRange": {
+      "hits": 0,
+      "sp": 12,
+      "mode": 0,
+      "marker": true
+     },
+     "model": "enemy/enemy_1284_sgprst/default/default",
+     "actor": "BattleActor",
+     "global": {
+      "mode": 1,
+      "range": true,
+      "marker": true,
+      "closed": false
+     },
+     "cast": true,
+     "skillClip": "Skill",
+     "globalHit": true,
+     "afterGlobal": {
+      "stacks": 1,
+      "defFlat": -300,
+      "def": 0,
+      "expectedDef": 0,
+      "ammo": 9,
+      "type": "phys"
+     },
+     "returned": {
+      "mode": 0,
+      "range": false,
+      "marker": true
+     },
+     "nearCast": true,
+     "attackClip": "Attack",
+     "nearHit": true,
+     "afterNear": {
+      "stacks": 2,
+      "ammo": 9
+     },
+     "killed": 2,
+     "unlinked": true,
+     "spAfterDeath": 0,
+     "pulseClock": [
+      0.967,
+      1.967,
+      2.967,
+      3.967,
+      4.967
+     ],
+     "errors": []
+    }
+   },
+   {
+    "viewport": "844x390 touch",
+    "level": 1,
+    "loadedBefore": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "loadedAfter": [
+     "arkpedia-stage-outcomes",
+     "arkpedia-enemy-sp-link",
+     "arkpedia-enemy-programmed-projectiles"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": {
+      "id": "char_124_kroos",
+      "kind": "op"
+     },
+     "record": {
+      "hp": 30000,
+      "atk": 1100
+     },
+     "ammo": [
+      10
+     ],
+     "linked": true,
+     "firstPulse": 2,
+     "outOfRange": {
+      "hits": 0,
+      "sp": 12,
+      "mode": 0,
+      "marker": true
+     },
+     "model": "enemy/enemy_1284_sgprst/default/default",
+     "actor": "BattleActor",
+     "global": {
+      "mode": 1,
+      "range": true,
+      "marker": true,
+      "closed": false
+     },
+     "cast": true,
+     "skillClip": "Skill",
+     "globalHit": true,
+     "afterGlobal": {
+      "stacks": 1,
+      "defFlat": -300,
+      "def": 0,
+      "expectedDef": 0,
+      "ammo": 9,
+      "type": "phys"
+     },
+     "returned": {
+      "mode": 0,
+      "range": false,
+      "marker": true
+     },
+     "nearCast": true,
+     "attackClip": "Attack",
+     "nearHit": true,
+     "afterNear": {
+      "stacks": 2,
+      "ammo": 9
+     },
+     "killed": 2,
+     "unlinked": true,
+     "spAfterDeath": 0,
+     "pulseClock": [
+      0.967,
+      1.967,
+      2.967,
+      3.967,
+      4.967
+     ],
+     "errors": []
+    }
+   }
+  ]
+ },
+ "artwork": {
+  "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+  "browser": "Chrome/156.0.8078.80",
+  "results": [
+   {
+    "viewport": "desktop",
+    "models": [
+     {
+      "id": "enemy_1284_sgprst",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 265.45345306396484,
+      "height": 438.95172929763794
+     }
+    ],
+    "errors": [],
+    "failures": []
+   },
+   {
+    "viewport": "mobile",
+    "models": [
+     {
+      "id": "enemy_1284_sgprst",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 265.45345306396484,
+      "height": 438.95172929763794
+     }
+    ],
+    "errors": [],
+    "failures": []
+   }
+  ]
+ },
+ "assetCommit": "a00f9ad2f5b09a58596cf3d787618bda7c1d4020",
+ "coverage": {
+  "enemies": 769,
+  "totalEnemies": 2163,
+  "databaseLevels": 835,
+  "runtimeKinds": 214,
+  "pinnedStageGraphs": 970
+ },
+ "stageSmoke": {
+  "stages": 970,
+  "passed": 970,
+  "scope": "Ten-second runtime smoke, not clears."
+ },
+ "boundaries": [
+  "Explicit SP receiver and explicit aura marker; trap_092_vgctrl is not admitted.",
+  "DEF stack applied after the hit damage, following the existing stacking DEF reduction; native order not established from method bodies.",
+  "Arrival round check uses the retained default of one round; a blackboard-supplied threshold was not established from method bodies.",
+  "Environment: macOS, Node v26.3.0; pinned CN bundles and Global templates re-fetched and hash-verified."
+ ]
+}

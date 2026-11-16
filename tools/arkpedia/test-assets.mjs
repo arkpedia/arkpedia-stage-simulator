@@ -16,8 +16,11 @@ export function reviewedSkeletons(snapshot){
     ||!/^[a-f0-9]{64}$/.test(e.sha256??''))throw Error('Invalid reviewed skeleton reference');
   const commit=model.assetsCommit??snapshot.sd.commit;
   if(!/^[a-f0-9]{40}$/.test(commit))throw Error('Invalid model commit');
-  const old=files.get(e.path);if(old&&(old.sha256!==e.sha256||old.bytes!==e.bytes||old.commit!==commit))throw Error('Conflicting immutable skeleton');
-  files.set(e.path,{...e,commit});
+  // An explicit shared-model alias is published by a later assets commit but
+  // names the same immutable file. Equal bytes are one download, fetched
+  // from the first pin seen; different bytes at one path remain a conflict.
+  const old=files.get(e.path);if(old&&(old.sha256!==e.sha256||old.bytes!==e.bytes))throw Error('Conflicting immutable skeleton');
+  if(!old)files.set(e.path,{...e,commit});
  }
  if(!files.size)throw Error('No reviewed skeletons in snapshot');return[...files.values()];
 }

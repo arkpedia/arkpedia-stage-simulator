@@ -31,6 +31,8 @@ test('moving pins, unsafe paths and conflicting aliases cannot prepare test asse
   s=>{s.sd.models.original.skeleton.bytes=NaN;},s=>{s.sd.models.alias={skeleton:{...entry,sha256:'0'.repeat(64)}};}];
  for(const fn of mutate){const s=structuredClone(snapshot);fn(s);assert.throws(()=>reviewedSkeletons(s));}
  const s=structuredClone(snapshot);s.sd.models.alias=structuredClone(s.sd.models.original);assert.equal(reviewedSkeletons(s).length,1);
+ const later=structuredClone(s);later.sd.models.alias.assetsCommit='b'.repeat(40);const [shared]=reviewedSkeletons(later);assert.equal(reviewedSkeletons(later).length,1);assert.equal(shared.commit,later.sd.models.original.assetsCommit??later.sd.commit);
+ const changed=structuredClone(later);changed.sd.models.alias.skeleton.sha256='c'.repeat(64);assert.throws(()=>reviewedSkeletons(changed),/Conflicting immutable skeleton/);
 });
 for(const status of[429,500,502,503,504])test(`temporary HTTP ${status} retries the same immutable skeleton, then verifies original bytes`,async t=>{
  const d=await directory(t),calls=[],delays=[];

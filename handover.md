@@ -1,6 +1,6 @@
 # Stage simulator handover
 
-Updated 2026-11-16. **Work is paused at the user's request.** The user asked to stop, create this file, and commit everything. Do not resume implementation until asked.
+Updated 2026-11-16. **Work was resumed on 2026-11-16 at the user's request**, on a macOS checkout, after the pause recorded earlier that day. Father Agenir is the first batch of the resumed work.
 
 ## Goal and agreed direction
 
@@ -15,43 +15,44 @@ When resumed, continue between completed batches without asking whether to conti
 
 ## Repositories and saved state
 
-- Simulator: `/workspace/arkpedia-stage-simulator`, local branch `work`, push target `origin master`.
-- Assets: `/workspace/arkpedia-sd-assets`, local branch `work`, push target `origin main`.
-- Latest implementation commit: **`5d685947`**, `Implement blocked Limo death modes and original passengers`, already pushed to master.
-- Latest asset commit: **`fb6623a5eb205ff461037ee23fe178cdb327db42`**, original Limo models, already pushed to main.
-- Both working trees were clean before adding this handover. No pending Father Agenir implementation was started.
-- No PR was created. No subagents were used; current instructions prohibit spawning them without an explicit request.
+The earlier sessions ran in a container under `/workspace`. That container, its `.cache` and its `/tmp` logs and research checkouts are not available on the macOS machine; everything needed was re-fetched from the pinned sources and hash-verified.
 
-Use normal Git pushes, not manual Git blob APIs:
+- Simulator: GitHub `arkpedia/arkpedia-stage-simulator`, branch `master`. On the Mac the remote is named **`legacy`** (`origin` there is the unrelated `arkpedia-stage-simulator-standalone`), and work happens in the worktree `~/Projects/Arkpedia/claude-sim/sim-master`, branch `work/enemies-continue`. Push with `git push legacy HEAD:master`.
+- Assets: GitHub `arkpedia/arkpedia-sd-assets`, branch `main`, worktree `~/Projects/Arkpedia/claude-sim/arkpedia-sd-assets`, branch `work/enemies-continue`. Tools and tests expect this checkout as the simulator's sibling `../arkpedia-sd-assets`. Push with `git push origin HEAD:main`.
+- Latest asset commit: **`a00f9ad2f5b09a58596cf3d787618bda7c1d4020`**, original Father Agenir model, pushed to main.
+- The latest implementation commit is the one that contains this file; see `git log`.
+- No PR was created. No subagents were used.
+
+### Rebuilding the ignored inputs on a fresh machine
 
 ```sh
 set -e
-git -c credential.helper='!gh auth git-credential' push origin HEAD:master
+npm ci
+python3 -m venv .cache/arkpedia-venv
+.cache/arkpedia-venv/bin/pip install -r tools/arkpedia/stages/requirements.txt
+export ARKPEDIA_PYTHON=$PWD/.cache/arkpedia-venv/bin/python
+node tools/arkpedia/cn-enemy-native-source.mjs --fetch
+node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab' --enemy-art
 ```
 
-Use `HEAD:main` in the asset repository.
+`extract-enemy-native-abilities.py` also reads three public tables into `.cache/arkpedia`, each checked against a pin in the script: `buff_template_data.json` (Global, `data/arkpedia-mvp.json` `behaviors.source`), `range_table_cn-<commit>.json` and `cn-native-source/tables/buff_table.json` (CN, the commit in `data/arkpedia-cn-native-source.json`). Fetch them from `raw.githubusercontent.com` at those commits. Rerunning the extractor on unchanged scopes must leave `data/arkpedia-enemy-native-abilities.json` byte-identical; that is the environment check.
 
 ## Current coverage and verification
 
-- **768 / 2,163 enemy records admitted; 1,395 remain.**
-- **833 database levels**, **213 runtime kinds**.
+- **769 / 2,163 enemy records admitted; 1,394 remain.**
+- **835 database levels**, **214 runtime kinds**.
 - **970 published stage graphs** remain pinned for the stages phase. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,843 complete models**; simulator original enemy artwork catalogue: 561 models.
+- Asset repository: **3,844 complete models**; simulator original enemy artwork catalogue: 562 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
-- Latest broad run was the Caster batch: **1,806 tests, 1,801 passes, 3 skips, 2 known failures**. Both known failures are in `test/content/feedback1d-solvent.test.js`, lines around 234 and 460, and concern stale Chimera pollution aura/SP expectations. Do not describe this baseline as fully green.
+- Latest broad run was the Father Agenir batch, before its Chimera test edit: **1,806 tests, 1,801 passes, 3 skips, 2 known failures**, identical to the Caster baseline. The two failures were stale Chimera expectations in `test/content/feedback1d-solvent.test.js`. They were then updated to the reviewed controller and the shared pollution registry; one unresolved claim (pollution damage grants hurt SP and triggers a Defender skill, which the registry's no-SP packets contradict) is kept as a `todo` test. That file was rerun alone (15 pass, 1 todo). The broad suite has not been rerun since, so do not describe it as measured green.
+- **CI.** Every master push since 2026-10-30 failed after about 45 seconds in `tools/arkpedia/test-assets.mjs` (`Conflicting immutable skeleton`), because shared-model aliases are published by a later assets pin than the file they name. No test ran in CI during that time. The Agenir batch fixes that step. CI runs only the top-level `test/*.test.js` files (`tools/run-tests.mjs`), in four 90-minute jobs per push, so push once per finished batch.
 - Desktop and touch browser fixtures and original-body galleries passed for each completed family. Fixtures use controlled battles on compiled 0-1 geometry and explicit SP receivers/aura markers; they do not certify the native Blood Debt controller, original-stage clears, effects/audio or frame/pixel parity.
 
 Detailed source hashes, validation scopes and browser receipts are committed in `data/arkpedia-*-review.json`, with explanations in `docs/ENEMY-*-REVIEW.md`.
 
-Useful latest local logs:
-
-- `/tmp/famiglia-limos-focused.log`
-- `/tmp/famiglia-limos-tests-final.log`
-- `/tmp/famiglia-limos-stage-smoke.log`
-- `/tmp/famiglia-limos-browser.log`, `/tmp/famiglia-limos-browser-touch.log`
-- `/tmp/famiglia-casters-focused.log`, `/tmp/famiglia-casters-broad.log`
+The `/tmp` logs of earlier batches were in the old container and are gone; their results are recorded in the committed review receipts.
 
 ## Recent completed batches
 
@@ -65,6 +66,7 @@ All listed commits were pushed. Their matching original models were published se
 | `593b3c8a` | Famiglia Capos pair: independent recipient death auras, 40 SP per attached killed recipient, overlapping source contributions, native Arts melee. Coverage 764. |
 | `14fd1aee` | Famiglia Casters pair: two-target Arts packets and eight-second channels, eight one-second pulses of five SP, entry-only Asset Liquidation condition, native three-part visuals and shared scheduler callbacks. Coverage 766. |
 | `5d685947` | Famiglia Limos pair: blocked before-zero death mode, original Soldier passengers, scheduler/route reuse, independent killed/direct-destruction results and original death clips. Coverage 768. |
+| Father Agenir batch | One magazine whose rounds buy permanent DEF stacks at arrival, global Skill mode under Asset Liquidation, start-only selected periodic SP link (`selectedSpLink`), silent `ModifySp`/empty `CreateEffect` lowering, CI skeleton-step fix, Chimera test update. Coverage 769. See `docs/ENEMY-FATHER-AGENIR-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
@@ -75,10 +77,11 @@ Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249
 - Build/source bridge: `shared/arkpedia/native-buff-programs.js` reads retained native evidence and compiles once. Browsers receive portable component graphs/references, not source templates or the native compiler.
 - `shared/arkpedia/behavior-native-compiler.js` accepts a strict native dialect. `shared/arkpedia/behavior-program.js` validates the full bounded graph and blackboard before execution.
 - Prepared programs expose `requiredServices` and `validateServices(allowed)`. Every consumer must declare supported services before actor traits attach. Energy-only consumers must not silently accept SP programs.
-- Resource operations currently include signed bounded integer `energyAdd` on the root owner and **nonnegative target-bound `spAdd`**. Signed SP and owner-bound/native silent SP variants have **not** been implemented.
+- Resource operations currently include signed bounded integer `energyAdd` on the root owner and **nonnegative target-bound `spAdd`**, which now also lowers the silent (`_dontShowSpUI`) target variant; the native empty-key `CreateEffect` lowers to nothing. Signed SP and owner-bound SP have **not** been implemented in programs. Agenir's own round spending (`ModifySp` −1 on BUFF_SOURCE after `CheckHasSp`) is an exact-template gate over the `enemyAmmo` account, not a program.
 - New guarded-stat lowering recognizes the exact native absence check followed by one permanent inert stat attachment. It does **not** implement arbitrary STACK merging. A present same-key buff suppresses creation; native `FinishBuffsById` removes all same-key instances. Supported modifiers are ATK percentage, DEF percentage and ASPD, with zero fallback and bounded signed operands. Shared damage operands retain their nonnegative domain.
 - The runtime index is `server/sim/content/arkpedia-enemy-runtime-index.js`. Some legacy kinds still route through `enemies.js`; further startup reduction remains useful.
-- `ammoAttack` is already implemented in standalone `arkpedia-enemy-ammo.js`, including reusable `enemyAmmo(max, initial)`, but its runtime-index entry still points through the legacy `enemies` module. Repointing it may help the next ammo enemy without duplicating the account.
+- `ammoAttack` is already implemented in standalone `arkpedia-enemy-ammo.js`, including reusable `enemyAmmo(max, initial)`, but its runtime-index entry still points through the legacy `enemies` module. Repointing it may help the next ammo enemy without duplicating the account. The same file now exports `ammoHitBuff`, an arrival buff that spends the source's rounds for flat DEF stacks; `programmedProjectileModes` composes it through optional `ammo`, per-mode `ammoHit` and per-mode `globalRange` parameters.
+- `arkpedia-enemy-sp-link.js` (`selectedSpLink`) is the start-only selected periodic SP link: selection happens once, when the parent passive starts; derived buffs live on their receivers and finish with the parent.
 
 ### Shared SP and channels
 
@@ -101,27 +104,9 @@ Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249
 
 ## Likely next work, not yet implemented
 
-The next contemplated enemy was **Father Agenir (`enemy_1284_sgprst`)**, followed by the Siracusan Civilian / remaining Blood Debt actors and then other enemy families. No Agenir code, retained evidence scopes, model import or animation wrapper has been added yet.
+Father Agenir (`enemy_1284_sgprst`) is done. The remaining Blood Debt actors are gated on material work described below: the Siracusan Civilian needs allied route actors, and the native controller belongs to the stages phase. Continue with other enemy families until one of those is taken up. `data/arkpedia-enemy-support.json` lists every unadmitted record with its missing reasons; 126 records have a single missing reason.
 
-Private, ignored inspections already available:
-
-- `.cache/arkpedia/famiglia-limos-father-native-inspection.json`: both Limos and Father Agenir, hash-verified native prefab inspection.
-- `.cache/arkpedia/famiglia-controller-followup-native-inspection.json`: both Casters, both Capos and Siracusan Civilian.
-- `.cache/arkpedia/famiglia-blood-debt-native-inspection.json`: Soldiers, Crossbowmen, Intimidators and Silencers.
-- `.cache/arkpedia/vgctrl-native-inspection.json`: native Blood Debt device/skill, described below.
-
-These cache files are inspection aids, **not admission**. They are ignored and are not portable Git artifacts. Re-extract if the workspace cache is absent.
-
-### Father Agenir findings
-
-- Record: ranged physical, HP 22,000, ATK 900, DEF 500, RES 40, BAT 4.5, normal range 1.9; silence immune.
-- `Passive.sp = 2`, `Passive.attack@def = -300`.
-- Native SP/ammo data: maximum 10, initial 10, increment 0. Reuse the existing `enemyAmmo` account rather than creating a second magazine store.
-- Two native modes, `Default` and `VG`, with different ordinary attack/selector bindings and empty visual passives. VG attacks use a global selector. Inspect the complete packets before designing the adapter.
-- Common checker is `enemy_common_check_vg`, already compiled for the Crossbowmen, half-second polling.
-- `enemy_sgprst_vg_add` runs ON_BUFF_START, selects `SelectVg`, and creates a **derived** receiver buff `enemy_sgprsr_modify_vg` (note spelling), template `modify_sp[trigger_with_no_ui]`, infinite lifetime, one-second interval, finished with parent.
-- This likely needs reusable selected periodic SP links and a native owner-bound/silent SP program variant. Inspect the exact retained Global template before extending the compiler.
-- Existing mode projectile execution is in `arkpedia-enemy-programmed-projectiles.js`; preserve captured packet and target lifetime semantics if extending it for ammo/global range/DEF debuffs.
+The private inspections named in earlier versions of this file lived in the old container's ignored cache and are gone. Re-extract with `tools/arkpedia/inspect-native-enemies.py` when needed; they were inspection aids, **not admission**.
 
 ### Siracusan Civilian findings and blocker
 
@@ -146,9 +131,9 @@ Other previously inspected, still gated families include racing actors, Carneval
 
 - **Never edit `tools/arkpedia/public-review-server.mjs`.** Verified SHA-256:
   `127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22`.
-- Preview is `http://127.0.0.1:3185`; do not touch ports 3182–3184.
-- Python: `/workspace/.venvs/arkpedia/bin/python`. Animation wrappers need `ARKPEDIA_PYTHON` set to it; system Python lacks Unity extraction dependencies.
-- Canonical source data: `/workspace/arkpedia-data/source/data`; native bundles: `.cache/arkpedia/cn-native-source`.
+- Preview is `http://127.0.0.1:3185` (`HOST=127.0.0.1 PORT=3185 node scripts/start-arkpedia.mjs`); do not touch ports 3182–3184.
+- Python: the venv built above (`.cache/arkpedia-venv/bin/python`; `/workspace/.venvs/arkpedia/bin/python` in the old container). Animation wrappers need `ARKPEDIA_PYTHON` set to it; system Python lacks Unity extraction dependencies.
+- Canonical source data: the sibling `arkpedia-data/source/data` checkout; native bundles: `.cache/arkpedia/cn-native-source`.
 - Prefabs are pinned CN; retained buff templates are pinned Global. Do not silently replace the template source with CN.
 - `nativeComponents` groups only non-referenced components by name. Use `$ref` and `$siblings` for referenced components. `$ref` ignores file ID, so source gates must explicitly require local references where appropriate.
 - Source gates/clock files must be added to the support/runtime-plan input hash lists.
@@ -190,14 +175,14 @@ node --test --test-concurrency=2 test/sim/*.test.js test/content/*.test.js
 ### Native inspection, models and browser review
 
 ```sh
-/workspace/.venvs/arkpedia/bin/python tools/arkpedia/inspect-native-enemies.py \
+$ARKPEDIA_PYTHON tools/arkpedia/inspect-native-enemies.py \
   --enemies enemy_1284_sgprst --out .cache/arkpedia/agenir-native-inspection.json
 ```
 
 For a new family, add exact retention scopes to `extract-enemy-native-abilities.py`, extract, then create an animation wrapper using verified skeleton IDs and the actual art bundle. Recent Famiglia bodies use `refs/arts/enm_art_11.ab`; prefab bundle numbering does not imply art bundle numbering.
 
 ```sh
-/workspace/.venvs/arkpedia/bin/python tools/arkpedia/extract-native-enemy-models.py \
+$ARKPEDIA_PYTHON tools/arkpedia/extract-native-enemy-models.py \
   --ids .cache/arkpedia/FAMILY-ids.json \
   --out .cache/arkpedia/FAMILY-models --native-bindings
 ```
@@ -211,6 +196,6 @@ node tools/arkpedia/enemy-artwork.mjs --commit ASSET_COMMIT \
 
 Artwork publication also updates MVP/operator metadata and writes new enemy definition objects. Include those generated files, but do not republish pinned stage graphs during the enemies phase.
 
-Ignored review helpers are `.cache/arkpedia/famiglia-*-browser-review.mjs` (`--touch` supported) and `.cache/arkpedia/gnawbeasts-art-review.mjs` for galleries. Chromium is `/usr/bin/chromium`, via puppeteer-core; certificate pins are in `.cache/arkpedia/prison-device-browser-review/ca-pins.txt`. Inspect gallery screenshots explicitly. No CUA session is active.
+The old container's ignored review helpers are gone. Committed replacements: `tools/arkpedia/review-enemy-artwork.mjs` for galleries (`ARKPEDIA_REVIEW_ORIGIN`, `ARKPEDIA_REVIEW_CHROME`, `ARKPEDIA_REVIEW_IDS_FILE`, `ARKPEDIA_REVIEW_OUT`) and `tools/arkpedia/review-father-agenir.mjs` as the template for a controlled battle fixture: it serves the app through `public-review-server.mjs`, injects one compiled enemy record before the battle starts, deploys a benched operator as the target and drives the battle from the page. A plain ally-side device is not a valid enemy target. Run them headless against the preview on port 3185; on macOS set `ARKPEDIA_REVIEW_CHROME` to the Chrome binary. Inspect the screenshots explicitly.
 
-Read-only public native research checkouts are `/tmp/arkbattle-native-research` and `/tmp/arknightsdb-native-research`; file indexes are `/tmp/arkbattle-research-files.txt` and `/tmp/arknightsdb-native-files.txt`. Prefer small known `git show` paths; broad promisor searches can trigger large fetches. Declaration dumps are not method bodies, archived static evidence is not fresh native extraction, and neither establishes live hotfix/frame parity.
+The public native research checkouts under `/tmp` belonged to the old container. If they are cloned again: prefer small known `git show` paths; broad promisor searches can trigger large fetches. Declaration dumps are not method bodies, archived static evidence is not fresh native extraction, and neither establishes live hotfix/frame parity.
