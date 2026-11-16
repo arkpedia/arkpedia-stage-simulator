@@ -34,6 +34,11 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1124_spbow': ['enemy_1124_spbow', 'Default', 'Attack', 'Trigger', 'YinYang'],
+    'enemy_1124_spbow_2': ['enemy_1124_spbow_2', 'Default', 'Attack', 'Trigger', 'YinYang'],
+    'enemy_1127_sptrkg': ['enemy_1127_sptrkg', 'Default', 'Combat', 'YinYang', 'BlockableTick', 'Passsive'],
+    'enemy_1127_sptrkg_2': ['enemy_1127_sptrkg_2', 'Default', 'Combat', 'YinYang', 'BlockableTick', 'Passsive'],
+
     'enemy_1129_spklr': ['enemy_1129_spklr', 'Default', 'Combat', 'YinYang', 'AtkUp'],
     'enemy_1129_spklr_2': ['enemy_1129_spklr_2', 'Default', 'Combat', 'YinYang', 'AtkUp'],
 
@@ -492,6 +497,11 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1124_spbow': {'Attack','Trigger','YinYang'},
+            'enemy_1124_spbow_2': {'Attack','Trigger','YinYang'},
+            'enemy_1127_sptrkg': {'Combat','YinYang','BlockableTick','Passsive'},
+            'enemy_1127_sptrkg_2': {'Combat','YinYang','BlockableTick','Passsive'},
+
             'enemy_1129_spklr': {'Combat','YinYang','AtkUp'},
             'enemy_1129_spklr_2': {'Combat','YinYang','AtkUp'},
 
@@ -662,6 +672,9 @@ for bundle in sorted(wanted):
         # Geometry scopes complement MonoBehaviour sibling scopes. A family's
         # contact contract can retain its original colliders without a new branch.
         geometry_names = {
+            'enemy_1124_spbow': {'Trigger'},
+            'enemy_1124_spbow_2': {'Trigger'},
+
             'enemy_1284_sgprst': {'Trigger'},
 
             'enemy_1280_sgmag': {'Trigger'},

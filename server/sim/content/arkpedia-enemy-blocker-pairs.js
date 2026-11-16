@@ -2,8 +2,10 @@
 import {prepareBehaviorProgram,decodeBehaviorParameters} from '../../../shared/arkpedia/behavior-program.js';
 /** A source-owned paired-marker block condition and blocker-side polling
  * effect. Each relationship owns a separate checker instance and cleanup. */
-export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval,program,blackboard={}}){
-  validatePair({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval});
+export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,pairs,checkBuffKey,interval,immediate=true,program,blackboard={}}){
+  validatePair({blockerBuffKey,blockeeBuffKey,pairs,checkBuffKey,interval,immediate,program});
+  // Several native pairs describe markers owned elsewhere (for example a shared attribute account):
+  // this component then neither attaches a blockee marker nor has a marker-only fallback release.
   const compiled=program===undefined?null:prepareBehaviorProgram(program);
   compiled?.validateServices([]);compiled?.validateBlackboard(blackboard);
   const clear=(b,a)=>{
@@ -13,8 +15,8 @@ export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,i
   return{
     spawn(b,e){
       if(e.profile.blockerBuffPairs)throw Error('Blocker buff pair condition already installed');
-      e.profile.blockerBuffPairs=[{blockerBuffKey,blockeeBuffKey}];
-      b.addBuff(e,{key:blockeeBuffKey,source:e,persist:true});
+      e.profile.blockerBuffPairs=pairs?pairs.map(p=>({...p})):[{blockerBuffKey,blockeeBuffKey}];
+      if(!pairs)b.addBuff(e,{key:blockeeBuffKey,source:e,persist:true});
     },
     blocked(c,b,e,a){
       clear(b,a);const blocker=c.blocker,life=e.deploySeq;
@@ -30,8 +32,9 @@ export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,i
       if(!buff)return;
       a.binding={blocker,buff};
       // Native waitFirstTriggerInterval=false checks on attachment, then at
-      // the fixed interval. The clock belongs to the blocker, not the enemy.
-      check({unit:blocker,buff});
+      // the fixed interval; true waits one interval first. The clock belongs
+      // to the blocker, not the enemy.
+      if(immediate)check({unit:blocker,buff});
     },
     unblocked(_c,b,_e,a){clear(b,a);},
     death(_c,b,_e,a){clear(b,a);},
@@ -46,7 +49,12 @@ pairedBlockerBuffs.validate=params=>{
 
 pairedBlockerBuffs.decodeParameters=decodeBehaviorParameters;
 
-function validatePair({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval}){
-  if([blockerBuffKey,blockeeBuffKey,checkBuffKey].some(k=>typeof k!=='string'||!k)||!Number.isFinite(interval)||interval<=0)
+function validatePair({blockerBuffKey,blockeeBuffKey,pairs,checkBuffKey,interval,immediate=true,program}){
+  const text=k=>typeof k==='string'&&!!k&&k.length<=256;
+  if(pairs!==undefined){
+    if(blockerBuffKey!==undefined||blockeeBuffKey!==undefined||program===undefined||!Array.isArray(pairs)||!pairs.length||pairs.length>16
+      ||pairs.some(p=>!p||Object.keys(p).sort().join()!=='blockeeBuffKey,blockerBuffKey'||!text(p.blockerBuffKey)||!text(p.blockeeBuffKey)))throw Error('Invalid paired blocker buffs');
+  }else if(![blockerBuffKey,blockeeBuffKey].every(text))throw Error('Invalid paired blocker buffs');
+  if(!text(checkBuffKey)||typeof immediate!=='boolean'||!Number.isFinite(interval)||interval<=0)
     throw Error('Invalid paired blocker buffs');
 }

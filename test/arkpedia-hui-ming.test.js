@@ -4,7 +4,7 @@ import records from '../data/arkpedia-enemy-records.json' with{type:'json'};
 import support from '../data/arkpedia-enemy-support.json' with{type:'json'};
 import evidence from '../data/arkpedia-enemy-native-abilities.json' with{type:'json'};
 import {nativeComponents} from '../shared/arkpedia/enemy-support.js';
-import {plainHuiMingNative,huiMingAccountNative} from '../shared/arkpedia/enemy-hui-ming-features.js';
+import {plainHuiMingNative,huiMingAccountNative,huiMingArcherNative,huiMingBlockeeNative} from '../shared/arkpedia/enemy-hui-ming-features.js';
 import {withCompiledEnemyRuntime} from '../shared/arkpedia/enemy-runtime-compiler.js';
 import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
 import {huiMingOf,setHuiMing,switchHuiMing,huiMingAttribute} from '../server/sim/content/arkpedia-hui-ming.js';
@@ -95,4 +95,56 @@ test('source gates refuse changed talents, templates, database buffs, packets an
 test('runtime parameters are validated before any buff attaches',()=>{
  const ok={dynamic:1,same:.6,diff:1.4,sameKey:same,diffKey:diff};huiMingAttribute.validate(ok);
  for(const bad of[{dynamic:2},{same:-1},{diff:Infinity},{sameKey:'buff_yin'},{diffKey:same},{sameKey:''}])assert.throws(()=>huiMingAttribute.validate({...ok,...bad}),/Invalid Hui-Ming attribute talent/);
+});
+
+// 'Stabby' and 'Blindey'
+const archers=['enemy_1124_spbow','enemy_1124_spbow_2'],blockees=['enemy_1127_sptrkg','enemy_1127_sptrkg_2'];
+function field(id,{compiled=true,guards=[[10,6]],pos=[10,5],hold=true}={}){
+ const g=chessRec({id:'huiming_pair_guard',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:1},skill:null});
+ const record=compiled?withCompiledEnemyRuntime(records.enemies[id].levels[0]):records.enemies[id].levels[0];
+ const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{[id]:record},chess:{[g.chessId]:g}},units:guards.map(([row,col])=>({chessId:g.chessId,row,col})),kits:{[g.chessId]:()=>({trait:{noAttack:true}})},setup:installEnemyFeatures});h.b.start();
+ const e=h.b.spawnEnemy(id,{pos}),units=h.b.allyUnits,hits=[];assert.equal(units.length,guards.length);if(hold)h.b.addBuff(e,{key:'hold',flags:{noMove:true}});
+ h.b.on('damaged',c=>{if(c.source===e)hits.push({target:units.indexOf(c.target),amount:c.amount});});
+ const next=()=>{const count=hits.length;assert.ok(h.runUntil(()=>hits.length>count,10));return hits[count];};
+ return{...h,e,units,hits,next,atk:record.stats.atk};
+}
+for(const id of archers)test(`${id}: an ordinary direct ranged hit that prefers the opposite attribute over deployment order and taunt`,()=>{
+ const r=records.enemies[id].levels[0];assert.ok(huiMingArcherNative(r,nativeComponents(evidence,id)));assert.equal(support.enemies[id].policy,'stats-attacks-and-features');
+ for(const compiled of [false,true]){const h=field(id,{compiled,guards:[[10,7],[11,6]]}),[first,second]=h.units;assert.equal(huiMingOf(h.e),'yang');
+  const plain=h.next();assert.equal(h.b.projectiles.list.length,0);near(plain.amount,h.atk);const preferred=plain.target,other=1-preferred;
+  setHuiMing(h.b,h.units[other],'yin');let hit=h.next();assert.equal(hit.target,other);near(hit.amount,h.atk*1.4);
+  h.b.addBuff(h.units[preferred],{key:'test:taunt',mods:{taunt:1}});setHuiMing(h.b,h.units[preferred],'yang');hit=h.next();assert.equal(hit.target,other);
+  switchHuiMing(h.b,h.e);hit=h.next();assert.equal(hit.target,preferred);near(hit.amount,h.atk*1.4);
+  h.b.removeBuff(h.e,'buff_yin');hit=h.next();assert.equal(hit.target,preferred);near(hit.amount,h.atk);assert.ok(first&&second);assert.deepEqual(h.b.errors,[]);}
+});
+for(const id of blockees)test(`${id}: only a blocker of the same attribute admits and keeps the block`,()=>{
+ const r=records.enemies[id].levels[0];assert.ok(huiMingBlockeeNative(r,nativeComponents(evidence,id)));assert.equal(support.enemies[id].policy,'stats-attacks-and-features');
+ assert.deepEqual(withCompiledEnemyRuntime(r).runtimeFeatures.entries.filter(v=>v.ability).map(v=>v.ability.kind).sort(),['huiMingAttribute','pairedBlockerBuffs']);
+ for(const compiled of [false,true]){
+  const h=field(id,{compiled,pos:[10,6],hold:false}),guard=h.units[0];h.run(.5);assert.equal(h.e.blockedBy,null);
+  h.b.addBuff(h.e,{key:'hold',flags:{noMove:true}});h.e.x=6;h.e.y=10;setHuiMing(h.b,guard,'yin');h.run(.3);assert.equal(h.e.blockedBy,null);
+  setHuiMing(h.b,guard,'yang');h.run(.2);assert.equal(h.e.blockedBy,guard);assert.ok(guard.findBuff('enemy_sptrkg_t'));near(h.next().amount,h.atk*.6);
+  setHuiMing(h.b,guard,'yin');h.run(.25);assert.equal(h.e.blockedBy,null);assert.equal(guard.findBuff('enemy_sptrkg_t'),null);
+  switchHuiMing(h.b,h.e);h.run(.2);assert.equal(h.e.blockedBy,guard);h.b.removeBuff(guard,'buff_yin');h.run(.25);assert.equal(h.e.blockedBy,null);
+  setHuiMing(h.b,guard,'yin');h.run(.2);assert.equal(h.e.blockedBy,guard);h.b.removeBuff(h.e,'buff_yin');h.run(.25);assert.equal(h.e.blockedBy,null);
+  setHuiMing(h.b,h.e,'yin');h.run(.2);assert.equal(h.e.blockedBy,guard);h.b.kill(h.e);assert.equal(guard.findBuff('enemy_sptrkg_t'),null);assert.deepEqual(h.b.errors,[]);}
+});
+test('archer and blockee gates refuse changed selectors, packets, block conditions, checkers and release logic',()=>{
+ const root=(n,id)=>n[id].find(v=>v._modes),mode=(n,id)=>n.$ref(root(n,id)._modes[0]);
+ for(const id of archers)for(const edit of[
+  n=>n.$siblings(n.$ref(mode(n,id)._attackTrigger)).find(c=>'_buffKeyPairs'in c)._buffKeyPairs.pop(),
+  n=>n.$siblings(n.$ref(mode(n,id)._attackTrigger)).find(c=>'_buffKeyPairs'in c)._sortByTauntAtLast=0,
+  n=>n.$siblings(n.$ref(mode(n,id)._attackTrigger)).find(c=>'_buffKeyPairs'in c)._targetMotion=1,
+  n=>n.$siblings(n.$ref(mode(n,id)._attackTrigger)).find(c=>'m_Radius'in c).m_Radius=3,
+  n=>n.$ref(mode(n,id)._attack)._damageType=2,n=>n.$ref(mode(n,id)._attack)._upAnimKey='',n=>root(n,id)._blockVolume=2,n=>n.YinYang.find(v=>v._buffs)._buffs.pop(),
+ ]){const n=nativeComponents(structuredClone(evidence),id);edit(n);assert.equal(huiMingArcherNative(records.enemies[id].levels[0],n),false,edit.toString());}
+ for(const id of blockees)for(const edit of[
+  n=>root(n,id)._specialBlockCondition._buffKeyPairs.pop(),n=>root(n,id)._specialBlockCondition._type=0,n=>root(n,id)._specialBlockCondition._buffKeyPairs[0].blockerBuffKey='buff_yang',
+  n=>n.$ref(n.$ref(mode(n,id)._generalAbilities[0])._checker)._blockMinCnt=0,n=>n.$ref(n.$ref(mode(n,id)._generalAbilities[0])._checker)._buffsToBlockee[0].blackboard[0].value=.5,
+  n=>n.$ref(n.$ref(mode(n,id)._generalAbilities[0])._checker)._buffsToBlockee[0].waitFirstTriggerInterval=0,n=>n.$ref(mode(n,id)._generalAbilities[0])._isInverseToggle=1,
+  n=>n.$ref(root(n,id)._commonAbilities[0])._buffs[0].templateKey='log_killed',n=>n.$template('enemy_sptrkg_t').eventToActions.ON_BUFF_TRIGGER[0]._failNodes[0]._failNodes=[],
+  n=>n.$template('enemy_sptrkg_t').eventToActions.ON_BUFF_TRIGGER[0]._succeedNodes.splice(1,1),n=>n.$ref(mode(n,id)._combat)._atkScale=2,
+ ]){const n=nativeComponents(structuredClone(evidence),id);edit(n);assert.equal(huiMingBlockeeNative(records.enemies[id].levels[0],n),false,edit.toString());}
+ for(const [id,gate] of [[archers[0],huiMingArcherNative],[blockees[0],huiMingBlockeeNative]])for(const change of[r=>r.abilities=[],r=>r.stats.rangeRadius=9,r=>r.talents.groups.taunt=['taunt_level'],r=>r.applyWay='NONE'])
+  {const r=structuredClone(records.enemies[id].levels[0]);change(r);if(id===blockees[0]&&change.toString().includes('rangeRadius'))continue;assert.equal(gate(r,nativeComponents(evidence,id)),false,change.toString());}
 });

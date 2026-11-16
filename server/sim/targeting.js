@@ -262,7 +262,9 @@ export function sortAllyTargets(enemy, cands) {
     : priority === 'named' ? (a, b) => namedScore(a) - namedScore(b)
     : priority === 'tag' ? (a, b) => tagScore(a) - tagScore(b)
     : priority === 'withoutBuff' ? (a, b) => buffScore(a) - buffScore(b)
-    : priority === 'withBuff' ? (a, b) => buffScore(b) - buffScore(a) : null;
+    : priority === 'withBuff' ? (a, b) => buffScore(b) - buffScore(a)
+    // A component may own a live comparator (for example a priority that follows the enemy's current attribute).
+    : typeof priority === 'function' ? priority : null;
   cands.sort((a, b) => {
     const ba = enemy.blockedBy === a ? 0 : 1, bb = enemy.blockedBy === b ? 0 : 1;
     return ba - bb || (special ? special(a, b) : 0) || aggroCmp(a, b, enemy.profile?.sameTauntPriority);

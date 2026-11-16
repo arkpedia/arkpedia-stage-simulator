@@ -40,7 +40,7 @@ export function switchHuiMing(b,unit,options){
  * a recipient holding the same, or the opposite, attribute, and only while
  * its own parent buff is still attached. */
 export function huiMingAttribute(params){
- validate(params);const {dynamic,same,diff,sameKey,diffKey,bonus=null}=params,keys=[sameKey,diffKey,...(bonus?[bonus.key]:[])];
+ validate(params);const {dynamic,same,diff,sameKey,diffKey,bonus=null,preferOpposite=false}=params,keys=[sameKey,diffKey,...(bonus?[bonus.key]:[])];
  return{
   spawn(b,e,a){
    const life=e.deploySeq;a.buffs={};
@@ -50,6 +50,13 @@ export function huiMingAttribute(params){
    }
    if(!live(e)||e.deploySeq!==life)return;
    if(dynamic===0)setHuiMing(b,e,'yin');else if(dynamic===1)setHuiMing(b,e,'yang');
+   // Native buff-pair selector: candidates holding the attribute opposite to this unit's current one come first,
+   // ahead of taunt; a unit with no attribute has no preference.
+   if(preferOpposite){
+    if(e.profile.targetPriority)throw Error('Target priority already installed');
+    const score=u=>{const mine=huiMingOf(e),theirs=huiMingOf(u);return mine&&theirs&&mine!==theirs?0:1;};
+    e.profile.targetPriority=(x,y)=>score(x)-score(y);
+   }
    b.on('sourceAtkScale',c=>{
     if(c.source!==e||!live(e)||e.deploySeq!==life)return;
     const mine=huiMingOf(e),theirs=huiMingOf(c.target);if(!mine||!theirs)return;
@@ -63,7 +70,8 @@ export function huiMingAttribute(params){
   death(_c,b,e,a){for(const buff of Object.values(a.buffs??{}))if(e.buffs.includes(buff))b.removeBuff(e,buff);a.buffs={};},
  };
 }
-function validate({dynamic,same,diff,sameKey,diffKey,bonus}){
+function validate({dynamic,same,diff,sameKey,diffKey,bonus,preferOpposite}){
+ if(preferOpposite!==undefined&&typeof preferOpposite!=='boolean')throw Error('Invalid Hui-Ming attribute talent');
  if(bonus!==undefined&&bonus!==null&&(typeof bonus!=='object'||Object.keys(bonus).sort().join()!=='key,scale'||typeof bonus.key!=='string'||!bonus.key||bonus.key.length>256||[sameKey,diffKey,...Object.values(HUI_MING)].includes(bonus.key)||!Number.isFinite(bonus.scale)||bonus.scale<0||bonus.scale>1e3))throw Error('Invalid Hui-Ming attribute talent');
  if(![-1,0,1].includes(dynamic)||![same,diff].every(v=>Number.isFinite(v)&&v>=0&&v<=1e3)
   ||[sameKey,diffKey].some(k=>typeof k!=='string'||!k||k.length>256||Object.values(HUI_MING).includes(k))||sameKey===diffKey)throw Error('Invalid Hui-Ming attribute talent');

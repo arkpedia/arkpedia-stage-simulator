@@ -1,25 +1,26 @@
 {
  "schemaVersion": 1,
- "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale in the damage pipeline, and eight source-gated melee Hui-Ming enemies, including the Fury pair's opposite-attribute scale. Controlled fixtures only; no Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
+ "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale, live target-priority comparators, multi-pair block conditions, and twelve source-gated Hui-Ming enemies (six plain, the Fury pair, the Stabby archers, the Blindey pair). Controlled fixtures only; no Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
  "sourceSha256": {
   "server/sim/damage.js": "4fd9624b605d74cb240591dc035cb0a37089b8b89c0e662292f444d5e372bcd4",
-  "server/sim/content/arkpedia-hui-ming.js": "c011af9764ee55cb932ee49a8f1ef85363099087b72fd95ad73c3de7c4de1b3f",
+  "server/sim/content/arkpedia-hui-ming.js": "7fe1161c5b2eee7d448b8e81e4f061f5b23d06761ed86f1b7eea14e27cefba12",
   "server/sim/content/arkpedia-enemy-runtime-index.js": "8af73447daf045537f0097c2db40dea011ebd6777ce2dcea07bda6b4e3b90ac7",
-  "shared/arkpedia/enemy-hui-ming-features.js": "d7a8843e7699e9d3fd57eee650e364d31477f89ebe0e5c7e3aba4f938e64ddd2",
-  "shared/arkpedia/enemy-features.js": "2649dbaa59bb84c9057b6e6e28a04fb28618df0367aac95b1811ec3c50aea80e",
-  "tools/arkpedia/review-hui-ming.mjs": "268866df674fd81e2e092c024d298833b47772fadf9c0ed7250ba761a1d4d84f",
-  "data/arkpedia-enemy-native-abilities.json": "521ad9ddc2faf98f1bdc85b1727ab60d0e184fe3ce5b6e503b60b5033b00af60",
-  "data/arkpedia-enemy-support.json": "ead256ad54d1d38d62213aa5e9259da6826db63213409a08448d1b44ddecea5d",
-  "data/arkpedia-hui-ming-animations.json": "02ba74461ee7ae25b8be570890c4c2ff4530fe728121d91150be9a453f8aa682",
-  "test/arkpedia-hui-ming.test.js": "e9a923bff16afa19c776d86afe42cad5bbde1bc54dc9976ae0fabd63fc55ec65"
+  "shared/arkpedia/enemy-hui-ming-features.js": "3195df9dbc3ce78e920643aa9baeaaa0c007a6eaa9dac092de7ea19188c1877b",
+  "shared/arkpedia/enemy-features.js": "8d1ce91319a6c8d1f0fc67f02aedaae7d6a5d7ce565dcc715eb4368dda2ca5a2",
+  "tools/arkpedia/review-hui-ming.mjs": "7aaaae5e536b03cfee9aa37fa5e0a8ec16976683435e6126048e431a37afebfa",
+  "data/arkpedia-enemy-native-abilities.json": "b520a742e37952ff99b53a2c2c7c45e0110f6cb413e0a9c959fe8eb521e7aace",
+  "data/arkpedia-enemy-support.json": "1772240840c6283442d84c09a55113841bf6b1b109faa9a4d6b2caff4136acf5",
+  "data/arkpedia-hui-ming-animations.json": "d7c65d01c0586ec0a96594002bfcd8e6a4067fd104b7a3fa7252fe9615894e6d",
+  "test/arkpedia-hui-ming.test.js": "c24e6c8ad64a264687ed6783aaca28ac807f59b478252472ee88bc32b9862099",
+  "server/sim/targeting.js": "abbe14bbc7b6179ae1f35e68500e4e6c16489baec3818b7e325b5555fa118195",
+  "server/sim/content/arkpedia-enemy-blocker-pairs.js": "7b8cdd2e451ef136cd1596c7d80b2897f10d112240fad4ddacf6de1f16306769"
  },
  "tests": {
-  "family": 17,
+  "family": 22,
   "focused": {
-   "tests": 431,
-   "passed": 430,
-   "failed": 1,
-   "failure": "BI-EX-6 stage-file test in test/arkpedia-icefield.test.js, failing identically before these batches"
+   "tests": 436,
+   "passed": 436,
+   "failed": 0
   },
   "broad": {
    "command": "node --test --test-concurrency=2 test/sim/*.test.js test/content/*.test.js",
@@ -28,7 +29,7 @@
    "skipped": 3,
    "todo": 1,
    "failed": 0,
-   "note": "Measured before the attribute-start reorder, the taunt gate and the Fury pair, which touch only the Hui-Ming module, its gate, registration and tests."
+   "note": "Measured on the final code of this batch."
   }
  },
  "browser": {
@@ -39,6 +40,7 @@
     "viewport": "1440x900 desktop",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
     "pending": 0,
@@ -110,6 +112,7 @@
     "viewport": "1440x900 desktop",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
     "pending": 0,
@@ -178,9 +181,74 @@
     }
    },
    {
+    "viewport": "1440x900 desktop",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1124_spbow",
+       "special": "archer",
+       "initial": "yang",
+       "hit": true,
+       "scale": 1.4,
+       "projectiles": 0,
+       "priority": "function",
+       "model": "enemy/enemy_1124_spbow/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      },
+      {
+       "id": "enemy_1124_spbow_2",
+       "special": "archer",
+       "initial": "yang",
+       "hit": true,
+       "scale": 1.4,
+       "projectiles": 0,
+       "priority": "function",
+       "model": "enemy/enemy_1124_spbow_2/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      },
+      {
+       "id": "enemy_1127_sptrkg",
+       "special": "blockee",
+       "initial": "yang",
+       "unmatched": true,
+       "matched": true,
+       "checker": true,
+       "released": true,
+       "model": "enemy/enemy_1127_sptrkg/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      },
+      {
+       "id": "enemy_1127_sptrkg_2",
+       "special": "blockee",
+       "initial": "yang",
+       "unmatched": true,
+       "matched": true,
+       "checker": true,
+       "released": true,
+       "model": "enemy/enemy_1127_sptrkg_2/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
     "viewport": "844x390 touch",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
     "pending": 0,
@@ -252,6 +320,7 @@
     "viewport": "844x390 touch",
     "loaded": [
      "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
      "enemies"
     ],
     "pending": 0,
@@ -314,6 +383,70 @@
        "same": 0.6,
        "opposite": 2.52,
        "guardMarker": true,
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
+    "viewport": "844x390 touch",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "arkpedia-enemy-blocker-pairs",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1124_spbow",
+       "special": "archer",
+       "initial": "yang",
+       "hit": true,
+       "scale": 1.4,
+       "projectiles": 0,
+       "priority": "function",
+       "model": "enemy/enemy_1124_spbow/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      },
+      {
+       "id": "enemy_1124_spbow_2",
+       "special": "archer",
+       "initial": "yang",
+       "hit": true,
+       "scale": 1.4,
+       "projectiles": 0,
+       "priority": "function",
+       "model": "enemy/enemy_1124_spbow_2/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      },
+      {
+       "id": "enemy_1127_sptrkg",
+       "special": "blockee",
+       "initial": "yang",
+       "unmatched": true,
+       "matched": true,
+       "checker": true,
+       "released": true,
+       "model": "enemy/enemy_1127_sptrkg/default/default",
+       "actor": "BattleActor",
+       "errors": []
+      },
+      {
+       "id": "enemy_1127_sptrkg_2",
+       "special": "blockee",
+       "initial": "yang",
+       "unmatched": true,
+       "matched": true,
+       "checker": true,
+       "released": true,
+       "model": "enemy/enemy_1127_sptrkg_2/default/default",
+       "actor": "BattleActor",
        "errors": []
       }
      ]
@@ -357,6 +490,20 @@
       "height": 360.2292366027832
      },
      {
+      "id": "enemy_1124_spbow",
+      "version": "3.8.99",
+      "clips": 7,
+      "width": 561.9674377441406,
+      "height": 325.936243057251
+     },
+     {
+      "id": "enemy_1124_spbow_2",
+      "version": "3.8.99",
+      "clips": 7,
+      "width": 561.9674377441406,
+      "height": 325.936243057251
+     },
+     {
       "id": "enemy_1125_spshld",
       "version": "3.8.99",
       "clips": 5,
@@ -369,6 +516,20 @@
       "clips": 5,
       "width": 602.0984954833984,
       "height": 442.00690269470215
+     },
+     {
+      "id": "enemy_1127_sptrkg",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 513.8350219726562,
+      "height": 243.49864196777344
+     },
+     {
+      "id": "enemy_1127_sptrkg_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 513.8350219726562,
+      "height": 243.49864196777344
      },
      {
       "id": "enemy_1129_spklr",
@@ -420,6 +581,20 @@
       "height": 360.2292366027832
      },
      {
+      "id": "enemy_1124_spbow",
+      "version": "3.8.99",
+      "clips": 7,
+      "width": 561.9674377441406,
+      "height": 325.936243057251
+     },
+     {
+      "id": "enemy_1124_spbow_2",
+      "version": "3.8.99",
+      "clips": 7,
+      "width": 561.9674377441406,
+      "height": 325.936243057251
+     },
+     {
       "id": "enemy_1125_spshld",
       "version": "3.8.99",
       "clips": 5,
@@ -432,6 +607,20 @@
       "clips": 5,
       "width": 602.0984954833984,
       "height": 442.00690269470215
+     },
+     {
+      "id": "enemy_1127_sptrkg",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 513.8350219726562,
+      "height": 243.49864196777344
+     },
+     {
+      "id": "enemy_1127_sptrkg_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 513.8350219726562,
+      "height": 243.49864196777344
      },
      {
       "id": "enemy_1129_spklr",
@@ -453,22 +642,23 @@
    }
   ]
  },
- "assetCommit": "292a9eadaaa724cc34791c4ee2d7a378c5403ddf",
+ "assetCommit": "a8528275b7b9d4b183c50bd891b2600676354341",
  "coverage": {
-  "enemies": 777,
+  "enemies": 781,
   "totalEnemies": 2163,
-  "databaseLevels": 843,
+  "databaseLevels": 847,
   "runtimeKinds": 215,
   "pinnedStageGraphs": 970
  },
  "stageSmoke": {
   "stages": 970,
   "passed": 970,
-  "scope": "Ten-second runtime smoke, not clears; rerun after the Fury pair."
+  "scope": "Ten-second runtime smoke, not clears; measured on the final code of this batch."
  },
  "boundaries": [
   "Operator attributes are set explicitly in fixtures; Hui-Ming tiles and devices are stages-phase work.",
   "ON_CALCULATE_DAMAGE read as the damage source's event; not established from method bodies.",
-  "Derived presentation marker removed with its attribute buff; native finish flag semantics not established."
+  "Derived presentation marker removed with its attribute buff; native finish flag semantics not established.",
+  "Archer height-specific attack clips, selector abnormal-flag and secondary-filter values, and the Blindey visual passive are gated but not reproduced."
  ]
 }
