@@ -30,7 +30,8 @@ export function programmedProjectileModes(params){
     let attached;attached=b.addBuff(e,{key,source:e,onRemove:()=>a.markers.delete(attached)});
     if(attached&&e.buffs.includes(attached))a.markers.add(attached);
    },clear:()=>{for(const marker of [...a.markers])b.removeBuff(e,marker);a.markers.clear();}};
-   a.parent=b.addBuff(e,{key:buffKey,source:e,...(parentDuration===undefined?{}:{duration:parentDuration}),...(triggerInterval===undefined?{}:{interval:triggerInterval,onTick:()=>{sync(b,e,a);if(a.enabled)execute('ON_BUFF_TRIGGER',b,e,a);}}),onRemove:()=>{a.ended=true;if(a.ready)sync(b,e,a);a.derivedService.clear();}});
+   const finishParent=()=>{a.ended=true;if(a.ready)sync(b,e,a);a.derivedService.clear();};
+   a.parent=b.addBuff(e,{key:buffKey,source:e,...(parentDuration===undefined?{}:{duration:parentDuration}),...(triggerInterval===undefined?{}:{interval:triggerInterval,onTick:()=>{sync(b,e,a);if(a.enabled)execute('ON_BUFF_TRIGGER',b,e,a);}}),onRemove:finishParent,onExpire:finishParent});
    a.ready=true;a.enabled=!!a.parent||a.ended;sync(b,e,a);
   },
   before(_c,b,e,a){sync(b,e,a);if(a.enabled)execute('ON_BEFORE_ATTACK',b,e,a);},

@@ -9,9 +9,11 @@ import {withCompiledEnemyRuntime} from '../shared/arkpedia/enemy-runtime-compile
 import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
 import {makeBattle,chessRec} from './helpers/battleHarness.js';
 const ids=['enemy_1391_dhbow','enemy_1391_dhbow_2'],key='enemy_dhbow_passive_check',marker=`${key}[buff]`;
-function fixture(id=ids[0],compiled=true){
+function fixture(id=ids[0],compiled=true,override={}){
  const guard=chessRec({id:'blight_mode_guard',stats:{maxHp:1e6,atk:0,def:1000,res:25,blockCnt:0},skill:null});
- const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{[id]:compiled?withCompiledEnemyRuntime(records.enemies[id].levels[0]):records.enemies[id].levels[0]},chess:{[guard.chessId]:guard}},
+ const record=compiled?withCompiledEnemyRuntime(records.enemies[id].levels[0]):records.enemies[id].levels[0];
+ if(compiled)Object.assign(record.runtimeFeatures.entries.find(e=>e.ability?.kind==='programmedProjectileModes').ability.params,override);
+ const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{[id]:record},chess:{[guard.chessId]:guard}},
   units:[{chessId:guard.chessId,row:10,col:6}],kits:{[guard.chessId]:()=>({trait:{noAttack:true}})},setup:installEnemyFeatures});
  const state={polluted:false};h.b.environmentConditions={test:(condition,u)=>{assert.equal(condition,'act31SidePollute');return u===h.e&&state.polluted;}};h.b.start();
  h.e=h.b.spawnEnemy(id,{pos:[10,5]});const g=h.b.allyUnits[0],hits=[],attacks=[];h.b.addBuff(h.e,{key:'hold',flags:{noMove:true}});
@@ -80,4 +82,9 @@ test('separate parents sharing the program poll their own area and clear their o
  const active=new Set([h.e,second]);h.b.environmentConditions={test:(_name,u)=>active.has(u)};h.run(.2);
  assert.ok(h.e.findBuff(marker));assert.ok(second.findBuff(marker));h.b.removeBuff(h.e,key);assert.equal(h.e.findBuff(marker),null);assert.ok(second.findBuff(marker));
  active.clear();h.run(.2);assert.equal(second.findBuff(marker),null);assert.deepEqual(h.b.errors,[]);
+});
+
+test('the reusable carrier finishes derived markers when an optional finite parent expires naturally',()=>{
+ const h=fixture(ids[0],true,{parentDuration:.35});h.state.polluted=true;h.run(.2);assert.ok(h.e.findBuff(marker));h.run(.2);
+ assert.equal(h.e.findBuff(key),null);assert.equal(h.e.findBuff(marker),null);assert.equal(h.e.mem.projectileModeIndex,1);assert.deepEqual(h.b.errors,[]);
 });
