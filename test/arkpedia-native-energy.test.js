@@ -55,3 +55,10 @@ test('optional SIMPLE overload counters retain owner/battle identity and do not 
  assert.throws(()=>recordNativeBattleInfo(h.b,null,{key:'fixture_overload',addition:1}),/owner/);assert.equal(nativeBattleInfo(h.b,'fixture_overload'),2);
  for(const addition of[-1,.5,Infinity])assert.throws(()=>recordNativeBattleInfo(h.b,h.e,{key:'fixture_overload',addition}));assert.deepEqual(h.b.errors,[]);
 });
+test('native overload counters are present once in the ordinary stage-result ledger',async()=>{
+ const {nativeBattleInfo,recordNativeBattleInfo}=await import('../server/sim/content/arkpedia-native-battle-info.js'),{readStageOutcomes}=await import('../server/sim/content/arkpedia-stage-outcomes.js');
+ const h=fixture({...spec,overload:{...spec.overload,log:{key:'fixture_overload',addition:1}}}),other=fixture();changeEnemyEnergy(h.b,h.e,10);
+ const result=readStageOutcomes(h.b);assert.equal(result.counters.fixture_overload,1);assert.equal(result.events.filter(e=>e.key==='fixture_overload').length,1);assert.equal(result.events[0].instance,h.e.id);
+ assert.equal(nativeBattleInfo(h.b,'fixture_overload',other.e),0);assert.throws(()=>recordNativeBattleInfo(h.b,other.e,{key:'fixture_overload',addition:1}),/owner/);assert.equal(nativeBattleInfo(h.b,'fixture_overload'),1);
+ result.counters.fixture_overload=99;assert.equal(nativeBattleInfo(h.b,'fixture_overload'),1);assert.deepEqual(h.b.errors,[]);
+});
