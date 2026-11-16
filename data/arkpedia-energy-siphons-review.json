@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "scope": "Paramilitary Axeman energy siphoning, shared meter and ordinary melee; controlled fixtures, not original battery stages or native method/frame parity.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-energy-features.js": "18a44810670b4ba6c107d545682d2490feab98b835eb43081c476f0d97d544d1",
+    "shared/arkpedia/enemy-energy-siphon-contract.js": "d2d029a20a92dadf09afe90d651b3524f83e2f4d0e6f629616d57b68a1f63f81",
+    "server/sim/content/arkpedia-enemy-energy-siphon.js": "0c9328dd5216e6cacda5fb51b98b71daa424fe263aa325bde4bdd0afb06bc735",
+    "server/sim/content/arkpedia-enemy-energy.js": "8e1d34d665654afd7bcec196cad956c214eeaf62362d47473da847ebda88199b",
+    "server/sim/content/arkpedia-enemy-services.js": "568ee3a3f0b09a441564078324885f9668cc8b49544d29e47403f3ee598281be",
+    "server/sim/content/arkpedia-enemy-plan.js": "30f3c23721806a2fb332761f0ca15f2b6d9e3ea6289caf39894298488d29d523",
+    "server/sim/content/arkpedia-enemy-runtime.js": "c1b0014bbb846700268ba7e732933918a89a2d8df9150224a1f44cdf9d005fe5",
+    "data/arkpedia-energy-siphons-animations.json": "5c4f075e1c1f10f1e4f6864aad80ccb5c6b234c2f90e9bb0ce85ea934897763a",
+    "data/arkpedia-enemy-native-abilities.json": "7a2bddc4b0b3ff26eaa285229975bd79d6275a1413a0419cd5c4012465f2feab",
+    "data/arkpedia-enemy-support.json": "123914484714868689cc11364ad8fdf60e8b3c27e959d49b443f0c747890706a",
+    "data/arkpedia-enemy-runtime-plan-report.json": "6a4bf7ddb0c449471ce218e49ea5a23bd5207ec8cb36b93d18d3be55327e9587",
+    "test/arkpedia-energy-siphons.test.js": "bed50168128fc339b1107a4530c87510fed71166e2edeb0e8a2a33f81b0fb04f"
+  },
+  "tests": {
+    "focusedRegressions": 72
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Paramilitary Axeman energy siphon and overload fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-energy-siphon"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1357_erob",
+          "initial": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "beforePulse": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterPulse": {
+            "count": 1,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "donorAfter": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "donorDuringOverload": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          }
+        },
+        {
+          "id": "enemy_1357_erob_2",
+          "initial": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "beforePulse": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterPulse": {
+            "count": 1,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "donorAfter": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "donorDuringOverload": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          }
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Paramilitary Axeman energy siphon and overload fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy-siphon",
+          "arkpedia-enemy-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1357_erob",
+          "initial": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "beforePulse": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterPulse": {
+            "count": 1,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "donorAfter": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "donorDuringOverload": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          }
+        },
+        {
+          "id": "enemy_1357_erob_2",
+          "initial": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "beforePulse": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterPulse": {
+            "count": 1,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "donorAfter": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "overload": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "donorDuringOverload": {
+            "count": 3,
+            "capacity": 10,
+            "overloaded": false
+          }
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1357_erob",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 545.6726379394531,
+            "height": 511.01601308584213
+          },
+          {
+            "id": "enemy_1357_erob_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 545.6726379394531,
+            "height": 511.01601308584213
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1357_erob",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 545.6726379394531,
+            "height": 511.01601308584213
+          },
+          {
+            "id": "enemy_1357_erob_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 545.6726379394531,
+            "height": 511.01601308584213
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "assetCommit": "72a4cab35f0a0fa17efc2ada31ba2047cd544191",
+  "coverage": {
+    "enemies": 748,
+    "totalEnemies": 2163,
+    "databaseLevels": 813,
+    "runtimeKinds": 205,
+    "pinnedStageGraphs": 970
+  },
+  "limitations": [
+    "Literal all-motion action selector retained; current admitted native energy carriers walk.",
+    "Captured-pulse completion follows retained action ordering, without native compiled-method/frame certification.",
+    "Runtime circle uses live entity centers; native collider-boundary parity is not certified.",
+    "Explicit controlled donor energy; no original battery controller or original-stage clear."
+  ]
+}

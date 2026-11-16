@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {validateEnemyServices} from './arkpedia-enemy-services.js';
 import { ENEMY_RUNTIME_INDEX } from './arkpedia-enemy-runtime-index.js';
 import { validateEnemyRuntimePlan,enemyRuntimeSpawnDependencies } from '../../../shared/arkpedia/enemy-runtime-plan.js';
 import { applyCompiledEnemyFeatures } from './arkpedia-enemy-plan.js';
@@ -44,8 +45,10 @@ export function createEnemyRuntime(index=ENEMY_RUNTIME_INDEX,{legacy=null}={}){
     return [...kinds];
   };
   const validateRecords=records=>{
-    for(const record of Object.values(records))for(const entry of record.runtimeFeatures?.entries??[]){
-      if(entry.ability)factories.get(entry.ability.kind)?.validate?.(entry.ability.params);
+    for(const record of Object.values(records)){
+      const entries=record.runtimeFeatures?.entries??[];
+      validateEnemyServices(entries.map(entry=>entry.ability?factories.get(entry.ability.kind):null));
+      for(const entry of entries)if(entry.ability)factories.get(entry.ability.kind)?.validate?.(entry.ability.params);
     }
   };
   const runtime={

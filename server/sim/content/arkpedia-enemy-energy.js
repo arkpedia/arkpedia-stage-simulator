@@ -66,3 +66,5 @@ function validate({capacity,initial,perStack,overload,decay}){
   ||decay!==undefined&&(!Number.isFinite(decay.interval)||decay.interval<=0||!Number.isSafeInteger(decay.amount)||decay.amount<1))throw Error('Invalid native energy meter');
 }
 nativeEnergyMeter.validate=validate;
+
+nativeEnergyMeter.provides=Object.freeze(['native-energy']);

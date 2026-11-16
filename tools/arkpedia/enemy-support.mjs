@@ -82,6 +82,8 @@ export async function buildEnemySupport() {
       fattyAnimations: { path: 'data/arkpedia-fatty-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-fatty-animations.json', root))) },
       bladeAnimations: { path: 'data/arkpedia-blade-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-blade-animations.json', root))) },
       knightAnimations: { path: 'data/arkpedia-knight-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-knight-animations.json', root))) },
+      energySiphonContract: { path: 'shared/arkpedia/enemy-energy-siphon-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-energy-siphon-contract.js', root))) },
+      energySiphonAnimations: { path: 'data/arkpedia-energy-siphons-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-energy-siphons-animations.json', root))) },
       energyFeatures: { path: 'shared/arkpedia/enemy-energy-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-energy-features.js', root))) },
       energyGrenadierAnimations: { path: 'data/arkpedia-energy-grenadiers-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-energy-grenadiers-animations.json', root))) },
       energyAnimations: { path: 'data/arkpedia-energy-basics-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-energy-basics-animations.json', root))) },

@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
 import {ordinaryMeleePacketNative} from './enemy-ordinary-body-contract.js';
+import siphonClocks from '../../data/arkpedia-energy-siphons-animations.json' with{type:'json'};
+import {energySiphonProgramNative} from './enemy-energy-siphon-contract.js';
 import grenadeClocks from '../../data/arkpedia-energy-grenadiers-animations.json' with{type:'json'};
 import {ordinaryProjectilePacketNative,ordinaryRangedSelectorNative,arcBoxProjectileNative} from './enemy-ordinary-projectile-contract.js';
 import clocks from '../../data/arkpedia-energy-basics-animations.json' with{type:'json'};
 const configs={
+ enemy_1357_erob:{capacity:20,duration:20,siphon:true},enemy_1357_erob_2:{capacity:20,duration:20,siphon:true},
  enemy_1359_ekulsr:{capacity:30,duration:20,initial:25,decay:5,grenade:true},enemy_1359_ekulsr_2:{capacity:30,duration:20,initial:25,decay:5,grenade:true},
  enemy_1353_esabr:{capacity:10,duration:10},enemy_1353_esabr_2:{capacity:10,duration:10},
  enemy_1354_eghost:{capacity:5,duration:10,ghost:true},enemy_1354_eghost_2:{capacity:5,duration:10,ghost:true},
@@ -16,10 +19,10 @@ const matchesRecord=r=>!!configs[r.prefabKey];
 const shortOverload='[Overload] Greatly increases ASPD, DEF, and RES for a period of time.';
 const longOverload='[Overload] Greatly increases ASPD, DEF, and RES for a longer period of time.';
 const descriptions=c=>c.ghost?['Unblockable. Energy Capacity: 5; gains [Overload] upon reaching max Energy',shortOverload]
- :[`Energy Capacity: ${c.capacity}; Gains [Overload] upon reaching max Energy.`,...(c.decay?[`Starts with an additional ${c.initial} Energy, but loses 1 Energy per ${c.decay} seconds.`]:[]),...(c.grenade?['While not blocked, launches grenades that deal damage to the target and surrounding units.']:[]),c.duration===10?shortOverload:longOverload];
+ :[`Energy Capacity: ${c.capacity}; Gains [Overload] upon reaching max Energy.`,...(c.decay?[`Starts with an additional ${c.initial} Energy, but loses 1 Energy per ${c.decay} seconds.`]:[]),...(c.siphon?['Continuously drains 1 Energy from all nearby ground enemies.']:[]),...(c.grenade?['While not blocked, launches grenades that deal damage to the target and surrounding units.']:[]),c.duration===10?shortOverload:longOverload];
 const talent=c=>({'over_energy.duration':c.duration,'over_energy.attack_speed':120,'over_energy.def':2,'over_energy.magic_resistance':30,
- 'blacksteel_energy.max_stack_cnt':c.capacity,...(c.initial?{'blacksteel_energy.init_stack_cnt':c.initial}:{}),...(c.decay?{'dec_energy.dec_count':-1,'dec_energy.interval':c.decay}:{})});
-const groups=c=>({over_energy:['attack_speed','def','duration','magic_resistance'],blacksteel_energy:[...(c.initial?['init_stack_cnt']:[]),'max_stack_cnt'],...(c.decay?{dec_energy:['dec_count','interval']}:{})});
+ 'blacksteel_energy.max_stack_cnt':c.capacity,...(c.initial?{'blacksteel_energy.init_stack_cnt':c.initial}:{}),...(c.decay?{'dec_energy.dec_count':-1,'dec_energy.interval':c.decay}:{}),...(c.siphon?{'steal_energy.interval':2,'steal_energy.range_radius':2.2,'steal_energy.steal_count':1}:{})});
+const groups=c=>({over_energy:['attack_speed','def','duration','magic_resistance'],blacksteel_energy:[...(c.initial?['init_stack_cnt']:[]),'max_stack_cnt'],...(c.decay?{dec_energy:['dec_count','interval']}:{}),...(c.siphon?{steal_energy:['interval','range_radius','steal_count']}:{})});
 const prefabBuff=b=>empty(b?.attributes)&&fields(b,{blackboard:[],loadFromDB:0,isDurableBuff:0,isSilenceable:0,isStunnable:0,isFreezable:0,isLevitatable:0,isGroundBoundable:0,maxStackCnt:1,overrideType:0});
 const passive=(v,n)=>fields(v,{m_Script:{m_FileID:1,m_PathID:'3800760148018415462'},_selector:{m_FileID:0,m_PathID:'0'},_ignoreIfOwnerDead:0})
  &&n.$siblings(v).filter(c=>c.m_Script).every(c=>['3800760148018415462','-2726233351382997147'].includes(c.m_Script.m_PathID));
@@ -55,8 +58,9 @@ function energyNative(r,n){
  const root=n[r.prefabKey]?.find(v=>'_modes'in v),mode=n.$ref(root?._modes?.[0]),marker=n.$ref(root?._commonAbilities?.[0]);
  if(!fields(root,{m_Script:{m_FileID:1,m_PathID:'-6629209555389654693'},_sideTypeIndex:1,_delayToBorn:0,_onlyDelayToBornOnTileStart:0,_blockVolume:1,
   _specialBlockCondition:{_type:0,_buffKeyPairs:[],_filterTags:[]},_idleWhenBorn:0,_canNotExit:0})||root._modes.length!==1||root._commonAbilities.length!==1
-  ||!mode||!same(mode._generalAbilities,[])||!c.grenade&&(!zero(mode._attack)||!zero(mode._attackTrigger))||!passive(marker,n)||marker._buffs.length!==1
+  ||!mode||!same(mode._generalAbilities,[])||!c.grenade&&(!zero(mode._attack)||!zero(mode._attackTrigger))||!passive(marker,n)||marker._buffs.length!==(c.siphon?2:1)
   ||!prefabBuff(marker._buffs[0])||!fields(marker._buffs[0],{buffKey:'blacksteel_energy[mark]',templateKey:'empty',lifeTimeType:2,lifeTime:0})
+  ||c.siphon&&(!prefabBuff(marker._buffs[1])||!fields(marker._buffs[1],{buffKey:'erob_immune_steal',templateKey:'empty',lifeTimeType:2,lifeTime:0}))
   ||!database(n)||!same(n.$template('empty'),{templateKey:'empty',effectKey:'',onEventPriority:'DEFAULT',eventToActions:{}})
   ||!same(n.$template('enemy_esabr_clear_energy'),clearTemplate))return false;
  const energy=n.blacksteel_energy?.find(v=>'_buff'in v),hud=n.$siblings(energy).find(v=>v.m_Script?.m_PathID==='4554755220141895060');
@@ -76,8 +80,13 @@ function energyNative(r,n){
    ||!fields(d._buffs[0],{buffKey:'enemy_esheld_dec_energy[trigger]',templateKey:'enemy_esheld_dec_energy[trigger]',lifeTimeType:2,triggerLifeType:2,triggerInterval:-1})
    ||!fields(d._buffs[1],{buffKey:'dec_energy[effect]',templateKey:'empty',lifeTimeType:2})||!same(n.$template('enemy_esheld_dec_energy[trigger]'),decayTemplate))return false;
  }
+ if(c.siphon){const p=n.steal_energy?.find(v=>'_buffs'in v);
+  if(!passive(p,n)||p._buffs.length!==1||!prefabBuff(p._buffs[0])
+   ||!fields(p._buffs[0],{buffKey:'enemy_erob_steal_energy_ability',templateKey:'enemy_erob_steal_energy_ability',lifeTimeType:2,lifeTime:0,triggerLifeType:2,triggerInterval:-1,waitFirstTriggerInterval:1,firstTriggerInterval:-1})
+   ||!energySiphonProgramNative(n))return false;
+ }
  if(c.ghost)return zero(mode._combat);
- const clock=(c.grenade?grenadeClocks:clocks).enemies[r.prefabKey],graphic=n.$ref(root._animator),combat=n.$ref(mode._combat);
+ const clock=clockFor(r),graphic=n.$ref(root._animator),combat=n.$ref(mode._combat);
  if(c.grenade)return r.stats.rangeRadius===2.6
   &&ordinaryMeleePacketNative(combat,{clip:'Combat'})
   &&ordinaryProjectilePacketNative(n.$ref(mode._attack),{projectileKey:'projectile_enemy_ekulsr',type:1,selectTargetSource:1,atkScale:.5})
@@ -88,9 +97,10 @@ function energyNative(r,n){
    &&same(clock.events[clip],[{time:Math.fround(clip==='Attack'?31/30:25/30),name:'OnAttack',int:0,float:0,string:''}]));
  return ordinaryMeleePacketNative(combat)&&!!clock&&n.$ref(graphic?._skeleton)?.skeletonDataAsset?.m_PathID===clock.source.skeletonDataPathId
   &&graphic._animations.some(a=>a.animKey==='Attack'&&a.animName==='Attack'&&a.speed===1&&!a.loop)
-  &&clock.durations.Attack===(c.decay?Math.fround(50/30):1)
-  &&same(clock.events.Attack,[{time:Math.fround(c.decay?.8:.4),name:'OnAttack',int:0,float:0,string:''}]);
+  &&clock.durations.Attack===(c.siphon?Math.fround(84/30):c.decay?Math.fround(50/30):1)
+  &&same(clock.events.Attack,[{time:Math.fround(c.siphon?40/30:c.decay?.8:.4),name:'OnAttack',int:0,float:0,string:''}]);
 }
+const clockFor=r=>(configs[r.prefabKey].grenade?grenadeClocks:configs[r.prefabKey].siphon?siphonClocks:clocks).enemies[r.prefabKey];
 export {energyNative};
 const feature={matchesRecord,covers:energyNative};
 export const ENERGY_FEATURES={
@@ -98,7 +108,8 @@ export const ENERGY_FEATURES={
   ability:{kind:'nativeEnergyMeter',params:r=>{const c=configs[r.prefabKey];return{capacity:c.capacity,initial:c.initial??0,perStack:{atkPct:.1,defPct:.2},
    overload:{duration:c.duration,mods:{aspd:120,defMul:2,resFlat:30}},...(c.decay?{decay:{interval:c.decay,amount:1}}:{})};}}},
  'talent:over_energy':feature,'talent:dec_energy':feature,
- 'native:energyMeleeAttack':{...feature,ability:{kind:'animatedMeleeAttack',params:r=>({type:'phys',animation:{clip:'Attack',duration:clocks.enemies[r.prefabKey].durations.Attack,releases:clocks.enemies[r.prefabKey].events.Attack.map(e=>e.time)}})}},
+ 'talent:steal_energy':{...feature,ability:{kind:'nativeEnergySiphon',params:()=>({interval:2,radius:2.2,amount:1,parentKey:'enemy_erob_steal_energy_ability',markerKey:'blacksteel_energy[mark]',immuneKey:'erob_immune_steal',motion:'all'})}},
+ 'native:energyMeleeAttack':{...feature,ability:{kind:'animatedMeleeAttack',params:r=>({type:'phys',animation:{clip:'Attack',duration:clockFor(r).durations.Attack,releases:clockFor(r).events.Attack.map(e=>e.time)}})}},
  'native:energyGrenadeAttack':{...feature,ability:{kind:'blockedMeleeProjectileModes',params:r=>{const clock=grenadeClocks.enemies[r.prefabKey],animation=clip=>({clip,duration:clock.durations[clip],releases:clock.events[clip].map(e=>e.time)});
   return{type:'phys',speed:5,lifetime:10,width:3,height:3,damageScale:.5,noAir:false,groundOnly:true,meleeAnimation:animation('Combat'),rangedAnimation:animation('Attack')};}}},
  'native:energyGhostBody':{...feature,trait:{flags:{unblockable:true}}},

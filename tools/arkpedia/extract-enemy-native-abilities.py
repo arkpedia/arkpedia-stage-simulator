@@ -34,6 +34,9 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1357_erob': ['enemy_1357_erob','Default','Combat','Ability0','over_energy','blacksteel_energy','steal_energy'],
+    'enemy_1357_erob_2': ['enemy_1357_erob_2','Default','Combat','Ability0','over_energy','blacksteel_energy','steal_energy'],
+
     'enemy_1359_ekulsr': ['enemy_1359_ekulsr','Default','Combat','Attack','Selector','Ability0','over_energy','blacksteel_energy','dec_energy'],
     'enemy_1359_ekulsr_2': ['enemy_1359_ekulsr_2','Default','Combat','Attack','Selector','Ability0','over_energy','blacksteel_energy','dec_energy'],
 
@@ -455,6 +458,9 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1357_erob': {'Combat','Ability0','over_energy','blacksteel_energy','steal_energy'},
+            'enemy_1357_erob_2': {'Combat','Ability0','over_energy','blacksteel_energy','steal_energy'},
+
             'enemy_1359_ekulsr': {'Combat','Attack','Selector','Ability0','over_energy','blacksteel_energy','dec_energy'},
             'enemy_1359_ekulsr_2': {'Combat','Attack','Selector','Ability0','over_energy','blacksteel_energy','dec_energy'},
 

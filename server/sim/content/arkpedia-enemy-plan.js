@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {validateEnemyServices} from './arkpedia-enemy-services.js';
 import { validateEnemyRuntimePlan,decodeEnemyRuntimeParameters } from '../../../shared/arkpedia/enemy-runtime-plan.js';
 import { installFeatureDispatch,attach,abOf } from './arkpedia-enemy-ability-runtime.js';
 /** Resolve every implementation before applying traits. Parameters belong to
@@ -11,6 +12,7 @@ export function applyCompiledEnemyFeatures(b,e,plan,factoryFor){
     make.validate?.(entry.ability.params);
     return make;
   });
+  validateEnemyServices(factories);
   const abilities=[];
   for(const[i,entry]of plan.entries.entries()){
     if(entry.trait?.flags)b.addBuff(e,{key:`feature:${entry.id}`,persist:true,flags:{...entry.trait.flags}});

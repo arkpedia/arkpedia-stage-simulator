@@ -1,0 +1,11 @@
+# Paramilitary Axemen
+
+Both Paramilitary Axeman variants compose the shared native energy meter, a reusable energy-siphon component and the ordinary animated melee sequence. They begin at zero of twenty energy; each two-second pulse transfers up to one energy from every eligible nearby donor within radius 2.2. Overload grants the existing twenty-second ASPD/DEF/RES modifiers. Their original Attack clip lasts 84/30 seconds and releases its physical hit at 40/30 seconds.
+
+Admission checks both original prefab bindings, talent values, immunity marker and complete retained Global parent/child transfer programs. Donors must have the native energy eligibility marker, energy remaining, no overload and no siphon immunity. Axemen cannot siphon from one another. The serialized circle action explicitly uses ALL motion; that is retained instead of inventing a ground filter from the handbook sentence. The parent overload guard precedes recipient capture: a captured pulse completes its donor transfers even if its receiver reaches capacity, while subsequent pulses skip the overloaded receiver. These are simulator interpretations of the retained action program, not certified native method/frame ordering or collider-boundary parity.
+
+A small ordered-service check validates that an energy consumer follows an energy provider before any traits or spawn hooks run. This also applies to selected runtime preparation. Existing compiled plan storage and on-demand loading remain reusable. Lifecycle checks cover ordinary death, leakage, parent removal and death during attachment callbacks.
+
+The 72 focused actor, meter, selected-loading and audit checks pass. Desktop and touch fixtures verify first-pulse timing, donor debit, receiver credit, overload suppression and loading only the selected energy/siphon/melee modules. Both original bodies render in both galleries and decode ten clips; animation extraction checks match the pinned bundle. Asset validation covers 3,823 complete models. No original battery stage or original-stage clear is claimed.
+
+Combat admission reaches 748 of 2,163 enemies, covering 813 database levels and 205 runtime kinds. The existing 970 stage graphs stay pinned until the stages phase. Native HUD, particles and exact game-frame parity remain outside this review.
