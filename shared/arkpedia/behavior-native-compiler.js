@@ -68,6 +68,29 @@ export function compileNativeBuffProgram(entry,templateFor){
     else compile(buff.templateKey,depth+1);
     return{key:buff.buffKey,template:buff.templateKey,clock:immediate?null:{duration:buff.durationKey,interval:buff.triggerInterval,firstDelay:buff.firstTriggerInterval}};
   };
+  // Fold only the native absence-guarded single attachment. This deliberately
+  // does not claim arbitrary STACK merging: a present same-key instance skips
+  // creation, regardless of the descriptor's higher maximum stack count.
+  const guardedStats=node=>{
+    const create=node._failNodes?.[0],buff=create?._buff;
+    if(node._succeedNodes!==null||node._failNodes?.length!==1||actionName(create)!=='CreateBuff'||buff?.lifeTimeType!=='INFINITY'||buff?.overrideType!=='STACK')return null;
+    exact(node._conditionNode,{$type:type('CheckContainsBuff'),_targetType:'BUFF_OWNER',_buffKeys:[buff.buffKey],isAND:true,_loadFromBlackboard:false,_checkBuffSource:false,_buffSourceType:'BUFF_SOURCE',_checkSourceHost:false},'stat absence guard');
+    exact(create,{$type:type('CreateBuff'),_buff:buff,_buffOwner:'BUFF_OWNER',_isDerivedBuff:false,_finishDerivedBuffIfParentFinish:false},'guarded stat owner');
+    if(!buff.attributes||!Array.isArray(buff.attributes.attributeModifiers)||!buff.attributes.attributeModifiers.length||buff.attributes.attributeModifiers.length>3)fail('stat modifiers');
+    const mods={};
+    for(const mod of buff.attributes.attributeModifiers){
+      const spec={'ATK:MULTIPLIER':['atkPct','atk'],'DEF:MULTIPLIER':['defPct','def'],'ATTACK_SPEED:ADDITION':['aspd','attack_speed']}[`${mod.attributeType}:${mod.formulaItem}`];
+      if(!spec||Object.hasOwn(mods,spec[0]))fail('stat modifier');
+      exact(mod,{attributeType:mod.attributeType,formulaItem:mod.formulaItem,value:0,loadFromBlackboard:true,fetchBaseValueFromSourceEntity:false},'stat operand');
+      mods[spec[0]]=spec[1];
+    }
+    // Reuse the exhaustive inert-child contract, normalizing only fields
+    // implemented by this guarded permanent-stat lowering.
+    if(buff.overrideKey!==''||buff.templateKey!=='empty')fail('stat override/template');
+    childBuff({...buff,attributes:emptyAttributes,overrideKey:null,overrideType:'DEFAULT',lifeTimeType:'IMMEDIATELY'},0,true);
+    exact(buff.attributes,{...emptyAttributes,attributeModifiers:buff.attributes.attributeModifiers},'stat attributes');
+    return{op:'ensureStatBuff',who:'owner',key:text(buff.buffKey),mods};
+  };
   const sequence=(nodes,depth)=>{
     if(nodes===null)return[];
     if(!Array.isArray(nodes)||depth>16)fail('node list/depth');
@@ -85,7 +108,9 @@ export function compileNativeBuffProgram(entry,templateFor){
       actionSeen=true;
       if(name==='IfElse'){
         exact(node,{$type:type(name),_conditionNode:node._conditionNode,_succeedNodes:node._succeedNodes,_failNodes:node._failNodes},'IfElse');
-        actions.push({op:'when',condition:predicate(node._conditionNode),yes:sequence(node._succeedNodes,depth+1),no:sequence(node._failNodes,depth+1)});
+        const stats=guardedStats(node);
+        if(stats)actions.push(stats);
+        else actions.push({op:'when',condition:predicate(node._conditionNode),yes:sequence(node._succeedNodes,depth+1),no:sequence(node._failNodes,depth+1)});
       }else if(name==='ModifySp'){
         exact(node,{$type:type(name),_targetType:'TARGET',_modifyByRatio:false,_modifyRatio:0,
           _modifyByRatioBasedOnCurSP:false,_dontCheckSpType:false,_spMask:'ALL',_forceFlag:false,_dontShowSpUI:false,
@@ -126,6 +151,9 @@ export function compileNativeBuffProgram(entry,templateFor){
         exact(node,{$type:type(name),_targetType:'TARGET',_killSource:true,_noSource:false,_withdrawIfRallyPoint:false,
           _resultIfInRallyPointMode:false,_skipReborn:false,_noReason:false,_markReachExit:false,_switchState:false},'source kill');
         actions.push({op:'kill',who:'source'});
+      }else if(name==='FinishBuffsById'){
+        exact(node,{$type:type(name),_buffKey:node._buffKey,_loadFromBlackboard:false,_decCntIfStack:false,_updateOverrideMap:true,_targetType:'BUFF_OWNER',_checkBuffSource:false,_sourceType:'BUFF_SOURCE',_alsoClearNullSource:false,_finishHostBuff:false},'finish owner buffs');
+        actions.push({op:'finishBuffs',who:'owner',key:text(node._buffKey)});
       }else if(name==='FinishDerivedBuff'){
         exact(node,{$type:type(name),_updateOverrideMap:true},'finish derived markers');
         actions.push({op:'clearDerivedMarkers'});

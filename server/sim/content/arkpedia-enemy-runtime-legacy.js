@@ -11,8 +11,9 @@ export function applyLegacyEnemyFeatures(battle,e,factoryFor){
   for (const id of recordFeatureIds(record)) {
     const f = enemyFeature(id);
     if (!f || f.matchesRecord && !f.matchesRecord(record)) continue;
-    if (f.trait?.flags) battle.addBuff(e, { key: `feature:${id}`, persist: true, flags: { ...f.trait.flags } });
-    if (f.trait?.maxTargets) e.profile.maxTargets = Math.max(e.profile.maxTargets ?? 1, f.trait.maxTargets);
+    const trait=typeof f.trait==='function'?f.trait(record):f.trait;
+    if (trait?.flags) battle.addBuff(e, { key: `feature:${id}`, persist: true, flags: { ...trait.flags } });
+    if (trait?.maxTargets) e.profile.maxTargets = Math.max(e.profile.maxTargets ?? 1, trait.maxTargets);
     const ability = typeof f.ability === 'function' ? f.ability(record) : f.ability;
     if (ability) {
       const make = factoryFor(ability.kind);

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {stealthOffKey} from '../targeting.js';
 import {stageOutcomeCounter} from './arkpedia-stage-outcomes.js';
 /** Shared birth-phase mapping: the source delay holds movement, targeting and
  * attacks while an optional original clip plays. Effect/mesh bodies can omit
@@ -29,3 +30,12 @@ export function passiveEnemyBody({immunities=[],birthDelay=0,birthDuration=birth
   };
 }
 export const loggedEnemyBody=p=>[passiveEnemyBody(p),stageOutcomeCounter({killedKey:p.killedKey})];
+
+/** A removable native stealth attachment uses the engine's existing blocker
+ * reveal/restoration path with its authored delay. */
+export function nativeStealth(params){
+ nativeStealth.validate(params);const{key,restoreDelay}=params;
+ return{spawn(b,e,a){a.life=e.deploySeq;a.buff=b.addBuff(e,{key,source:e,flags:{stealth:true},data:{stealthRestore:restoreDelay},refresh:'independent',maxStacks:Infinity,admit:u=>u.alive&&u.deployed&&u.deploySeq===a.life});},
+  death(_c,b,e,a){if(a.buff)b.removeBuff(e,a.buff);a.buff=null;b.removeBuff(e,stealthOffKey(key));}};
+}
+nativeStealth.validate=({key,restoreDelay})=>{if(typeof key!=='string'||!key||key.length>256||!Number.isFinite(restoreDelay)||restoreDelay<0)throw Error('Invalid native stealth attachment');};

@@ -20,7 +20,7 @@ export function prepareBehaviorProgram(input){
   if(!object(input.templates))fail('templates');
   const keys=Object.keys(input.templates);if(!keys.length||keys.length>64)fail('template count');
   let count=0;const required=new Map(),optional=new Set(),edges=new Map(),modeBindings=new Set(),modeIndices=new Set(),eventRequirements=new Map();
-  const energyKeys=new Set(),spKeys=new Set(),nonnegativeKeys=new Set();
+  const energyKeys=new Set(),spKeys=new Set(),nonnegativeKeys=new Set(),statKeys=new Set();let hasStatBuff=false;
   let currentTemplate,currentEvent;
   const requirements=()=>{if(!eventRequirements.has(currentEvent))eventRequirements.set(currentEvent,{modes:new Set(),environment:new Set(),namedEnvironment:new Map(),derived:false,energy:false,sp:false});return eventRequirements.get(currentEvent);};
   const modeIndex=n=>{if(!Number.isSafeInteger(n)||n<0||n>63)fail('mode index');modeIndices.add(n);};
@@ -34,10 +34,16 @@ export function prepareBehaviorProgram(input){
         case 'when':fields(n,'op condition yes no');condition(n.condition,depth+1);visit(n.yes,refs,depth+1);visit(n.no,refs,depth+1);break;
         case 'release':fields(n,'op who');binding(n.who);break;
         case 'switchMode':fields(n,'op who index');rootBinding(n.who);modeIndex(n.index);modeBindings.add(n.who);requirements().modes.add(n.who);break;
+        case 'ensureStatBuff':
+          hasStatBuff=true;fields(n,'op who key mods');rootBinding(n.who);if(n.who!=='owner')fail('stat binding');string(n.key);
+          if(!object(n.mods)||!Object.keys(n.mods).length||Object.entries(n.mods).some(([k,v])=>!['atkPct','defPct','aspd'].includes(k)||typeof v!=='string'))fail('stat mods');
+          for(const key of Object.values(n.mods)){string(key);optional.add(key);statKeys.add(key);}
+          break;
+        case 'finishBuffs':fields(n,'op who key');rootBinding(n.who);if(n.who!=='owner')fail('finish binding');string(n.key);break;
         case 'deriveMarker':fields(n,'op key');rootBinding('owner');string(n.key);requirements().derived=true;break;
         case 'clearDerivedMarkers':fields(n,'op');rootBinding('owner');requirements().derived=true;break;
         case 'kill':fields(n,'op who');if(n.who!=='source')fail('kill binding');break;
-        case 'damage':fields(n,'op type scaleKey defaultScale');if(!['phys','arts','true'].includes(n.type))fail('damage type');string(n.scaleKey);finite(n.defaultScale);optional.add(n.scaleKey);break;
+        case 'damage':fields(n,'op type scaleKey defaultScale');if(!['phys','arts','true'].includes(n.type))fail('damage type');string(n.scaleKey);finite(n.defaultScale);optional.add(n.scaleKey);nonnegativeKeys.add(n.scaleKey);break;
         case 'spAdd':
           fields(n,'op who key');if(n.who!=='target'||currentTemplate!==input.entry)fail('SP binding');
           operand(n.key);spKeys.add(n.key);requirements().sp=true;break;
@@ -102,8 +108,10 @@ export function prepareBehaviorProgram(input){
   const graph=freeze(structuredClone(input));
   const validateBlackboard=bb=>{
     if(!object(bb))fail('blackboard');const result={};
+    if(hasStatBuff)for(const key of ['max_stack_cnt','max_valid_stack_cnt'])if(Object.hasOwn(bb,key)&&(!Number.isSafeInteger(bb[key])||bb[key]<1&&bb[key]!==-1||bb[key]>1024))fail('stat stack cap');
     for(const[key,positive]of required){if(!Object.hasOwn(bb,key))fail(`missing blackboard ${key}`);if(energyKeys.has(key)&&!nonnegativeKeys.has(key)){if(!Number.isFinite(bb[key]))fail('number');}else finite(bb[key],positive?Number.MIN_VALUE:0);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
-    for(const key of optional)if(!required.has(key)&&Object.hasOwn(bb,key)){finite(bb[key]);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
+    for(const key of optional)if(!required.has(key)&&Object.hasOwn(bb,key)){if(statKeys.has(key)&&!nonnegativeKeys.has(key)){if(!Number.isFinite(bb[key])||Math.abs(bb[key])>1e6)fail('stat amount');}else finite(bb[key]);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
+    for(const key of statKeys)if(Object.hasOwn(result,key)&&Math.abs(result[key])>1e6)fail('stat amount');
     for(const key of energyKeys)if(!Number.isSafeInteger(result[key])||Math.abs(result[key])>1024)fail('energy amount');
     for(const key of spKeys)if(result[key]>1e6)fail('SP amount');
     return Object.freeze(result);
@@ -124,6 +132,12 @@ export function prepareBehaviorProgram(input){
   const runNodes=(nodes,c)=>{
     for(const n of nodes){
       if(n.op==='when'){runNodes(predicate(n.condition,c)?n.yes:n.no,c);continue;}
+      if(n.op==='ensureStatBuff'){
+        const owner=c.owner;if(!owner?.alive||!owner.deployed||owner.deploySeq!==c.ownerLife||owner.findBuff(n.key))continue;
+        const mods=Object.fromEntries(Object.entries(n.mods).map(([stat,key])=>[stat,c.blackboard[key]??0]));
+        c.battle.addBuff(owner,{key:n.key,source:c.source,mods,refresh:'keep',admit:u=>u.alive&&u.deployed&&u.deploySeq===c.ownerLife});continue;
+      }
+      if(n.op==='finishBuffs'){const owner=c.owner;if(owner?.alive&&owner.deployed&&owner.deploySeq===c.ownerLife)c.battle.removeBuff(owner,n.key);continue;}
       if(n.op==='deriveMarker'){c.derivedService.create(n.key);continue;}
       if(n.op==='clearDerivedMarkers'){c.derivedService.clear();continue;}
       if(n.op==='switchMode'){c.modeService.set(c[n.who],n.index);continue;}

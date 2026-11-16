@@ -33,7 +33,7 @@ export function compileEnemyRuntimePlan(record){
     }
     if(f.matchesRecord&&!f.matchesRecord(record))throw Error(`Unmatched enemy runtime feature: ${record.key}/${id}`);
     Object.assign(plan.properties,f.unitProperties);
-    const entry={id};if(f.trait)entry.trait=jsonCopy(f.trait,`${id}.trait`);
+    const entry={id},trait=typeof f.trait==='function'?f.trait(record):f.trait;if(trait)entry.trait=jsonCopy(trait,`${id}.trait`);
     const ability=typeof f.ability==='function'?f.ability(record):f.ability;
     if(ability)entry.ability={kind:ability.kind,params:jsonCopy(ability.params(record),`${id}.params`)};
     if(entry.trait||entry.ability)plan.entries.push(entry);

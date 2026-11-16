@@ -90,6 +90,8 @@ export async function buildEnemySupport() {
       energyGrantContract: { path: 'shared/arkpedia/enemy-energy-grant-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-energy-grant-contract.js', root))) },
       energyGunnerContract: { path: 'shared/arkpedia/enemy-energy-gunner-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-energy-gunner-contract.js', root))) },
       energyGunnerAnimations: { path: 'data/arkpedia-energy-gunners-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-energy-gunners-animations.json', root))) },
+      famigliaSilencerFeatures: { path: 'shared/arkpedia/enemy-famiglia-silencer-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-silencer-features.js', root))) },
+      famigliaSilencerAnimations: { path: 'data/arkpedia-famiglia-silencers-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-famiglia-silencers-animations.json', root))) },
       famigliaCrossbowFeatures: { path: 'shared/arkpedia/enemy-famiglia-crossbow-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-crossbow-features.js', root))) },
       famigliaCrossbowAnimations: { path: 'data/arkpedia-famiglia-crossbows-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-famiglia-crossbows-animations.json', root))) },
       famigliaBasicFeatures: { path: 'shared/arkpedia/enemy-famiglia-basic-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-basic-features.js', root))) },

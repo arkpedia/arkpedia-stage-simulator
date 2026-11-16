@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "bc2dfd09a4e464de8ecbec7dd894d275bd8b4481ba21feace3ff6706ab8596f5",
-    "data/arkpedia-enemy-support.json": "cef5498722c7d29d029612d040de16cbbe7fd503a1cb9c5f928b0cfa3efbac45",
+    "data/arkpedia-enemy-native-abilities.json": "cfd721c9ad9b676e244fd4d595d4665ad2e579f4794587c4a5aa093fb3584c82",
+    "data/arkpedia-enemy-support.json": "2286012661e03a813bbbc00a09bb2a17d4ef3fc41b7ddccd073032ab63e9392a",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "5de8511fd58f4bde47e8e56a662e1f4145a2c08a2d8489e26629fd729d884025",
-    "shared/arkpedia/behavior-program.js": "f81286dc6c00587c9d7311088461faea63bd0563e1a216c6a5afadbb0a1dfd75",
+    "shared/arkpedia/behavior-native-compiler.js": "31cbcb3d4800bcbfb15fb09798fa2fc5d6ce367c913809f0299e40cf644e8a7b",
+    "shared/arkpedia/behavior-program.js": "8f1545ded28d8900adc3099d63d4a50e56c42cc5eab78d8a0a21dd392e44c9ea",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 395,
-  "templates": 242,
-  "compiled": 13,
-  "refused": 229,
+  "retainedPrefabs": 397,
+  "templates": 243,
+  "compiled": 21,
+  "refused": 222,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -225,8 +225,11 @@
         "enemy_1073_dscout_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "ffa171ce6625e8d1501c78c01c859c5c69aad61c0691b5a5feeb1b687a6cba99",
+      "bytes": 176,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "dscout_t[buff]",
@@ -427,6 +430,8 @@
         "enemy_1276_telex",
         "enemy_1278_sgbow",
         "enemy_1278_sgbow_2",
+        "enemy_1283_sgkill",
+        "enemy_1283_sgkill_2",
         "enemy_1286_dumcy",
         "enemy_1286_dumcy_2",
         "enemy_1287_ducrb",
@@ -626,7 +631,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: action FinishBuff"
     },
     {
       "key": "enemy_bbrain[aoe_when_finish]",
@@ -1297,7 +1302,7 @@
         "enemy_10092_hlslp"
       ],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: action AlwaysNext"
     },
     {
       "key": "enemy_hlslp[end_sleep_delay]",
@@ -1390,7 +1395,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: mode switch"
     },
     {
       "key": "enemy_liberty_listener[warning]",
@@ -1404,7 +1409,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: finish owner buffs"
     },
     {
       "key": "enemy_lrchld[finishFx]",
@@ -1715,7 +1720,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: finish owner buffs"
     },
     {
       "key": "enemy_mdrock_s_1[effect_c_creator]",
@@ -1724,7 +1729,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: finish owner buffs"
     },
     {
       "key": "enemy_mdrock_s_1[persistent]",
@@ -1742,7 +1747,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "reason": "Unsupported native behaviour: lifetime"
     },
     {
       "key": "enemy_mdrock_s_2[shield_last]",
@@ -1791,8 +1796,11 @@
         "enemy_1410_mmelee_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "959576c43771557454f83b49fdad0fcc1d568c94acc42aafea7ce0f373a32aa8",
+      "bytes": 224,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "enemy_mubsbl_enhance",
@@ -2070,6 +2078,19 @@
       "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
     },
     {
+      "key": "enemy_sgkill_passive",
+      "consumers": [
+        "enemy_1283_sgkill",
+        "enemy_1283_sgkill_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "5fc20876b31c545650bca05c0f2a41cefeb79c7a362e94d2d83e703ddb8b16ab",
+      "bytes": 411,
+      "templateCount": 1,
+      "requiredBlackboard": []
+    },
+    {
       "key": "enemy_sgman_death_rattle",
       "consumers": [
         "enemy_1277_sgman",
@@ -2243,8 +2264,11 @@
         "enemy_1083_sotiab_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "90b9ca32b7cf80df52f2572ba36e226752946732c98f0069b82797a0cc09b15e",
+      "bytes": 397,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "enemy_strength_talent_finish_listener[atk_speed]",
@@ -2253,8 +2277,11 @@
         "enemy_1082_soticn_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "ccee9ae710a0d8a6d06701f19bc84935bb29feaef8272259674e3e208cf49ec4",
+      "bytes": 415,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "enemy_strength_talent_finish_listener[move_speed]",
@@ -2263,8 +2290,11 @@
         "enemy_1078_sotisc_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "f446fcc662bd83434a2c9eadaed56724fb0b996b3fb5c6a7e6827c6a7776c54d",
+      "bytes": 418,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "enemy_strength_talent_start_listener[atk]",
@@ -2563,6 +2593,8 @@
         "enemy_1277_sgman_2",
         "enemy_1278_sgbow",
         "enemy_1278_sgbow_2",
+        "enemy_1283_sgkill",
+        "enemy_1283_sgkill_2",
         "enemy_1433_dsbasi",
         "enemy_1433_dsbasi_2",
         "enemy_1434_dsshel",
@@ -2736,8 +2768,11 @@
         "enemy_2070_skzfbx"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "ec1e5d7e8e089f7af621bf06fa4e98948d042b33e58fc5c7f36500fed6f26544",
+      "bytes": 180,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "skzfbx_m1_a[fall_down]",
@@ -2900,8 +2935,11 @@
         "enemy_1421_lrchld"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishBuffsById"
+      "compiled": true,
+      "programSha256": "fe639e4f1eae49610e5ad305c48b36753b4a055ec8097c92d27ec33ef912a7c7",
+      "bytes": 193,
+      "templateCount": 1,
+      "requiredBlackboard": []
     }
   ],
   "refusals": [
@@ -3148,6 +3186,8 @@
         "enemy_1278_sgbow_2",
         "enemy_1279_sgbdg",
         "enemy_1279_sgbdg_2",
+        "enemy_1283_sgkill",
+        "enemy_1283_sgkill_2",
         "enemy_1290_duflm",
         "enemy_1290_duflm_2",
         "enemy_1294_duchns",
@@ -3213,6 +3253,7 @@
         "enemy_lydrty[buff_to_source]",
         "enemy_mdrock_s_1",
         "enemy_mdrock_s_1[effect_a_creator]",
+        "enemy_mdrock_s_2[shield][refresh]",
         "enemy_skztxs_face_to",
         "lifbos_trigger_ability_once",
         "skzwdd_a[multi_attack]"
@@ -3259,51 +3300,6 @@
       "unsupportedConsumers": [
         "enemy_10092_hlslp",
         "enemy_1531_bbrain"
-      ]
-    },
-    {
-      "reason": "Unsupported native behaviour: action FinishBuffsById",
-      "templates": [
-        "dscout_cancel_undead",
-        "enemy_axetro_t[checker]",
-        "enemy_hlslp[end_sleep_core]",
-        "enemy_liberty_force",
-        "enemy_liberty_listener[warning]",
-        "enemy_mdrock_s_1[effect_b_creator]",
-        "enemy_mdrock_s_1[effect_c_creator]",
-        "enemy_mdrock_s_2[shield][refresh]",
-        "enemy_mmelee_touched_rope[continues]",
-        "enemy_strength_talent_finish_listener[atk]",
-        "enemy_strength_talent_finish_listener[atk_speed]",
-        "enemy_strength_talent_finish_listener[move_speed]",
-        "skzfbx_m1_a[effect]",
-        "trap_lrcore[finishFx][core]"
-      ],
-      "consumers": [
-        "enemy_10092_hlslp",
-        "enemy_1073_dscout_2",
-        "enemy_1078_sotisc",
-        "enemy_1078_sotisc_2",
-        "enemy_1082_soticn",
-        "enemy_1082_soticn_2",
-        "enemy_1083_sotiab",
-        "enemy_1083_sotiab_2",
-        "enemy_1117_liiprr",
-        "enemy_1117_liiprr_2",
-        "enemy_1120_vofwiz",
-        "enemy_1120_vofwiz_2",
-        "enemy_1121_lifbos",
-        "enemy_1121_lifbos_2",
-        "enemy_1410_mmelee",
-        "enemy_1410_mmelee_2",
-        "enemy_1421_lrchld",
-        "enemy_1511_mdrock",
-        "enemy_1516_jakill",
-        "enemy_2005_axetro",
-        "enemy_2070_skzfbx"
-      ],
-      "unsupportedConsumers": [
-        "enemy_10092_hlslp"
       ]
     },
     {
@@ -3410,16 +3406,20 @@
       "reason": "Unsupported native behaviour: mode switch",
       "templates": [
         "dscout_t[buff]",
+        "enemy_liberty_force",
         "switch_mode_no_restore",
         "switch_mode_restart_fsm_when_trigger"
       ],
       "consumers": [
         "enemy_1073_dscout",
         "enemy_1073_dscout_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
         "enemy_1143_merrpg",
         "enemy_1143_merrpg_2",
         "enemy_1271_nhkodo",
         "enemy_1271_nhkodo_2",
+        "enemy_1516_jakill",
         "enemy_1536_ncrmcr"
       ],
       "unsupportedConsumers": [
@@ -3441,6 +3441,20 @@
       ],
       "unsupportedConsumers": [
         "enemy_1531_bbrain"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action AlwaysNext",
+      "templates": [
+        "enemy_hlslp[end_sleep_core]",
+        "enemy_telex_t[kill]"
+      ],
+      "consumers": [
+        "enemy_10092_hlslp",
+        "enemy_1276_telex"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
       ]
     },
     {
@@ -3654,6 +3668,24 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: finish owner buffs",
+      "templates": [
+        "enemy_liberty_listener[warning]",
+        "enemy_mdrock_s_1[effect_b_creator]",
+        "enemy_mdrock_s_1[effect_c_creator]"
+      ],
+      "consumers": [
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: action ChangeMotionMode",
       "templates": [
         "enemy_durokt[fly]",
@@ -3739,6 +3771,20 @@
         "enemy_1075_dmgswd_2",
         "enemy_1250_lyengs",
         "enemy_1250_lyengs_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action FinishBuff",
+      "templates": [
+        "enemy_axetro_t[checker]",
+        "enemy_mainline14[origFx]"
+      ],
+      "consumers": [
+        "enemy_1420_lrmm",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2",
+        "enemy_2005_axetro"
       ],
       "unsupportedConsumers": []
     },
@@ -3879,16 +3925,6 @@
         "fear_buff"
       ],
       "consumers": [],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: action AlwaysNext",
-      "templates": [
-        "enemy_telex_t[kill]"
-      ],
-      "consumers": [
-        "enemy_1276_telex"
-      ],
       "unsupportedConsumers": []
     },
     {
@@ -4043,18 +4079,6 @@
         "enemy_1103_wdkght_2",
         "enemy_1103_wdkght_3",
         "enemy_5042_dqkght_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: action FinishBuff",
-      "templates": [
-        "enemy_mainline14[origFx]"
-      ],
-      "consumers": [
-        "enemy_1420_lrmm",
-        "enemy_1425_lrcmra",
-        "enemy_1425_lrcmra_2"
       ],
       "unsupportedConsumers": []
     },
