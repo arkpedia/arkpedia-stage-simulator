@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1282_sgelder': ['enemy_1282_sgelder','Mode','Combat','AuraVG','SelectVg'],
+    'enemy_1282_sgelder_2': ['enemy_1282_sgelder_2','Mode','Combat','AuraVG','SelectVg'],
     'enemy_1283_sgkill': ['enemy_1283_sgkill','Mode','Attack','Trigger','Passive','Invisible'],
     'enemy_1283_sgkill_2': ['enemy_1283_sgkill_2','Mode','Attack','Trigger','Passive','Invisible'],
     'enemy_1278_sgbow': ['enemy_1278_sgbow','Default','VG','Attack','Trigger','Passive','VGCheck'],
@@ -474,6 +476,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1282_sgelder': {'Combat','AuraVG','SelectVg'},
+            'enemy_1282_sgelder_2': {'Combat','AuraVG','SelectVg'},
             'enemy_1283_sgkill': {'Attack','Trigger','Passive','Invisible'},
             'enemy_1283_sgkill_2': {'Attack','Trigger','Passive','Invisible'},
             'enemy_1278_sgbow': {'Attack','Trigger','Passive','VGCheck'},
@@ -626,6 +630,8 @@ for bundle in sorted(wanted):
         # Geometry scopes complement MonoBehaviour sibling scopes. A family's
         # contact contract can retain its original colliders without a new branch.
         geometry_names = {
+            'enemy_1282_sgelder': {'AuraVG'},
+            'enemy_1282_sgelder_2': {'AuraVG'},
             'enemy_1283_sgkill': {'Trigger'},
             'enemy_1283_sgkill_2': {'Trigger'},
             'enemy_1278_sgbow': {'Trigger'},

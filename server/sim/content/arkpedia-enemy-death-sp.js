@@ -20,10 +20,7 @@ export function selectedDeathSp(params){
    if(a.parent)b.removeBuff(e,a.parent);if(a.log)b.removeBuff(e,a.log);a.parent=null;a.log=null;
    if(c.reason!=='killed'||e.deploySeq!==a.life)return;
    if(attached){
-    const candidates=b.units.filter(u=>u.kind==='device'&&u.tags?.has(selector.tag)&&u.alive&&u.deployed&&!u.hidden&&!u.removed
-     &&(selector.side==='both'||(selector.side==='same')===(u.side===e.side))&&!u.s.flags.untargetable&&!u.s.flags.isolated&&!u.s.flags.sleep
-     &&!(u.side!==e.side&&(u.s.flags.targetFree||u.s.flags.stealth||u.s.flags.camou)));
-    for(const target of candidates.sort(aggroCmp).slice(0,selector.maxTargets))program.run('ON_BUFF_START',{battle:b,unit:e,source:e,target,blackboard,spService:{add:(unit,amount)=>addDeviceSp(b,unit,amount)}});
+    for(const target of selectedDeviceSpTargets(b,e,selector))program.run('ON_BUFF_START',{battle:b,unit:e,source:e,target,blackboard,spService:{add:(unit,amount)=>addDeviceSp(b,unit,amount)}});
    }
    if(logged)recordStageOutcome(b,e,log.key);
   },
@@ -38,3 +35,10 @@ function validate({parentKey,mods={},selector,blackboard={},log,program,programC
 }
 selectedDeathSp.validate=validate;
 selectedDeathSp.decodeParameters=decodeBehaviorParameters;
+
+/** Shared native tagged-device acquisition, independent of the trigger event. */
+export function selectedDeviceSpTargets(b,e,selector){
+ return b.units.filter(u=>u.kind==='device'&&u.tags?.has(selector.tag)&&u.alive&&u.deployed&&!u.hidden&&!u.removed
+  &&(selector.side==='both'||(selector.side==='same')===(u.side===e.side))&&!u.s.flags.untargetable&&!u.s.flags.isolated&&!u.s.flags.sleep
+  &&!(u.side!==e.side&&(u.s.flags.targetFree||u.s.flags.stealth||u.s.flags.camou))).sort(aggroCmp).slice(0,selector.maxTargets);
+}
