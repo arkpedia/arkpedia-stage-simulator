@@ -20,11 +20,12 @@ export function prepareBehaviorProgram(input){
   if(!object(input.templates))fail('templates');
   const keys=Object.keys(input.templates);if(!keys.length||keys.length>64)fail('template count');
   let count=0;const required=new Map(),optional=new Set(),edges=new Map(),modeBindings=new Set(),modeIndices=new Set(),eventRequirements=new Map();
+  const energyKeys=new Set(),nonnegativeKeys=new Set();
   let currentTemplate,currentEvent;
-  const requirements=()=>{if(!eventRequirements.has(currentEvent))eventRequirements.set(currentEvent,{modes:new Set(),environment:new Set(),namedEnvironment:new Map(),derived:false});return eventRequirements.get(currentEvent);};
+  const requirements=()=>{if(!eventRequirements.has(currentEvent))eventRequirements.set(currentEvent,{modes:new Set(),environment:new Set(),namedEnvironment:new Map(),derived:false,energy:false});return eventRequirements.get(currentEvent);};
   const modeIndex=n=>{if(!Number.isSafeInteger(n)||n<0||n>63)fail('mode index');modeIndices.add(n);};
   const rootBinding=who=>{binding(who);if(currentTemplate!==input.entry)fail('mode/environment child binding');};
-  const operand=(key,positive=false)=>{string(key);required.set(key,positive||required.get(key)||false);};
+  const operand=(key,positive=false)=>{string(key);nonnegativeKeys.add(key);required.set(key,positive||required.get(key)||false);};
   const visit=(nodes,refs,depth=0)=>{
     if(!Array.isArray(nodes)||depth>16)fail('depth/list');
     for(const n of nodes){
@@ -37,6 +38,9 @@ export function prepareBehaviorProgram(input){
         case 'clearDerivedMarkers':fields(n,'op');rootBinding('owner');requirements().derived=true;break;
         case 'kill':fields(n,'op who');if(n.who!=='source')fail('kill binding');break;
         case 'damage':fields(n,'op type scaleKey defaultScale');if(!['phys','arts','true'].includes(n.type))fail('damage type');string(n.scaleKey);finite(n.defaultScale);optional.add(n.scaleKey);break;
+        case 'energyAdd':
+          fields(n,'op who key');if(n.who!=='owner'||currentTemplate!==input.entry)fail('energy binding');
+          string(n.key);required.set(n.key,required.get(n.key)??false);energyKeys.add(n.key);requirements().energy=true;break;
         case 'loss':fields(n,'op key');operand(n.key);break;
         case 'create':
           fields(n,'op who key template clock');binding(n.who);string(n.key);string(n.template);refs.add(n.template);
@@ -95,8 +99,9 @@ export function prepareBehaviorProgram(input){
   const graph=freeze(structuredClone(input));
   const validateBlackboard=bb=>{
     if(!object(bb))fail('blackboard');const result={};
-    for(const[key,positive]of required){if(!Object.hasOwn(bb,key))fail(`missing blackboard ${key}`);finite(bb[key],positive?Number.MIN_VALUE:0);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
+    for(const[key,positive]of required){if(!Object.hasOwn(bb,key))fail(`missing blackboard ${key}`);if(energyKeys.has(key)&&!nonnegativeKeys.has(key)){if(!Number.isFinite(bb[key]))fail('number');}else finite(bb[key],positive?Number.MIN_VALUE:0);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
     for(const key of optional)if(!required.has(key)&&Object.hasOwn(bb,key)){finite(bb[key]);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
+    for(const key of energyKeys)if(!Number.isSafeInteger(result[key])||Math.abs(result[key])>1024)fail('energy amount');
     return Object.freeze(result);
   };
   const predicate=(n,c)=>{
@@ -119,6 +124,7 @@ export function prepareBehaviorProgram(input){
       if(n.op==='clearDerivedMarkers'){c.derivedService.clear();continue;}
       if(n.op==='switchMode'){c.modeService.set(c[n.who],n.index);continue;}
       if(n.op==='release'){const u=c[n.who];if(u?.alive&&u.deployed)c.battle._unblock(u);continue;}
+      if(n.op==='energyAdd'){const u=c.owner;if(u?.alive&&u.deployed&&u.deploySeq===c.ownerLife)c.energyService.add(u,c.blackboard[n.key]);continue;}
       if(n.op==='loss'){if(c.target?.alive&&c.target.deployed)c.battle.loseHp(c.target,c.blackboard[n.key],{source:c.source,tags:[c.buffKey,'dot']});continue;}
       if(n.op==='damage'){if(c.source?.alive&&c.source.deployed&&c.source.deploySeq===c.sourceLife&&c.target?.alive&&c.target.deployed&&c.target.deploySeq===c.targetLife)c.battle.dealDamage(c.source,c.target,{amount:c.source.s.atk*(c.blackboard[n.scaleKey]??n.defaultScale),type:n.type,isAttack:true,isSkill:false,applyWay:'all',canDodge:c.damageMissable,tags:[c.buffKey]});continue;}
       if(n.op==='kill'){const u=c[n.who];if(u?.alive&&u.deployed&&u.deploySeq===c.sourceLife)c.battle.kill(u,c.source);continue;}
@@ -134,13 +140,14 @@ export function prepareBehaviorProgram(input){
     }
   };
   const prepared=Object.freeze({graph,requiredBlackboard:Object.freeze([...required.keys()]),requiredModeIndices:Object.freeze([...modeIndices].sort((a,b)=>a-b)),requiredModeBindings:Object.freeze([...modeBindings]),validateBlackboard,
-    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true,modeService=null,derivedService=null}){
+    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true,modeService=null,derivedService=null,energyService=null}){
       if(!EVENTS.has(event))fail('event');
       const bb=validateBlackboard(blackboard);
       if(!battle||!unit||!source)fail('owner/source');
       if(typeof damageMissable!=='boolean')fail('missability');
-      const context={battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,modeService,derivedService,sourceLife:source.deploySeq,targetLife:target?.deploySeq};
+      const context={battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,modeService,derivedService,energyService,ownerLife:unit.deploySeq,sourceLife:source.deploySeq,targetLife:target?.deploySeq};
       const needs=eventRequirements.get(event);
+      if(needs?.energy&&(!energyService||typeof energyService.add!=='function'))fail('energy service');
       if(needs?.modes.size){
         if(!modeService||typeof modeService.get!=='function'||typeof modeService.set!=='function')fail('mode service');
         for(const who of needs.modes){const actor=context[who],index=actor&&modeService.get(actor);if(!actor||!Number.isSafeInteger(index)||index<0||index>63)fail('current mode');}

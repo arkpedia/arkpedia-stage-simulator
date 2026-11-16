@@ -1,3 +1,4 @@
+import {nativeBuffProgram} from './native-buff-programs.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
 import {ordinaryMeleePacketNative} from './enemy-ordinary-body-contract.js';
@@ -44,6 +45,6 @@ export function radioactiveNative(r,n){
 }
 export const RADIOACTIVE_FEATURES={
  'talent:Boom':{matchesRecord:isRadioactiveSlug,covers:radioactiveNative,explains:text=>text==='When defeated, deals heavy Arts damage in an area and causes all enemies on the field to gain 1 Energy.',
-  ability:{kind:'deathEnergyPulse',params:()=>({delay:.5,radius:1.25,scale:4,type:'arts',energy:1,markerKey:'blacksteel_energy[mark]',parentKey:'enemy_eslime_add_energy_global',silenceable:true})}},
+  ability:{kind:'deathEnergyPulse',params:()=>({delay:.5,radius:1.25,scale:4,type:'arts',program:nativeBuffProgram('enemy_esabr_add_energy'),blackboard:{add_count:1},parentKey:'enemy_eslime_add_energy_global',silenceable:true})}},
  'native:radioactiveMelee':{matchesRecord:isRadioactiveSlug,covers:radioactiveNative,ability:{kind:'animatedMeleeAttack',params:r=>({type:'arts',animation:{clip:'Attack',duration:clocks.enemies[r.prefabKey].durations.Attack,releases:clocks.enemies[r.prefabKey].events.Attack.map(e=>e.time),maxScale:-1}})}},
 };

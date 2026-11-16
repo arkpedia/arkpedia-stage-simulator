@@ -64,3 +64,8 @@ test('removing the owned native parent disables the death program without consum
  const h=fixture(),d=h.donor(),foreign=h.b.addBuff(h.e,{key:'enemy_eslime_add_energy_global',refresh:'independent'}),own=h.e.buffs.find(x=>x.key==='enemy_eslime_add_energy_global'&&x!==foreign);
  h.b.removeBuff(h.e,own);h.b.kill(h.e);h.run(.6);assert.equal(enemyEnergy(h.b,d).count,4);assert.equal(h.g.hp,h.g.s.maxHp);assert.ok(h.e.buffs.includes(foreign));assert.deepEqual(h.b.errors,[]);
 });
+test('previously published scalar death-energy parameters retain their behavior',async()=>{
+ const {deathEnergyPulse}=await import('../server/sim/content/arkpedia-enemy-death-energy.js'),{attach}=await import('../server/sim/content/arkpedia-enemy-ability-runtime.js');
+ const h=fixture(),d=h.donor();h.b.removeBuff(h.e,'enemy_eslime_add_energy_global');
+ attach(h.b,h.e,[deathEnergyPulse({delay:.5,radius:1.25,scale:4,type:'arts',energy:1,markerKey:'blacksteel_energy[mark]',parentKey:'enemy_eslime_add_energy_global',silenceable:true})]);h.b.kill(h.e);h.run(.6);assert.equal(enemyEnergy(h.b,d).count,5);assert.equal(h.g.s.maxHp-h.g.hp,h.e.base.atk*4);assert.deepEqual(h.b.errors,[]);
+});

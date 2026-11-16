@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "scope": "Bounded native energy transactions and shared selected resource programs; no automatic enemy admission.",
+  "sourceSha256": {
+    "shared/arkpedia/behavior-native-compiler.js": "a12d83135384d907b3a0b4189e5312289ba75a2095ff7e030d5f95b21b589f04",
+    "shared/arkpedia/behavior-program.js": "6c8b2bdb61228e6741d7430314c9eb17e99d5c2da2863168ba425dd3c3daca96",
+    "shared/arkpedia/enemy-radioactive-features.js": "6947a0a5bd1a109c075ed9e63971c8331576010d570dc8a3b701e3993dd90c64",
+    "server/sim/content/arkpedia-enemy-death-energy.js": "d89aadf8f4ee561e9b62afbb933f7989ac16b51d6b7c5af340001f6e6b5107d3",
+    "data/arkpedia-enemy-runtime-plan-report.json": "ac728bf8ddfa9a6fc4641d9dace32fd60253a4ffa26dfab1ae5e5938399e6d14",
+    "data/arkpedia-enemy-support.json": "c00ca66dc47e4260f8c8404cae8db38ac5205dc3fc854723ec4be02f741effa1",
+    "data/arkpedia-native-buff-program-audit.json": "5312e7d27ab8d7f4272012cb0c179857e2089a2321b5ebcf7622d147c5aaf3b4",
+    "test/arkpedia-native-buff-program.test.js": "6658f8945950f01c38c7901fe19e7df97dbf0f0a72d1833e66889a19992bbd3a",
+    "test/arkpedia-radioactive-slugs.test.js": "286d32fc4af706bf42ab2912bdda9ed44dccd52141ff8880d2cc1bbe821bc4c2"
+  },
+  "tests": {
+    "focusedRegressions": 121
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Radioactive Originium Slug delayed death damage and global energy fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-death-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1352_eslime",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 360,
+          "start": 0,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 360,
+              "donorEnergy": 5,
+              "time": 0.5
+            }
+          ]
+        },
+        {
+          "id": "enemy_1352_eslime_2",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 600,
+          "start": 0.7333333333333333,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 600,
+              "donorEnergy": 5,
+              "time": 1.2333333333333334
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Radioactive Originium Slug delayed death damage and global energy fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-death-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1352_eslime",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 360,
+          "start": 0,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 360,
+              "donorEnergy": 5,
+              "time": 0.5
+            }
+          ]
+        },
+        {
+          "id": "enemy_1352_eslime_2",
+          "beforePulse": 4,
+          "beforeHits": 0,
+          "afterPulse": 5,
+          "amount": 600,
+          "start": 0.7333333333333333,
+          "packets": [
+            {
+              "type": "arts",
+              "amount": 600,
+              "donorEnergy": 5,
+              "time": 1.2333333333333334
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "coverage": {
+    "enemies": 752,
+    "databaseLevels": 817,
+    "runtimeKinds": 207,
+    "pinnedStageGraphs": 970
+  },
+  "audit": {
+    "templates": 236,
+    "compiled": 11,
+    "refused": 225
+  },
+  "compatibility": "Previously published scalar death-energy parameters remain supported."
+}

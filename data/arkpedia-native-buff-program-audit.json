@@ -3,16 +3,16 @@
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
     "data/arkpedia-enemy-native-abilities.json": "c579428d4e6804fab220376e370d572dcb5f83150f943079d45928c829ac5c06",
-    "data/arkpedia-enemy-support.json": "839c3f60db4f7fff66caf8afdb7f71a1897d0588e928612f378b4db81004f7ad",
+    "data/arkpedia-enemy-support.json": "c00ca66dc47e4260f8c8404cae8db38ac5205dc3fc854723ec4be02f741effa1",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "97dd9969ddb03e5c33246daf0bad1afde7e58f7e64c3ded3206c3f3442852550",
-    "shared/arkpedia/behavior-program.js": "1b9c2b014bd61479b66a556d745b02a324fd22d41cec15fbe09c328185ee4f6f",
+    "shared/arkpedia/behavior-native-compiler.js": "a12d83135384d907b3a0b4189e5312289ba75a2095ff7e030d5f95b21b589f04",
+    "shared/arkpedia/behavior-program.js": "6c8b2bdb61228e6741d7430314c9eb17e99d5c2da2863168ba425dd3c3daca96",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
   "retainedPrefabs": 387,
   "templates": 236,
-  "compiled": 9,
-  "refused": 227,
+  "compiled": 11,
+  "refused": 225,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -1141,7 +1141,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: binding"
+      "reason": "Unsupported native behaviour: predicate FilterByBuffStackCount"
     },
     {
       "key": "enemy_erob_steal_energy_ability",
@@ -1160,8 +1160,13 @@
         "enemy_1352_eslime_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: binding"
+      "compiled": true,
+      "programSha256": "6e9d2812c3c3d22aa4ea5f998cc47b38aea3ad24404c12ca6815180918e41291",
+      "bytes": 413,
+      "templateCount": 1,
+      "requiredBlackboard": [
+        "add_count"
+      ]
     },
     {
       "key": "enemy_esabr_clear_energy",
@@ -1179,7 +1184,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: binding"
+      "reason": "Unsupported native behaviour: action ModifyAbilityBlackboard"
     },
     {
       "key": "enemy_esheld_dec_energy[trigger]",
@@ -1190,8 +1195,13 @@
         "enemy_1359_ekulsr_2"
       ],
       "unsupportedConsumers": [],
-      "compiled": false,
-      "reason": "Unsupported native behaviour: binding"
+      "compiled": true,
+      "programSha256": "ae1846b73173fc593dce7334e30a3b11eecd28f2af327558dca420ee3ebdfb90",
+      "bytes": 434,
+      "templateCount": 1,
+      "requiredBlackboard": [
+        "dec_count"
+      ]
     },
     {
       "key": "enemy_eslime_add_energy_global",
@@ -3505,33 +3515,6 @@
       "unsupportedConsumers": []
     },
     {
-      "reason": "Unsupported native behaviour: binding",
-      "templates": [
-        "enemy_bomscr_boom_switch_mode",
-        "enemy_erob_steal_energy",
-        "enemy_esabr_add_energy",
-        "enemy_esabr_clear_energy",
-        "enemy_esheld_dec_energy[trigger]"
-      ],
-      "consumers": [
-        "enemy_1218_bomscr",
-        "enemy_1218_bomscr_2",
-        "enemy_1352_eslime",
-        "enemy_1352_eslime_2",
-        "enemy_1353_esabr",
-        "enemy_1353_esabr_2",
-        "enemy_1354_eghost",
-        "enemy_1354_eghost_2",
-        "enemy_1357_erob",
-        "enemy_1357_erob_2",
-        "enemy_1358_esheld",
-        "enemy_1358_esheld_2",
-        "enemy_1359_ekulsr",
-        "enemy_1359_ekulsr_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
       "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers",
       "templates": [
         "enemy_bigstorm[dmg]",
@@ -3757,6 +3740,19 @@
         "enemy_1219_mtrbty_2",
         "enemy_1272_nhtank",
         "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate FilterByBuffStackCount",
+      "templates": [
+        "enemy_erob_steal_energy",
+        "enemy_mdrock_s_1[persistent]"
+      ],
+      "consumers": [
+        "enemy_1357_erob",
+        "enemy_1357_erob_2",
+        "enemy_1511_mdrock"
       ],
       "unsupportedConsumers": []
     },
@@ -3987,6 +3983,25 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: action ModifyAbilityBlackboard",
+      "templates": [
+        "enemy_esabr_clear_energy"
+      ],
+      "consumers": [
+        "enemy_1353_esabr",
+        "enemy_1353_esabr_2",
+        "enemy_1354_eghost",
+        "enemy_1354_eghost_2",
+        "enemy_1357_erob",
+        "enemy_1357_erob_2",
+        "enemy_1358_esheld",
+        "enemy_1358_esheld_2",
+        "enemy_1359_ekulsr",
+        "enemy_1359_ekulsr_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: action NoSourceDamage",
       "templates": [
         "periodic_magic_damage"
@@ -4015,6 +4030,17 @@
         "enemy_1293_duswrd",
         "enemy_1293_duswrd_2",
         "enemy_1293_duswrd_3"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: binding",
+      "templates": [
+        "enemy_bomscr_boom_switch_mode"
+      ],
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
       ],
       "unsupportedConsumers": []
     },
@@ -4122,16 +4148,6 @@
         "enemy_1267_nhpbr_2",
         "enemy_1272_nhtank",
         "enemy_1272_nhtank_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: predicate FilterByBuffStackCount",
-      "templates": [
-        "enemy_mdrock_s_1[persistent]"
-      ],
-      "consumers": [
-        "enemy_1511_mdrock"
       ],
       "unsupportedConsumers": []
     },

@@ -1,0 +1,9 @@
+# Shared native energy programs
+
+The bounded native buff compiler now folds an AddAbilityBlackboard for blacksteel_energy plus its immediately matching TriggerSpecifiedAbility into one energy transaction. A separated update, different resource, different owner or subtraction-policy flag is refused. Operands are explicit signed integers bounded to ±1,024; both the positive energy reward and the native negative Defender decay operand compile. An operand shared with a nonnegative-only operation retains the stricter common domain.
+
+The portable interpreter requires an explicit energy service before any effect in the requested event, including effects preceding the transaction. It checks the entire graph and blackboard first. Transactions apply only to the current live owner deployment. Child-template resource bindings stay refused until their service requirements can be propagated safely. TARGET predicates now retain their explicit event-target binding.
+
+Radioactive Slug rewards consume the compiled native reward program through the shared energy API. Their older scalar death-energy plans remain supported. Normal and elite programs pack into one shared component, hydrate once and load only the selected death-energy runtime module. The source templates and compiler stay out of the browser.
+
+All 121 focused compiler, program-packing, lifecycle, actor, selected-runtime, complete-plan and audit regressions pass. Desktop/touch browser fixtures retain the half-second death pulse and reward-before-damage ordering, with no page/runtime errors or full-source catalogue/compiler downloads. The template audit now compiles eleven of 236 retained templates; compilation is not enemy admission. Coverage stays at 752 enemies, 817 database levels and 207 runtime kinds, with the existing 970 stage graphs pinned.

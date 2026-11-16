@@ -8,7 +8,7 @@ const type=name=>`Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
 function fail(label){throw Error(`Unsupported native behaviour: ${label}`);}
 function exact(v,w,label){if(!v||Object.keys(v).sort().join()!==Object.keys(w).sort().join()||Object.entries(w).some(([k,x])=>!same(v[k],x)))fail(label);}
 function text(v){if(typeof v!=='string'||!v||v.length>256)fail('key');return v;}
-const binding=v=>{const b={BUFF_OWNER:'owner',BUFF_SOURCE:'source',MODIFIER_TARGET:'target'}[v];if(!b)fail('binding');return b;};
+const binding=v=>{const b={BUFF_OWNER:'owner',BUFF_SOURCE:'source',MODIFIER_TARGET:'target',TARGET:'target'}[v];if(!b)fail('binding');return b;};
 const finite=(v,min)=>{if(!Number.isFinite(v)||v<min)fail('number');return v;};
 const emptyAttributes={abnormalFlags:[],abnormalImmunes:[],abnormalAntis:[],abnormalCombos:[],abnormalComboImmunes:[],attributeModifiers:[]};
 export function compileNativeBuffProgram(entry,templateFor){
@@ -72,7 +72,8 @@ export function compileNativeBuffProgram(entry,templateFor){
     if(nodes===null)return[];
     if(!Array.isArray(nodes)||depth>16)fail('node list/depth');
     const guards=[],actions=[];let actionSeen=false;
-    for(const node of nodes){
+    for(let index=0;index<nodes.length;index++){
+      const node=nodes[index];
       if(++budget>1024)fail('node budget');const name=actionName(node);
       if(['CheckContainsBuff','CheckAbnormalFlag','CheckTargetProfession','CheckRootTileAdvBuildableMask','CheckUnitCurrentMode','Act31SideCheckInPolluteArea'].includes(name)){
         if(actionSeen)fail('predicate after effect');guards.push(predicate(node));continue;
@@ -85,6 +86,17 @@ export function compileNativeBuffProgram(entry,templateFor){
       if(name==='IfElse'){
         exact(node,{$type:type(name),_conditionNode:node._conditionNode,_succeedNodes:node._succeedNodes,_failNodes:node._failNodes},'IfElse');
         actions.push({op:'when',condition:predicate(node._conditionNode),yes:sequence(node._succeedNodes,depth+1),no:sequence(node._failNodes,depth+1)});
+      }else if(name==='AddAbilityBlackboard'){
+        // One bounded native resource transaction, not an arbitrary blackboard
+        // interpreter: the matching update must be its immediate next node.
+        exact(node,{$type:type(name),_blackboardKeys:'blacksteel_energy',_addBlackboardKey:node._addBlackboardKey,
+          _fromOwnerBlackBoard:true,_isMinus:false,_isLimitValue:false,_limitValueKey:null,_limitValue:0,
+          _abilityName:'blacksteel_energy',_abilityOwnerType:'BUFF_OWNER',_isUpdateSelector:false},'energy addition');
+        if(++budget>1024)fail('node budget');
+        exact(nodes[++index],{$type:type('TriggerSpecifiedAbility'),_ownerType:'BUFF_OWNER',_targetType:'BUFF_OWNER',
+          _abilityName:'blacksteel_energy',_checkCanUseAblityFlag:false,_triggerStealAttrAbility:false,
+          _triggerEnergyBuffAbility:true,_triggerProjectileToTileOnceAbilityBySubSelector:false},'energy update');
+        actions.push({op:'energyAdd',who:'owner',key:text(node._addBlackboardKey)});
       }else if(name==='SwitchMode'){
         if(!Number.isSafeInteger(node._modeIndex)||node._modeIndex<0||node._modeIndex>63)fail('mode index');
         exact(node,{$type:type(name),_modeIndex:node._modeIndex,_loadModeFromBlackboard:false,_restoreDefault:false,_restartFSM:false,_targetType:node._targetType},'mode switch');

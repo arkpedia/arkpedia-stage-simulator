@@ -264,3 +264,49 @@ test('named condition and derived marker services preflight before earlier comba
  assert.throws(()=>named.run('ON_BUFF_START',{battle:{...battle,environmentConditions:{test:()=>8}},unit:owner,blackboard:{loss:1}}),/named stage environment condition/);
  assert.deepEqual(effects,[]);
 });
+
+test('native energy addition and its immediate matching update compile to one bounded resource transaction',()=>{
+ const program=compile('enemy_esabr_add_energy'),p=prepareBehaviorProgram(program),u=unit(['blacksteel_energy[mark]']),calls=[];
+ p.run('ON_BUFF_START',{battle:{},unit:u,blackboard:{add_count:1},energyService:{add:(owner,amount)=>calls.push([owner,amount])}});
+ assert.deepEqual(calls,[[u,1]]);assert.deepEqual(p.requiredBlackboard,['add_count']);
+ const over=unit(['blacksteel_energy[mark]','act28side_over_energy_buff']);p.run('ON_BUFF_START',{battle:{},unit:over,blackboard:{add_count:1},energyService:{add:()=>assert.fail('overloaded recipient')}});
+ p.run('ON_BUFF_START',{battle:{},unit:unit(),blackboard:{add_count:1},energyService:{add:()=>assert.fail('unmarked recipient')}});
+});
+test('energy graph preflight validates the service and every integer operand before earlier effects',()=>{
+ const graph=structuredClone(compile('enemy_esabr_add_energy'));graph.templates[graph.entry].events.ON_BUFF_START.unshift({op:'release',who:'owner'});
+ const p=prepareBehaviorProgram(graph),u=unit(['blacksteel_energy[mark]']);let touched=false;const context={battle:{_unblock:()=>{touched=true;}},unit:u,blackboard:{add_count:1}};
+ assert.throws(()=>p.run('ON_BUFF_START',context),/energy service/);assert.equal(touched,false);
+ for(const add_count of[-1025,.5,1025,Infinity,NaN,'1']){assert.throws(()=>p.run('ON_BUFF_START',{...context,blackboard:{add_count},energyService:{add(){}}}));assert.equal(touched,false);}
+ assert.throws(()=>p.run('ON_BUFF_START',{...context,blackboard:{},energyService:{add(){}}}),/missing blackboard/);
+ p.run('ON_BUFF_DISABLE',context);assert.equal(touched,false);
+});
+test('native energy compilation refuses nonadjacent updates, other resources, ownership and subtraction policies',()=>{
+ for(const edit of[
+  a=>a.pop(),a=>a.splice(4,0,node('ReleaseFromBlocker',{_target:'BUFF_OWNER'})),a=>a[3]._abilityName='other',
+  a=>a[3]._blackboardKeys='other',a=>a[3]._isMinus=true,a=>a[3]._abilityOwnerType='BUFF_SOURCE',
+  a=>a[4]._targetType='BUFF_SOURCE',a=>a[4]._triggerEnergyBuffAbility=false,
+ ]){const ts=structuredClone(evidence.templates);edit(ts.enemy_esabr_add_energy.eventToActions.ON_BUFF_START);assert.throws(()=>compile('enemy_esabr_add_energy',ts),/energy (addition|update)/);}
+});
+test('portable energy transactions do not mutate dead, retired or replaced owner deployments',()=>{
+ const graph={schemaVersion:1,entry:'fixture',templates:{fixture:{events:{ON_BUFF_START:[{op:'release',who:'owner'},{op:'energyAdd',who:'owner',key:'add_count'}]}}}},p=prepareBehaviorProgram(graph);
+ for(const mode of['death','retire','life']){const u=unit();u.deploySeq=1;const battle={_unblock:()=>{if(mode==='death')u.alive=false;else if(mode==='retire')u.deployed=false;else u.deploySeq++;}};
+  p.run('ON_BUFF_START',{battle,unit:u,blackboard:{add_count:1},energyService:{add:()=>assert.fail('retired owner')}});
+ }
+ const invalid=structuredClone(graph);invalid.templates.fixture.events.ON_BUFF_START[1].who='source';assert.throws(()=>prepareBehaviorProgram(invalid),/energy binding/);
+});
+
+test('signed native resource operands preserve decay while shared loss operands retain their nonnegative contract',()=>{
+ const p=prepareBehaviorProgram(compile('enemy_esheld_dec_energy[trigger]')),u=unit(['blacksteel_energy[mark]']),calls=[];
+ p.run('ON_BUFF_TRIGGER',{battle:{},unit:u,blackboard:{dec_count:-1},energyService:{add:(_u,n)=>calls.push(n)}});assert.deepEqual(calls,[-1]);
+ const graph={schemaVersion:1,entry:'fixture',templates:{fixture:{events:{ON_BUFF_START:[{op:'energyAdd',who:'owner',key:'value'},{op:'loss',key:'value'}]}}}};
+ assert.throws(()=>prepareBehaviorProgram(graph).validateBlackboard({value:-1}),/number/);
+});
+test('energy reward programs remain one shared selected component across enemy variants',async()=>{
+ const objects=new Map(),program=compile('enemy_esabr_add_energy'),put=value=>{const bytes=JSON.stringify(value)+'\n',hash=createHash('sha256').update(bytes).digest('hex');objects.set(hash,bytes);return hash;};
+ const enemy=key=>({key,stats:{atk:1},runtimeFeatures:{schemaVersion:1,properties:{},entries:[{id:'talent:Boom',ability:{kind:'deathEnergyPulse',params:{delay:.5,radius:1.25,scale:4,type:'arts',parentKey:'parent',silenceable:true,program,blackboard:{add_count:1}}}}]}});
+ const stage={battle:{},geometry:{rows:2,cols:2},pathing:{paths:{}},enemies:{normal:enemy('normal'),elite:enemy('elite')}},bundle=packStage('fixture',stage,put),graph=JSON.parse(objects.get(bundle));
+ const definition=key=>JSON.parse(objects.get(graph.enemies[key].definition)),a=definition('normal').runtimeFeatures.entries[0].ability.params,b=definition('elite').runtimeFeatures.entries[0].ability.params;assert.equal(a.programComponent,b.programComponent);assert.equal(a.program,undefined);
+ const requests=[],loader=createStageLibraryLoader(async url=>{const hash=url.split('/').at(-1).slice(0,-5);requests.push(hash);return new Response(objects.get(hash));});
+ const loaded=await loader.load({id:'fixture',availability:'available',bundle});assert.equal(requests.filter(h=>h===a.programComponent).length,1);const runtime=createEnemyRuntime();await runtime.prepare(loaded.enemies);assert.deepEqual(runtime.stats().loaded,['arkpedia-enemy-death-energy']);
+ assert.equal(loaded.enemies.normal.runtimeFeatures.entries[0].ability.params.program,loaded.enemies.elite.runtimeFeatures.entries[0].ability.params.program);
+});
