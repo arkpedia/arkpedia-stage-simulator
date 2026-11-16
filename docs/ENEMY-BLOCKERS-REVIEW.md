@@ -1,0 +1,11 @@
+# Blocker drones
+
+Blocker and Blocker–P now compose one reusable native circle stat aura. They remain non-attacking flyers. The aura grants thirty flat RES within radius 2.5, excludes its source and stops under source silence. Stun does not disable the aura; recipient silence does not disable its received grant. Leaving the area, source death and leakage remove the grant. Overlapping sources keep one named effect with surviving-owner fallback.
+
+The source gate checks the empty combat mode, silenceable talent binding, original circle/transform geometry, modifier formula, removal flags, empty buff template and full advanced target options. The native category is DEFAULT | TRAP_OR_ITEM, so same-side devices are included and obstacles excluded. This follows the public EntityCategory and SelfOption enum declarations, not inferred meanings from their numeric values. Native collider-boundary/frame parity is not certified; the simulator uses its existing body-radius geometry.
+
+The flying handbook feature now leaves these two native FLY records to the engine's motion data. It no longer pulls in the legacy full enemy registry just to restate their motion. The new aura module imports shared ownership, modifier and geometry helpers and contains no enemy-ID switches.
+
+Forty-one focused actor, energy-siphon, complete-plan, selected-runtime and audit checks pass. They cover radius changes, same-key overlap, silence recovery, hidden/sleeping/isolated recipients, same-side device targeting, source death during child attachment and malformed-plan rejection. Desktop/touch browser fixtures verify RES, source exclusion, silence, range exit, death cleanup, stage restart and selected loading. Both original bodies render in both galleries and decode eight clips; pinned-bundle animation extraction checks match. The shared asset repository validates 3,825 models.
+
+Combat admission reaches 750 of 2,163 enemies, covering 815 database levels and 206 runtime kinds. The 970 existing stage graphs remain pinned for the later stages phase. Fixtures are controlled scenarios on compiled 0-1 geometry without its waves, not original-stage clears. Native particles and pixel/frame parity remain outside this review.

@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-circle-aura',load:()=>import('./arkpedia-enemy-circle-aura.js'),exports:{nativeCircleStatAura:'nativeCircleStatAura'}},
   {key:'arkpedia-enemy-energy-siphon',load:()=>import('./arkpedia-enemy-energy-siphon.js'),exports:{nativeEnergySiphon:'nativeEnergySiphon'}},
   {key:'arkpedia-enemy-energy',load:()=>import('./arkpedia-enemy-energy.js'),exports:{nativeEnergyMeter:'nativeEnergyMeter'}},
   {key:'arkpedia-enemy-programmed-projectiles',load:()=>import('./arkpedia-enemy-programmed-projectiles.js'),exports:{programmedProjectileModes:'programmedProjectileModes'}},

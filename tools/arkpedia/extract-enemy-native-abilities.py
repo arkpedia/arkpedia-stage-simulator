@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1355_mrfly': ['enemy_1355_mrfly','Default','EmptyCombat','magdef_add'],
+    'enemy_1355_mrfly_2': ['enemy_1355_mrfly_2','Default','EmptyCombat','magdef_add'],
     'enemy_1357_erob': ['enemy_1357_erob','Default','Combat','Ability0','over_energy','blacksteel_energy','steal_energy'],
     'enemy_1357_erob_2': ['enemy_1357_erob_2','Default','Combat','Ability0','over_energy','blacksteel_energy','steal_energy'],
 
@@ -458,6 +460,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1355_mrfly': {'EmptyCombat','magdef_add'},
+            'enemy_1355_mrfly_2': {'EmptyCombat','magdef_add'},
             'enemy_1357_erob': {'Combat','Ability0','over_energy','blacksteel_energy','steal_energy'},
             'enemy_1357_erob_2': {'Combat','Ability0','over_energy','blacksteel_energy','steal_energy'},
 
@@ -594,6 +598,8 @@ for bundle in sorted(wanted):
         # Geometry scopes complement MonoBehaviour sibling scopes. A family's
         # contact contract can retain its original colliders without a new branch.
         geometry_names = {
+            'enemy_1355_mrfly': {'magdef_add'},
+            'enemy_1355_mrfly_2': {'magdef_add'},
             'enemy_1359_ekulsr': {'Selector'},
             'enemy_1359_ekulsr_2': {'Selector'},
             'enemy_5021_tmagfd': {'Trigger'},

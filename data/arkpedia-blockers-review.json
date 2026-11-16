@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "scope": "Blocker drones: native circle RES aura, same-side device category and non-attacking flight; controlled fixtures, no native collider/frame parity or original-stage clear.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-blocker-features.js": "22507c8a88885b966543ae0f6bb4fcb97af5c879dce82b76b4033faadee7af3f",
+    "server/sim/content/arkpedia-enemy-circle-aura.js": "1062fb983e9ae28413ed6c5cb3ee874c82e82d00a74d8fbee68ed3634187b816",
+    "shared/arkpedia/enemy-features.js": "13b1dbe5cec04b1c21efe22479b9e0daf18282ef63edfbcd1f4e76f789e0cd1b",
+    "data/arkpedia-enemy-native-abilities.json": "757777d7ad939558bc0844971332148861f5868f976a02f6ed16ed282a89c3a4",
+    "data/arkpedia-blockers-animations.json": "7018116f6f12163f1a8b4fd798061f8d90f4caa13cb2c9f7f34dd9973e2fa609",
+    "data/arkpedia-enemy-support.json": "d794347a42830dd244a07055a674b42ac7d6bd427357eda2fccd7ee04a9f61ee",
+    "data/arkpedia-enemy-runtime-plan-report.json": "a10f184531c01bc72e2a01db83e47b95695af022c3fdcc78fefa07e1f014f20b",
+    "test/arkpedia-blockers.test.js": "94824038f378e30b5f683c931e4459505d6e02b5f18b2ceadc03b76e17e67fa7"
+  },
+  "tests": {
+    "focusedRegressions": 41
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Blocker drone radius, RES, silence and cleanup fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy",
+          "arkpedia-enemy-circle-aura"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1355_mrfly",
+          "base": 0,
+          "granted": 30,
+          "self": 40,
+          "selfBase": 40,
+          "silenced": 0,
+          "restored": 30,
+          "outside": 0,
+          "afterDeath": 0
+        },
+        {
+          "id": "enemy_1355_mrfly_2",
+          "base": 0,
+          "granted": 30,
+          "self": 50,
+          "selfBase": 50,
+          "silenced": 0,
+          "restored": 30,
+          "outside": 0,
+          "afterDeath": 0
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Blocker drone radius, RES, silence and cleanup fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-circle-aura",
+          "arkpedia-enemy-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1355_mrfly",
+          "base": 0,
+          "granted": 30,
+          "self": 40,
+          "selfBase": 40,
+          "silenced": 0,
+          "restored": 30,
+          "outside": 0,
+          "afterDeath": 0
+        },
+        {
+          "id": "enemy_1355_mrfly_2",
+          "base": 0,
+          "granted": 30,
+          "self": 50,
+          "selfBase": 50,
+          "silenced": 0,
+          "restored": 30,
+          "outside": 0,
+          "afterDeath": 0
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1355_mrfly",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 422.4351348876953,
+            "height": 147.60791778564453
+          },
+          {
+            "id": "enemy_1355_mrfly_2",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 422.4351348876953,
+            "height": 147.60791778564453
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1355_mrfly",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 422.4351348876953,
+            "height": 147.60791778564453
+          },
+          {
+            "id": "enemy_1355_mrfly_2",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 422.4351348876953,
+            "height": 147.60791778564453
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "assetCommit": "201decc82808e9e91ccda3bd6c0dfce69fafb09f",
+  "coverage": {
+    "enemies": 750,
+    "totalEnemies": 2163,
+    "databaseLevels": 815,
+    "runtimeKinds": 206,
+    "pinnedStageGraphs": 970
+  },
+  "enumEvidence": {
+    "repository": "AdoreJc/ArknightsDB",
+    "localCheckoutCommit": "95ce0f0823f233389fa97e0d7fc9d1759e58464e",
+    "paths": [
+      "source/dump/Torappu/Battle/EntityCategory.md",
+      "source/dump/SelfOption.md"
+    ],
+    "scope": "Enum declarations only: DEFAULT=1, TRAP_OR_ITEM=2, OBSTACLE=4; EXCLUDE=2. Not compiled method bodies."
+  }
+}

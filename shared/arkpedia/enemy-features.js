@@ -1,3 +1,4 @@
+import {BLOCKER_FEATURES,isBlocker,blockerNative} from './enemy-blocker-features.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {ENERGY_FEATURES} from './enemy-energy-features.js';
 import {FUNLIVE_CASTER_FEATURES} from './enemy-funlive-caster-features.js';
@@ -427,6 +428,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...BLIGHT_ARCHER_FEATURES,
   ...FUNLIVE_CASTER_FEATURES,
   ...ENERGY_FEATURES,
+  ...BLOCKER_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,
@@ -887,7 +889,7 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'one non-silenceable 3x3 Arts projectile, applying the source Cold duration; no post-cast movement bonus',
     explains: text => text === 'Can launch a warhead to deal AoE Arts damage and apply the <$ba.cold>Cold</> effect to targets' },
   // Flying text shared by several records.
-  'ability:Flying unit.': { covers: r => r.abilities.some(a => a.text === 'Flying unit.'), ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^Flying unit\.$/ },
+  'ability:Flying unit.': { covers: (r,n) => isBlocker(r)?blockerNative(r,n):r.abilities.some(a => a.text === 'Flying unit.'), ability: r=>isBlocker(r)?null:({ kind: 'hover', params: () => ({}) }), note: 'flying unit', explains: /^Flying unit\.$/ },
   // Recon drone: invisible, self-draining, and its attacks charge the artillery (charge state is inert without the device).
   'ability:<$ba.invisible>Invisible</>, gradually loses HP over time': {
     covers: r => r.abilities.some(a => a.text === '<$ba.invisible>Invisible</>, gradually loses HP over time'),
