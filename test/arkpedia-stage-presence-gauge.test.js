@@ -47,3 +47,12 @@ test('signed deltas retain strict positive-event validation and reject overflow 
  for(const params of[{key:'',buffKey:'x'},{key:'x',buffKey:''},{key:'x',buffKey:'x',value:-1}])
   assert.throws(()=>stagePresenceGauge(params),/Invalid stage presence gauge/);
 });
+test('owned presence effects roll back when recording would overflow, and invalid modifiers fail before attachment',()=>{
+ const f=fixture(),owner=f.spawn();recordStageDelta(f.b,owner,'alive_cnt',Number.MAX_SAFE_INTEGER-1);
+ const before=readStageOutcomes(f.b),params={key:'alive_cnt',buffKey:'overflow:presence',flags:{noDisplace:true},mods:{taunt:5}};
+ assert.throws(()=>stagePresenceGauge(params).spawn(f.b,owner,{}),/overflow/);
+ assert.equal(owner.findBuff(params.buffKey),null);assert.ok(!owner.s.flags.noDisplace);assert.equal(owner.s.taunt,0);
+ assert.deepEqual(readStageOutcomes(f.b),before);
+ for(const invalid of[{...params,flags:{typo:true}},{...params,mods:{typo:1}},{...params,mods:{taunt:NaN}}])
+  assert.throws(()=>stagePresenceGauge(invalid),/Invalid stage presence gauge/);
+});

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "41d386fbd2da930416866e43e0a80f148216c28f25743d4aae2f59434541f838",
-    "data/arkpedia-enemy-support.json": "55563c9d31406621347efccfa0a2f3cc30f494cf8e8a59f972499f5a9a27a764",
+    "data/arkpedia-enemy-native-abilities.json": "b8573f6bfb6267ad96ebc780da5d606389628b433e3e42950290b75b7fb31bff",
+    "data/arkpedia-enemy-support.json": "655ed98bd61f576be252971cb3455d1f4410f7f62f3444172b17cfd9f926ec86",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "abd32bcf14335e8b2be3b7ada3cf39e2d454cd9aa1b2b9308a9c663a0081dcf3",
     "shared/arkpedia/behavior-program.js": "5f60d38fe927e70645d204a6c4c0b489bb6494357eba562d4b83d24190bbd5b7"
@@ -1971,9 +1971,7 @@
       "consumers": [
         "enemy_2047_smtree"
       ],
-      "unsupportedConsumers": [
-        "enemy_2047_smtree"
-      ],
+      "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: action LogExtraBattleInfo"
     },
@@ -3292,18 +3290,6 @@
       ]
     },
     {
-      "reason": "Unsupported native behaviour: action LogExtraBattleInfo",
-      "templates": [
-        "enemy_smtree_log"
-      ],
-      "consumers": [
-        "enemy_2047_smtree"
-      ],
-      "unsupportedConsumers": [
-        "enemy_2047_smtree"
-      ]
-    },
-    {
       "reason": "Unsupported native behaviour: event ON_APPLYING_MODIFIER",
       "templates": [
         "enemy_hlslp[heal_add_sp]"
@@ -3820,6 +3806,16 @@
       ],
       "consumers": [
         "enemy_2088_skzdwz"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action LogExtraBattleInfo",
+      "templates": [
+        "enemy_smtree_log"
+      ],
+      "consumers": [
+        "enemy_2047_smtree"
       ],
       "unsupportedConsumers": []
     },

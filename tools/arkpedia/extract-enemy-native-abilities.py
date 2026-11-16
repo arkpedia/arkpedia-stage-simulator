@@ -34,6 +34,7 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_2047_smtree': ['enemy_2047_smtree','Default','Attack','Passive'],
     'enemy_1135_redman': ['enemy_1135_redman','Default','Combat','Attack','Trigger','Invi'],
     'enemy_1135_redman_2': ['enemy_1135_redman_2','Default','Combat','Attack','Trigger','Invi'],
     'enemy_10053_cjman': ['enemy_10053_cjman','Default','Combat','Attack','Selector'],
@@ -439,6 +440,7 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_2047_smtree': {'Attack','Passive'},
             'enemy_1135_redman': {'Combat','Attack','Trigger','Invi'},
             'enemy_1135_redman_2': {'Combat','Attack','Trigger','Invi'},
             'enemy_10053_cjman': {'Combat','Attack','Selector'},

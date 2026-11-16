@@ -82,6 +82,7 @@ export async function buildEnemySupport() {
       fattyAnimations: { path: 'data/arkpedia-fatty-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-fatty-animations.json', root))) },
       bladeAnimations: { path: 'data/arkpedia-blade-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-blade-animations.json', root))) },
       knightAnimations: { path: 'data/arkpedia-knight-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-knight-animations.json', root))) },
+      silvernwhiteFeatures: { path: 'shared/arkpedia/enemy-silvernwhite-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-silvernwhite-features.js', root))) },
       ordinaryBodyContract: { path: 'shared/arkpedia/enemy-ordinary-body-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-ordinary-body-contract.js', root))) },
       redmarkFeatures: { path: 'shared/arkpedia/enemy-redmark-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-redmark-features.js', root))) },
       markedTargetContract: { path: 'shared/arkpedia/enemy-marked-target-contract.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-marked-target-contract.js', root))) },

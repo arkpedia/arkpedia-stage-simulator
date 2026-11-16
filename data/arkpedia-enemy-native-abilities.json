@@ -51,6 +51,12 @@
   "Boomb"
  ],
  "scopedObjects": {
+  "enemy_2047_smtree": [
+   "enemy_2047_smtree",
+   "Default",
+   "Attack",
+   "Passive"
+  ],
   "enemy_1135_redman": [
    "enemy_1135_redman",
    "Default",
@@ -23825,9 +23831,38 @@
   ],
   "dyn/battle/prefabs/enemies/enemy_2047_smtree.prefab": [
    {
+    "pathId": "-7222536181469710076",
+    "objectName": "enemy_2047_smtree",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"-713728933910644476\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"-860782701155747580\"}],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":1.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"3133908729772931332\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"-774784813745145596\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"9187375844020812036\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}"
+   },
+   {
+    "pathId": "-2622723323383154428",
+    "objectName": "Attack",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2061021579019778308\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8178746901033412656\"}}"
+   },
+   {
     "pathId": "-860782701155747580",
     "objectName": "Passive",
     "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[22,8],\"abnormalImmunes\":[],\"attributeModifiers\":[{\"attributeType\":20,\"fetchBaseValueFromSourceEntity\":0,\"formulaItem\":0,\"loadFromBlackboard\":0,\"value\":1.0}]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_smtree_passive\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_smtree_log\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"Passive\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5118922075948025596\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "-774784813745145596",
+    "objectName": "Default",
+    "originalJson": "{\"_addIndexToSignalId\":0,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-2622723323383154428\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"1084327962330495236\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-7866221682522031868\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":0,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8020908253210179844\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}"
+   },
+   {
+    "pathId": "-713728933910644476",
+    "objectName": "Graphic",
+    "referenced": true,
+    "sha256": "6f4f84a10154f02e120dce6195cd16a3042389005feb898e3e94ef73752a006e",
+    "originalJson": "{\"_animation\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_animations\":[],\"_checkMissing\":1,\"_constRenders\":[],\"_enableEmissionColor\":0,\"_enableRotate\":0,\"_enableShowDamageFlash\":1,\"_enableThemeTintColor\":0,\"_fixedTweenEndColor\":0,\"_graphicFootTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"-5161097491587303164\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"-506982692763830012\"},\"_hitTransformStable\":0,\"_justRotateHandler\":0,\"_meshTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_rotateMeshOnly\":0,\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useGraphicFootAsFootTransform\":0,\"_useMaterialTintColorAsDefaultColor\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5907983582646728964\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6490301617952843582\"}}"
+   },
+   {
+    "pathId": "1084327962330495236",
+    "objectName": "Attack",
+    "referenced": true,
+    "sha256": "ce4df227194d38497ebb1455fe151984c8dfc32f52d2e2a2d44cabe8fcd5271d",
+    "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2061021579019778308\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"248012603862317511\"}}"
    }
   ],
   "dyn/battle/prefabs/enemies/enemy_2052_smgia.prefab": [

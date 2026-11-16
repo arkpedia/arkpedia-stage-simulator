@@ -11,6 +11,7 @@ Enemy behavior is compiled from source-checked feature data. A stage loads enemy
 - `environmentStatBonus`: an enemy-owned modifier enabled by a stage-provided condition bit.
 - `contactBuffProgram`: source-owned contact bindings that execute a portable native buff program.
 - `stageOutcomeCounter`: native killed/exit result receipts, independent of progression or rewards.
+- `stagePresenceGauge`: a live native passive owns its signed presence count and optional body flags/modifiers together.
 
 The marked attack components share their selector setup, captured-target cast clock and ordinary damage/projectile paths. Global range is a runtime selector flag; no nonfinite number enters portable enemy statistics or component JSON.
 

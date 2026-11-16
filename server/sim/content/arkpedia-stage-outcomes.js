@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {ADD_KEYS,MUL_KEYS} from '../buffs.js';
+const presenceMods=new Set([...ADD_KEYS,...MUL_KEYS]);
 /** Native battle-result counters. A stage reports these to its caller; it does
  * not invent a run wallet, rewards, or progression from a counter's name. */
 export function recordStageOutcome(battle, enemy, key, value = 1) {
@@ -22,9 +24,8 @@ export function recordStageDelta(battle, enemy, key, value) {
 /** One contribution per attached passive, released on passive removal or any
  * owner removal. Enemy death does not run buff onRemove in the shared engine,
  * so both paths deliberately share the same idempotent release operation. */
-export function stagePresenceGauge({key, buffKey, value = 1}) {
-  if (typeof key !== 'string' || !key || typeof buffKey !== 'string' || !buffKey
-    || !Number.isSafeInteger(value) || value <= 0) throw Error('Invalid stage presence gauge');
+export function stagePresenceGauge(params) {
+  validatePresence(params);const {key,buffKey,value=1,flags={},mods={}}=params;
   const release = (battle, enemy, state) => {
     if (!state.contributing) return;
     recordStageDelta(battle, enemy, key, -value);
@@ -33,14 +34,23 @@ export function stagePresenceGauge({key, buffKey, value = 1}) {
   return {
     spawn(battle, enemy, state) {
       if (state.contributing) return;
-      recordStageDelta(battle, enemy, key, value);
-      state.contributing = true;
-      state.buff = battle.addBuff(enemy, {key:buffKey, source:enemy,
-        onRemove:() => release(battle, enemy, state)});
+      state.ended=false;
+      state.buff=battle.addBuff(enemy,{key:buffKey,source:enemy,flags,mods,onRemove:()=>{state.ended=true;release(battle,enemy,state);}});
+      if(!state.buff||state.ended||!enemy.alive||!enemy.deployed||!enemy.buffs.includes(state.buff))return;
+      try{recordStageDelta(battle,enemy,key,value);state.contributing=true;}
+      catch(error){battle.removeBuff(enemy,state.buff);state.buff=null;throw error;}
     },
     death(_context, battle, enemy, state) { release(battle, enemy, state); },
   };
 }
+function validatePresence({key,buffKey,value=1,flags={},mods={}}){
+  if(typeof key!=='string'||!key||typeof buffKey!=='string'||!buffKey||!Number.isSafeInteger(value)||value<=0
+    ||!flags||typeof flags!=='object'||Array.isArray(flags)||Object.entries(flags).some(([k,v])=>!['noMove','noDisplace'].includes(k)||typeof v!=='boolean')
+    ||!mods||typeof mods!=='object'||Array.isArray(mods)||Object.entries(mods).some(([k,v])=>!presenceMods.has(k)||!Number.isFinite(v)))
+    throw Error('Invalid stage presence gauge');
+}
+stagePresenceGauge.validate=validatePresence;
+
 export function readStageOutcomes(battle) {
   return { ...(battle.stageReeds ? { tileStates: battle.stageReeds.resultTiles() } : {}), counters: { ...battle.stageOutcomes?.counters }, events: (battle.stageOutcomes?.events ?? []).map(e => ({ ...e })) };
 }
