@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "e76b7f100a5b5f7ef946f2216fddc47785d60a5190fea02a361cc50cfb0a2fa8",
-    "data/arkpedia-enemy-support.json": "c7d2095fc55e45ac0531491f65a6f2d004e91fec10edd32db694c3eda6c7bf9d",
+    "data/arkpedia-enemy-native-abilities.json": "0bb6c335deadd7325cbae52b6b32b25d2bb73691df8f29aa3c7a507f1351cd21",
+    "data/arkpedia-enemy-support.json": "37cfe006e7edbe5f0d5c02b00afa14e939859a388db5b5812b429a516aa9902d",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "31cbcb3d4800bcbfb15fb09798fa2fc5d6ce367c913809f0299e40cf644e8a7b",
+    "shared/arkpedia/behavior-native-compiler.js": "718ae4f625a406cd8bbee2fd9014f2b4d38f5415c0cda900bc48238e299dd501",
     "shared/arkpedia/behavior-program.js": "8f1545ded28d8900adc3099d63d4a50e56c42cc5eab78d8a0a21dd392e44c9ea",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 403,
-  "templates": 247,
-  "compiled": 21,
-  "refused": 226,
+  "retainedPrefabs": 404,
+  "templates": 250,
+  "compiled": 22,
+  "refused": 228,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -438,6 +438,7 @@
         "enemy_1282_sgelder_2",
         "enemy_1283_sgkill",
         "enemy_1283_sgkill_2",
+        "enemy_1284_sgprst",
         "enemy_1286_dumcy",
         "enemy_1286_dumcy_2",
         "enemy_1287_ducrb",
@@ -755,7 +756,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action CreateEffect"
+      "reason": "Unsupported native behaviour: empty effect"
     },
     {
       "key": "enemy_bomscr_boom_damage",
@@ -833,7 +834,8 @@
       "key": "enemy_common_check_vg",
       "consumers": [
         "enemy_1278_sgbow",
-        "enemy_1278_sgbow_2"
+        "enemy_1278_sgbow_2",
+        "enemy_1284_sgprst"
       ],
       "unsupportedConsumers": [],
       "compiled": true,
@@ -1520,7 +1522,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action CreateEffect"
+      "reason": "Unsupported native behaviour: empty effect"
     },
     {
       "key": "enemy_ltmob_t",
@@ -2011,7 +2013,7 @@
         "enemy_7011_paki"
       ],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action CreateEffect"
+      "reason": "Unsupported native behaviour: empty effect"
     },
     {
       "key": "enemy_rescar_skill[summon]",
@@ -2165,6 +2167,24 @@
       "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_sgprst_sp_attack_check",
+      "consumers": [
+        "enemy_1284_sgprst"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckHasSp"
+    },
+    {
+      "key": "enemy_sgprst_vg_add",
+      "consumers": [
+        "enemy_1284_sgprst"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffUseAbilitySelector"
     },
     {
       "key": "enemy_skztxs_face_to",
@@ -2587,7 +2607,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action CreateEffect"
+      "reason": "Unsupported native behaviour: empty effect"
     },
     {
       "key": "jakill_trigger_ability",
@@ -2645,6 +2665,7 @@
         "enemy_1281_sgcar_2",
         "enemy_1283_sgkill",
         "enemy_1283_sgkill_2",
+        "enemy_1284_sgprst",
         "enemy_1433_dsbasi",
         "enemy_1433_dsbasi_2",
         "enemy_1434_dsshel",
@@ -2720,6 +2741,20 @@
       "compiled": true,
       "programSha256": "6b84616d33056d5d823c68ce452f04e6736ae042831581919e49776af6b3e49a",
       "bytes": 152,
+      "templateCount": 1,
+      "requiredBlackboard": [
+        "sp"
+      ]
+    },
+    {
+      "key": "modify_sp[trigger_with_no_ui]",
+      "consumers": [
+        "enemy_1284_sgprst"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "9b738eda556967ff106eefebf1870ab3aaf864892e4862b854c5e808a5ee201c",
+      "bytes": 180,
       "templateCount": 1,
       "requiredBlackboard": [
         "sp"
@@ -3185,6 +3220,7 @@
         "enemy_1282_sgelder_2",
         "enemy_1283_sgkill",
         "enemy_1283_sgkill_2",
+        "enemy_1284_sgprst",
         "enemy_1290_duflm",
         "enemy_1290_duflm_2",
         "enemy_1294_duchns",
@@ -3444,7 +3480,26 @@
       ]
     },
     {
-      "reason": "Unsupported native behaviour: action CreateEffect",
+      "reason": "Unsupported native behaviour: action CreateBuffUseAbilitySelector",
+      "templates": [
+        "enemy_lrchld[finishFx]",
+        "enemy_ncrmcr_sacrifice[trigger]",
+        "enemy_sgmag_s_modify_vg",
+        "enemy_sgprst_vg_add"
+      ],
+      "consumers": [
+        "enemy_1280_sgmag",
+        "enemy_1280_sgmag_2",
+        "enemy_1284_sgprst",
+        "enemy_1421_lrchld",
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: empty effect",
       "templates": [
         "enemy_bomscr_boom_and_killself",
         "enemy_ltmage_t",
@@ -3481,23 +3536,6 @@
         "enemy_1271_nhkodo",
         "enemy_1271_nhkodo_2",
         "enemy_1516_jakill",
-        "enemy_1536_ncrmcr"
-      ],
-      "unsupportedConsumers": [
-        "enemy_1536_ncrmcr"
-      ]
-    },
-    {
-      "reason": "Unsupported native behaviour: action CreateBuffUseAbilitySelector",
-      "templates": [
-        "enemy_lrchld[finishFx]",
-        "enemy_ncrmcr_sacrifice[trigger]",
-        "enemy_sgmag_s_modify_vg"
-      ],
-      "consumers": [
-        "enemy_1280_sgmag",
-        "enemy_1280_sgmag_2",
-        "enemy_1421_lrchld",
         "enemy_1536_ncrmcr"
       ],
       "unsupportedConsumers": [
@@ -4043,6 +4081,16 @@
       "consumers": [
         "enemy_1072_dlancer",
         "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CheckHasSp",
+      "templates": [
+        "enemy_sgprst_sp_attack_check"
+      ],
+      "consumers": [
+        "enemy_1284_sgprst"
       ],
       "unsupportedConsumers": []
     },

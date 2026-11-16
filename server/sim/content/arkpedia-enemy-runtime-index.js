@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-sp-link',load:()=>import('./arkpedia-enemy-sp-link.js'),exports:{selectedSpLink:'selectedSpLink'}},
   {key:'arkpedia-enemy-blocked-death',load:()=>import('./arkpedia-enemy-blocked-death.js'),exports:{blockedDeathSummons:'blockedDeathSummons'}},
   {key:'arkpedia-enemy-sp-channel',load:()=>import('./arkpedia-enemy-sp-channel.js'),exports:{channelledSpEmitter:'channelledSpEmitter'}},
   {key:'arkpedia-enemy-death-aura',load:()=>import('./arkpedia-enemy-death-aura.js'),exports:{selectedAuraDeathSp:'selectedAuraDeathSp'}},

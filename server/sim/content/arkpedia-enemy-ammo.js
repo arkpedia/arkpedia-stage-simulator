@@ -14,6 +14,29 @@ export function enemyAmmo(max, initial) {
     } };
 }
 
+/** A native attack buff that spends the source's own ammunition on arrival:
+ * each paid hit adds one permanent flat-stat stack to the target. The source
+ * must still be the same live deployment; an empty magazine leaves the hit an
+ * ordinary one. Accounts are bound per deployment by `bind`. */
+export function ammoHitBuff({ cost, buffKey, mods }) {
+  validateAmmoHit({ cost, buffKey, mods });
+  const accounts = new WeakMap();
+  return {
+    bind(e, account) { accounts.set(e, { account, life: e.deploySeq }); },
+    impact(b, e, target) {
+      const entry = accounts.get(e);
+      if (!entry || !e.alive || !e.deployed || e.deploySeq !== entry.life || entry.account.current < cost) return;
+      b.addBuff(target, { key: buffKey, source: e, refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { ...mods }, visible: true });
+      entry.account.modify(-cost);
+    },
+  };
+}
+export function validateAmmoHit({ cost, buffKey, mods }) {
+  if (!Number.isSafeInteger(cost) || cost < 1 || cost > 1024 || typeof buffKey !== 'string' || !buffKey || buffKey.length > 256
+    || !mods || typeof mods !== 'object' || Array.isArray(mods) || Object.keys(mods).join() !== 'defFlat'
+    || !Number.isFinite(mods.defFlat) || Math.abs(mods.defFlat) > 1e6) throw Error('Invalid ammunition hit buff');
+}
+
 export function ammoAttack({ max, initial, type, lifetime, meleeWhenEmpty, damageScale, elementRatio,
   rangedOnlyWithAmmo = false, area = null, bonus = null, disarmDuration = 0 }) {
   const normal = projectileSingleAttack({ speed: 10, lifetime, type, noAir: true, meleeWhenBlocked: meleeWhenEmpty });

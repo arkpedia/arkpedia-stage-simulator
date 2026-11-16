@@ -112,10 +112,17 @@ export function compileNativeBuffProgram(entry,templateFor){
         if(stats)actions.push(stats);
         else actions.push({op:'when',condition:predicate(node._conditionNode),yes:sequence(node._succeedNodes,depth+1),no:sequence(node._failNodes,depth+1)});
       }else if(name==='ModifySp'){
+        // The SP popup flag is presentation only; both variants add the same
+        // nonnegative blackboard amount to the bound target.
+        if(typeof node._dontShowSpUI!=='boolean')fail('SP popup flag');
         exact(node,{$type:type(name),_targetType:'TARGET',_modifyByRatio:false,_modifyRatio:0,
-          _modifyByRatioBasedOnCurSP:false,_dontCheckSpType:false,_spMask:'ALL',_forceFlag:false,_dontShowSpUI:false,
+          _modifyByRatioBasedOnCurSP:false,_dontCheckSpType:false,_spMask:'ALL',_forceFlag:false,_dontShowSpUI:node._dontShowSpUI,
           _modifyValue:0,_spString:node._spString,_isMinis:false},'SP addition');
         actions.push({op:'spAdd',who:'target',key:text(node._spString)});
+      }else if(name==='CreateEffect'){
+        // Only the native empty-key placeholder: it creates no effect object.
+        exact(node,{$type:type(name),_targetType:'TARGET',_sourceType:'SOURCE',_effectKey:'',_useSourceFaceVactor:false,
+          _useSourceToTargetDirection:false,_useAttackPlaybackSpeed:false},'empty effect');
       }else if(name==='AddAbilityBlackboard'){
         // One bounded native resource transaction, not an arbitrary blackboard
         // interpreter: the matching update must be its immediate next node.

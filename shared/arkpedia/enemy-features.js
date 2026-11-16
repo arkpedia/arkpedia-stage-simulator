@@ -1,3 +1,4 @@
+import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
@@ -406,6 +407,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1284_sgprst:'native:fatherAgenirLog',
   enemy_1281_sgcar:'native:famigliaLimoMelee',enemy_1281_sgcar_2:'native:famigliaLimoMelee',
   enemy_1280_sgmag:'native:famigliaCasterLog',enemy_1280_sgmag_2:'native:famigliaCasterLog',
   enemy_1282_sgelder:'native:famigliaCapoMelee',enemy_1282_sgelder_2:'native:famigliaCapoMelee',
@@ -446,6 +448,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...RADIOACTIVE_FEATURES,
   ...FAMIGLIA_BASIC_FEATURES,
   ...FAMIGLIA_LIMO_FEATURES,
+  ...FATHER_AGENIR_FEATURES,
   ...FAMIGLIA_CASTER_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
@@ -776,13 +779,13 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },
     note: 'leaves the reviewed child on death', dependsOn: r => [r.talents.bbStr['Summon.enemy_key']].filter(Boolean),
     explains: /^Leaves behind <Blood Amber> when defeated\.$/ },
-  'talent:Passive': { matchesRecord: r => isFamigliaSilencer(r)||isAssaultPowerArmor(r)
+  'talent:Passive': { matchesRecord: r => isFatherAgenir(r)||isFamigliaSilencer(r)||isAssaultPowerArmor(r)
       || sig(r, 'Passive', ['damage_resistance', 'hp_ratio']) || sig(r, 'Passive', ['magic_max_count', 'phy_max_count']),
-    covers: (r, n) => famigliaSilencerNative(r,n)||assaultPowerArmorNative(r, n) || (sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
+    covers: (r, n) => fatherAgenirNative(r,n)||famigliaSilencerNative(r,n)||assaultPowerArmorNative(r, n) || (sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
       && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'))
       || (sig(r, 'Passive', ['magic_max_count', 'phy_max_count'])
         && r.abilities.some(a => a.text === 'Does not initially attack; transforms into different forms when certain conditions are met')),
-    ability: r => isFamigliaSilencer(r)?null:isAssaultPowerArmor(r) ? ASSAULT_POWER_ARMOR_ABILITY : { kind: 'decodeBasis', params: r => sig(r, 'Passive', ['magic_max_count', 'phy_max_count']) ? {
+    ability: r => isFatherAgenir(r)||isFamigliaSilencer(r)?null:isAssaultPowerArmor(r) ? ASSAULT_POWER_ARMOR_ABILITY : { kind: 'decodeBasis', params: r => sig(r, 'Passive', ['magic_max_count', 'phy_max_count']) ? {
       fuchou: { hp: r.talents.bb['Mode_Fuchou_Passive.max_hp'], atk: r.talents.bb['Mode_Fuchou_Passive.atk'], def: r.talents.bb['Mode_Fuchou_Passive.def'],
         res: r.talents.bb['Mode_Fuchou_Passive.magic_resistance'], move: r.talents.bb['Mode_Fuchou_Passive.move_speed'], bat: r.talents.bb['Mode_Fuchou_Passive.base_attack_time'] },
       youling: { hp: r.talents.bb['Mode_Youling_Passive.max_hp'], atk: r.talents.bb['Mode_Youling_Passive.atk'], def: r.talents.bb['Mode_Youling_Passive.def'],
@@ -790,7 +793,7 @@ export const ENEMY_FEATURES = Object.freeze({
       shushi: { hp: r.talents.bb['Mode_Shushi_Passive.max_hp'], atk: r.talents.bb['Mode_Shushi_Passive.atk'], def: r.talents.bb['Mode_Shushi_Passive.def'],
         res: r.talents.bb['Mode_Shushi_Passive.magic_resistance'], move: r.talents.bb['Mode_Shushi_Passive.move_speed'], bat: r.talents.bb['Mode_Shushi_Passive.base_attack_time'] },
     } : {} },
-    note: 'Reviewed conditional stat polling, Assault Power Armor modes, inert Blood Amber, or Decode Basis modes', nativeClaim: (_p,n) => n.enemy_1283_sgkill||n.enemy_1283_sgkill_2?{}:({ active: 1 }),
+    note: 'Reviewed conditional stat polling, Assault Power Armor modes, inert Blood Amber, or Decode Basis modes', nativeClaim: (_p,n) => n.enemy_1284_sgprst||n.enemy_1283_sgkill||n.enemy_1283_sgkill_2?{}:({ active: 1 }),
     explains: (text, r) => isAssaultPowerArmor(r) && text === 'Attacks 4 enemies simultaneously'
       || /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/.test(text)
       || text === 'Does not initially attack; transforms into different forms when certain conditions are met'
