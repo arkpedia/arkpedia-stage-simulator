@@ -75,6 +75,8 @@ jobs:
           git init -q ../arkpedia-data
           # Keep the data files byte-identical to the commit on Windows runners too.
           git -C ../arkpedia-data config core.autocrlf false
+          # The data repository's wiki cache has file names Windows cannot create (':'); the simulator never reads it.
+          git -C ../arkpedia-data sparse-checkout set --no-cone '/*' '!/source/data/wiki-cache/'
           git -C ../arkpedia-data fetch -q --depth 1 https://github.com/arkpedia/arkpedia-data.git "$commit"
           git -C ../arkpedia-data -c advice.detachedHead=false checkout -q FETCH_HEAD
           test "$(git -C ../arkpedia-data rev-parse HEAD)" = "$commit"
