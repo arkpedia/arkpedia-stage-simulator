@@ -1,3 +1,4 @@
+import {FAMIGLIA_BASIC_FEATURES,isFamigliaBasic,famigliaBasicNative} from './enemy-famiglia-basic-features.js';
 import {RADIOACTIVE_FEATURES,isRadioactiveSlug,radioactiveNative} from './enemy-radioactive-features.js';
 import {BLOCKER_FEATURES,isBlocker,blockerNative} from './enemy-blocker-features.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -400,6 +401,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1277_sgman:'native:famigliaBasicMelee',enemy_1277_sgman_2:'native:famigliaBasicMelee',enemy_1279_sgbdg:'native:famigliaBasicMelee',enemy_1279_sgbdg_2:'native:famigliaBasicMelee',
   enemy_1352_eslime:'native:radioactiveMelee',enemy_1352_eslime_2:'native:radioactiveMelee',
   enemy_1357_erob:['native:energyMeleeAttack'],enemy_1357_erob_2:['native:energyMeleeAttack'],
   enemy_1359_ekulsr:['native:energyGrenadeAttack'],enemy_1359_ekulsr_2:['native:energyGrenadeAttack'],
@@ -432,6 +434,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...ENERGY_FEATURES,
   ...BLOCKER_FEATURES,
   ...RADIOACTIVE_FEATURES,
+  ...FAMIGLIA_BASIC_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,
@@ -584,10 +587,10 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'block weight 3; the first blocker takes ATK × Crash.atk_scale', explains: /^Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding/,
   },
   'talent:Crash': { covers: r => sig(r, 'Crash', ['atk_scale']), note: 'collision damage is attached by the handbook-line feature' },
-  'talent:DeathRattle': { covers: r => sig(r, 'DeathRattle', ['enemy_key']) && /^enemy_[a-z0-9_]+$/.test(r.talents.bbStr['DeathRattle.enemy_key']??''),
-    ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeathRattle.enemy_key'], cnt: 1 }) },
+  'talent:DeathRattle': { covers: (r,n) => isFamigliaBasic(r)?famigliaBasicNative(r,n):sig(r, 'DeathRattle', ['enemy_key']) && /^enemy_[a-z0-9_]+$/.test(r.talents.bbStr['DeathRattle.enemy_key']??''),
+    ability: r=>isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].ability:({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeathRattle.enemy_key'], cnt: 1 }) }),
     dependsOn: r => [r.talents.bbStr['DeathRattle.enemy_key']].filter(Boolean),
-    note: 'spawns the named crew enemy on death', explains: /will continue battle after the vehicle is destroyed$/ },
+    nativeClaim:FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].nativeClaim,note: 'source-gated death SP or named crew spawn', explains:(value,r)=>isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].explains(value,r):/will continue battle after the vehicle is destroyed$/.test(value) },
   'talent:Drown': { covers: r => sig(r, 'Drown', ['damage']) && r.abilities.some(a => /^Quickly loses HP while under the effects of 'Erosion'$/.test(a.text)),
     ability: { kind: 'drown', params: r => ({ damage: r.talents.bb['Drown.damage'] }) },
     note: 'takes Drown.damage True damage per second while Erosion is active', explains: /^Quickly loses HP while under the effects of 'Erosion'$/ },

@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "scope": "Famiglia Soldier and Intimidator native melee, selected death SP, taunt and killed-result attachments; controlled tagged receiver, not original Blood Debt controller/stage clears.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-famiglia-basic-features.js": "2ab7e40f686964b595dcde9be468168437dba55d9f892c2db20ae913eb3db6af",
+    "shared/arkpedia/enemy-features.js": "1ea68b268b7315a40360914246aa2f6f8fafb0cc7665876d8bf50d69d06ce013",
+    "shared/arkpedia/behavior-native-compiler.js": "5de8511fd58f4bde47e8e56a662e1f4145a2c08a2d8489e26629fd729d884025",
+    "shared/arkpedia/behavior-program.js": "f81286dc6c00587c9d7311088461faea63bd0563e1a216c6a5afadbb0a1dfd75",
+    "server/sim/content/arkpedia-device-sp.js": "d213d058807a7488ffaf6697353dd5ff7c8d5b66156dbab65db18e13d04d9c29",
+    "server/sim/content/arkpedia-enemy-death-sp.js": "95c7560b5e99e532edc0005d8a6d96cea6bd2bc090520a955b1755ad9f1f115f",
+    "server/sim/content/arkpedia-enemy-charged-loss.js": "78e27c5048b6c2b755ece84658046dd3eafb634693ba8cb52cec714aad5f5dc4",
+    "server/sim/content/arkpedia-enemy-contact-program.js": "079c6b7bb5632e795b937cfc48eaef1861381a1f4ce63f6db15cccc8367f283b",
+    "server/sim/content/arkpedia-enemy-blocker-pairs.js": "fdc9cfa328410a97663c18190c26c805f3ded73875b630b97ee31c99c90d17b1",
+    "server/sim/content/arkpedia-enemy-programmed-projectiles.js": "43ddcab75faf808f4bf0be7492e4d2545e65e6e2152a03ce7a02dc4d925b4d9c",
+    "server/sim/content/arkpedia-enemy-death-energy.js": "a4fd07b510d03af9b0c33dbd65a6074b011fd0bea647ddc8c2b009bdcbf1f364",
+    "server/sim/content/arkpedia-enemy-energy-emitter.js": "7474b687c2f76435a2e06e06bd6f06439ed5294d5d0c3309f0071aebe47d47b8",
+    "data/arkpedia-famiglia-basics-animations.json": "1566c50c15e3b31c0eea77ed4788ea9a6178dc7b2cfe7ff2f8ab7d06aad11c71",
+    "data/arkpedia-enemy-native-abilities.json": "eb8bfdbb92ec97c8502dbd222f61f4e05afe1dadcf12c77125d91d9c03a517c8",
+    "data/arkpedia-enemy-support.json": "50cb8b2b79a7e27b7e7870ddb2fd4f7b51855c7c1a5b23f0091dffbdcc2cc87d",
+    "data/arkpedia-enemy-runtime-plan-report.json": "22ab199a7c167e11397b2d3a3c2223916f5977eb0795fde99b93419cd73a3375",
+    "test/arkpedia-device-sp.test.js": "530e9d8957d1b85421f5590252bc511b94276a1e495869d9d40a34be465e0d16",
+    "test/arkpedia-famiglia-basics.test.js": "41482db34e8637636653e41a6ef29b7e0a8081b09a796f588d167824eb795194",
+    "test/arkpedia-native-buff-program.test.js": "50055fedac71ce0c15210ffe1bd0ca80feb3a060239b46eb40ccf84a617c0690"
+  },
+  "tests": {
+    "focusedRegressions": 157,
+    "broad": {
+      "tests": 1806,
+      "passed": 1801,
+      "skipped": 3,
+      "knownChimeraFailures": 2
+    }
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Famiglia melee/death gifts to an explicit tagged SP receiver; no native Blood Debt regeneration, activation, aura or branch-controller fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-death-sp"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1277_sgman",
+          "before": 0,
+          "sp": 20,
+          "expected": 20,
+          "logged": 1,
+          "taunt": 0,
+          "baseTaunt": 0,
+          "amount": 320,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 320,
+              "time": 0.5666666666666667
+            }
+          ]
+        },
+        {
+          "id": "enemy_1277_sgman_2",
+          "before": 0,
+          "sp": 35,
+          "expected": 35,
+          "logged": 1,
+          "taunt": 0,
+          "baseTaunt": 0,
+          "amount": 375,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 375,
+              "time": 2.1666666666666665
+            }
+          ]
+        },
+        {
+          "id": "enemy_1279_sgbdg",
+          "before": 0,
+          "sp": 80,
+          "expected": 80,
+          "logged": 0,
+          "taunt": 2,
+          "baseTaunt": 1,
+          "amount": 500,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 500,
+              "time": 3.6333333333333333
+            }
+          ]
+        },
+        {
+          "id": "enemy_1279_sgbdg_2",
+          "before": 0,
+          "sp": 80,
+          "expected": 80,
+          "logged": 0,
+          "taunt": 2,
+          "baseTaunt": 1,
+          "amount": 600,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 600,
+              "time": 5.233333333333333
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Famiglia melee/death gifts to an explicit tagged SP receiver; no native Blood Debt regeneration, activation, aura or branch-controller fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-death-sp"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1277_sgman",
+          "before": 0,
+          "sp": 20,
+          "expected": 20,
+          "logged": 1,
+          "taunt": 0,
+          "baseTaunt": 0,
+          "amount": 320,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 320,
+              "time": 0.5666666666666667
+            }
+          ]
+        },
+        {
+          "id": "enemy_1277_sgman_2",
+          "before": 0,
+          "sp": 35,
+          "expected": 35,
+          "logged": 1,
+          "taunt": 0,
+          "baseTaunt": 0,
+          "amount": 375,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 375,
+              "time": 2.1666666666666665
+            }
+          ]
+        },
+        {
+          "id": "enemy_1279_sgbdg",
+          "before": 0,
+          "sp": 80,
+          "expected": 80,
+          "logged": 0,
+          "taunt": 2,
+          "baseTaunt": 1,
+          "amount": 500,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 500,
+              "time": 3.6333333333333333
+            }
+          ]
+        },
+        {
+          "id": "enemy_1279_sgbdg_2",
+          "before": 0,
+          "sp": 80,
+          "expected": 80,
+          "logged": 0,
+          "taunt": 2,
+          "baseTaunt": 1,
+          "amount": 600,
+          "packets": [
+            {
+              "type": "phys",
+              "amount": 600,
+              "time": 5.233333333333333
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1277_sgman",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 305.7100524902344,
+            "height": 364.9138022661209
+          },
+          {
+            "id": "enemy_1277_sgman_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 305.7100524902344,
+            "height": 364.9138022661209
+          },
+          {
+            "id": "enemy_1279_sgbdg",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 372.136962890625,
+            "height": 445.6930863261223
+          },
+          {
+            "id": "enemy_1279_sgbdg_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 372.136962890625,
+            "height": 447.4849869608879
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1277_sgman",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 305.7100524902344,
+            "height": 364.9138022661209
+          },
+          {
+            "id": "enemy_1277_sgman_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 305.7100524902344,
+            "height": 364.9138022661209
+          },
+          {
+            "id": "enemy_1279_sgbdg",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 372.136962890625,
+            "height": 445.6930863261223
+          },
+          {
+            "id": "enemy_1279_sgbdg_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 372.136962890625,
+            "height": 447.4849869608879
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "assetCommit": "aff8f4ecc657ce39f6b524675881a99bf91fcb94",
+  "coverage": {
+    "enemies": 758,
+    "totalEnemies": 2163,
+    "databaseLevels": 823,
+    "runtimeKinds": 209,
+    "pinnedStageGraphs": 970
+  },
+  "stageSmoke": {
+    "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+    "available": 970,
+    "completed": 970,
+    "failures": [],
+    "uniqueComponentsRead": 6487,
+    "cache": {
+      "cachedBytes": 14713975,
+      "cachedObjects": 6487,
+      "pending": 0
+    }
+  }
+}

@@ -310,3 +310,25 @@ test('energy reward programs remain one shared selected component across enemy v
  const loaded=await loader.load({id:'fixture',availability:'available',bundle});assert.equal(requests.filter(h=>h===a.programComponent).length,1);const runtime=createEnemyRuntime();await runtime.prepare(loaded.enemies);assert.deepEqual(runtime.stats().loaded,['arkpedia-enemy-death-energy']);
  assert.equal(loaded.enemies.normal.runtimeFeatures.entries[0].ability.params.program,loaded.enemies.elite.runtimeFeatures.entries[0].ability.params.program);
 });
+test('native targeted SP additions retain the event receiver, including a retired source',()=>{
+ const p=prepareBehaviorProgram(compile('modify_sp[start]')),source=unit(),target=unit(),calls=[];source.alive=false;
+ p.run('ON_BUFF_START',{battle:{},unit:source,source,target,blackboard:{sp:20.5},spService:{add:(u,n)=>calls.push([u,n])}});assert.deepEqual(calls,[[target,20.5]]);
+ target.deployed=false;p.run('ON_BUFF_START',{battle:{},unit:source,source,target,blackboard:{sp:20},spService:{add:()=>assert.fail('retired receiver')}});
+});
+test('SP program operands and service are preflighted before any earlier effect',()=>{
+ const graph=structuredClone(compile('modify_sp[start]'));graph.templates[graph.entry].events.ON_BUFF_START.unshift({op:'release',who:'owner'});const p=prepareBehaviorProgram(graph),u=unit();let touched=false;
+ const c={battle:{_unblock:()=>{touched=true;}},unit:u,blackboard:{sp:20}};assert.throws(()=>p.run('ON_BUFF_START',c),/SP service/);assert.equal(touched,false);
+ for(const sp of[-1,Infinity,NaN,1000001,'20']){assert.throws(()=>p.run('ON_BUFF_START',{...c,blackboard:{sp},spService:{add(){}}}));assert.equal(touched,false);}
+});
+test('native SP compilation refuses ratio, mask, force, source and subtraction-policy changes',()=>{
+ for(const patch of[{_modifyByRatio:true},{_spMask:'INCREASE_WITH_TIME'},{_forceFlag:true},{_targetType:'SOURCE'},{_isMinis:true},{_modifyValue:1},{_dontCheckSpType:true}]){
+  const ts=structuredClone(evidence.templates);Object.assign(ts['modify_sp[start]'].eventToActions.ON_BUFF_START[0],patch);assert.throws(()=>compile('modify_sp[start]',ts),/SP addition/);
+ }
+});
+test('program consumers declare their supported services before any actor traits can attach',async()=>{
+ const {deathEnergyPulse}=await import('../server/sim/content/arkpedia-enemy-death-energy.js');const p=prepareBehaviorProgram(compile('modify_sp[start]'));assert.deepEqual(p.requiredServices,['sp']);assert.throws(()=>p.validateServices(['energy']),/unsupported service sp/);p.validateServices(['sp']);
+ let touched=false;const params={delay:.5,radius:1.25,scale:4,type:'arts',parentKey:'parent',silenceable:true,blackboard:{sp:20},program:p.graph};
+ const plan={schemaVersion:1,properties:{},entries:[{id:'native:trait',trait:{flags:{noMove:true}}},{id:'native:gift',ability:{kind:'deathEnergyPulse',params}}]};
+ assert.throws(()=>applyCompiledEnemyFeatures({addBuff:()=>{touched=true;}},{},plan,()=>deathEnergyPulse),/unsupported service sp/);assert.equal(touched,false);
+ assert.throws(()=>chargedMeleeBuffProgram.validate({program:compile('enemy_esabr_add_energy'),blackboard:{add_count:1},cost:1,initialSp:0,maxSp:1,increment:1,silenceBlocksSpend:false}),/unsupported service energy/);
+});

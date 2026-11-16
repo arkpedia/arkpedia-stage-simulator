@@ -52,7 +52,7 @@ function validate({program,programComponent,modes,initialMode,buffKey,disabledBy
    ||new Set(m.tileOffsets.map(t=>`${t.row},${t.col}`)).size!==m.tileOffsets.length))throw Error('Invalid projectile tile offsets');
   if(!['phys','arts','true'].includes(m.type)||!Number.isFinite(m.speed)||m.speed<=0||!Number.isFinite(m.lifetime)||m.lifetime<=0
    ||m.damageScale!==undefined&&(!Number.isFinite(m.damageScale)||m.damageScale<0)||typeof m.interruptOnDetach!=='boolean'||m.noAir!==undefined&&typeof m.noAir!=='boolean')throw Error('Invalid projectile mode transport');}
- const p=prepareBehaviorProgram(program);p.validateBlackboard(blackboard);
+ const p=prepareBehaviorProgram(program);p.validateServices(['mode','derived']);p.validateBlackboard(blackboard);
  if(p.requiredModeIndices.some(index=>!modes[index]))throw Error('Missing projectile mode');
  return p;
 }

@@ -23,7 +23,7 @@ export function contactBuffProgram(params){
 function validate({radius,buffKey,damageMissable=false,program,blackboard={},programComponent}){
  if(programComponent!==undefined)throw Error('Unhydrated behaviour program component');
  if(!Number.isFinite(radius)||radius<0||typeof buffKey!=='string'||!buffKey||typeof damageMissable!=='boolean')throw Error('Invalid contact buff program');
- const p=prepareBehaviorProgram(program);p.validateBlackboard(blackboard);return p;
+ const p=prepareBehaviorProgram(program);p.validateServices([]);p.validateBlackboard(blackboard);return p;
 }
 contactBuffProgram.validate=validate;
 contactBuffProgram.decodeParameters=decodeBehaviorParameters;

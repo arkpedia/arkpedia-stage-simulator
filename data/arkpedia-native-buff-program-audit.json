@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "ec9cb0ebb7dce67998212a0269dd526d19a6b3823ec8694ea46987aadba0144c",
-    "data/arkpedia-enemy-support.json": "637c19e73f0ff2a8ea75702c6e6bde04b596912ce1ae399567e37a2114c0e8f2",
+    "data/arkpedia-enemy-native-abilities.json": "eb8bfdbb92ec97c8502dbd222f61f4e05afe1dadcf12c77125d91d9c03a517c8",
+    "data/arkpedia-enemy-support.json": "50cb8b2b79a7e27b7e7870ddb2fd4f7b51855c7c1a5b23f0091dffbdcc2cc87d",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "a12d83135384d907b3a0b4189e5312289ba75a2095ff7e030d5f95b21b589f04",
-    "shared/arkpedia/behavior-program.js": "6c8b2bdb61228e6741d7430314c9eb17e99d5c2da2863168ba425dd3c3daca96",
+    "shared/arkpedia/behavior-native-compiler.js": "5de8511fd58f4bde47e8e56a662e1f4145a2c08a2d8489e26629fd729d884025",
+    "shared/arkpedia/behavior-program.js": "f81286dc6c00587c9d7311088461faea63bd0563e1a216c6a5afadbb0a1dfd75",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 389,
-  "templates": 238,
-  "compiled": 11,
-  "refused": 227,
+  "retainedPrefabs": 393,
+  "templates": 241,
+  "compiled": 12,
+  "refused": 229,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -1315,7 +1315,7 @@
         "enemy_10092_hlslp"
       ],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action ModifySp"
+      "reason": "Unsupported native behaviour: SP addition"
     },
     {
       "key": "enemy_hp_listener",
@@ -1550,7 +1550,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action ModifySp"
+      "reason": "Unsupported native behaviour: limited override"
     },
     {
       "key": "enemy_lybgpa[keep_punch_mark]",
@@ -2045,6 +2045,26 @@
       "reason": "Unsupported native behaviour: derived marker"
     },
     {
+      "key": "enemy_sgbdg_death_rattle",
+      "consumers": [
+        "enemy_1279_sgbdg",
+        "enemy_1279_sgbdg_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_sgman_death_rattle",
+      "consumers": [
+        "enemy_1277_sgman",
+        "enemy_1277_sgman_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
       "key": "enemy_sgmum[hit_ad]",
       "consumers": [
         "enemy_10019_sgmum",
@@ -2162,7 +2182,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action ModifySp"
+      "reason": "Unsupported native behaviour: SP addition"
     },
     {
       "key": "enemy_spnaxe_buffs2[mark]",
@@ -2467,7 +2487,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action ModifySp"
+      "reason": "Unsupported native behaviour: SP addition"
     },
     {
       "key": "jakill_skill_1_reborn_hit",
@@ -2524,6 +2544,8 @@
         "enemy_1256_lyacpa",
         "enemy_1256_lyacpa_2",
         "enemy_1257_lydrty",
+        "enemy_1277_sgman",
+        "enemy_1277_sgman_2",
         "enemy_1433_dsbasi",
         "enemy_1433_dsbasi_2",
         "enemy_1434_dsshel",
@@ -2581,7 +2603,24 @@
         "enemy_1531_bbrain"
       ],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action ModifySp"
+      "reason": "Unsupported native behaviour: SP addition"
+    },
+    {
+      "key": "modify_sp[start]",
+      "consumers": [
+        "enemy_1277_sgman",
+        "enemy_1277_sgman_2",
+        "enemy_1279_sgbdg",
+        "enemy_1279_sgbdg_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "6b84616d33056d5d823c68ce452f04e6736ae042831581919e49776af6b3e49a",
+      "bytes": 152,
+      "templateCount": 1,
+      "requiredBlackboard": [
+        "sp"
+      ]
     },
     {
       "key": "mousek_shield",
@@ -3044,6 +3083,8 @@
         "enemy_duchns_boom",
         "enemy_eslime_add_energy_global",
         "enemy_ncrmcr_aura",
+        "enemy_sgbdg_death_rattle",
+        "enemy_sgman_death_rattle",
         "enemy_sybox_t[logkilled]",
         "enemy_wdkght_t",
         "log_killed",
@@ -3084,6 +3125,10 @@
         "enemy_1257_lydrty",
         "enemy_1267_nhpbr",
         "enemy_1267_nhpbr_2",
+        "enemy_1277_sgman",
+        "enemy_1277_sgman_2",
+        "enemy_1279_sgbdg",
+        "enemy_1279_sgbdg_2",
         "enemy_1290_duflm",
         "enemy_1290_duflm_2",
         "enemy_1294_duchns",
@@ -3172,18 +3217,15 @@
       ]
     },
     {
-      "reason": "Unsupported native behaviour: action ModifySp",
+      "reason": "Unsupported native behaviour: SP addition",
       "templates": [
         "enemy_hlslp[heal_add_sp_core]",
-        "enemy_ltsmer_s_1[modify_sp]",
         "enemy_spmode_sp_reduce",
         "jakill_reborn",
         "modify_sp[ratio]"
       ],
       "consumers": [
         "enemy_10092_hlslp",
-        "enemy_1088_ltsmer",
-        "enemy_1088_ltsmer_2",
         "enemy_1213_mtrsnp",
         "enemy_1213_mtrsnp_2",
         "enemy_1214_mtrmgc",
@@ -3276,6 +3318,33 @@
       ]
     },
     {
+      "reason": "Unsupported native behaviour: limited override",
+      "templates": [
+        "enemy_bbrain[blink_eff]",
+        "enemy_ltsmer_s_1[modify_sp]",
+        "hlbird_t[self_fear]",
+        "hlegle_t[self_fear]",
+        "hllevi_t[self_fear]",
+        "hltigr_t[self_fear]"
+      ],
+      "consumers": [
+        "enemy_10083_hlbird",
+        "enemy_10083_hlbird_2",
+        "enemy_10084_hlegle",
+        "enemy_10084_hlegle_2",
+        "enemy_10085_hllevi",
+        "enemy_10085_hllevi_2",
+        "enemy_10086_hltigr",
+        "enemy_10086_hltigr_2",
+        "enemy_1088_ltsmer",
+        "enemy_1088_ltsmer_2",
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ]
+    },
+    {
       "reason": "Unsupported native behaviour: action TriggerEnemySkill",
       "templates": [
         "enemy_duskld_anim_trigger",
@@ -3296,30 +3365,6 @@
       ],
       "unsupportedConsumers": [
         "enemy_1536_ncrmcr"
-      ]
-    },
-    {
-      "reason": "Unsupported native behaviour: limited override",
-      "templates": [
-        "enemy_bbrain[blink_eff]",
-        "hlbird_t[self_fear]",
-        "hlegle_t[self_fear]",
-        "hllevi_t[self_fear]",
-        "hltigr_t[self_fear]"
-      ],
-      "consumers": [
-        "enemy_10083_hlbird",
-        "enemy_10083_hlbird_2",
-        "enemy_10084_hlegle",
-        "enemy_10084_hlegle_2",
-        "enemy_10085_hllevi",
-        "enemy_10085_hllevi_2",
-        "enemy_10086_hltigr",
-        "enemy_10086_hltigr_2",
-        "enemy_1531_bbrain"
-      ],
-      "unsupportedConsumers": [
-        "enemy_1531_bbrain"
       ]
     },
     {

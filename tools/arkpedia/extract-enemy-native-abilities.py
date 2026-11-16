@@ -34,6 +34,11 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1277_sgman': ['enemy_1277_sgman','Default','Combat','DeathRattle','SelectVg'],
+    'enemy_1277_sgman_2': ['enemy_1277_sgman_2','Default','Combat','DeathRattle','SelectVg'],
+    'enemy_1279_sgbdg': ['enemy_1279_sgbdg','Default','Combat','DeathRattle','SelectVg'],
+    'enemy_1279_sgbdg_2': ['enemy_1279_sgbdg_2','Default','Combat','DeathRattle','SelectVg'],
+
     'enemy_1356_egun': ['enemy_1356_egun','Default','Attack','Selector','Ability0','over_energy','blacksteel_energy','AddEnergy'],
     'enemy_1356_egun_2': ['enemy_1356_egun_2','Default','Attack','Selector','Ability0','over_energy','blacksteel_energy','AddEnergy'],
     'enemy_1352_eslime': ['enemy_1352_eslime','Default','Combat','Boom'],
@@ -464,6 +469,11 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1277_sgman': {'Combat','DeathRattle','SelectVg'},
+            'enemy_1277_sgman_2': {'Combat','DeathRattle','SelectVg'},
+            'enemy_1279_sgbdg': {'Combat','DeathRattle','SelectVg'},
+            'enemy_1279_sgbdg_2': {'Combat','DeathRattle','SelectVg'},
+
             'enemy_1356_egun': {'Attack','Selector','Ability0','over_energy','blacksteel_energy','AddEnergy'},
             'enemy_1356_egun_2': {'Attack','Selector','Ability0','over_energy','blacksteel_energy','AddEnergy'},
             'enemy_1352_eslime': {'Combat','Boom'},

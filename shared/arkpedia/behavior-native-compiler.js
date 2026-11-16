@@ -86,6 +86,11 @@ export function compileNativeBuffProgram(entry,templateFor){
       if(name==='IfElse'){
         exact(node,{$type:type(name),_conditionNode:node._conditionNode,_succeedNodes:node._succeedNodes,_failNodes:node._failNodes},'IfElse');
         actions.push({op:'when',condition:predicate(node._conditionNode),yes:sequence(node._succeedNodes,depth+1),no:sequence(node._failNodes,depth+1)});
+      }else if(name==='ModifySp'){
+        exact(node,{$type:type(name),_targetType:'TARGET',_modifyByRatio:false,_modifyRatio:0,
+          _modifyByRatioBasedOnCurSP:false,_dontCheckSpType:false,_spMask:'ALL',_forceFlag:false,_dontShowSpUI:false,
+          _modifyValue:0,_spString:node._spString,_isMinis:false},'SP addition');
+        actions.push({op:'spAdd',who:'target',key:text(node._spString)});
       }else if(name==='AddAbilityBlackboard'){
         // One bounded native resource transaction, not an arbitrary blackboard
         // interpreter: the matching update must be its immediate next node.

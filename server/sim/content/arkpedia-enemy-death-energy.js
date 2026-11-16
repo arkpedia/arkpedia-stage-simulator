@@ -33,7 +33,7 @@ function validate({delay,radius,scale,type,energy,markerKey,parentKey,silenceabl
  if(programComponent!==undefined)throw Error('Unhydrated behaviour program component');
  if(!Number.isFinite(delay)||delay<=0||!Number.isFinite(radius)||radius<=0||radius>128||!Number.isFinite(scale)||scale<0
   ||!['phys','arts','true'].includes(type)||program===undefined&&(!Number.isSafeInteger(energy)||energy<1||energy>1024||typeof markerKey!=='string'||!markerKey||markerKey.length>256)||typeof parentKey!=='string'||!parentKey||parentKey.length>256||parentKey===markerKey||typeof silenceable!=='boolean')throw Error('Invalid death energy pulse');
- if(program!==undefined){const reward=prepareBehaviorProgram(program);reward.validateBlackboard(blackboard);return reward;}return null;
+ if(program!==undefined){const reward=prepareBehaviorProgram(program);reward.validateServices(['energy']);reward.validateBlackboard(blackboard);return reward;}return null;
 }
 deathEnergyPulse.validate=validate;
 deathEnergyPulse.decodeParameters=decodeBehaviorParameters;

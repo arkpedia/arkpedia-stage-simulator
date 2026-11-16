@@ -62,7 +62,7 @@ export function chargedMeleeBuffProgram(params){
 }
 function validateChargedProgram(params){
   if(Object.hasOwn(params,'programComponent'))throw Error('Unhydrated behaviour program component');
-  const program=prepareBehaviorProgram(params.program);program.validateBlackboard(params.blackboard);validateCharge(params);
+  const program=prepareBehaviorProgram(params.program);program.validateServices([]);program.validateBlackboard(params.blackboard);validateCharge(params);
   return program;
 }
 chargedMeleeBuffProgram.validate=validateChargedProgram;

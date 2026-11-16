@@ -43,7 +43,7 @@ function validate(p){
  if(!['phys','arts','true'].includes(type)||typeof groundOnly!=='boolean'||skillAnimation.releases.length!==1||!Number.isFinite(initial)||initial<0||!Number.isFinite(cooldown)||cooldown<=0
   ||!Number.isFinite(duration)||duration<=0||cooldown<duration||!Number.isFinite(interval)||interval<=0||interval>duration||!Number.isFinite(radius)||radius<=0||radius>128
   ||typeof parentKey!=='string'||!parentKey||parentKey.length>256||!Number.isFinite(speed)||speed<=0||!Number.isFinite(lifetime)||lifetime<=0)throw Error('Invalid energy ranged emitter');
- const reward=prepareBehaviorProgram(p.program);reward.validateBlackboard(blackboard);return reward;
+ const reward=prepareBehaviorProgram(p.program);reward.validateServices(['energy']);reward.validateBlackboard(blackboard);return reward;
 }
 energyRangedEmitter.validate=validate;
 energyRangedEmitter.decodeParameters=decodeBehaviorParameters;

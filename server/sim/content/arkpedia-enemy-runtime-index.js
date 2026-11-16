@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-death-sp',load:()=>import('./arkpedia-enemy-death-sp.js'),exports:{selectedDeathSp:'selectedDeathSp'}},
   {key:'arkpedia-enemy-energy-emitter',load:()=>import('./arkpedia-enemy-energy-emitter.js'),exports:{energyRangedEmitter:'energyRangedEmitter'}},
   {key:'arkpedia-enemy-death-energy',load:()=>import('./arkpedia-enemy-death-energy.js'),exports:{deathEnergyPulse:'deathEnergyPulse'}},
   {key:'arkpedia-enemy-circle-aura',load:()=>import('./arkpedia-enemy-circle-aura.js'),exports:{nativeCircleStatAura:'nativeCircleStatAura'}},

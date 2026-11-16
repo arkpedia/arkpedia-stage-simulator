@@ -5,7 +5,7 @@ import {prepareBehaviorProgram,decodeBehaviorParameters} from '../../../shared/a
 export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval,program,blackboard={}}){
   validatePair({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval});
   const compiled=program===undefined?null:prepareBehaviorProgram(program);
-  compiled?.validateBlackboard(blackboard);
+  compiled?.validateServices([]);compiled?.validateBlackboard(blackboard);
   const clear=(b,a)=>{
     const prior=a.binding;a.binding=null;
     if(prior)b.removeBuff(prior.blocker,prior.buff);
@@ -41,7 +41,7 @@ export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,i
 pairedBlockerBuffs.validate=params=>{
   if(Object.hasOwn(params,'programComponent'))throw Error('Unhydrated behaviour program component');
   validatePair(params);
-  if(Object.hasOwn(params,'program'))prepareBehaviorProgram(params.program).validateBlackboard(params.blackboard??{});
+  if(Object.hasOwn(params,'program')){const p=prepareBehaviorProgram(params.program);p.validateServices([]);p.validateBlackboard(params.blackboard??{});}
 };
 
 pairedBlockerBuffs.decodeParameters=decodeBehaviorParameters;
