@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-death-blast',load:()=>import('./arkpedia-enemy-death-blast.js'),exports:{bothSidesDeathBlast:'bothSidesDeathBlast'}},
   {key:'arkpedia-enemy-direswine',load:()=>import('./arkpedia-enemy-direswine.js'),exports:{direswineRush:'direswineRush'}},
   {key:'arkpedia-enemy-damage-count-burst',load:()=>import('./arkpedia-enemy-damage-count-burst.js'),exports:{damageCountBurst:'damageCountBurst'}},
   {key:'arkpedia-enemy-charged-burst',load:()=>import('./arkpedia-enemy-charged-burst.js'),exports:{chargedTileBurst:'chargedTileBurst'}},

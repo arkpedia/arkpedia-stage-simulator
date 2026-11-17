@@ -3,7 +3,7 @@
   "scope": "Compiled execution plans for already-admitted records; source admission remains separate. Plans belong in shared enemy-definition components, not a duplicated global payload.",
   "source": {
     "data/arkpedia-enemy-records.json": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8",
-    "data/arkpedia-enemy-support.json": "c2849e0f9b40a874720ae32536a80d7d2e3b8efc7834e7c19ba87d115ef85e9e",
+    "data/arkpedia-enemy-support.json": "ac3696429578e085bc16adb3e00ce21ca00eecaf1927645909c989c11d81d0a2",
     "shared/arkpedia/enemy-runtime-compiler.js": "277cdbe67612b39a03bc0ea0cf9dc57a96a05c877e85b3083d5dd2ac67e34bf6",
     "shared/arkpedia/enemy-runtime-plan.js": "854942a6ddfceb1af2a6dba4ba19a9c3fb2db65122e1789e3ebe8186c908471f",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
@@ -74,6 +74,9 @@
     "shared/arkpedia/enemy-direswine-features.js": "58fc4fa91f8a55d4b3b7db0d99a4b9251770b906092b133fd190d11f2b2cd16e",
     "data/arkpedia-direswine-animations.json": "6199b63182d0c9de84962dc7961bd0b0ca51a0360de16f9a0af451d834fe941e",
     "server/sim/content/arkpedia-enemy-direswine.js": "a76e36993942d87b55d21efc4dbd3ccadcb759470263d2b46a44eb45627fb652",
+    "shared/arkpedia/enemy-icefield-arts-features.js": "faab5c319ff553bf2c1188317aad6e62318c855c06af4a1dbbf8e22c8bc07821",
+    "data/arkpedia-icefield-arts-animations.json": "c392bf9b11bbbe98be45a0b594394b7e6b801ac1099b5f6690abfbdf5d609ee9",
+    "server/sim/content/arkpedia-enemy-death-blast.js": "fca735b37aa8890fd8778eb2d3d688dfc91ec9b09a760f7e6f66f1ce15cb7129",
     "shared/arkpedia/enemy-famiglia-limo-features.js": "8bf9666540fad1d8540f8731cb3967dc22a1808d0b22679cb95703bedc16a29f",
     "data/arkpedia-famiglia-limos-animations.json": "bf8cc05e58d1249a25ab0c8433c3a278c58ff778e6d658dca770eef9688a1e16",
     "shared/arkpedia/enemy-famiglia-caster-features.js": "d8bafc9875c23e0ff7f7c6a27a7af1c65bcb263b905ffb95d5ece41cf271ea82",
@@ -88,13 +91,13 @@
     "data/arkpedia-famiglia-basics-animations.json": "1566c50c15e3b31c0eea77ed4788ea9a6178dc7b2cfe7ff2f8ab7d06aad11c71"
   },
   "summary": {
-    "records": 868,
-    "entries": 864,
-    "abilities": 805,
+    "records": 870,
+    "entries": 868,
+    "abilities": 809,
     "traits": 64,
     "properties": 1,
-    "serializedBytes": 232516,
-    "plansSha256": "46f27b36b3f410c597e59a5f6024a7bdb3be3a935f17670509c59960672d9b95",
+    "serializedBytes": 233208,
+    "plansSha256": "eab529aed87f141f3078ea8570f441ae8747f97007eff488287c6e8fc2288b77",
     "kinds": [
       {
         "kind": "allyDeathStacks",
@@ -234,6 +237,10 @@
       },
       {
         "kind": "bombtail",
+        "instances": 2
+      },
+      {
+        "kind": "bothSidesDeathBlast",
         "instances": 2
       },
       {
@@ -950,7 +957,7 @@
       },
       {
         "kind": "unbalancedPeriodicDamage",
-        "instances": 2
+        "instances": 4
       },
       {
         "kind": "unblockedSanctuary",

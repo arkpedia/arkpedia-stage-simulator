@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {isIcefieldArts,icefieldArtsNative} from './enemy-icefield-arts-features.js';
 const node = name => `Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
 const empty = attributes => attributes && Object.values(attributes).every(v => Array.isArray(v) && v.length === 0);
 const zeroRef = value => value?.m_PathID === '0';
@@ -49,9 +50,10 @@ export function shiftBleedNative(r, n) {
 }
 
 export const SHIFT_ENEMY_FEATURES = Object.freeze({
-  'talent:unbalanced_bleed': { covers: shiftBleedNative,
+  // Also the Icefield Arts pair: the same bleed template with its own keys (enemy-icefield-arts-features.js).
+  'talent:unbalanced_bleed': { covers: (r, n) => isIcefieldArts(r) ? icefieldArtsNative(r, n) : shiftBleedNative(r, n),
     ability: { kind: 'unbalancedPeriodicDamage', params: r => ({ damage: r.talents.bb['unbalanced_bleed.damage'],
       interval: r.talents.bb['unbalanced_bleed.interval'] }) },
-    explains: /^Loses HP proportional to distance moved when shifted$/,
+    explains: /^(Loses HP proportional to distance moved when shifted|Loses HP when shifted)$/,
     note: 'Original template checks the unbalanced state and maintains fixed unmodified periodic true damage; ordinary walking and teleports do not count. Requires regular-stage continuous force integration. Native frame phase is not certified.' },
 });

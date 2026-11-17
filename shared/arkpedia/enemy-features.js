@@ -8,6 +8,7 @@ import {SHANHAIZHONG_ASSASSIN_FEATURES} from './enemy-shanhaizhong-assassin-feat
 import {NOVA_KNIGHT_FEATURES,isNovaKnight,novaKnightNative} from './enemy-nova-knight-features.js';
 import {DYLNPP_FEATURES} from './enemy-dylnpp-features.js';
 import {DIRESWINE_FEATURES,isDireswine,direswineNative} from './enemy-direswine-features.js';
+import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -1308,14 +1309,15 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'other enemies within range_radius gain DEF +def (zero for Frost)', explains: /^Increases the DEF of surrounding enemy units$/ },
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
-  'talent:boom': { covers: (r, n) => isHuiMingBlaster(r) ? huiMingNative(r, n) : coversDeathBlast(r, 'boom') || cartNative(r, n) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].covers(r, n),
-    ability: r => isHuiMingBlaster(r) ? null : r.prefabKey.startsWith('enemy_1089_ltlntc') ? GRAMOPHONE_ENEMY_FEATURES['talent:boom'].ability
+  'talent:boom': { covers: (r, n) => isHuiMingBlaster(r) ? huiMingNative(r, n) : isIcefieldArts(r) ? icefieldArtsNative(r, n) : coversDeathBlast(r, 'boom') || cartNative(r, n) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].covers(r, n),
+    // The Icefield Arts pair's blast also hits ground enemies, with Cold.
+    ability: r => isHuiMingBlaster(r) ? null : isIcefieldArts(r) ? { kind: 'bothSidesDeathBlast', params: icefieldBlastParams } : r.prefabKey.startsWith('enemy_1089_ltlntc') ? GRAMOPHONE_ENEMY_FEATURES['talent:boom'].ability
       : cart(r) ? cartAbility : { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
     stageAdditions: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0 },
     stageMultipliers: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0,
       'boom.attack@s2mode_boom_atk_totrap': v => Number.isFinite(v) && v > 0, 'boom.attack@s2mode_ep_fire_damage': v => Number.isFinite(v) && v > 0 },
     note: 'Reviewed death blasts, or the source-gated Snack Cart block/attack-triggered blast',
-    explains: text => deathBlastText(text) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].explains.test(text)
+    explains: (text, r) => deathBlastText(text) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].explains.test(text) || isIcefieldArts(r) && text === ICEFIELD_BLAST_DESCRIPTION
       || /^Detonates when blocked, inflicting Arts damage and <\$ba.dt.burning>Burn damage<\/> to all nearby targets$/.test(text)
       || text === "Explosion deals a large amount of Arts damage to nearby 'Gelato Stops'" },
   // DefDown: every attack hit adds a permanent, uncapped stack of DEF +defdown.def (flat) to the operator hit

@@ -39,10 +39,10 @@ node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab'
 
 ## Current coverage and verification
 
-- **799 / 2,163 enemy records admitted; 1,364 remain.**
-- **868 database levels**, **222 runtime kinds**.
+- **801 / 2,163 enemy records admitted; 1,362 remain.**
+- **870 database levels**, **223 runtime kinds**.
 - **970 published stage graphs** remain pinned for the stages phase. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,880 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 592 models.
+- Asset repository: **3,882 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 594 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -81,6 +81,7 @@ All listed commits were pushed. Their matching original models were published se
 | Nova Knights batch | `enemy_1184_cadkgt`, `_2`, `_3` (Viviana): Glimmering Touch, a 7 s channel bursting over the `x-1` diamond around one ground ally, through the new `chargedTileBurst` kind; shared `skill:ChargeAttack` dispatch. Coverage 796. First stage made ready by enemy work: `ISW-SP` (166 ready). See `docs/ENEMY-NOVA-KNIGHTS-REVIEW.md`. |
 | 小八界 batch + CN templates | Owner-approved CN template fallback (16 CN-only keys); `enemy_2125_dylnpp` (three levels): Dublinn-style hover until a disabling control, and the new `damageCountBurst` (every 15 counted hits: 3.5-radius stun 15 s + 3× ATK Arts). Coverage 797. 394 CN-only records were waiting on CN templates. See `docs/ENEMY-DYLNPP-REVIEW.md`. |
 | Direswine batch | `enemy_1309_mhboar`, `_2`: the new `direswineRush` kind (restarting rush with predelay and Lancer-style trigger budget, first-attack and contact crash packets of coefficient × Movement Speed). Coverage 799. See `docs/ENEMY-DIRESWINE-REVIEW.md`. |
+| Icefield Arts batch | `enemy_1191_krgrg`, `_2`: the new `bothSidesDeathBlast` kind (death blast hitting ground units of both sides with Arts and Cold) and the Arc Frontliner bleed with its own keys. Coverage 801. Stage-tied families found while ranking (Hot Spring lambs, Shanhaizhong Skirmishers, Filth) are listed in `docs/ENEMY-ICEFIELD-ARTS-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
