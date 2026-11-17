@@ -35,14 +35,14 @@ node tools/arkpedia/cn-enemy-native-source.mjs --fetch
 node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab' --enemy-art
 ```
 
-`extract-enemy-native-abilities.py` also reads three public tables into `.cache/arkpedia`, each checked against a pin in the script: `buff_template_data.json` (Global, `data/arkpedia-mvp.json` `behaviors.source`), `range_table_cn-<commit>.json` and `cn-native-source/tables/buff_table.json` (CN, the commit in `data/arkpedia-cn-native-source.json`). Fetch them from `raw.githubusercontent.com` at those commits. Rerunning the extractor on unchanged scopes must leave `data/arkpedia-enemy-native-abilities.json` byte-identical; that is the environment check.
+`extract-enemy-native-abilities.py` also reads four public tables into `.cache/arkpedia`, each checked against a pin in the script: `buff_template_data.json` (Global, `data/arkpedia-mvp.json` `behaviors.source`), `buff_template_data_cn-<commit>.json` (CN `zh_CN/gamedata/battle/buff_template_data.json`, the CN-only fallback), `range_table_cn-<commit>.json` and `cn-native-source/tables/buff_table.json` (CN, the commit in `data/arkpedia-cn-native-source.json`). Fetch them from `raw.githubusercontent.com` at those commits. Rerunning the extractor on unchanged scopes must leave `data/arkpedia-enemy-native-abilities.json` byte-identical; that is the environment check.
 
 ## Current coverage and verification
 
-- **796 / 2,163 enemy records admitted; 1,367 remain.**
-- **863 database levels**, **220 runtime kinds**.
+- **797 / 2,163 enemy records admitted; 1,366 remain.**
+- **866 database levels**, **221 runtime kinds**.
 - **970 published stage graphs** remain pinned for the stages phase. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,871 complete models**; simulator original enemy artwork catalogue: 589 models.
+- Asset repository: **3,878 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 590 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -79,6 +79,7 @@ All listed commits were pushed. Their matching original models were published se
 | Mateo's guards batch | `enemy_1409_bdguad`, `_2`: two exploding grenades on attack events (blast 1.1, 70% ATK) through `straightShot` (explicit release times, optional blast) and the existing `unblockedSanctuary` for 40% Physical/Arts resistance while unblocked. Coverage 791. Two grenades confirmed in game by the owner (2026-11-16). See `docs/ENEMY-MATEO-GUARDS-REVIEW.md`. |
 | Shanhaizhong assassins batch | `enemy_1299_ymkilr`, `_2`: the first attack after breaking Invisibility deals 2× ATK, through the new `invisibleStrike` kind that follows the invisibility template's mark. Coverage 793. See `docs/ENEMY-SHANHAIZHONG-ASSASSINS-REVIEW.md`. |
 | Nova Knights batch | `enemy_1184_cadkgt`, `_2`, `_3` (Viviana): Glimmering Touch, a 7 s channel bursting over the `x-1` diamond around one ground ally, through the new `chargedTileBurst` kind; shared `skill:ChargeAttack` dispatch. Coverage 796. First stage made ready by enemy work: `ISW-SP` (166 ready). See `docs/ENEMY-NOVA-KNIGHTS-REVIEW.md`. |
+| 小八界 batch + CN templates | Owner-approved CN template fallback (16 CN-only keys); `enemy_2125_dylnpp` (three levels): Dublinn-style hover until a disabling control, and the new `damageCountBurst` (every 15 counted hits: 3.5-radius stun 15 s + 3× ATK Arts). Coverage 797. 394 CN-only records were waiting on CN templates. See `docs/ENEMY-DYLNPP-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
@@ -118,7 +119,7 @@ Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249
 
 **How to pick the next family.** Rank unadmitted enemies by how many blocked stages list them (`data/arkpedia-content-inventory.json` blockers) and prefer families whose base and `_2` records share one mechanism. Only 108 blocked stages are blocked by enemies alone; most also need stage mechanics, so stages become ready mostly in the stages phase. Report the inventory's ready count per batch.
 
-**Next by blocked-stage count** (2026-11-16): `enemy_2102_dytmbr`, `enemy_1309_mhboar*`, `enemy_2125_dylnpp`. `enemy_2119_dyshhj*` blocks 154 but has five mechanisms. **Tactical Crossbowmen** (`enemy_1141_merbow*`, 63 stages) are one chain with the Mobile Tactical Hangar device and the Scrap drones: `AirSupportAtk` (once, before the first attack) selects the unit carrying `trap_airsup_base` anywhere and summons `enemy_1145_atkspd` (`_2` for the Leader) from it; 46 of their 50 stages place the Hangar. Do them with the Hangar in the stages phase.
+**Next by blocked-stage count** (2026-11-17): `enemy_1309_mhboar*` (Direswine charge, 53 stages). `enemy_2102_dytmbr` absorbs a talisman (`便符`) that `enemy_2103_dykens` attaches; do them together. CN-only records are now admissible through the template fallback. `enemy_2119_dyshhj*` blocks 154 but has five mechanisms. **Tactical Crossbowmen** (`enemy_1141_merbow*`, 63 stages) are one chain with the Mobile Tactical Hangar device and the Scrap drones: `AirSupportAtk` (once, before the first attack) selects the unit carrying `trap_airsup_base` anywhere and summons `enemy_1145_atkspd` (`_2` for the Leader) from it; 46 of their 50 stages place the Hangar. Do them with the Hangar in the stages phase.
 
 **Straight Shot, remaining.** The crossbowmen and Mateo's first two guards are done. Captain Mateo (`enemy_1551_bolicp`, 2 levels) and his ammo guard `enemy_1409_bdguad_3` block only about 3 stages each, and Mateo is a large boss batch (inspected 2026-11-16, nothing extracted): two forms with `Reborn` at another location; `CrossAttack` of 10 bolts whose last one lowers DEF (`def` −100/−150) after a Begin/Loop/End channel; `SmokeBomb` smoke fields that make enemies invisible for 30 s (one use); `Shotgun` stuns for 6 s using ammo (SP 6, no recovery); `CallBdguad` gathers the guards and holds them for 30 s; `DmgResist` and `Attack` talents. Reuse `straightShotTargets`, `fireStraightBolt` and explicit `releases`. Expose (`enemy_1402_tgshd*`, `enemy_1407_hummbd*`) applies `enemy_tgshd_exposed_mark`, which the selection already honours.
 
@@ -169,7 +170,7 @@ Other previously inspected, still gated families include racing actors, Carneval
 - Preview is `http://127.0.0.1:3185` (`HOST=127.0.0.1 PORT=3185 node scripts/start-arkpedia.mjs`); do not touch ports 3182–3184.
 - Python: the venv built above (`.cache/arkpedia-venv/bin/python`; `/workspace/.venvs/arkpedia/bin/python` in the old container). Animation wrappers need `ARKPEDIA_PYTHON` set to it; system Python lacks Unity extraction dependencies.
 - Canonical source data: the sibling `arkpedia-data/source/data` checkout; native bundles: `.cache/arkpedia/cn-native-source`.
-- Prefabs are pinned CN; retained buff templates are pinned Global. Do not silently replace the template source with CN.
+- Prefabs are pinned CN; retained buff templates are pinned Global. Since 2026-11-17 (owner's decision) a template key Global does not ship is taken from the CN table pinned at the prefabs' commit; Global stays authoritative for every key it has, and each fallback key is listed in `cnTemplateKeys` of `data/arkpedia-enemy-native-abilities.json`. Never replace a Global template with CN.
 - `nativeComponents` groups only non-referenced components by name. Use `$ref` and `$siblings` for referenced components. `$ref` ignores file ID, so source gates must explicitly require local references where appropriate.
 - Source gates/clock files must be added to the support/runtime-plan input hash lists.
 - Generators run sequentially:

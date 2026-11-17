@@ -6,6 +6,7 @@ import {STRAIGHT_SHOT_FEATURES,AMBUSHER_STEALTH_ABILITY,isCrossbowmanAmbusher,cr
 import {MATEO_GUARD_FEATURES} from './enemy-mateo-guard-features.js';
 import {SHANHAIZHONG_ASSASSIN_FEATURES} from './enemy-shanhaizhong-assassin-features.js';
 import {NOVA_KNIGHT_FEATURES,isNovaKnight,novaKnightNative} from './enemy-nova-knight-features.js';
+import {DYLNPP_FEATURES} from './enemy-dylnpp-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -414,6 +415,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1284_sgprst:'native:fatherAgenirLog',
   enemy_1184_cadkgt_3:'native:vivianaLog',
+  enemy_2125_dylnpp:'native:dylnppLog',
   enemy_1281_sgcar:'native:famigliaLimoMelee',enemy_1281_sgcar_2:'native:famigliaLimoMelee',
   enemy_1280_sgmag:'native:famigliaCasterLog',enemy_1280_sgmag_2:'native:famigliaCasterLog',
   enemy_1282_sgelder:'native:famigliaCapoMelee',enemy_1282_sgelder_2:'native:famigliaCapoMelee',
@@ -469,6 +471,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...STRAIGHT_SHOT_FEATURES,
   ...MATEO_GUARD_FEATURES,
   ...SHANHAIZHONG_ASSASSIN_FEATURES,
+  ...DYLNPP_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,

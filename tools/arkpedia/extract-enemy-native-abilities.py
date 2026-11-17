@@ -68,6 +68,7 @@ SCOPED_OBJECTS = {
     'enemy_1184_cadkgt': ['enemy_1184_cadkgt','Mode','Attack','Trigger','ChargeAttack','Passive'],
     'enemy_1184_cadkgt_2': ['enemy_1184_cadkgt_2','Mode','Attack','Trigger','ChargeAttack','Passive'],
     'enemy_1184_cadkgt_3': ['enemy_1184_cadkgt_3','Mode','Attack','Trigger','ChargeAttack','Passive'],
+    'enemy_2125_dylnpp': ['enemy_2125_dylnpp','Fly','Normal','Combat','Attack','CircleDamage'],
 
     'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
     'enemy_1281_sgcar_2': ['enemy_1281_sgcar_2','Default','Special','Combat','Passive','DeathRattle'],
@@ -362,6 +363,19 @@ templates_raw = (ROOT / '.cache/arkpedia/buff_template_data.json').read_bytes()
 template_pin = json.loads((ROOT / 'data/arkpedia-mvp.json').read_bytes())['behaviors']['source']
 assert hashlib.sha256(templates_raw).hexdigest() == template_pin['sha256']
 TEMPLATES = json.loads(templates_raw)
+# CN-only enemies name templates Global does not ship. Their source is the CN
+# table pinned at the same commit as the prefabs and the other CN tables; it is
+# a fallback only (Global stays authoritative for every key it has), and each
+# key taken from it is listed in the output's cnTemplateKeys.
+cn_template_source = {'repository': 'Kengxxiao/ArknightsGameData', 'commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',
+                      'path': 'zh_CN/gamedata/battle/buff_template_data.json', 'bytes': 27996217,
+                      'gitBlob': 'a94bbb391fded80e59db38ad7c3ded89e25fd682',
+                      'sha256': 'b119917318c464f92d28fc5eb40b2069e3644674d26cace165f17bf9044e00ff'}
+cn_templates_raw = (ROOT / '.cache/arkpedia' / f"buff_template_data_cn-{cn_template_source['commit']}.json").read_bytes()
+assert len(cn_templates_raw) == cn_template_source['bytes'] and hashlib.sha256(cn_templates_raw).hexdigest() == cn_template_source['sha256']
+assert hashlib.sha1(f'blob {len(cn_templates_raw)}\0'.encode() + cn_templates_raw).hexdigest() == cn_template_source['gitBlob']
+CN_TEMPLATES = json.loads(cn_templates_raw)
+def template_of(k): return TEMPLATES[k] if k in TEMPLATES else CN_TEMPLATES[k]
 
 
 def exact(v, key=''):
@@ -390,7 +404,7 @@ def local_refs(v):
 def template_keys(v):
     if isinstance(v, dict):
         for k, x in v.items():
-            if k in ('templateKey', '_templateKey') and isinstance(x, str) and x in TEMPLATES: yield x
+            if k in ('templateKey', '_templateKey') and isinstance(x, str) and (x in TEMPLATES or x in CN_TEMPLATES): yield x
             else: yield from template_keys(x)
     elif isinstance(v, list):
         for x in v: yield from template_keys(x)
@@ -549,6 +563,7 @@ for bundle in sorted(wanted):
             'enemy_1184_cadkgt': {'Attack','Trigger','ChargeAttack','Passive'},
             'enemy_1184_cadkgt_2': {'Attack','Trigger','ChargeAttack','Passive'},
             'enemy_1184_cadkgt_3': {'Attack','Trigger','ChargeAttack','Passive'},
+            'enemy_2125_dylnpp': {'Fly','Normal','Combat','Attack','CircleDamage'},
 
             'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
             'enemy_1281_sgcar_2': {'Combat','Passive','DeathRattle','Special'},
@@ -770,7 +785,8 @@ templates, todo = {}, sorted(used_templates)
 while todo:
     k = todo.pop()
     if k in templates: continue
-    templates[k] = TEMPLATES[k]; todo.extend(template_keys(TEMPLATES[k]))
+    templates[k] = template_of(k); todo.extend(template_keys(templates[k]))
+cn_template_keys = sorted(k for k in templates if k not in TEMPLATES)
 # Retain the reviewed projectile controllers from the separately pinned shared
 # bundle. Both Bombtail variants share motion/target/hit behavior, not visuals.
 projectile_source = next(r for r in json.loads((ROOT / 'data/arkpedia-cn-native-source.json').read_bytes())['bundles']
@@ -840,7 +856,8 @@ result = {'schemaVersion': 1,
     'scope': 'Original serialized content of the enemy ability components reviewed enemy features read. Each indexed originalJson hashes to the originalDataSha256 the native timing index records for that component; referenced components carry their own sha256 from the same verified bundles.',
     'source': {'nativeTimingIndex': 'data/arkpedia-enemy-clock-source.json',
                'sha256': hashlib.sha256(index_raw).hexdigest(), 'templates': template_pin, 'projectiles': projectile_source,
-               'ranges': range_source, 'buffDatabase': buff_source},
+               'ranges': range_source, 'buffDatabase': buff_source, 'cnTemplates': cn_template_source},
+    'cnTemplateKeys': cn_template_keys,
     'objects': OBJECTS,
     'scopedObjects': SCOPED_OBJECTS,
     'automaticAuxiliaryCandidates': {path: sorted(ids) for path, ids in sorted(automatic_auxiliaries.items())},
