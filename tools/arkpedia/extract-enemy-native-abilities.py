@@ -69,6 +69,8 @@ SCOPED_OBJECTS = {
     'enemy_1184_cadkgt_2': ['enemy_1184_cadkgt_2','Mode','Attack','Trigger','ChargeAttack','Passive'],
     'enemy_1184_cadkgt_3': ['enemy_1184_cadkgt_3','Mode','Attack','Trigger','ChargeAttack','Passive'],
     'enemy_2125_dylnpp': ['enemy_2125_dylnpp','Fly','Normal','Combat','Attack','CircleDamage'],
+    'enemy_1309_mhboar': ['enemy_1309_mhboar','Default','Combat','Rush','FirstAttack','Crash'],
+    'enemy_1309_mhboar_2': ['enemy_1309_mhboar_2','Default','Combat','Rush','FirstAttack','Crash'],
 
     'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
     'enemy_1281_sgcar_2': ['enemy_1281_sgcar_2','Default','Special','Combat','Passive','DeathRattle'],
@@ -564,6 +566,8 @@ for bundle in sorted(wanted):
             'enemy_1184_cadkgt_2': {'Attack','Trigger','ChargeAttack','Passive'},
             'enemy_1184_cadkgt_3': {'Attack','Trigger','ChargeAttack','Passive'},
             'enemy_2125_dylnpp': {'Fly','Normal','Combat','Attack','CircleDamage'},
+            'enemy_1309_mhboar': {'Combat','Rush','FirstAttack','Crash'},
+            'enemy_1309_mhboar_2': {'Combat','Rush','FirstAttack','Crash'},
 
             'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
             'enemy_1281_sgcar_2': {'Combat','Passive','DeathRattle','Special'},
@@ -740,6 +744,8 @@ for bundle in sorted(wanted):
             'enemy_1404_msnip_2': {'Selector'},
             'enemy_1409_bdguad': {'Selector'},
             'enemy_1409_bdguad_2': {'Selector'},
+            'enemy_1309_mhboar': {'Crash'},
+            'enemy_1309_mhboar_2': {'Crash'},
             'enemy_1184_cadkgt': {'Trigger'},
             'enemy_1184_cadkgt_2': {'Trigger'},
             'enemy_1184_cadkgt_3': {'Trigger'},

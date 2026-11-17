@@ -110,6 +110,8 @@ export async function buildEnemySupport() {
       novaKnightAnimations: { path: 'data/arkpedia-nova-knights-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-nova-knights-animations.json', root))) },
       dylnppFeatures: { path: 'shared/arkpedia/enemy-dylnpp-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-dylnpp-features.js', root))) },
       dylnppAnimations: { path: 'data/arkpedia-dylnpp-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-dylnpp-animations.json', root))) },
+      direswineFeatures: { path: 'shared/arkpedia/enemy-direswine-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-direswine-features.js', root))) },
+      direswineAnimations: { path: 'data/arkpedia-direswine-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-direswine-animations.json', root))) },
       famigliaLimoFeatures: { path: 'shared/arkpedia/enemy-famiglia-limo-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-limo-features.js', root))) },
       famigliaLimoAnimations: { path: 'data/arkpedia-famiglia-limos-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-famiglia-limos-animations.json', root))) },
       famigliaCasterFeatures: { path: 'shared/arkpedia/enemy-famiglia-caster-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-caster-features.js', root))) },

@@ -7,6 +7,7 @@ import {MATEO_GUARD_FEATURES} from './enemy-mateo-guard-features.js';
 import {SHANHAIZHONG_ASSASSIN_FEATURES} from './enemy-shanhaizhong-assassin-features.js';
 import {NOVA_KNIGHT_FEATURES,isNovaKnight,novaKnightNative} from './enemy-nova-knight-features.js';
 import {DYLNPP_FEATURES} from './enemy-dylnpp-features.js';
+import {DIRESWINE_FEATURES,isDireswine,direswineNative} from './enemy-direswine-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -472,6 +473,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...MATEO_GUARD_FEATURES,
   ...SHANHAIZHONG_ASSASSIN_FEATURES,
   ...DYLNPP_FEATURES,
+  ...DIRESWINE_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -635,7 +637,7 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'crash', params: r => ({ scale: r.talents.bb['Crash.atk_scale'], block: 3 }) },
     note: 'block weight 3; the first blocker takes ATK × Crash.atk_scale', explains: /^Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding/,
   },
-  'talent:Crash': { covers: r => sig(r, 'Crash', ['atk_scale']), note: 'collision damage is attached by the handbook-line feature' },
+  'talent:Crash': { covers: (r, n) => isDireswine(r) ? direswineNative(r, n) : sig(r, 'Crash', ['atk_scale']), note: 'collision damage is attached by the handbook-line feature, or by the Direswine rush' },
   'talent:DeathRattle': { covers: (r,n) => isFamigliaLimo(r)?famigliaLimoNative(r,n):isFamigliaBasic(r)?famigliaBasicNative(r,n):sig(r, 'DeathRattle', ['enemy_key']) && /^enemy_[a-z0-9_]+$/.test(r.talents.bbStr['DeathRattle.enemy_key']??''),
     ability: r=>isFamigliaLimo(r)?FAMIGLIA_LIMO_DEATH:isFamigliaBasic(r)?FAMIGLIA_BASIC_FEATURES['talent:DeathRattle'].ability:({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeathRattle.enemy_key'], cnt: 1 }) }),
     dependsOn: r => isFamigliaLimo(r)?[famigliaLimoChild(r)]:[r.talents.bbStr['DeathRattle.enemy_key']].filter(Boolean),
@@ -1134,8 +1136,9 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'selfDestruct', params: () => ({ radius: 2 }) }, note: 'physical blast then dies when an ally is near',
     explains: /^Self-destructs when near an Operator, dealing Physical damage$/ },
   // Snowball thrower: the first attack uses first_atk_scale.
-  'talent:FirstAttack': { covers: r => sig(r, 'FirstAttack', ['attack@first_atk_scale']),
-    ability: { kind: 'firstAttack', params: r => ({ scale: r.talents.bb['FirstAttack.attack@first_atk_scale'] }) },
+  'talent:FirstAttack': { covers: (r, n) => isDireswine(r) ? direswineNative(r, n) : sig(r, 'FirstAttack', ['attack@first_atk_scale']),
+    // The Direswine's first-attack packet belongs to its rush (talent:Rush).
+    ability: r => isDireswine(r) ? null : { kind: 'firstAttack', params: r => ({ scale: r.talents.bb['FirstAttack.attack@first_atk_scale'] }) },
     note: 'first attack ×scale' },
   // Ability-only melee splash (Originium Colossus): the record carries no talent group, only the sentence.
   'ability:Attacks deal splash damage': { covers: r => r.abilities.some(a => a.text === 'Attacks deal splash damage'),
