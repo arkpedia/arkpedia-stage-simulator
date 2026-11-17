@@ -18,7 +18,10 @@ export const EMPERORS_BLADE_ABILITIES=[
  {text:"Gains increased ATK and a melee attack that deals more damage",format:"NORMAL"},
  {text:"Whenever a low percentage of HP is lost, unleashes the permanent terrain effect [Dominion]",format:"NORMAL"},
 ];
-const TALENTS={"BlackFogTriggerP1.hp_ratio":.5,"BlackFogTriggerP2.hp_ratio":.25,"Reborn.duration":7.2,"Reborn.rest_duration":3,"Reborn.atk":.5,
+// The two Dominion thresholds are stage-scalable (DC-8 Challenge: x0.6 and x0.8), so they are checked as ratios.
+const RATIOS=["BlackFogTriggerP1.hp_ratio","BlackFogTriggerP2.hp_ratio"];
+const ratio=v=>Number.isFinite(v)&&v>0&&v<=1;
+const TALENTS={"Reborn.duration":7.2,"Reborn.rest_duration":3,"Reborn.atk":.5,
  "Reborn.reborn_invincible.duration":10,"Reborn.atk_scale":1,"Combat.attack@combat_atkscale.atk_scale":2.5,"BlackFog.attack_speed":-50,
  "BlackFog.damage_resistance":.5,"BlackFog.range_radius":1.8};
 const GROUPS={BlackFogTriggerP1:["hp_ratio"],BlackFogTriggerP2:["hp_ratio"],Reborn:["atk","atk_scale","duration","reborn_invincible.duration","rest_duration"],
@@ -47,7 +50,7 @@ export function emperorsBladeNative(r,n){
  const t=r?.talents?.bb??{},s=STATS[r?.level];
  if(!isEmperorsBlade(r)||!s||r.stats.maxHp!==s.maxHp||r.stats.atk!==s.atk||r.applyWay!=="ALL"||r.stats.dmgType!=="phys"||r.stats.motion!=="WALK"
   ||r.stats.rangeRadius!==2||r.stats.blockCnt!==1||r.sp||r.notCountInTotal||!same(r.abilities,EMPERORS_BLADE_ABILITIES)
-  ||!same(r.talents.groups,GROUPS)||!same(t,TALENTS)||!same(r.talents.bbStr,{})||!same(r.skills,SKILLS))return false;
+  ||!same(r.talents.groups,GROUPS)||!RATIOS.every(k=>ratio(t[k]))||!same(Object.fromEntries(Object.entries(t).filter(([k])=>!RATIOS.includes(k))),TALENTS)||!same(r.talents.bbStr,{})||!same(r.skills,SKILLS))return false;
  if(!same(closure(n),COMPONENTS)||Object.entries(TEMPLATES).some(([k,v])=>!same(n.$template(k),v))
   ||Object.entries(PROJECTILES).some(([k,v])=>!same(n.$projectile(k).map(c=>JSON.stringify(norm(c))).sort(),v))
   ||Object.entries(RANGES).some(([k,v])=>!same(n.$range(k),v)))return false;
@@ -80,7 +83,7 @@ export function emperorsBladeParams(r){
 const feature={matchesRecord:isEmperorsBlade,covers:emperorsBladeNative};
 const lines=new Set(EMPERORS_BLADE_ABILITIES.map(a=>a.text));
 export const EMPERORS_BLADE_FEATURES={
- "talent:BlackFog":{...feature,explains:text=>lines.has(text),nativeClaim:()=>({wrappers:2}),
+ "talent:BlackFog":{...feature,explains:text=>lines.has(text),nativeClaim:()=>({wrappers:2}),stageMultipliers:Object.fromEntries(RATIOS.map(k=>[k,ratio])),
   note:"Emperor's Blade: Dominion zones, Collapsing Fear, revive and second form",ability:{kind:"emperorsBlade",params:emperorsBladeParams}},
  "talent:BlackFogTriggerP1":{...feature,note:"Dominion trigger of the first form (talent:BlackFog)"},
  "talent:BlackFogTriggerP2":{...feature,note:"Dominion trigger of the second form (talent:BlackFog)"},

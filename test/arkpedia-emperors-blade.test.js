@@ -30,7 +30,10 @@ test("both Emperor's Blade levels are admitted only with the complete native tre
  assert.ok(enemySupport(entry,clocks.prefabs,native).policy);
  const n=nativeComponents(native,id);
  for(const r of Object.values(entry.levels))assert.equal(emperorsBladeNative(r,n),true,`level ${r.level}`);
- assert.equal(emperorsBladeNative({...record,talents:{...record.talents,bb:{...record.talents.bb,'BlackFogTriggerP2.hp_ratio':.2}}},n),false);
+ assert.equal(emperorsBladeNative({...record,talents:{...record.talents,bb:{...record.talents.bb,'Reborn.duration':6}}},n),false);
+ assert.equal(emperorsBladeNative({...record,talents:{...record.talents,bb:{...record.talents.bb,'BlackFogTriggerP2.hp_ratio':0}}},n),false);
+ // DC-8 Challenge scales both Dominion thresholds.
+ assert.equal(emperorsBladeNative({...record,talents:{...record.talents,bb:{...record.talents.bb,'BlackFogTriggerP1.hp_ratio':.3,'BlackFogTriggerP2.hp_ratio':.2}}},n),true);
  const kill=structuredClone(native);kill.templates.enemy_empgrd_blackring.eventToActions.ON_BUFF_START[3]._skipReborn=true;
  assert.equal(emperorsBladeNative(record,nativeComponents(kill,id)),false);
  const aoe=structuredClone(native);for(const row of aoe.projectiles.projectile_enemy_empgrd_aoe){const d=JSON.parse(row.originalJson);if('m_Radius'in d){d.m_Radius=2.5;row.originalJson=JSON.stringify(d);}}
@@ -110,5 +113,34 @@ test('a Dominion outlives the Pursuer and then slows enemies too',()=>{
  slime.x=9;slime.y=9;h.run(.35);assert.ok(!slime.findBuff(DOMINION_BUFF),'his own side is spared while he is on the field');
  b.leak(e);h.run(.35);
  assert.ok(slime.findBuff(DOMINION_BUFF));assert.equal(slime.s.aspd,slime.base.aspd+p.fogAspd);assert.ok(top.findBuff(DOMINION_BUFF));
+ assert.deepEqual(b.errors,[]);
+});
+
+test('compiled DC-8 runs the Pursuer through both forms',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const {StandardBattle}=await import('../server/sim/arkpedia.js');
+ const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+ const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+ const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+ const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+ const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+ const stage=await loader.load(manifest.stages.find(s=>s.id==='dc-8'));
+ const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+ let boss=null;
+ // Clear the escort as it arrives, so the stage lasts until the Pursuer appears.
+ while(!b.finished&&b.time<900&&!(boss=b.enemies.find(e=>e.alive&&e.defId===id))){
+  for(const e of b.enemies)if(e.alive&&e.defId!==id)b.kill(e);
+  b.step();
+ }
+ assert.ok(boss,'the Pursuer spawns');
+ b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});
+ assert.equal(boss.alive,true,'the first knock-out revives him');
+ const until=b.time+7.3;while(b.time<until&&!b.finished)b.step();
+ assert.equal(boss.alive,true);assert.equal(boss.form,'form2');
+ b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});
+ assert.equal(boss.alive,true,'still invincible after the revive');
+ const later=b.time+10.1;while(b.time<later&&!b.finished)b.step();
+ b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});
+ assert.equal(boss.alive,false,'the second knock-out is final');
  assert.deepEqual(b.errors,[]);
 });
