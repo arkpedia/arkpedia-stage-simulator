@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { INFANTRY_ATTACK, isInfantry } from './enemy-infantry-features.js';
+import { isEmperorsBlade, emperorsBladeNative } from './enemy-emperors-blade-features.js';
 // Small source-backed families share the regular enemy dispatcher. Registration
 // stays separate from runtime factories and from generated support decisions.
 const signature = (r, group, keys) => JSON.stringify(r.talents.groups[group]) === JSON.stringify([...keys].sort());
@@ -54,8 +55,9 @@ export const REACTIVE_ENEMY_FEATURES = Object.freeze({
   'ability:<$ba.invisible>隐匿</>': { covers: (r, n) => r.key === 'enemy_2034_sythef_2' && cryingThief(r, n),
     trait: { flags: { stealth: true } }, note: 'Reviewed CN Crying Thief variant: shared native invisibility toggle.' },
   'talent:Combat': {
-    covers: (r, n) => isInfantry(r) ? INFANTRY_ATTACK.covers(r, n) : cryingThief(r, n),
-    ability: r => isInfantry(r) ? INFANTRY_ATTACK.ability : { kind: 'ordinaryAttackStatus', params: r => ({ status: 'stun',
+    // The Emperor's Blade's 250% melee attack belongs to talent:BlackFog.
+    covers: (r, n) => isEmperorsBlade(r) ? emperorsBladeNative(r, n) : isInfantry(r) ? INFANTRY_ATTACK.covers(r, n) : cryingThief(r, n),
+    ability: r => isEmperorsBlade(r) ? null : isInfantry(r) ? INFANTRY_ATTACK.ability : { kind: 'ordinaryAttackStatus', params: r => ({ status: 'stun',
       duration: r.talents.bb['Combat.attack@stun'], stealthRestore: 0 }) },
     explains: (text, r) => isInfantry(r) ? INFANTRY_ATTACK.explains.test(text)
       : /^(?:Attacks <\$ba\.stun>Stun<\/> the target|攻击会<\$ba\.stun>晕眩<\/>目标)$/.test(text),

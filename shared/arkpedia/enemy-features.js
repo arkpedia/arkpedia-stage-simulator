@@ -8,6 +8,7 @@ import {SHANHAIZHONG_ASSASSIN_FEATURES} from './enemy-shanhaizhong-assassin-feat
 import {NOVA_KNIGHT_FEATURES,isNovaKnight,novaKnightNative} from './enemy-nova-knight-features.js';
 import {DYLNPP_FEATURES} from './enemy-dylnpp-features.js';
 import {DIRESWINE_FEATURES,isDireswine,direswineNative} from './enemy-direswine-features.js';
+import {EMPERORS_BLADE_FEATURES,isEmperorsBlade,emperorsBladeNative} from './enemy-emperors-blade-features.js';
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -254,9 +255,9 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: (r, n) => isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan'
+    covers: (r, n) => isEmperorsBlade(r) ? emperorsBladeNative(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan'
       || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
-    ability: r => isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+    ability: r => isEmperorsBlade(r) || isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
 }
@@ -475,6 +476,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...SHANHAIZHONG_ASSASSIN_FEATURES,
   ...DYLNPP_FEATURES,
   ...DIRESWINE_FEATURES,
+  ...EMPERORS_BLADE_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -1335,13 +1337,14 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:enhance': { covers: (r, nat) => isJesselton(r) ? jesseltonNative(r,nat) : sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
     ability: r => isJesselton(r) ? JESSELTON_ABILITY : { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
     note: 'reviewed form enhancement or stacks ATK/ASPD per enemy-side death', explains: (text,r) => isJesselton(r) ? jesseltonExplains(text) : /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/.test(text) },
-  'ability:First Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
-    ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
+  'ability:First Form': { covers: (r, n) => isEmperorsBlade(r) ? emperorsBladeNative(r, n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
+    // The Emperor's Blade's forms belong to talent:BlackFog, which also claims his two skill wrappers.
+    ability: r => isEmperorsBlade(r) ? null : { kind: 'pancho', params: () => ({}) }, nativeClaim: (_p, n) => n.enemy_1520_empgrd ? {} : { wrappers: 5 },
     note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
   'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
   'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
   "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
-  'ability:Second Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
+  'ability:Second Form': { covers: (r, n) => isEmperorsBlade(r) ? emperorsBladeNative(r, n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
   'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
   'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
   'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
@@ -1358,13 +1361,14 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },
     note: 'immune to Erosion; while flooded, ATK +Swim.atk and Invisible', explains: /^Immune to Erosion\. While in water/ },
   'talent:Swim': { covers: r => sig(r, 'Swim', ['atk']), note: 'swim behaviour is attached by the handbook-line feature' },
-  'ability:First Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
-    ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
+  'ability:First Form': { covers: (r, n) => isEmperorsBlade(r) ? emperorsBladeNative(r, n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
+    // The Emperor's Blade's forms belong to talent:BlackFog, which also claims his two skill wrappers.
+    ability: r => isEmperorsBlade(r) ? null : { kind: 'pancho', params: () => ({}) }, nativeClaim: (_p, n) => n.enemy_1520_empgrd ? {} : { wrappers: 5 },
     note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
   'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
   'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
   "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
-  'ability:Second Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
+  'ability:Second Form': { covers: (r, n) => isEmperorsBlade(r) ? emperorsBladeNative(r, n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
   'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
   'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
   'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
