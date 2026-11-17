@@ -39,7 +39,7 @@ try {
       const state = await page.evaluate(() => {
         const battle = window.reviewBattle;
         for (let n = 0; n < 300 && !battle.finished; n++) battle.step();
-        return { seconds: battle.time, errors: battle.errors, devices: battle.manualStageDevices.entries.size,
+        return { seconds: battle.time, errors: battle.errors, devices: battle.manualStageDevices?.entries.size ?? 0, // device runtimes load only for stages that use them
           restriction: battle.stageCardRules?.deploymentExcludedProfessionMask ?? 0, canvas: !!document.querySelector('canvas'),
           originalWaveProgram: !!battle.stageWaveScheduler };
       });

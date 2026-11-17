@@ -73,6 +73,7 @@ SCOPED_OBJECTS = {
     'enemy_1309_mhboar_2': ['enemy_1309_mhboar_2','Default','Combat','Rush','FirstAttack','Crash'],
     'enemy_1191_krgrg': ['enemy_1191_krgrg','Default','Combat','unbalanced_bleed','Boom'],
     'enemy_1191_krgrg_2': ['enemy_1191_krgrg_2','Default','Combat','unbalanced_bleed','Boom'],
+    'enemy_1520_empgrd': ['enemy_1520_empgrd','Default','Reborn','Trigger','Attack','Selector','BlackRingP1','BlackRingP2','DamageBuffer','BlackFogTriggerP1','BlackFogTriggerP2','MarkSelf','Combat','BlackRing','Rest','WakeUp','AOE','TileSelector','FogProjectile','FogEffect','BlackFog'],
 
     'enemy_1281_sgcar': ['enemy_1281_sgcar','Default','Special','Combat','Passive','DeathRattle'],
     'enemy_1281_sgcar_2': ['enemy_1281_sgcar_2','Default','Special','Combat','Passive','DeathRattle'],
@@ -572,6 +573,7 @@ for bundle in sorted(wanted):
             'enemy_1309_mhboar_2': {'Combat','Rush','FirstAttack','Crash'},
             'enemy_1191_krgrg': {'Combat','unbalanced_bleed','Boom'},
             'enemy_1191_krgrg_2': {'Combat','unbalanced_bleed','Boom'},
+            'enemy_1520_empgrd': {'Trigger','Attack','Selector','BlackRingP1','BlackRingP2','DamageBuffer','BlackFogTriggerP1','BlackFogTriggerP2','MarkSelf','Combat','BlackRing','Rest','WakeUp','AOE','TileSelector','FogProjectile','FogEffect','BlackFog'},
 
             'enemy_1281_sgcar': {'Combat','Passive','DeathRattle','Special'},
             'enemy_1281_sgcar_2': {'Combat','Passive','DeathRattle','Special'},
@@ -750,6 +752,7 @@ for bundle in sorted(wanted):
             'enemy_1409_bdguad_2': {'Selector'},
             'enemy_1309_mhboar': {'Crash'},
             'enemy_1309_mhboar_2': {'Crash'},
+            'enemy_1520_empgrd': {'Trigger','Selector','TileSelector'},
             'enemy_1184_cadkgt': {'Trigger'},
             'enemy_1184_cadkgt_2': {'Trigger'},
             'enemy_1184_cadkgt_3': {'Trigger'},

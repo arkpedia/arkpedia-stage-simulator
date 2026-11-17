@@ -74,6 +74,10 @@ ARKPEDIA_REVIEW_CHROME=/path/to/chromium npm run content:library:review
 results are written under `.cache/arkpedia/stage-library-review/`.
 `data/arkpedia-library-review.json` records verification results and file hashes.
 
+## Publication with each enemy batch (owner's decision, 2026-11-17)
+
+From 2026-11-17 the library is rebuilt and reviewed with every enemy batch, so stages whose enemies become supported are published at once. The first rebuild made 8 stages available (CG-S-1, CV-1, CV-6, CV-EX-6, DC-S-1, both FM-2 variants and ISW-SP); none became unavailable. `npm run content:library:check` smoked all 978 graphs without failures, and the browser review passed on desktop and touch. The review ran with `ARKPEDIA_REVIEW_ORIGIN=http://127.0.0.1:3185` (ports 3182–3184 are reserved) and Playwright's `chrome-headless-shell` as `ARKPEDIA_REVIEW_CHROME`. The review script now treats a stage without a device runtime as having no manual devices, because device runtimes load only for stages that use them. `data/arkpedia-library-review.json` stays the 2026-11-14 receipt; later reviews are recorded here and in the batch documents.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
