@@ -63,7 +63,7 @@ export function emperorsBladeNative(r,n){
 }
 /**
  * Runtime parameters. Talent and skill values come from the record; the rest from the pinned components:
- * the revive's 0.5 HP recharge ratio, the Dominion projectiles' 1.45 s delay, the 0.3 s pulse and its 0.6 s
+ * the Dominion projectiles' 1.45 s delay, the 0.3 s pulse and its 0.6 s
  * buff, the `x-1` Dominion range, and the clip clocks (Attack01 for the ranged attack stand, Skill_01 for
  * Collapsing Fear, Skill_02_Begin's strike for the revive's field-wide cast).
  */
@@ -72,7 +72,8 @@ export function emperorsBladeParams(r){
  const form=(ratio,k,radius)=>({hpRatio:t[ratio],radius,scale:skill(k).bb.atk_scale,cooldown:skill(k).cooldown,initial:skill(k).initCooldown});
  return {
   form1:form("BlackFogTriggerP1.hp_ratio","BlackRingP1",2),form2:form("BlackFogTriggerP2.hp_ratio","BlackRingP2",2.5),
-  rebirth:t["Reborn.duration"],rebornHp:.5,invincible:t["Reborn.reborn_invincible.duration"],rebornAtk:t["Reborn.atk"],
+  rebirth:t["Reborn.duration"],// Full HP: the owner checked in game (2026-11-17); the pinned _hpRechargeRatio 0.5 does not set it.
+  rebornHp:1,invincible:t["Reborn.reborn_invincible.duration"],rebornAtk:t["Reborn.atk"],
   ringScale:t["Reborn.atk_scale"],ringRelease:CLOCK.events.Skill_02_Begin,combatScale:t["Combat.attack@combat_atkscale.atk_scale"],
   fogAspd:t["BlackFog.attack_speed"],fogResistance:t["BlackFog.damage_resistance"],aoeRadius:t["BlackFog.range_radius"],aoeScale:1,
   fogDelay:f32(1.45),fogInterval:f32(.3),fogBuffDuration:f32(.6),fogRange:RANGES["x-1"].grids,

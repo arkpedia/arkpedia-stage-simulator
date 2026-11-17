@@ -41,13 +41,13 @@ The revive component (`_maxRespawnCnt` 1, `_modeIndex` 1, `_hpRechargeRatio` 0.5
 - Skill_02_Begin 1.8 s, then Rest 3 s (`rest_duration`), then Skill_02_End 2.4 s. These add up to exactly `Reborn.duration` 7.2 s.
 - During it he is invulnerable, untargetable and inert (the shared `reborn()`).
 - At Skill_02_Begin's strike (1.167 s) Collapsing Fear hits every selectable operator on the field with `Reborn.atk_scale` × ATK and defeats the Dominion holders.
-- He then stands up with 50% HP, gets `reborn_up` (ATK +`Reborn.atk`, a MULTIPLIER modifier read as +50%), and has `reborn_invincible` for 10 s.
+- He then stands up with full HP (checked in game by the owner, 2026-11-17), gets `reborn_up` (ATK +`Reborn.atk`, a MULTIPLIER modifier read as +50%), and has `reborn_invincible` for 10 s.
 - The damage tally is cleared.
 
 ## Second form
 
 - **Attack.** He attacks his blocker with the Combat ability. Its own `_atkScale` is 0, and the `enemy_empgrd_atkscale` buff deals one 2.5× ATK physical melee packet. Any other target takes the 1× ranged attack (PRTS: "被阻挡时进行近战攻击，造成攻击力250%的物理伤害").
-- **Dominion.** It is cast at every 25% of max HP lost (`BlackFogTriggerP2`). Counting starts from the HP he revived with.
+- **Dominion.** It is cast at every 25% of max HP lost (`BlackFogTriggerP2`), counted from the full HP he revives with.
 - **Collapsing Fear (`BlackRingP2`).** The same, with radius 2.5. Its cooldown restarts at 20 s.
 
 ## Stage multipliers
@@ -61,7 +61,7 @@ DC-8 Challenge applies `enemy_talent_blackb_mul`: `BlackFogTriggerP1.hp_ratio` �
 - the Dominion appears 1.45 s after the 50% threshold, on the top damage dealer, with the Arts splash, the 13-tile diamond, −50 ASPD, and halved damage on him while he stands in it;
 - an operator outside every Dominion is preferred to a bigger damage dealer inside one;
 - Collapsing Fear at 20 s: an operator holding the Dominion within 2 is defeated, another takes Arts damage, one at distance 3 is untouched;
-- the knock-out: the field-wide cast, revive at 50% HP with +50% ATK and 10 s invincibility, and a Dominion after a further 25%;
+- the knock-out: the field-wide cast, revive at full HP with +50% ATK and 10 s invincibility, and a Dominion after a further 25%;
 - the second form's 2.5× melee on its blocker and 1× on others;
 - a Dominion outlives him and slows enemies after he leaves;
 - compiled DC-8 from the published library: the Pursuer spawns, revives into the second form, stays invincible, and his second knock-out is final, with no battle errors.
@@ -70,7 +70,7 @@ The library rebuild published exactly five more stages (DC-8, DC-8 Challenge, WD
 
 ## Boundaries
 
-- **Revive HP.** The native `_hpRechargeRatio` is 0.5. The Blade Knight (0.2) and Jesselton (1) contracts read the same field as the HP after reviving. PRTS says "回复100%生命值" and the EN wiki is silent. The runtime follows the data, `rebornHp` in the contract, until an in-game check settles it.
+- **Revive HP.** He revives at full HP: the owner checked in game on 2026-11-17, matching PRTS ("回复100%生命值"). The native `_hpRechargeRatio` is 0.5 and stays pinned; it does not set the revive HP here, although the Blade Knight (0.2) and Jesselton (1) contracts read the same field as the HP after reviving. Recheck those two if their revive HP is ever questioned.
 - **One cast per crossing.** A single hit that crosses two thresholds raises one Dominion, and the count moves past both.
 - **Damage tally.** The tally adds the amount of every damage receipt from an operator-side source, before shields and HP floors. The native `RecordDamageModifier` filter is not decompiled.
 - **The Combat clip.** Blocked attackers do not stand, so the 1.867 s Attack02 clip only changes the visuals, which use the shared attack animation.
