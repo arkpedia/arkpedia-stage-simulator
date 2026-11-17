@@ -80,6 +80,8 @@ From 2026-11-17 the library is rebuilt and reviewed with every enemy batch, so s
 
 The Emperor's Blade batch (2026-11-17) published DC-8, DC-8 Challenge, WD-8, WD-EX-8 and WD-EX-8 Challenge (983 available, none withdrawn). The smoke check passed all 983 graphs, and the browser review passed.
 
+The Andoain batch (2026-11-17) published FD-8, FD-8 Challenge, GA-8, GA-EX-8 and GA-EX-8 Challenge (988 available, none withdrawn). The smoke check passed all 988 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

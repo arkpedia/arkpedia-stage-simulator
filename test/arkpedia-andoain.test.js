@@ -113,3 +113,30 @@ test('second form: the scan locks five operators left to right, top first, then 
  assert.equal(h.ab.ammo.current,p.ammo.max);assert.ok(!ops.some(u=>u.findBuff(LOCK_BUFF)));
  assert.deepEqual(b.errors,[]);
 });
+
+test('compiled GA-8: his revive releases the wave, so later waves come while he still stands',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const {StandardBattle}=await import('../server/sim/arkpedia.js');
+ const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+ const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+ const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+ const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+ const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+ const stage=await loader.load(manifest.stages.find(s=>s.id==='ga-8'));
+ const run=knockOut=>{
+  const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+  let boss=null,spawned=0;b.on('enemySpawn',()=>spawned++);
+  // Clear the escort as it arrives; hold Andoain in place so only the wave rules decide what comes next.
+  while(!b.finished&&b.time<900&&!boss){for(const e of b.enemies)if(e.alive&&e.defId!==id)b.kill(e);boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+  assert.ok(boss,'Andoain spawns');
+  b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true,disarm:true}});
+  if(knockOut)b.kill(boss);
+  const start=spawned,until=b.time+120;
+  while(!b.finished&&b.time<until){for(const e of b.enemies)if(e.alive&&e!==boss)b.kill(e);b.step();}
+  assert.equal(boss.alive,true);assert.deepEqual(b.errors,[]);
+  return {spawns:spawned-start,form:boss.form};
+ };
+ const held=run(false),revived=run(true);
+ assert.equal(revived.form,'form2');
+ assert.ok(revived.spawns>held.spawns,`${revived.spawns} spawns after the revive vs ${held.spawns} without`);
+});
