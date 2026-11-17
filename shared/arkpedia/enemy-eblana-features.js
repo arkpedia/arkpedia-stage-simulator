@@ -6,8 +6,8 @@ export const EBLANA_REBIRTH_TEXT = '[Rebirth] While on the field, some enemies w
 export const EBLANA_AURA_EXCLUSIONS = Object.freeze(['enemy_1288_duskls', 'enemy_1288_duskls_2',
   'enemy_1292_duskld', 'enemy_1292_duskld_2', 'enemy_1294_duchns']);
 
-/** Partial boss coverage: this approves the independent Aura talent only.
- * Phases, attacks and skills still require their own source contracts. */
+/** The independent Aura talent of The Leader (enemy_1536_ncrmcr). Her phases,
+ * attacks and skills are in enemy-the-leader-features.js. */
 export function eblanaAuraNative(r, n) {
   if (r.key !== 'enemy_1536_ncrmcr' || r.prefabKey !== r.key || ![0, 1].includes(r.level)
     || !same(r.talents.groups.Aura, ['enemy_key'])
@@ -51,5 +51,5 @@ export const EBLANA_AURA_FEATURE = {
   dependsOn: r => r.key === 'enemy_1536_ncrmcr' ? [r.talents.bbStr['Aura.enemy_key']] : [],
   ability: r => r.key === 'enemy_1536_ncrmcr' ? { kind: 'deathConversionAura', params: r => ({ child: r.talents.bbStr['Aura.enemy_key'], delay: .5,
     excludedPrefabs: EBLANA_AURA_EXCLUSIONS, excludedTags: ['machine'], buffKey: 'enemy_ncrmcr_aura' }) } : null,
-  note: 'Independent global conversion aura; the remaining boss phase and skill contracts are still blocked.',
+  note: 'Independent global conversion aura; her phases and skills are in enemy-the-leader-features.js.',
 };

@@ -10,10 +10,11 @@ import {DYLNPP_FEATURES} from './enemy-dylnpp-features.js';
 import {DIRESWINE_FEATURES,isDireswine,direswineNative} from './enemy-direswine-features.js';
 import {EMPERORS_BLADE_FEATURES,isEmperorsBlade,emperorsBladeNative} from './enemy-emperors-blade-features.js';
 import {ANDOAIN_FEATURES,isAndoain,andoainNative} from './enemy-andoain-features.js';
+import {THE_LEADER_FEATURES,isTheLeader,theLeaderNative} from './enemy-the-leader-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -483,6 +484,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...DIRESWINE_FEATURES,
   ...EMPERORS_BLADE_FEATURES,
   ...ANDOAIN_FEATURES,
+  ...THE_LEADER_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -1168,9 +1170,9 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(text) },
   // Volleyball cart: ATK stacks per attack, lost on a negative status.
   'talent:Atkup': { covers: brokenBladesNative },
-  'talent:AtkUp': { covers: (r, n) => brokenBladesNative(r, n) || sig(r, 'AtkUp', ['atk', 'max_stack_cnt'])
+  'talent:AtkUp': { covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : brokenBladesNative(r, n) || sig(r, 'AtkUp', ['atk', 'max_stack_cnt'])
       && r.abilities.some(a => a.text === 'Gains increased ATK with each attack (up to a limit); when affected by certain <$ba.debuff>Negative Statuses</>, these stacks will be lost'),
-    ability: r => brokenBlades(r) ? null : { kind: 'atkUpStacks', params: r => ({ atk: r.talents.bb['AtkUp.atk'], max: r.talents.bb['AtkUp.max_stack_cnt'] }) },
+    ability: r => formBoss(r) || brokenBlades(r) ? null : { kind: 'atkUpStacks', params: r => ({ atk: r.talents.bb['AtkUp.atk'], max: r.talents.bb['AtkUp.max_stack_cnt'] }) },
     note: 'ATK +atk per attack, capped, cleared by negative statuses',
     explains: /^Gains increased ATK with each attack \(up to a limit\); when affected by certain <\$ba\.debuff>Negative Statuses<\/>, these stacks will be lost$/ },
   // Evade: dodge while unblocked, an initial timed dodge, or a one-time low-HP dodge.

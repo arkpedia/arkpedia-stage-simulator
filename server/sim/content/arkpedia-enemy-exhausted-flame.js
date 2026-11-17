@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { areaSelectable } from '../targeting.js';
+const BOUND_PREFIX='ab:exhaustedFlame:';
+/** Whether a unit is held by some Exhausted Flame (native enemy_duchns_kill_source). */
+export const boundByExhaustedFlame=u=>!!u?.buffs?.some(x=>typeof x.key==='string'&&x.key.startsWith(BOUND_PREFIX));
 /** A tile-bound enemy aura. The bound buff owns suppression; removing one
  * cannot clear another source, and its finish kills only its original flame. */
 export function exhaustedFlame({hpRatio,elementRatio},ab){
@@ -10,7 +13,7 @@ export function exhaustedFlame({hpRatio,elementRatio},ab){
   for(const[u,key]of a.bound)if(!current.has(u)||!u.findBuff(key)){b.kill(e);return;}
   if(!current.size){b.kill(e);return;}
   for(const u of current)if(!a.bound.has(u)){
-   const key=`ab:exhaustedFlame:${e.id}:${e.deploySeq}`;a.bound.set(u,key);
+   const key=`${BOUND_PREFIX}${e.id}:${e.deploySeq}`;a.bound.set(u,key);
    b.addBuff(u,{key,source:e,flags:{disarm:true,skillNotActivatable:true},onRemove:()=>{if(!a.cleaning&&e.alive)b.kill(e);}});
   }
  };

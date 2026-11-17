@@ -69,9 +69,10 @@ test('overlapping aura sources cannot duplicate a converted body or remove each 
   const next = spawn(); b.kill(boss); run(.1);
   assert.equal(next.findBuff('enemy_ncrmcr_aura').source, second); assert.deepEqual(b.errors, []);
 });
-test('Aura source contract covers both levels but keeps the full boss blocked', () => {
+test('Aura source contract covers both levels; the boss is admitted with The Leader contract', () => {
   for (const r of Object.values(ENEMY_RECORDS.enemies[bossId].levels)) assert.equal(eblanaAuraNative(r, nativeComponents(native, bossId)), true);
-  assert.equal(enemySupport(ENEMY_RECORDS.enemies[bossId], clocks.prefabs, native).policy, null);
+  // Since 2026-11-18 the remaining phases and skills have their own contract (enemy-the-leader-features.js).
+  assert.equal(enemySupport(ENEMY_RECORDS.enemies[bossId], clocks.prefabs, native).policy, 'stats-attacks-and-features');
   for (const change of ['delay', 'fall', 'mode', 'tags']) {
     const ev = structuredClone(native);
     if (change === 'delay') ev.templates.enemy_ncrmcr_aura.eventToActions.ON_OWNER_KILLED[3]._delayTime = 0;
