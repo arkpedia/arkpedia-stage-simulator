@@ -109,7 +109,7 @@ for(const [stageId,level] of [['fc-8',0],['fc-ex-8',1]])
   let boss=null;
   while(!b.finished&&b.time<900&&!boss){for(const e of b.enemies)if(e.alive&&e.defId!==id)b.kill(e);boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
   assert.ok(boss,'The Leader spawns');
-  assert.equal(boss.def.level??boss.def.raw?.level??level,level,'the stage uses this level');
+  assert.equal(boss.def.raw?.level,level,'the stage uses this level');assert.equal(boss.base.maxHp,entry.levels[level].stats.maxHp);
   b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
   b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});
   assert.equal(boss.alive,true);
