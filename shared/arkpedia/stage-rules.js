@@ -292,12 +292,19 @@ export function compileStageRules(source, receipt) {
           values[entry.key] = entry.value;
         }
       }
-      if (!selectors.enemy || !selectors.skill || !Object.keys(values).length) throw Error('Incomplete enemy skill multiplier');
+      if (!selectors.enemy || !Object.keys(values).length) throw Error('Incomplete enemy skill multiplier');
+      // Without a `skill` selector each key names its skill itself ("PetrifiedRay.atk_scale", 9-19 Challenge).
+      const scoped = selectors.skill ? Object.entries(values).map(([key, value]) => [selectors.skill, key, value])
+        : Object.entries(values).map(([key, value]) => {
+          const m = /^([a-zA-Z][a-zA-Z0-9_]*)\.(.+)$/.exec(key);
+          if (!m) throw Error('Incomplete enemy skill multiplier');
+          return [m[1], m[2], value];
+        });
       const ids = selectors.enemy.split('|');
       if (new Set(ids).size !== ids.length) throw Error('Duplicate enemy skill target');
       for (const id of ids) {
-        const skills = enemySkillScoped[id] ??= {}, params = skills[selectors.skill] ??= {};
-        for (const [key, value] of Object.entries(values)) params[key] = (params[key] ?? 1) * value;
+        const skills = enemySkillScoped[id] ??= {};
+        for (const [skill, key, value] of scoped) { const params = skills[skill] ??= {}; params[key] = (params[key] ?? 1) * value; }
       }
       continue;
     }

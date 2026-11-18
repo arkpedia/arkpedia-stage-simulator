@@ -84,6 +84,8 @@ The Andoain batch (2026-11-17) published FD-8, FD-8 Challenge, GA-8, GA-EX-8 and
 
 The Leader batch (2026-11-18) published FC-8, FC-EX-8, FC-EX-8 Challenge and `camp_r_17` (992 available, none withdrawn). The smoke check passed all 992 graphs, and the browser review passed.
 
+The Mandragora batch (2026-11-18) published 9-19, 9-19 Challenge, H9-6 and `camp_r_09` (996 available, none withdrawn). The smoke check passed all 996 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

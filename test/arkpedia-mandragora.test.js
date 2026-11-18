@@ -98,3 +98,43 @@ test('the revive releases the wave and brings the second form: hovering, 3 s inv
  h.run(p.restore.duration+p.skin.duration);assert.equal(h.shield(),true);assert.ok(e.s.flags.float);
  assert.deepEqual(b.errors,[]);
 });
+
+async function compiled(stageId){
+ const {readFile}=await import('node:fs/promises');
+ const {StandardBattle}=await import('../server/sim/arkpedia.js');
+ const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+ const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+ const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+ const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+ const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+ const stage=await loader.load(manifest.stages.find(s=>s.id===stageId));
+ const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+ let boss=null;
+ while(!b.finished&&b.time<900&&!boss){for(const e of b.enemies)if(e.alive&&e.defId!==id&&!e.mem.stageUnitDevice)b.kill(e);boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+ assert.ok(boss,'Mandragora spawns');
+ const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){for(const e of b.enemies)if(e.alive&&e!==boss&&!e.mem.stageUnitDevice)b.kill(e);b.step();}};
+ return {b,boss,run};
+}
+for(const [stageId,level] of [['9-19',0],['h9-6',1]])
+ test(`compiled ${stageId} runs Mandragora (level ${level}) into the second form`,async()=>{
+  const {b,boss,run}=await compiled(stageId);
+  assert.equal(boss.def.raw?.level,level);
+  b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
+  b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});assert.equal(boss.alive,true);
+  run(8);assert.equal(boss.form,'form2');assert.ok(boss.s.flags.float,'hovering behind her Stoneshield');
+  assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
+ });
+test('compiled 9-19: a real Tattered Pillar collapse breaks her Stoneshield',async()=>{
+ const {b,boss,run}=await compiled('9-19');
+ const pillar=b.enemies.find(e=>e.alive&&e.mem.stageUnitDevice?.pillar&&b.grid.inRect(e.tileR,e.tileC+1));
+ b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
+ boss.x=pillar.tileC+1;boss.y=pillar.tileR;assert.ok(boss.findBuff('mandra_stone_skin'));
+ b.stageDemolition.collapse(pillar,'RIGHT');run(2);
+ assert.ok(!boss.findBuff('mandra_stone_skin'),'the pillar broke the Stoneshield');assert.deepEqual(b.errors,[]);
+});
+test('compiled 9-19 Challenge scales the Gaze and the aura',async()=>{
+ const {boss}=await compiled('9-19_challenge_mode');
+ const raw=boss.def.raw;
+ assert.equal(raw.skills.find(s=>s.prefabKey==='PetrifiedRay').bb.atk_scale,1.2);
+ assert.ok(Math.abs(raw.talents.bb['StoneSkin_2.atk_scale']-.45)<1e-9);
+});

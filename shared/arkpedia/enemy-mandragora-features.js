@@ -20,6 +20,7 @@ export const MANDRAGORA_ABILITIES=[
 ];
 // Level one lists two talent values and one skill. Like Jesselton's and The Leader's level one, it is read as a
 // sparse overlay on level zero, here by talent key and by skill prefab key (PRTS lists every skill for both levels).
+const AURA="StoneSkin_2.atk_scale";
 const T0={"StoneSkin.damage_resistance":.6,"ReSummonStoneSkin.duration":25,"ReSummonStoneSkin.hp_ratio_offset":-.4,"StoneSkin_2.range_radius":1.7,
  "StoneSkin_2.atk_scale":.3,"StoneSkin_2.interval":1,"Reborn.duration":5,"Reborn.mandra_p2_invinsible.duration":3,"Reborn.mandra_ray_p2[cd]":10,
  "Reborn.summon_dupilr_p2[cd]":20};
@@ -58,7 +59,9 @@ export function mandragoraNative(r,n){
  const skillsOk=l&&same([...r.skills].sort((a,b)=>a.prefabKey.localeCompare(b.prefabKey)),[...l.skills].sort((a,b)=>a.prefabKey.localeCompare(b.prefabKey)));
  // PetrifiedRay.atk_scale is stage-scalable (9-19 Challenge: x1.2); every other value is pinned.
  if(!isMandragora(r)||!l||r.applyWay!=="ALL"||r.stats.dmgType!=="arts"||r.stats.motion!=="WALK"||r.stats.rangeRadius!==1.5||r.notCountInTotal
-  ||!same(r.abilities,MANDRAGORA_ABILITIES)||!same(r.talents.groups,l.groups)||!same(t,l.talents)||!same(r.talents.bbStr,l.bbStr)
+  ||!same(r.abilities,MANDRAGORA_ABILITIES)||!same(r.talents.groups,l.groups)
+  // StoneSkin_2.atk_scale is stage-scalable too (9-19 Challenge: x1.5).
+  ||!same({...t,...(AURA in t&&t[AURA]>0?{[AURA]:l.talents[AURA]}:{})},l.talents)||!same(r.talents.bbStr,l.bbStr)
   ||!(skillsOk||same(r.skills.map(s=>s.prefabKey==="PetrifiedRay"&&s.bb.atk_scale>0?{...s,bb:{...s.bb,atk_scale:1}}:s),l.skills)))return false;
  if(!same(closure(n),COMPONENTS)||Object.entries(TEMPLATES).some(([k,v])=>!same(n.$template(k),v))
   ||Object.entries(PROJECTILES).some(([k,v])=>!same(n.$projectile(k).map(c=>JSON.stringify(norm(c))).sort(),v)))return false;
@@ -89,6 +92,7 @@ const lines=new Set(MANDRAGORA_ABILITIES.map(a=>a.text));
 export const MANDRAGORA_FEATURES={
  "skill:PetrifiedRay":{...feature,explains:text=>lines.has(text),nativeClaim:()=>({wrappers:6,active:2}),
   stageSkillMultipliers:{PetrifiedRay:{atk_scale:v=>Number.isFinite(v)&&v>0&&v<=10}},
+  stageMultipliers:{[AURA]:v=>Number.isFinite(v)&&v>0&&v<=10},
   note:"Mandragora: Stoneshield, Gaze with tile sealing, revive with wave release, second-form hover, aura and pillar collapse",
   ability:{kind:"mandragora",params:mandragoraParams}},
  "skill:Reborn":{...feature,note:"revive into the second form (skill:PetrifiedRay)"},
