@@ -87,3 +87,30 @@ test('blink: hidden and protected, then at the next checkpoint; cooldowns follow
  assert.ok(Math.abs(ab.blinkLeft-(p.blink.cooldowns[0]-p.blink.hide))<.2);
  assert.deepEqual(b.errors,[]);
 });
+
+// M8-8 Challenge doubles the dust (a FOUR_STAR rune); normal M8-8 keeps 50.
+for(const [stageId,level,dust] of [['m8-8',0,50],['m8-8_challenge_mode',0,100],['h8-3',1,80]])
+ test(`compiled ${stageId}: Mephisto (level ${level}) goes Dormant, then into Rage; the dust deals ${dust} per stack`,async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const {StandardBattle}=await import('../server/sim/arkpedia.js');
+  const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+  const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+  const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+  const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+  const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+  const stage=await loader.load(manifest.stages.find(s=>s.id===stageId));
+  const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+  let boss=null;
+  const clear=()=>{for(const e of b.enemies)if(e.alive&&e!==boss&&e.defId!==id&&!e.mem.stageUnitDevice)b.kill(e);};
+  while(!b.finished&&b.time<900&&!boss){clear();boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+  assert.ok(boss);assert.equal(boss.def.raw?.level,level);
+  assert.equal(boss.def.raw.skills.find(s=>s.prefabKey==='Poison').bb.damage,dust);
+  const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
+  b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
+  const def=boss.s.def;
+  b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});assert.equal(boss.alive,true);
+  run(3);assert.ok(boss.s.def>def+2000,'Dormant');
+  run(3);b.dealDamage(null,boss,{amount:boss.s.maxHp*3,type:'true',sourceless:true});assert.equal(boss.alive,true);
+  run(3);assert.ok(boss.s.def<def+1,'Rage');assert.ok(boss.hp>=boss.s.maxHp*.5-1);
+  assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
+ });
