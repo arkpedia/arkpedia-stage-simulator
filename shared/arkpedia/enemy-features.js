@@ -13,10 +13,11 @@ import {ANDOAIN_FEATURES,isAndoain,andoainNative} from './enemy-andoain-features
 import {THE_LEADER_FEATURES,isTheLeader,theLeaderNative} from './enemy-the-leader-features.js';
 import {MANDRAGORA_FEATURES,isMandragora,mandragoraNative} from './enemy-mandragora-features.js';
 import {AWAKEN_BOSS_FEATURES,isAwaken,awakenBossNative} from './enemy-awaken-boss-features.js';
+import {MEPHISTO_FEATURES,isMephisto,mephistoNative} from './enemy-mephisto-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -489,6 +490,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...THE_LEADER_FEATURES,
   ...MANDRAGORA_FEATURES,
   ...AWAKEN_BOSS_FEATURES,
+  ...MEPHISTO_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -606,11 +608,11 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
   // Crownslayer: a cooldown blink past the blocker, proven against the reviewed Blink wrapper/ability pair.
-  'skill:blink': { covers: (r, nat) => isCrownslayerBlink(r, nat) || isCheckpointBlink(r, nat),
+  'skill:blink': { covers: (r, nat) => formBoss(r) ? formBoss(r)(r, nat) : isCrownslayerBlink(r, nat) || isCheckpointBlink(r, nat),
     stageSkillCooldown: { blink: (r, skill) => r.prefabKey === 'enemy_1502_crowns' && skill.cooldown === 15 && skill.initCooldown === 15 },
-    ability: { kind: 'blink', params: r => r.skills[0].cooldown === 0 && r.skills[0].spCost === 2 ? { mode: 'attacks', every: r.skills[0].spCost ?? 2, dist: r.skills[0].bb.dist ?? 1.5 }
+    ability: r => formBoss(r) ? null : ({ kind: 'blink', params: r => r.skills[0].cooldown === 0 && r.skills[0].spCost === 2 ? { mode: 'attacks', every: r.skills[0].spCost ?? 2, dist: r.skills[0].bb.dist ?? 1.5 }
       : { mode: 'blocked', dist: r.skills[0].bb.dist ?? 1.5,
-        cooldown: r.skills[0].cooldown * (r.stageSkillCooldownScale ?? 1), initCooldown: r.skills[0].initCooldown * (r.stageSkillCooldownScale ?? 1) } },
+        cooldown: r.skills[0].cooldown * (r.stageSkillCooldownScale ?? 1), initCooldown: r.skills[0].initCooldown * (r.stageSkillCooldownScale ?? 1) } }),
     note: 'blink past the blocker, or towards the next checkpoint after several attacks', nativeClaim: () => ({ wrappers: 1 }),
     explains: text => text === 'When blocked, can quickly move behind the unit'
       || text === 'After several attacks, moves towards the next checkpoint for the next attack' },
