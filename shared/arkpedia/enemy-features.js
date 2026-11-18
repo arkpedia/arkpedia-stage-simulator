@@ -16,6 +16,7 @@ import {AWAKEN_BOSS_FEATURES,isAwaken,awakenBossNative} from './enemy-awaken-bos
 import {MEPHISTO_FEATURES,isMephisto,mephistoNative} from './enemy-mephisto-features.js';
 import {BIG_UGLY_THING_FEATURES,isBigUglyThing,bigUglyThingNative} from './enemy-big-ugly-thing-features.js';
 import {MANFRED_FEATURES,isManfred,manfredNative} from './enemy-manfred-features.js';
+import {COCOON_CAGE_FEATURES} from './enemy-cocoon-cage-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
 const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
@@ -428,6 +429,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1284_sgprst:'native:fatherAgenirLog',
+  enemy_1432_lrccon:'native:cocoonCage',
   enemy_1184_cadkgt_3:'native:vivianaLog',
   enemy_2125_dylnpp:'native:dylnppLog',
   enemy_1281_sgcar:'native:famigliaLimoMelee',enemy_1281_sgcar_2:'native:famigliaLimoMelee',
@@ -495,6 +497,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...MEPHISTO_FEATURES,
   ...BIG_UGLY_THING_FEATURES,
   ...MANFRED_FEATURES,
+  ...COCOON_CAGE_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,

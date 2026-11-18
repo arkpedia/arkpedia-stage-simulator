@@ -4,6 +4,7 @@
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-big-ugly-thing',load:()=>import('./arkpedia-enemy-big-ugly-thing.js'),exports:{bigUglyThing:'bigUglyThing'}},
   {key:'arkpedia-enemy-manfred',load:()=>import('./arkpedia-enemy-manfred.js'),exports:{manfred:'manfred'}},
+  {key:'arkpedia-enemy-cocoon-cage',load:()=>import('./arkpedia-enemy-cocoon-cage.js'),exports:{cocoonCage:'cocoonCage'}},
   {key:'arkpedia-enemy-mephisto',load:()=>import('./arkpedia-enemy-mephisto.js'),exports:{mephisto:'mephisto'}},
   {key:'arkpedia-enemy-awaken',load:()=>import('./arkpedia-enemy-awaken.js'),exports:{awaken:'awaken'}},
   {key:'arkpedia-enemy-mandragora',load:()=>import('./arkpedia-enemy-mandragora.js'),exports:{mandragora:'mandragora'}},

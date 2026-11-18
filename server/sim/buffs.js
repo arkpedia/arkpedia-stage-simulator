@@ -44,6 +44,8 @@ export const FLAG_KEYS = Object.freeze([
   'mireImmune',
   // Native SKILL_NOT_ACTIVATABLE gates new skill casts independently of Silence.
   'skillNotActivatable',
+  // Native NOT_WITHDRAWABLE: the player cannot retreat the unit (Theresa's Cocoon Cage).
+  'noRetreat',
 ]);
 
 /**

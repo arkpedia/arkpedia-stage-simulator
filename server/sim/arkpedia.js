@@ -664,6 +664,7 @@ export class StandardBattle extends Battle {
       throw new Error("Battle workspace is inactive.");
     const entry = this.bench[id];
     if (!entry?.unit?.alive) throw new Error("Operator is not deployed.");
+    if (entry.unit.s.flags.noRetreat) throw new Error("Operator cannot retreat.");
     const support = REGULAR_OPERATORS[id];
     const refund = support.noRetreatRefund ? 0 : support.mechanic === "fang-fire-sharpened"
       ? this.operatorServices.fangFireSharpenedRefund(entry) : support.mechanic === "charger"
