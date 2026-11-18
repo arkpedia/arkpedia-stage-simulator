@@ -101,3 +101,40 @@ test('Ruination Stance: unblocked single hits and the spear at the farthest unit
  h.run(p.spear.anim.dur);assert.equal(ab.cast,null);assert.ok(Math.abs(ab.spearLeft-(p.spear.cooldown-(b.time-cast0)))<.05,'the cooldown runs from the cast start');
  assert.deepEqual(b.errors,[]);
 });
+
+// [stage, max HP after the stage runes (Challenge: +20%)].
+for(const [stageId,maxHp] of [['7-18',45000],['7-18_challenge_mode',54000]])
+ test(`compiled ${stageId}: Strength Inspires the guerrillas, the knock-out releases the wave, Sacrifice, then Ruination`,async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const {StandardBattle}=await import('../server/sim/arkpedia.js');
+  const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+  const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+  const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+  const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+  const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+  const stage=await loader.load(manifest.stages.find(s=>s.id===stageId));
+  const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+  let boss=null,sniper=null;
+  const clear=()=>{for(const e of b.enemies)if(e.alive&&e!==boss&&e!==sniper&&e.defId!==id&&!e.mem.stageUnitDevice)b.kill(e);};
+  const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
+  while(!b.finished&&b.time<600&&!boss){clear();boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+  assert.ok(boss);assert.equal(boss.def.raw?.level,0);assert.equal(boss.s.maxHp,maxHp,'stage runes');
+  assert.equal(b.mvpStageDevices[0]?.name,'Originium Altar');assert.equal(boss.profile.pulseImmune,true);
+  sniper=b.spawnEnemy(SNIPER,{pos:[Math.round(boss.y),Math.round(boss.x)],route:0});b.addBuff(sniper,{key:'hold',persist:true,flags:{noMove:true}});
+  run(.5);assert.ok(sniper.findBuff('enemy_9D0_talent_strength'));assert.equal(sniper.profile.maxTargets,2,'Inspired');
+  const ab=boss.mem.ab.list.find(a=>'form'in a),p=patriotParams(boss.def.raw);
+  b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
+  b.setViewport('fullscreen-workspace');b.getPlayer('arkpedia').dp=99;
+  let myrtle=null;
+  for(let r=0;r<stage.geometry.tileGrid.length&&!myrtle;r++)for(let c=0;c<stage.geometry.tileGrid[0].length&&!myrtle;c++){try{myrtle=b.deployOperator('char_151_myrtle',r,c,'RIGHT');}catch{}}
+  assert.ok(myrtle);myrtle.base.maxHp=1e9;myrtle.markDirty();myrtle.hp=myrtle.s.maxHp;myrtle.y=boss.y;myrtle.x=boss.x-1;
+  b.dealDamage(null,boss,{amount:boss.hp,type:'true',sourceless:true});assert.equal(ab.state,'reborn');
+  assert.equal(b.stageWaveScheduler.membership(boss).dontBlockWave,true,'the wave is released');
+  const sac=[];b.on('damaged',c=>{if(c.source===boss&&c.dmg?.tags?.includes('patrtSacrifice'))sac.push([c.target,c.dmg.type,c.amount]);});
+  run(p.revive.interval*5+.05);
+  assert.equal(sac.length,5,'five Sacrifice ticks in 4 s');
+  assert.ok(sac.every(([u,type,amount])=>u===myrtle&&type==='true'&&Math.abs(amount-boss.s.atk*p.immo.scale)<1e-6),'true damage at 5.21% ATK');
+  run(p.revive.dur);
+  assert.equal(ab.form,2);assert.equal(boss.hp,boss.s.maxHp);assert.ok(boss.s.flags.invulnerable);
+  assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
+ });
