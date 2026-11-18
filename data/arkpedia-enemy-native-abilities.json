@@ -447,6 +447,19 @@
    "OreImmune",
    "immo_trigger[reborning]"
   ],
+  "enemy_1503_talula": [
+   "enemy_1503_talula",
+   "Default",
+   "HalfState",
+   "Attack",
+   "Trigger",
+   "Combat",
+   "DragonFire",
+   "DanceFire",
+   "DragonFire[Half]",
+   "DanceFire[Half]",
+   "HalfHp"
+  ],
   "enemy_1514_smephi": [
    "enemy_1514_smephi",
    "Default",
@@ -29860,6 +29873,382 @@
     "pathId": "-277223773051767068",
     "objectName": "Blink",
     "originalJson": "{\"_addEnemyIdToSignalId\":0,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":2,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4948193224390063844\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   }
+  ],
+  "dyn/battle/prefabs/enemies/enemy_1503_talula.prefab": [
+   {
+    "pathId": "-9215956471810945287",
+    "objectName": "Attack",
+    "referenced": true,
+    "sha256": "cf98ec0047ab3202160d37a3770c5dcd0f5701959894049571e83eff02706bea",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_01_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_01_start_02\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1644390934427930361\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-9150546482611220743",
+    "objectName": "DanceFire[Half]",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":0,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Skill_2\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"6060512955666992889\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4634482268467564281\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+   },
+   {
+    "pathId": "-7922541897293754631",
+    "objectName": "Combat",
+    "referenced": true,
+    "sha256": "a3ecc75d1e56dcc37fe6d8be44798546a0f5e6c1b4ee9dfb6ae80d3e6f5a6a43",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_02_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_02_hit\",\"\",\"\",\"\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5451473470209003257\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-6202890692967067911",
+    "objectName": "HalfHp",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[{\"attributeType\":2,\"fetchBaseValueFromSourceEntity\":0,\"formulaItem\":1,\"loadFromBlackboard\":1,\"value\":0.0},{\"attributeType\":3,\"fetchBaseValueFromSourceEntity\":0,\"formulaItem\":1,\"loadFromBlackboard\":1,\"value\":0.0}]},\"audioSignal\":\"\",\"blackboard\":[{\"key\":\"mode\",\"value\":1.0,\"valueStr\":\"\"}],\"buffKey\":\"ftrtal_t[rage]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"skulsr_buff_01_start\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"switch_mode_restart_fsm\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_buffsWhenToggleOff\":[],\"_checker\":{\"m_FileID\":0,\"m_PathID\":\"2199137909249806073\"},\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":0,\"_isInverseToggle\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_setToggleFalseOnDetached\":0,\"_unmanagedBuffsWhenToggleOn\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7645410025599078137\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-4310938555973424352\"}}"
+   },
+   {
+    "pathId": "-6029853088011710727",
+    "objectName": "Default",
+    "originalJson": "{\"_addIndexToSignalId\":0,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-2327123792707121415\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"1796214867508268793\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"8512983362936573689\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-111273337436958983\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":0,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3885512609104203513\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}"
+   },
+   {
+    "pathId": "-5938867841529606407",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "05b4d1cb534e61badbcd02eda250926de822bcdb28447010ed72e6788145d8fa",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":1,\"_abnormalFlag\":20,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4907593922523885831\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "-5892698613704552711",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "77ffc420734b09bd0e0d3a06a12d538b4f92a1a3a5e2d8fe3a9f01d3304f7274",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8310770183593594617\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":2.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "-5761727407056613639",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "7a569b00f332339c299e4cfcae1dde7c41c7fdfe51d0d261534ca2d24874b3aa",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3645954369514180345\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":2.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "-5162931505845498119",
+    "objectName": "FaceSwitcher",
+    "referenced": true,
+    "sha256": "c952f4aed5eb008815f44a4a79ca720ee1389a9c9875c5bef26ef303d82e346f",
+    "originalJson": "{\"_defaultLOrR\":3,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2737598617510605063\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}"
+   },
+   {
+    "pathId": "-3762588453575389447",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "01b281f6d0cf202cbf7fc2fa9f0e614a3f01228a7edb22eacdefcfada8fe904a",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":0,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2434232702895780103\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "-3591485301153984775",
+    "objectName": "DragonFire",
+    "referenced": true,
+    "sha256": "7e272b002bf4fa504be8e10981115025518459689a758d8e0b4e0c07195716eb",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_01_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_01_hit\",\"\",\"\",\"\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"373412456735117049\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-3446566851022024967",
+    "objectName": "DragonFire",
+    "originalJson": "{\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"dragon_fire\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":1,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":0,\"_animKey\":\"Skill_1\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"Idle\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"5724681022896344825\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"373412456735117049\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8145049199648393782\"}}"
+   },
+   {
+    "pathId": "-2525473139375403271",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "b48b5a2c5d9266e57a7ebf21508860679c6877386e6d829923ce2b76b4bf06c1",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":0,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3645954369514180345\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "-2504543185575211271",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "ea46441967088a54ff69a9b2744502e1ef36fafd393b9aaa24467617826f3f1b",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2434232702895780103\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":2.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "-2327123792707121415",
+    "objectName": "Attack",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack_1\",\"_atkScale\":0.4000000059604645,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_talula\",\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-5938867841529606407\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5651054744630595321\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+   },
+   {
+    "pathId": "-2070252950240817415",
+    "objectName": "Spine",
+    "referenced": true,
+    "sha256": "7d6843437ea338c2f6bbf5208c2fda5efe7a2e445576358351a1a182fe4c6244",
+    "originalJson": "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7742473859698003705\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":2,\"m_PathID\":\"5559528849471389613\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}"
+   },
+   {
+    "pathId": "-1882254188902740231",
+    "objectName": "DanceFire",
+    "referenced": true,
+    "sha256": "1a6ee02cfb445e5d2c1664b6cb643e02bf0a38c9edc4bd503439d0bc14500ae7",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_02_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_02_start_02\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_02_hit\",\"\",\"\",\"\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8502425872580735239\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-958161308115267847",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "7aeee7c3413f0d276b56e2c0bd2d7439c4f235b6be9797c23fba2c2acba6a752",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6365253422442483449\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "-930459928880607495",
+    "objectName": "Attack",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack_1\",\"_atkScale\":0.4000000059604645,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_talula\",\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-877051709055168775\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1644390934427930361\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+   },
+   {
+    "pathId": "-877051709055168775",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "e3da91943da65c665a58a3704c616c9911279c5284293578d80217e2489d9111",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":1,\"_abnormalFlag\":20,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2434232702895780103\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "-644388851734671623",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "e97fe4bd36cc428be0569187ac0d0a37a16552626127632bbff2cbdda5cc032d",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-770662776769671431\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7786721565136654073\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "-262107832528859399",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "c18dc30e2348fe66619a9a5a968ed3205bfdc2fd7a8c1e95eae13cb23216d5a4",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-5618278454296375559\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6365253422442483449\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "-111273337436958983",
+    "objectName": "Combat",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack_2\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":3,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7729833696883175687\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+   },
+   {
+    "pathId": "942557472068144889",
+    "objectName": "DragonFire",
+    "originalJson": "{\"_addEnemyIdToSignalId\":0,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"-958161308115267847\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"373412456735117049\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "1265583496520666873",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "f054c6e67f6e442fb9fed67163f1ef9b0b86c80b75b26e6767c29a453d0622aa",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-7871584098393125127\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3645954369514180345\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "1796214867508268793",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "dce9e4149b34fef4f615b773db79b5183fea8e91efb4b86f78e136b9aa1b7dd0",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4907593922523885831\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "1805130037270941433",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "075faa199d9958347af6dd75cdaef2f4a2a1db739cb48e87995fcdd335c05791",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8310770183593594617\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "2074705200457912057",
+    "objectName": "Combat",
+    "referenced": true,
+    "sha256": "fe5130e6fb58e22cc96cbf0c31317e7605caee44c2ebfa21a1acc8270b7145e2",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_02_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_02_hit\",\"\",\"\",\"\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7729833696883175687\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "2199137909249806073",
+    "objectName": "HalfHp",
+    "referenced": true,
+    "sha256": "c9cf25e57d1f39fd0490da69a19a37c232c120ea967a44bc8d93fb3da85248f9",
+    "originalJson": "{\"_initialToggle\":1,\"_loadMinHpRatioFromBlackboard\":0,\"_maxHpRatio\":0.5,\"_minHpRatio\":0.0,\"_restoreDelay\":0.0,\"_setInitialToggle\":0,\"_toggleOnce\":0,\"_useLTForMax\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7645410025599078137\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2776920899325723445\"}}"
+   },
+   {
+    "pathId": "2337264102910791417",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "90dacb2948c7ff20b298d01850f9b2f03322af296a5daf72814cf31d2cdc5efb",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7786721565136654073\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "2398755507754569465",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "f9952f2d7a249d8e2bfe956318facac8ccee5656650b881e9cb2e874c5eeea30",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":0,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8310770183593594617\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "3176457606814961401",
+    "objectName": "Shadow",
+    "referenced": true,
+    "sha256": "cb8b12ca378a5abc497c2dba7457ab16daac81f6848d50f5ab61690d8624ab2a",
+    "originalJson": "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5112490231002894073\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}"
+   },
+   {
+    "pathId": "3352641414308761337",
+    "objectName": "DragonFire[Half]",
+    "originalJson": "{\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"dragon_fire\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":1,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":0,\"_animKey\":\"Skill_1\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"Idle\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"6866384049448161017\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-506234790038270215\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8145049199648393782\"}}"
+   },
+   {
+    "pathId": "3381029025583402745",
+    "objectName": "HalfHp",
+    "referenced": true,
+    "sha256": "37176b9a58e63aa01b152714fe0738912464661b6b34632be11a6e5b10b27a0c",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7645410025599078137\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}"
+   },
+   {
+    "pathId": "3522001035614293753",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "3cbef48ffc62c2059278c3800cae3a308b87cf5383495675f08e2350ad95c413",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":1,\"_abnormalFlag\":20,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":0,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":0,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3645954369514180345\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "3565456394656288505",
+    "objectName": "DragonFire[Half]",
+    "originalJson": "{\"_addEnemyIdToSignalId\":0,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"8010607887237910265\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-506234790038270215\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "3613405702015946489",
+    "objectName": "Graphic",
+    "referenced": true,
+    "sha256": "9519c51dbf294a988c3125d0eebb468676228b1f2216acda72fe97cc69385ab0",
+    "originalJson": "{\"_animations\":[{\"animKey\":\"Move\",\"animName\":\"Move\",\"ignoreMissing\":0,\"loop\":1,\"speed\":1.2000000476837158},{\"animKey\":\"Idle\",\"animName\":\"Idle\",\"ignoreMissing\":0,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"Die\",\"ignoreMissing\":0,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Default\",\"animName\":\"Default\",\"ignoreMissing\":0,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Attack_1\",\"animName\":\"Attack_1\",\"ignoreMissing\":0,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Attack_2\",\"animName\":\"Attack_2\",\"ignoreMissing\":0,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_1\",\"animName\":\"Skill_1\",\"ignoreMissing\":0,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_2\",\"animName\":\"Skill_2\",\"ignoreMissing\":0,\"loop\":0,\"speed\":1.2000000476837158}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"-5162931505845498119\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"2220720456050740985\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"-1838088980912009479\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"-7811858198315462919\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"-2070252950240817415\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"-6434338934084923655\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"-4360988533666279687\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6358890510066970887\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}"
+   },
+   {
+    "pathId": "3711486737081437945",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "f00362d975a71b3ac0eca8090ff5fe605da1f04b72229126f2024df0e1273aac",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2434232702895780103\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "4021989145869881081",
+    "objectName": "DanceFire[Half]",
+    "originalJson": "{\"_addEnemyIdToSignalId\":0,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"1805130037270941433\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4634482268467564281\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "5155052184942874361",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "3cf1e75f52cb09410e12e10c1195370b3bdecca37ca204ace459c2f5f6895797",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4907593922523885831\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":2.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "5724681022896344825",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "ab6b9f25657bc5ecda832e6a467654e05dca77e5ce78d3a5633be73e5ca32154",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":1,\"_abnormalFlag\":20,\"_buffKey\":\"dragon_fire\",\"_buffKeyExcluded\":1,\"_buffs\":[],\"_checkOrInsteadOfAnd\":0,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_filterBuffSource\":0,\"_filterTag\":\"\",\"_filterTagList\":[],\"_filterTokenHost\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_tagExcluded\":1,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6365253422442483449\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6959540303033999559\"}}"
+   },
+   {
+    "pathId": "6050625636608052985",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "4ebd086d5aeebdcfccdb5fc721081fece6ea05149eb9ce5231de9538c207d90b",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-6553970199766298887\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2434232702895780103\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "6060512955666992889",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "c623c51c83ebd24fcd8f922f333f96432d247d7722f17f96d10d78a153b19ccd",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":1,\"_abnormalFlag\":20,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":0,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":0,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8310770183593594617\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "6086141847564390137",
+    "objectName": "Combat",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack_2\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":3,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5451473470209003257\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+   },
+   {
+    "pathId": "6248914705706323705",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "b04d89faa1d8bedcc91aa3e9cc151b9aab0a9d3fa5a2b0666cbdce7ee1e4c657",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"2228815764483149561\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8310770183593594617\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "6575149511636160249",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "93bcacaf951dc7bf24be1765dc8211deb28feedcc8e334984de88a5ddfbdc028",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3645954369514180345\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "6763075636208668409",
+    "objectName": "DanceFire",
+    "originalJson": "{\"_addEnemyIdToSignalId\":0,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"6575149511636160249\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8502425872580735239\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "6866384049448161017",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "5ad7f293798e4197d6a1ad167c0aae4d15fd589dee5886ca7855d74c5545941f",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":1,\"_abnormalFlag\":20,\"_buffKey\":\"dragon_fire\",\"_buffKeyExcluded\":1,\"_buffs\":[],\"_checkOrInsteadOfAnd\":0,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_filterBuffSource\":0,\"_filterTag\":\"\",\"_filterTagList\":[],\"_filterTokenHost\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_tagExcluded\":1,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7786721565136654073\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6959540303033999559\"}}"
+   },
+   {
+    "pathId": "6939700539113213689",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "331761c039c7e2964a08df27ef6b8ae1a84913ab2d5c3cc2e3a5f571bb1b4a83",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-5024561662367101191\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4907593922523885831\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "7016974493924069113",
+    "objectName": "Attack",
+    "referenced": true,
+    "sha256": "1fe13a8c26b5463104c7960e2c75c42b4915a9dd2ee636786e1c67a0f2a8b1ec",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_01_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_attack_01_start_02\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5651054744630595321\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "7246961388115726073",
+    "objectName": "DanceFire[Half]",
+    "referenced": true,
+    "sha256": "cd269f463b517d6fc9409188302832908584119a64b87dd26d326402f9c68414",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_02_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_02_start_02\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_02_hit\",\"\",\"\",\"\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4634482268467564281\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "7376186988309384953",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "555ff4a58ba46b5a03678e9b3d5f1d56d4512877af05733772e569ad01c28022",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6365253422442483449\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "7478659247740358393",
+    "objectName": "enemy_1503_talula",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"3613405702015946489\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":0.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"-3732069470536200455\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"-6029853088011710727\"},{\"m_FileID\":0,\"m_PathID\":\"8434794700487790329\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"3176457606814961401\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4020159525536337657\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}"
+   },
+   {
+    "pathId": "7697787483210714873",
+    "objectName": "DanceFire",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":0,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Skill_2\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"3522001035614293753\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8502425872580735239\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+   },
+   {
+    "pathId": "8010607887237910265",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "da011675b08a43d071c3c8fd2d0e5e2d567aa5c5dcb4eafeda99ff407981d66f",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7786721565136654073\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "8434794700487790329",
+    "objectName": "HalfState",
+    "originalJson": "{\"_addIndexToSignalId\":0,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-930459928880607495\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"3711486737081437945\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-9075588432973328647\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"6086141847564390137\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":0,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"361443179958308601\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}"
+   },
+   {
+    "pathId": "8839116744485965561",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "0336cf5247696f8abdce1d5b6db641c3eb44a764079002947d8859ae94fb69e4",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":0,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4907593922523885831\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "8839703990132150009",
+    "objectName": "DragonFire[Half]",
+    "referenced": true,
+    "sha256": "d05add5bebbad7847f414fc25d2f5012a81b8f8e4fb57a75c6c49815152deebe",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_01_start\",\"\",\"\",\"\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_talula_skill_01_hit\",\"\",\"\",\"\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-506234790038270215\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
    }
   ],
   "dyn/battle/prefabs/enemies/enemy_15043_dqrckm.prefab": [
@@ -70250,6 +70639,23 @@
     "pathId": "8661485175427570630",
     "sha256": "f594839fa828230305da37adcfe8a7b47cf45ac0504e2bd3c5e4193c57499652",
     "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6783888085760533562\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"248012603862317511\"}}"
+   }
+  ],
+  "projectile_enemy_talula": [
+   {
+    "pathId": "-932225505795224017",
+    "sha256": "e4ba33159e641ea460e147cf0cac3ab8ce97b0d1a0f15173a3ddf19c4e51d80b",
+    "originalJson": "{\"_actionController\":{\"_addExtraBuffsWhenReached\":0,\"_detachAllBuffsWhenStopped\":0,\"_detachAllExtraBuffsWhenStopped\":0,\"_detachBuffsWhenTargetLeave\":0,\"_dontAddBuffs\":0,\"_excludeAttachments\":0,\"_extraBuffsInTheEnd\":[],\"_onlyAddBuffsToTargetOnce\":0,\"_onlyAddBuffsToTraceTarget\":0,\"_useExtraBuffsWhenStopHit\":0,\"_useSelfBlackboard\":0},\"_allowZeroBlockCntLimit\":0,\"_alwaysHitTraceTargetInTheEnd\":1,\"_alwaysHitTraceTargetWhenReached\":0,\"_alwaysReachInTheEnd\":0,\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_canHitSameTargetMultipleTimes\":0,\"_clearMainEffectWhenReached\":0,\"_containsChildrenBehaviours\":0,\"_eliminatableStatus\":0,\"_fireProjectileReachedEvent\":0,\"_fixDealHitTargetLeft\":0,\"_getLifeTimeFromBB\":0,\"_getMaxHitNumFromBB\":0,\"_hitNumType\":1,\"_keepAlreadyHitTime\":-1.0,\"_lifeTime\":10.0,\"_lifeTimeType\":1,\"_limitedMaxHitNumToSourceBlockedCnt\":0,\"_mainEffect\":\"enemy_talula_attack_01_trail\",\"_managedBySource\":0,\"_maxHitNum\":1,\"_maxHitNumBBKey\":\"\",\"_movementAdjustableStatus\":0,\"_overrideAudioSignal\":\"\",\"_projectileType\":0,\"_randomDelayToBorn\":0.0,\"_stopAfterFirstHit\":0,\"_stopAfterMaxHit\":1,\"_stopGraphicProjectileWhenClearMainEffect\":0,\"_stopWhenSourceInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8437913471404887599\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8797129986015012478\"}}"
+   },
+   {
+    "pathId": "2321879341842714159",
+    "sha256": "76607048ceadd3b2709e1565d9da9584b999681e28943ff07941ea087040db4a",
+    "originalJson": "{\"_alwaysPlayStartEffects\":0,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":0,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[\"enemy_talula_attack_01_hit\"],\"_effectsWhenReached\":[],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8437913471404887599\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}"
+   },
+   {
+    "pathId": "8351540143276183087",
+    "sha256": "44199951b4d3c0fd4deb24d03dfad3f6ecaaf5241484f5f7ca852b8a0b33bade",
+    "originalJson": "{\"_addInertia\":0,\"_adjustSourceToTargetArcAngleBySourceFace\":0,\"_awayFromSourceAsDirection\":0,\"_clearTraceTargetWhenReached\":1,\"_comeBack\":0,\"_comeBackSpeedScale\":0.25,\"_delayAfterReached\":0.0,\"_delayToReachAfterHit\":0.0,\"_delayToStart\":0.0,\"_deltaSpeedPerSec\":0.0,\"_distance\":0.0,\"_drawFuncTurnAndWaveDebugLine\":0,\"_exactMatchCameraForward\":0,\"_finalSpeed\":0.0,\"_fixOnProjectileReached\":0,\"_fixProjectileHasReached\":0,\"_fixProjectileZWhenReached\":0,\"_flyToPredefinedLocation\":0,\"_flyToTargetLocationOnly\":0,\"_forceReachedWhenTimeup\":1,\"_forceResetToTargetPosWhenReached\":0,\"_forceUseTargetMountPoint\":0,\"_freezeRotationXY\":0,\"_freezeRotationZ\":0,\"_handleWithIBuildableTarget\":0,\"_moveType\":1,\"_moveTypeData\":{\"data\":[]},\"_onlyReachedInTime\":0.0,\"_predefinedLocation\":0,\"_randomOffset\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"_resetToTargetPosWhenReached\":0,\"_resetToTracetargetMapPosV3\":0,\"_rotateToTarget\":0,\"_rotateToTargetOnDelayToStart\":0,\"_skipSmoothLerpDirection\":0,\"_sourceDirectionArcAngleRatio\":0.0,\"_sourceToTargetArcAngle\":0.0,\"_speed\":10.0,\"_turnSpeed\":0.0,\"_updateDelayTimeOnlyOnce\":0,\"_useDynamicSpeed\":0,\"_useSourceDirection\":0,\"_useSourceDirectionArcAngleWithRatio\":0,\"_useSourceDirectionRandomArcAngleStart\":0,\"_useSourceToTargetArcAngleWithRatio\":0,\"_useSourceToTargetRandomArcAngleStart\":0,\"_useStartToTarget\":0,\"_useTargetDirection\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8437913471404887599\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-1429203677512073985\"}}"
    }
   ],
   "projectile_enemy_telex": [

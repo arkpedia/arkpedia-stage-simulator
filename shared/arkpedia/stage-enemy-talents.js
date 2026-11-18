@@ -92,7 +92,13 @@ export function applyStageEnemyBlackboard(record, override) {
     override.skills.forEach((skill, i) => {
       const before = record.skills.find(s => s.prefabKey === skill?.prefabKey);
       if (!skill || Object.keys(skill).some(k => !['prefabKey', 'priority', 'cooldown', 'initCooldown', 'spCost', 'blackboard'].includes(k))
-        || ['prefabKey', 'priority', 'spCost'].some(k => skill[k] !== before[k])) invalid();
+        || ['prefabKey', 'spCost'].some(k => skill[k] !== before[k])) invalid();
+      // A changed tie priority needs a reviewed feature that declares it for this skill.
+      if (skill.priority !== before.priority) {
+        const validators = features.map(f => f.stageSkillPriorityOverrides?.[before.prefabKey]).filter(Boolean);
+        if (!Number.isInteger(skill.priority) || !validators.length || !validators.every(check => check(skill.priority, before))) invalid();
+        result.skills[i].priority = skill.priority;
+      }
       for (const key of ['cooldown', 'initCooldown']) {
         if (skill[key] === before[key]) continue;
         const validators = features.map(f => f.stageSkillTimingOverrides?.[before.prefabKey]?.[key]).filter(Boolean);

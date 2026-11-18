@@ -19,6 +19,7 @@ import {MANFRED_FEATURES,isManfred,manfredNative} from './enemy-manfred-features
 import {COCOON_CAGE_FEATURES} from './enemy-cocoon-cage-features.js';
 import {THERESA_FEATURES,isTheresa,theresaNative} from './enemy-theresa-features.js';
 import {PATRIOT_FEATURES,isPatriot,patriotNative} from './enemy-patriot-features.js';
+import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
 const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
@@ -502,6 +503,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...COCOON_CAGE_FEATURES,
   ...THERESA_FEATURES,
   ...PATRIOT_FEATURES,
+  ...TALULAH_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },
