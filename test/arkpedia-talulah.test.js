@@ -95,3 +95,34 @@ test('JT8-2: only Stellar Corona, first at 160 s; its Challenge starts enraged, 
   h.run(.1);assert.equal(ab.half,true,'enraged at full HP');h.run(200);assert.equal(ab.cast,null);
  }
 });
+
+// [stage, level, max HP after the stage runes, first skill and its time, enraged at once].
+for(const [stageId,level,maxHp,first,at,enraged] of [['h8-2',1,60000,'DragonFire',19,false],['jt8-2',0,50000,'DanceFire',160,false],
+ ['jt8-2_challenge_mode',0,55000,null,0,true]])
+ test(`compiled ${stageId}: Talulah (level ${level}) with the stage's own skills`,async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const {StandardBattle}=await import('../server/sim/arkpedia.js');
+  const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+  const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+  const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+  const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+  const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+  const stage=await loader.load(manifest.stages.find(s=>s.id===stageId));
+  const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+  let boss=null;
+  const clear=()=>{for(const e of b.enemies)if(e.alive&&e!==boss&&e.defId!==id&&!e.mem.stageUnitDevice)b.kill(e);};
+  const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
+  while(!b.finished&&b.time<600&&!boss){clear();boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+  assert.ok(boss);assert.equal(boss.def.raw?.level,level);assert.ok(Math.abs(boss.s.maxHp-maxHp)<1e-6,'stage runes');
+  const ab=boss.mem.ab.list.find(a=>'half'in a),t0=b.time;
+  b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
+  b.setViewport('fullscreen-workspace');b.getPlayer('arkpedia').dp=99;
+  let myrtle=null;
+  for(let r=0;r<stage.geometry.tileGrid.length&&!myrtle;r++)for(let c=0;c<stage.geometry.tileGrid[0].length&&!myrtle;c++){try{myrtle=b.deployOperator('char_151_myrtle',r,c,'RIGHT');}catch{}}
+  assert.ok(myrtle);myrtle.base.maxHp=1e9;myrtle.markDirty();myrtle.hp=myrtle.s.maxHp;myrtle.y=boss.y;myrtle.x=boss.x+2;
+  run(.2);assert.equal(ab.half,enraged);
+  const cast=[];while(!b.finished&&b.time<t0+at+5&&!cast.length){run(.1);if(ab.cast)cast.push([ab.cast.skill.key,b.time-t0]);}
+  if(first){assert.equal(cast[0]?.[0],first);assert.ok(Math.abs(cast[0][1]-at)<.5,`first cast at ${cast[0]?.[1]}`);}
+  else assert.deepEqual(cast,[],'no skill is left once enraged');
+  assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
+ });

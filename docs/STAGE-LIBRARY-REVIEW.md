@@ -93,6 +93,7 @@ The Big Ugly Thing batch (2026-11-18) published RI-8, RI-EX-8 and RI-EX-8 Challe
 The Manfred batch (2026-11-18) published 10-17, 10-17 Adverse, H10-1 and H10-2 (1,009 available, none withdrawn, no other bundle changed). H10-3 stays blocked on its `aura_on` override. The smoke check passed all 1,009 graphs, and the browser review passed.
 The Theresa batch (2026-11-18) published 14-21 and 14-21 Adverse (1,011 available, none withdrawn, no other bundle changed). H14-4 stays blocked on Patriot and its environment. The smoke check passed all 1,011 graphs, and the browser review passed.
 The Patriot batch (2026-11-18) published 7-18 and 7-18 Challenge (1,013 available, none withdrawn, no other bundle changed). The smoke check passed all 1,013 graphs, and the browser review passed.
+The Talulah batch (2026-11-18) published H8-2, JT8-2 and JT8-2 Challenge (1,016 available, none withdrawn, no other bundle changed). The smoke check passed all 1,016 graphs, and the browser review passed.
 
 ## Remaining work
 
