@@ -112,3 +112,43 @@ test('soul capture heals by the Soul Maelstrom\'s remaining HP; first revive int
  h.run(p.win.delay-p.weave.p3.anim.hit-.3);assert.equal(b.finished,false);
  h.run(.4);assert.equal(b.finished,true);assert.equal(b.reason,'cleared');
 });
+
+// [stage, max HP after the stage runes]; both stages place level 0 and restate Doom at 59 (the database value).
+for(const [stageId,maxHp] of [['14-21',50000],['14-21_adverse_environment',60000]])
+ test(`compiled ${stageId}: Banish cages a deployed operator, two revives, and the third form wins`,async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const {StandardBattle}=await import('../server/sim/arkpedia.js');
+  const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+  const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+  const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+  const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+  const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+  const stage=await loader.load(manifest.stages.find(s=>s.id===stageId));
+  const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+  // Cages and the wave-holding body stay; everything else (Soul Maelstroms included) is removed.
+  const keep=new Set([id,CAGE,HOLDER]);let boss=null;
+  const clear=()=>{for(const e of b.enemies)if(e.alive&&!keep.has(e.defId)&&!e.mem.stageUnitDevice)b.kill(e);};
+  const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
+  while(!b.finished&&b.time<600&&!boss){clear();boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+  assert.ok(boss);assert.equal(boss.def.raw?.level,0);assert.equal(boss.s.maxHp,maxHp,'stage runes');
+  const ab=boss.mem.ab.list.find(a=>'rings'in a),p=theresaParams(boss.def.raw);
+  assert.equal(p.doom.p1.count,59);
+  b.setViewport('fullscreen-workspace');b.getPlayer('arkpedia').dp=99;
+  let myrtle=null;
+  for(let r=0;r<stage.geometry.tileGrid.length&&!myrtle;r++)for(let c=0;c<stage.geometry.tileGrid[0].length&&!myrtle;c++){try{myrtle=b.deployOperator('char_151_myrtle',r,c,'RIGHT');}catch{}}
+  assert.ok(myrtle);myrtle.x=boss.x+1;myrtle.y=boss.y;myrtle.tileR=Math.round(boss.y);myrtle.tileC=Math.round(boss.x)+1;
+  b.dealDamage(null,boss,{amount:boss.s.maxHp*p.banish.ratio/p.dust.p1.scale+1,type:'true',sourceless:true});
+  run(p.banish.anim.dur+.5);
+  assert.ok(hasCocoon(b,myrtle.tileR,myrtle.tileC),'Banish cages the operator beside her');
+  assert.ok(myrtle.s.flags.stun&&myrtle.s.flags.noRetreat);assert.throws(()=>b.retreatOperator('char_151_myrtle'),/cannot retreat/);
+  b.dealDamage(null,boss,{amount:1e9,type:'true',sourceless:true});assert.equal(ab.state,'revive');
+  run(p.revive1.dur+.2);
+  assert.equal(ab.form,2);assert.equal(boss.s.maxHp,maxHp*(1+p.form2.hpPct));
+  b.dealDamage(null,boss,{amount:1e9,type:'true',sourceless:true});assert.equal(ab.state,'revive');
+  run(p.revive2.dur+.2);
+  assert.equal(ab.form,3);const holder=b.enemies.find(e=>e.alive&&e.defId===HOLDER);assert.ok(holder,'the wave-holding body');
+  const life=b.life;run(p.win.delay-.5);assert.equal(b.finished,false);assert.equal(b.life,life,'nothing leaks');
+  assert.ok(Math.abs(holder.x-boss.x)<.6&&Math.abs(holder.y-boss.y)<.6,'it stands with her');
+  run(1);assert.equal(b.finished,true);assert.equal(b.reason,'cleared');
+  assert.deepEqual(b.errors,[]);
+ });

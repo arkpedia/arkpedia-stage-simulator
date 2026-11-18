@@ -149,7 +149,15 @@ export function theresa(p) {
           b.after(p.revive2.holdAt, () => {
             if (!e.alive) return;
             const holder = b.spawnEnemy(p.revive2.holder, { pos: tileOf(e), countInTotal: false });
-            if (holder && b.stageWaveScheduler) b.stageWaveScheduler.track(holder);
+            if (holder) {
+              // SummonEnemiesFollowMyRoute with _unharmful, and the body's own `Unmovable` passive (enemy_dthmark_immune):
+              // it stands where she is, cannot be hurt and costs no Life Point; it only holds the wave.
+              holder.lpr = 0; holder.counted = false; holder.mem.noLeak = true;
+              holder.profile.noAttack = true; holder.profile.cannotExit = true;
+              b.addBuff(holder, { key: 'enemy_dthmark_immune', persist: true,
+                flags: { noMove: true, selfBound: true, noDisplace: true, unblockable: true, invulnerable: true, untargetable: true } });
+              b.stageWaveScheduler?.track(holder);
+            }
             a.holder = holder;
           }, { owner: e });
           b.after(p.revive2.dur, () => {
