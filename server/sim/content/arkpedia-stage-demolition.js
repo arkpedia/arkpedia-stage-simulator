@@ -46,12 +46,14 @@ export class StageDemolition {
       ctx.prevented = true; ctx.unit.hp = 1; this.collapse(ctx.unit);
     });
   }
-  collapse(pillar) {
+  /** `facing`, when given, is a direction already chosen by an enemy's auto-collapse (FaceToDirectionViaMoreTargets);
+   *  otherwise the pillar falls away from its last attacker. */
+  collapse(pillar, facing = null) {
     const b = this.b, d = pillar.mem.stageUnitDevice;
     if (!live(pillar) || d.collapsed) return;
     d.collapsed = true; d.state = 'collapsing';
     const dr = d.row - (d.lastSource?.r ?? d.row), dc = d.col - (d.lastSource?.c ?? d.col - 1);
-    const dir = Math.abs(dc) >= Math.abs(dr) ? (dc < 0 ? 'LEFT' : 'RIGHT') : (dr < 0 ? 'DOWN' : 'UP');
+    const dir = facing && vector[facing] ? facing : Math.abs(dc) >= Math.abs(dr) ? (dc < 0 ? 'LEFT' : 'RIGHT') : (dr < 0 ? 'DOWN' : 'UP');
     pillar.dir = dir;
     b.addBuff(pillar, { key: 'pillar:collapse', persist: true, flags: { invulnerable: true, undeadable: true,
       untargetable: true, isolated: true, noBlock: true } });

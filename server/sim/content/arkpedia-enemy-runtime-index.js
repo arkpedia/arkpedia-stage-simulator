@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-mandragora',load:()=>import('./arkpedia-enemy-mandragora.js'),exports:{mandragora:'mandragora'}},
   {key:'arkpedia-enemy-the-leader',load:()=>import('./arkpedia-enemy-the-leader.js'),exports:{theLeader:'theLeader'}},
   {key:'arkpedia-enemy-andoain',load:()=>import('./arkpedia-enemy-andoain.js'),exports:{andoain:'andoain'}},
   {key:'arkpedia-enemy-emperors-blade',load:()=>import('./arkpedia-enemy-emperors-blade.js'),exports:{emperorsBlade:'emperorsBlade'}},
