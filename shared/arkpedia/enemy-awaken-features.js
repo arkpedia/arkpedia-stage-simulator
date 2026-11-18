@@ -32,5 +32,5 @@ export const AWAKEN_DAMAGE_SHARE_FEATURE={
   matchesRecord:r=>r.key===id,covers:awakenDamageShareNative,
   explains:/^When 'Awaken' takes damage, transfers 50% of the damage received to Dorothy's other experiments on the field$/,
   ability:{kind:'markedEnemyDamageShare',params:r=>({ratio:r.talents.bb['DamageSplit.damage_resistance'],mark:'lypa[driver_mark]'})},
-  note:'Independent global damage-sharing component; the boss phases and attacks remain separate contracts.',
+  note:'Independent global damage-sharing component; her phases and attacks are in enemy-awaken-boss-features.js.',
 };

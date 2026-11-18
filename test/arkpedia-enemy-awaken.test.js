@@ -44,10 +44,11 @@ test('HP loss, cancelled damage and explicitly classified execution damage never
  assert.equal(a.hp,hp);assert.equal(makeDamageInfo({instantKillLike:true}).instantKillLike,true);
  assert.equal(makeDamageInfo({instantKillLike:1}).instantKillLike,false);assert.deepEqual(b.errors,[]);
 });
-test('the independent source contract refuses changed selectors and transfer semantics; full boss remains blocked',()=>{
+test('the independent source contract refuses changed selectors and transfer semantics; the full boss is admitted with its own contract',()=>{
  const entry=ENEMY_RECORDS.enemies[id];
  for(const r of Object.values(entry.levels))assert.equal(awakenDamageShareNative(r,nativeComponents(native,id)),true);
- assert.equal(enemySupport(entry,clocks.prefabs,native).policy,null);
+ // Since 2026-11-18 her skills and forms have their own contract (enemy-awaken-boss-features.js).
+ assert.equal(enemySupport(entry,clocks.prefabs,native).policy,'stats-attacks-and-features');
  for(const mutate of [
   n=>n.templates['enemy_bbrain[damage_split]'].eventToActions.ON_TAKE_DAMAGE[0]._isUnset=false,
   n=>n.templates['enemy_bbrain[damage_split]'].eventToActions.ON_TAKE_DAMAGE[1]._buffKey='wrong',

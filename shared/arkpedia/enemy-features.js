@@ -12,10 +12,11 @@ import {EMPERORS_BLADE_FEATURES,isEmperorsBlade,emperorsBladeNative} from './ene
 import {ANDOAIN_FEATURES,isAndoain,andoainNative} from './enemy-andoain-features.js';
 import {THE_LEADER_FEATURES,isTheLeader,theLeaderNative} from './enemy-the-leader-features.js';
 import {MANDRAGORA_FEATURES,isMandragora,mandragoraNative} from './enemy-mandragora-features.js';
+import {AWAKEN_BOSS_FEATURES,isAwaken,awakenBossNative} from './enemy-awaken-boss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -487,6 +488,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...ANDOAIN_FEATURES,
   ...THE_LEADER_FEATURES,
   ...MANDRAGORA_FEATURES,
+  ...AWAKEN_BOSS_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,

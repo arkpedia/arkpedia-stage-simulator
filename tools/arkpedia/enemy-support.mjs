@@ -120,6 +120,8 @@ export async function buildEnemySupport() {
       theLeaderAnimations: { path: 'data/arkpedia-the-leader-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-the-leader-animations.json', root))) },
       mandragoraFeatures: { path: 'shared/arkpedia/enemy-mandragora-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-mandragora-features.js', root))) },
       mandragoraAnimations: { path: 'data/arkpedia-mandragora-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-mandragora-animations.json', root))) },
+      awakenBossFeatures: { path: 'shared/arkpedia/enemy-awaken-boss-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-awaken-boss-features.js', root))) },
+      awakenAnimations: { path: 'data/arkpedia-awaken-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-awaken-animations.json', root))) },
       icefieldArtsFeatures: { path: 'shared/arkpedia/enemy-icefield-arts-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-icefield-arts-features.js', root))) },
       icefieldArtsAnimations: { path: 'data/arkpedia-icefield-arts-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-icefield-arts-animations.json', root))) },
       famigliaLimoFeatures: { path: 'shared/arkpedia/enemy-famiglia-limo-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-limo-features.js', root))) },
