@@ -808,6 +808,16 @@ export class StandardBattle extends Battle {
       this.addDp('arkpedia', d.dp);
     });
   }
+  /** Native `modify_sp[start]` on the unit tagged `gunctrl` (the Londinium artillery): adds `amount` SP, capped
+   * at the device's cost; it fires on the next device tick. The selectors take one unit, so the first
+   * artillery in stage order is charged. Returns false when the stage has no artillery. */
+  chargeStageArtillery(amount) {
+    if (!(amount >= 0)) throw Error('Invalid artillery charge');
+    const d = this.mvpStageDevices?.find(x => stageDeviceSpec(x)?.artillery);
+    if (!d) return false;
+    d.sp = Math.min(stageDeviceSpec(d).artillery.spCost, d.sp + amount);
+    return true;
+  }
   _tickMvpStageDevices(dt) {
     for (const d of this.mvpStageDevices) {
       const def = stageDeviceSpec(d);

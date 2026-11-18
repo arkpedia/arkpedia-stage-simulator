@@ -15,10 +15,11 @@ import {MANDRAGORA_FEATURES,isMandragora,mandragoraNative} from './enemy-mandrag
 import {AWAKEN_BOSS_FEATURES,isAwaken,awakenBossNative} from './enemy-awaken-boss-features.js';
 import {MEPHISTO_FEATURES,isMephisto,mephistoNative} from './enemy-mephisto-features.js';
 import {BIG_UGLY_THING_FEATURES,isBigUglyThing,bigUglyThingNative} from './enemy-big-ugly-thing-features.js';
+import {MANFRED_FEATURES,isManfred,manfredNative} from './enemy-manfred-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -493,6 +494,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...AWAKEN_BOSS_FEATURES,
   ...MEPHISTO_FEATURES,
   ...BIG_UGLY_THING_FEATURES,
+  ...MANFRED_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -1201,9 +1203,9 @@ export const ENEMY_FEATURES = Object.freeze({
       || text === 'Initially has 100% Physical Dodge for a period of time'
       || text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time' },
   // Rhine Defense: a one-hit Physical/Arts shield.
-  'talent:Shield': { covers: r => sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
+  'talent:Shield': { covers: (r, n) => isManfred(r) ? manfredNative(r, n) : sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
       && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage'),
-    ability: { kind: 'hitShield', params: r => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) },
+    ability: r => isManfred(r) ? null : { kind: 'hitShield', params: r => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) },
     note: 'blocks max_block_damage_cnt Physical/Arts hits', explains: /^Blocks 1 instance of Physical or Arts damage$/ },
   // Roar Knightclub: a timed flat DEF/RES buff declared by the record.
   'talent:buff': { covers: (r, nat) => cheeringDrone(r, nat) || sig(r, 'buff', ['def', 'duration', 'magic_resistance'])
@@ -1242,9 +1244,9 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:Aura': EBLANA_AURA_FEATURE,
   'talent:aura': {
     stageMultipliers: { 'aura.enemy_dsuply_t[attr_buff].atk': v => Number.isFinite(v) && v >= 0 },
-    covers: (r, n) => isFlamechaser(r) ? flamechaserNative(r, n) : isSwampRover(r) ? swampRoverNative(r, n) : r.abilities.some(a => a.text === ASV_TEXT) ? !!asvAura(r)
+    covers: (r, n) => isManfred(r) ? manfredNative(r, n) : isFlamechaser(r) ? flamechaserNative(r, n) : isSwampRover(r) ? swampRoverNative(r, n) : r.abilities.some(a => a.text === ASV_TEXT) ? !!asvAura(r)
       : sig(r, 'aura', ['atk', 'max_valid_stack_cnt']) && r.abilities.some(a => a.text === HATEDRINKER_TEXT),
-    ability: r => isFlamechaser(r) ? FLAMECHASER_AURA : isSwampRover(r) ? SWAMP_ROVER_AURA : { kind: 'aura', params: r => r.abilities.some(a => a.text === ASV_TEXT)
+    ability: r => isManfred(r) ? null : isFlamechaser(r) ? FLAMECHASER_AURA : isSwampRover(r) ? SWAMP_ROVER_AURA : { kind: 'aura', params: r => r.abilities.some(a => a.text === ASV_TEXT)
       ? { mode: 'asv', ...asvAura(r) }
       : { mode: 'rebornAtk', atk: r.talents.bb['aura.atk'], max: r.talents.bb['aura.max_valid_stack_cnt'] } },
     note: 'reviewed creation and visibility auras', explains: text => text === FLAMECHASER_BURN || text === FLAMECHASER_GUARD_BURN || text === HATEDRINKER_TEXT || text === ASV_TEXT || text === ROVER_REVEAL },
