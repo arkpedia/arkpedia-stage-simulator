@@ -32,7 +32,7 @@ The Artificer and the drone keep their existing inert charge. Their charge is no
 
 - **The wave.** The current wave is released (`FinishCurrentWave`, and he is tracked in the next wave when one exists).
 - **The revive.** A 20 s revive (`Reborn.duration`) at full HP; the native `_hpRechargeRatio` is 1 here.
-- **The barrage.** During the revive, every 0.8 s the cannon hits one random ground operator anywhere on the field for 30% ATK Arts damage (`Funnel_rage.atk_scale`). Each shot adds 6 SP. That is 24 shots: the 25th tick would fall at the instant the revive ends.
+- **The barrage.** During the revive, every 0.8 s the cannon hits one random ground operator anywhere on the field for 30% ATK Arts damage (`Funnel_rage.atk_scale`). Each shot adds 6 SP. In the simulator that is 24 shots. The 25th tick falls at the same instant the revive ends, and the revive's expiry runs first on that shared tick. That is engine ordering, not a rule from the data.
 - **Pose.** The Pose cast then plays the 5 s Revive clip, during which he does not act, with 5 s of invincibility (`Reborn.invincible`).
 - **Sword form.** He then switches to the sword form and regains the dodge. Only `enemy_manfri_aura_on` survives the revive, so a running disable timer ends with it.
 
@@ -40,7 +40,7 @@ The Artificer and the drone keep their existing inert charge. Their charge is no
 
 - **Sword.** A 100% ATK Physical attack at the Attack_2 strike. It does not charge the artillery.
 - **Funnel.** At the same moment the funnel fires a speed-20 projectile at the same target, dealing 50% ATK Arts per hit. Each hit adds 6 SP.
-- **Bounces.** The projectile is a bounce controller with one hit per `Funnel_s2.times`, 0.53 s apart. After the first hit, the next goes to one other operator within its 1.5 selector, nearest first; if there is none, it hits the traced target again.
+- **Bounces.** The projectile is a bounce controller with one hit per `Funnel_s2.times`, 0.53 s apart. After the first hit, the next goes to one other operator within its 1.5 selector; if there is none, it hits the traced target again (`_hitTraceTargetIfNoOtherTarget`, and PRTS H10-2).
 - **The next knock-out is final.**
 
 ## Stage overrides
@@ -62,6 +62,7 @@ The Artificer and the drone keep their existing inert charge. Their charge is no
   - the knock-out moves him to the next wave (H10-2 has one wave);
   - the barrage adds 24 × 6 SP;
   - he ends at full HP in the sword form with the dodge;
+  - each stage's own values are observed in the compiled battle, not read back from the record. Max HP after the stage runes is 40,000, 48,000, 60,000 and 72,000. An artillery hit disables the dodge for 30 s, or 12 s on H10-1. Sword-form funnel hits charge 6 SP each, and on H10-2 12 SP with two hits per shot;
   - there are no battle errors.
 
 The library rebuild published exactly four more stages: 10-17, 10-17 Adverse, H10-1 and H10-2 (1,009 available). No other stage's bundle changed. `check-stage-library.mjs` smoked every graph with no failures, the browser review passed, and 10-17 opens in the preview.
@@ -71,6 +72,8 @@ The library rebuild published exactly four more stages: 10-17, 10-17 Adverse, H1
 - **Attack range.** The attack triggers carry placeholder 0.5 colliders with `_useBlackboardRangeId` 0. The record's 2.0 range is used, which agrees with PRTS.
 - **Charge timing.** A charge is added when the shot or hit is dealt. The native charge events (`_runActionOnEvent` 5 and 3) are not modelled separately.
 - **Funnel damage.** Funnel hits are not normal attacks (`isAttack` false). They are a separate triggered ability.
+- **Bounce target.** The bounce selector has `_targetMotion` 3 and no sort order. The runtime assumes a ground operator and picks the nearest one. Which operator the game picks is unverified.
+- **Barrage count.** 24 shots, from the engine's tick order. The game may fire a 25th at the instant the revive ends.
 - **Artillery targeting.** The device still excludes stealthed and camouflaged operators. PRTS says the blast ignores them. This existing simplification is unchanged.
 - **Artificers and drones.** Their artillery charge stays inert. Wiring it would change the ten published artillery stages and is stages-phase work.
 - **Presentation.** The funnel and mode effects, and the idle-hiding effect buffs, are not reproduced.

@@ -143,7 +143,10 @@ test('H10-1 and H10-2 overrides: Necrosis on both normal attacks, a 12 s disable
  }
 });
 
-for(const [stageId,level] of [['10-17',0],['10-17_adverse_environment',0],['h10-1_adverse_environment',1],['h10-2_adverse_environment',1]])
+// Literal per-stage expectations, so the compiled overrides are observed rather than read back from the record:
+// [stage, level, max HP after the stage runes, funnel hits per shot, SP per funnel hit, dodge disable seconds].
+for(const [stageId,level,maxHp,times,hitSp,disable] of [['10-17',0,40000,1,6,30],['10-17_adverse_environment',0,48000,1,6,30],
+ ['h10-1_adverse_environment',1,60000,1,6,12],['h10-2_adverse_environment',1,72000,2,12,30]])
  test(`compiled ${stageId}: Manfred (level ${level}) charges the artillery, releases the wave and revives into the sword form`,async()=>{
   const {readFile}=await import('node:fs/promises');
   const {StandardBattle}=await import('../server/sim/arkpedia.js');
@@ -157,7 +160,7 @@ for(const [stageId,level] of [['10-17',0],['10-17_adverse_environment',0],['h10-
   let boss=null;
   const clear=()=>{for(const e of b.enemies)if(e.alive&&e!==boss&&e.defId!==id&&!e.mem.stageUnitDevice)b.kill(e);};
   while(!b.finished&&b.time<1200&&!boss){clear();boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
-  assert.ok(boss);assert.equal(boss.def.raw?.level,level);
+  assert.ok(boss);assert.equal(boss.def.raw?.level,level);assert.equal(boss.s.maxHp,maxHp,'stage runes');
   const artillery=b.mvpStageDevices.find(d=>d.name===ARTILLERY);assert.ok(artillery,'one artillery');
   const ab=boss.mem.ab.list.find(a=>'posing'in a);
   const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
@@ -167,7 +170,7 @@ for(const [stageId,level] of [['10-17',0],['10-17_adverse_environment',0],['h10-
   let myrtle=null;
   for(let r=0;r<stage.geometry.tileGrid.length&&!myrtle;r++)for(let c=0;c<stage.geometry.tileGrid[0].length&&!myrtle;c++){try{myrtle=b.deployOperator('char_151_myrtle',r,c,'RIGHT');}catch{}}
   assert.ok(myrtle);b.addBuff(myrtle,{key:'probe',persist:true,flags:{invulnerable:true}});myrtle.y=boss.y;myrtle.x=boss.x+1;
-  let charged=0;const charge=b.chargeStageArtillery.bind(b);b.chargeStageArtillery=n=>{charged+=n;return charge(n);};
+  let charged=0;const calls=[];const charge=b.chargeStageArtillery.bind(b);b.chargeStageArtillery=n=>{charged+=n;calls.push(n);return charge(n);};
   const p=manfredParams(boss.def.raw);
   // At least one shot: an artillery blast aimed at the operator beside him also stuns him for 8 s.
   run(12);assert.ok(charged>=p.charge.attack&&charged%p.charge.attack===0,`his shots charge the artillery (${charged})`);
@@ -182,5 +185,17 @@ for(const [stageId,level] of [['10-17',0],['10-17_adverse_environment',0],['h10-
   assert.equal(boss.hp,boss.s.maxHp);
   run(p.rebirth.pose+.5);
   assert.equal(ab.form,2,'sword form');assert.ok(evading(boss));
+  // The stage's disable duration, through the real artillery-tagged damage path.
+  artillery.sp=0;b.dealDamage(null,boss,{amount:3000,type:'true',sourceless:true,ignoreSelect:true,tags:['device','artillery']});
+  // The artillery is held empty meanwhile: a real blast at the operator beside him would re-hit him and restart the timer.
+  const quiet=t=>{const until=b.time+t;while(!b.finished&&b.time<until){clear();artillery.sp=0;b.step();}};
+  assert.ok(!evading(boss));quiet(disable-.2);assert.ok(!evading(boss),`still disabled before ${disable} s`);quiet(.4);assert.ok(evading(boss),`dodge back after ${disable} s`);
+  // Sword-form attacks through the engine: each funnel shot charges times x Funnel_s2_charge.sp.
+  // The invulnerable operator raises no 'hit' events: attacks come from the attack event, funnel hits from the charge calls.
+  const swords=[];b.on('attack',c=>{if(c.attacker===boss)swords.push(c.targets[0]);});
+  charged=0;calls.length=0;run(20);const funnels=calls;
+  assert.ok(swords.length>0,'he attacks in the sword form');assert.ok(funnels.every(n=>n===hitSp),`${hitSp} SP per funnel hit (${funnels})`);
+  // `times` hits per shot, give or take one shot straddling each end of the window.
+  assert.ok(funnels.length<=(swords.length+1)*times&&funnels.length>=(swords.length-1)*times,`${funnels.length} funnel hits for ${swords.length} sword attacks`);
   assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
  });
