@@ -90,6 +90,7 @@ The 'Awaken' batch (2026-11-18) published DV-8, DV-EX-8 and DV-EX-8 Challenge (9
 
 The Mephisto batch (2026-11-18) published M8-8, M8-8 Challenge and H8-3 (1,002 available, none withdrawn). The smoke check passed all 1,002 graphs, and the browser review passed.
 The Big Ugly Thing batch (2026-11-18) published RI-8, RI-EX-8 and RI-EX-8 Challenge (1,005 available, none withdrawn). The smoke check passed all 1,005 graphs, and the browser review passed.
+The Manfred batch (2026-11-18) published 10-17, 10-17 Adverse, H10-1 and H10-2 (1,009 available, none withdrawn, no other bundle changed). H10-3 stays blocked on its `aura_on` override. The smoke check passed all 1,009 graphs, and the browser review passed.
 
 ## Remaining work
 

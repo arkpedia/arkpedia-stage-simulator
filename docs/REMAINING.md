@@ -7,10 +7,10 @@ all blocked stage IDs are in `data/arkpedia-content-inventory.json`.
 |---|---:|---:|
 | Operator forms | 431 | 431 |
 | Source skills registered | 949 | 949 |
-| Enemies supported | 808 | 2163 |
-| Capability-checked combat stages | 1005 | 3892 |
+| Enemies supported | 809 | 2163 |
+| Capability-checked combat stages | 1009 | 3892 |
 
-The generated library can load 1005 stages; 2887
+The generated library can load 1009 stages; 2883
 have missing capabilities. The legacy catalogue contains 938
 entries (597 public, 341 developer-only, 1 embedded).
 316 story/non-combat source entries are excluded from the combat target.
@@ -31,8 +31,8 @@ source checks or determine admission to the generated library.
 
 | Mode | Loadable | Missing capabilities | Total |
 |---|---:|---:|---:|
-| main | 340 | 224 | 564 |
-| sub | 52 | 34 | 86 |
+| main | 342 | 222 | 564 |
+| sub | 54 | 32 | 86 |
 | activity | 558 | 1567 | 2125 |
 | event | 0 | 171 | 171 |
 | daily | 35 | 0 | 35 |

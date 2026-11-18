@@ -162,12 +162,25 @@ for(const [stageId,level] of [['10-17',0],['10-17_adverse_environment',0],['h10-
   const ab=boss.mem.ab.list.find(a=>'posing'in a);
   const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
   b.addBuff(boss,{key:'hold',persist:true,flags:{noMove:true}});
-  const myrtle=b.allies().find(u=>u.alive)??null;
-  if(myrtle){myrtle.x=boss.x+1;myrtle.y=boss.y;}
-  const sp0=artillery.sp,t0=b.time;run(12);
-  if(myrtle?.alive)assert.ok(artillery.sp>=Math.min(120,sp0+(b.time-t0))+ (artillery.sp>=120?0:3)-1e-6||artillery.sp<sp0,'his attacks add SP on top of 1/s');
+  // One invulnerable operator beside him, so that both his shots and the barrage have a target.
+  b.setViewport('fullscreen-workspace');b.getPlayer('arkpedia').dp=99;
+  let myrtle=null;
+  for(let r=0;r<stage.geometry.tileGrid.length&&!myrtle;r++)for(let c=0;c<stage.geometry.tileGrid[0].length&&!myrtle;c++){try{myrtle=b.deployOperator('char_151_myrtle',r,c,'RIGHT');}catch{}}
+  assert.ok(myrtle);b.addBuff(myrtle,{key:'probe',persist:true,flags:{invulnerable:true}});myrtle.y=boss.y;myrtle.x=boss.x+1;
+  let charged=0;const charge=b.chargeStageArtillery.bind(b);b.chargeStageArtillery=n=>{charged+=n;return charge(n);};
+  const p=manfredParams(boss.def.raw);
+  // At least one shot: an artillery blast aimed at the operator beside him also stuns him for 8 s.
+  run(12);assert.ok(charged>=p.charge.attack&&charged%p.charge.attack===0,`his shots charge the artillery (${charged})`);
+  const wave=b.stageWaveScheduler.membership(boss).wave;
   b.dealDamage(null,boss,{amount:boss.hp,type:'true',sourceless:true});assert.equal(boss.alive,true);assert.equal(ab.state,'reborn');
-  run(manfredParams(boss.def.raw).rebirth.dur+manfredParams(boss.def.raw).rebirth.pose+.5);
+  // FinishCurrentWave with the next-wave option: he joins the next wave when there is one (H10-2 has a single wave).
+  const last=wave+1>=b.stageWaveScheduler.program.waves.length;
+  assert.equal(b.stageWaveScheduler.membership(boss).wave,last?wave:wave+1,'the knock-out releases the wave');
+  charged=0;run(p.rebirth.dur+.05);
+  // 24 shots: the 25th tick would fall at the instant the 20 s revive ends.
+  assert.equal(charged,Math.floor((p.rebirth.dur-1e-6)/p.rebirth.interval)*p.charge.rage,'the barrage charges every 0.8 s');
+  assert.equal(boss.hp,boss.s.maxHp);
+  run(p.rebirth.pose+.5);
   assert.equal(ab.form,2,'sword form');assert.ok(evading(boss));
   assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
  });
