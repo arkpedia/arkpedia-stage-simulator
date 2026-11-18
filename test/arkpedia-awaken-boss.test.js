@@ -78,3 +78,29 @@ test('second form: Shattered Vision also stuns units on high ground for 15 s sha
  const stun=highA.buffs.find(x=>x.status==='stun'||x.key==='stun');assert.ok(stun.timeLeft<=p.vision.stun/2+1e-6);
  assert.deepEqual(b.errors,[]);
 });
+
+for(const [stageId,level,first] of [['dv-8',0,[2,8]],['dv-ex-8',1,[5,5]]])
+ test(`compiled ${stageId}: 'Awaken' (level ${level}) blinks to her first checkpoint, then her revive fills every Power Armor`,async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const {StandardBattle}=await import('../server/sim/arkpedia.js');
+  const {createStageLibraryLoader}=await import('../shared/arkpedia/stage-library.js');
+  const {defaultBuild}=await import('../shared/arkpedia/loadout.js');
+  const mvp=JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json',import.meta.url)));
+  const manifest=JSON.parse(await readFile(new URL('../data/arkpedia-library.json',import.meta.url)));
+  const loader=createStageLibraryLoader(async url=>new Response(await readFile(new URL(`..${url}`,import.meta.url))));
+  const stage=await loader.load(manifest.stages.find(s=>s.id===stageId));
+  const b=new StandardBattle({...mvp,stage,enemies:{...mvp.enemies,...stage.enemies}},{operators:[{...defaultBuild(mvp.operators.char_151_myrtle)}]},{seed:1});
+  const keep=e=>e.findBuff?.('lypa[car_mark]')||e.mem.stageUnitDevice;
+  let boss=null;
+  const clear=()=>{for(const e of b.enemies)if(e.alive&&e!==boss&&e.defId!==id&&!keep(e))b.kill(e);};
+  while(!b.finished&&b.time<900&&!boss){clear();boss=b.enemies.find(e=>e.alive&&e.defId===id);b.step();}
+  assert.ok(boss);assert.equal(boss.def.raw?.level,level);
+  const armors=b.enemies.filter(e=>e.findBuff?.('lypa[car_mark]'));assert.ok(armors.length>0);
+  const run=s=>{const until=b.time+s;while(!b.finished&&b.time<until){clear();b.step();}};
+  run(52);assert.deepEqual([boss.y,boss.x],first,'blinked to the next checkpoint');
+  b.dealDamage(null,boss,{amount:boss.s.maxHp,type:'true',sourceless:true});assert.equal(boss.alive,true);
+  run(10.5);
+  assert.equal(boss.form,'form2');
+  assert.ok(armors.every(a=>!a.alive||!a.findBuff('lypa[car_mark]')||a.skill.sp>=a.skill.spCost),'every inactive Power Armor filled or activated');
+  assert.equal(b.finished,false);assert.deepEqual(b.errors,[]);
+ });

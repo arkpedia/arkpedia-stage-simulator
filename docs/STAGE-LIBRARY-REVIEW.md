@@ -86,6 +86,8 @@ The Leader batch (2026-11-18) published FC-8, FC-EX-8, FC-EX-8 Challenge and `ca
 
 The Mandragora batch (2026-11-18) published 9-19, 9-19 Challenge, H9-6 and `camp_r_09` (996 available, none withdrawn). The smoke check passed all 996 graphs, and the browser review passed.
 
+The 'Awaken' batch (2026-11-18) published DV-8, DV-EX-8 and DV-EX-8 Challenge (999 available, none withdrawn). The smoke check passed all 999 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
