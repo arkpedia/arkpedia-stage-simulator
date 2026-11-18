@@ -89,6 +89,7 @@ The Mandragora batch (2026-11-18) published 9-19, 9-19 Challenge, H9-6 and `camp
 The 'Awaken' batch (2026-11-18) published DV-8, DV-EX-8 and DV-EX-8 Challenge (999 available, none withdrawn). The smoke check passed all 999 graphs, and the browser review passed.
 
 The Mephisto batch (2026-11-18) published M8-8, M8-8 Challenge and H8-3 (1,002 available, none withdrawn). The smoke check passed all 1,002 graphs, and the browser review passed.
+The Big Ugly Thing batch (2026-11-18) published RI-8, RI-EX-8 and RI-EX-8 Challenge (1,005 available, none withdrawn). The smoke check passed all 1,005 graphs, and the browser review passed.
 
 ## Remaining work
 
