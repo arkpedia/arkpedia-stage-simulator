@@ -94,6 +94,7 @@ The Manfred batch (2026-11-18) published 10-17, 10-17 Adverse, H10-1 and H10-2 (
 The Theresa batch (2026-11-18) published 14-21 and 14-21 Adverse (1,011 available, none withdrawn, no other bundle changed). H14-4 stays blocked on Patriot and its environment. The smoke check passed all 1,011 graphs, and the browser review passed.
 The Patriot batch (2026-11-18) published 7-18 and 7-18 Challenge (1,013 available, none withdrawn, no other bundle changed). The smoke check passed all 1,013 graphs, and the browser review passed.
 The Talulah batch (2026-11-18) published H8-2, JT8-2 and JT8-2 Challenge (1,016 available, none withdrawn, no other bundle changed). The smoke check passed all 1,016 graphs, and the browser review passed.
+The FrostNova batch (2026-11-18) published 4-10 (1,017 available, none withdrawn, no other bundle changed). 4-10 Challenge stays blocked on its `ebuff_skill_radius` rune. The smoke check passed all 1,017 graphs, and the browser review passed.
 
 ## Remaining work
 
