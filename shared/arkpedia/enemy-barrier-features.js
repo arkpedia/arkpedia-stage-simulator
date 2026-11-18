@@ -2,6 +2,7 @@
 import { isMephisto, mephistoNative } from './enemy-mephisto-features.js';
 import { ratKingNative } from './enemy-ratking-features.js';
 import { mudrockNative } from './enemy-mudrock-features.js';
+import {isPatriot,patriotNative} from './enemy-patriot-features.js';
 const zero = ref => ref?.m_FileID === 0 && ref.m_PathID === '0';
 const node = (action, name) => action?.$type === `Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
 function barrierTemplate(n, key, last, effect = false) {
@@ -61,8 +62,8 @@ export function zealotNative(r, n) {
     && barrierTemplate(n, 'enemy_mdhmmr_shield', false) && barrierTemplate(n, 'enemy_mdhmmr_shield_end', true, true);
 }
 export const BARRIER_ENEMY_FEATURES = {
-  'talent:shield': { covers: (r, n) => isMephisto(r) ? mephistoNative(r, n) : greytailNative(r, n) || zealotNative(r, n) || mudrockNative(r, n) || ratKingNative(r, n),
-    ability: r => isMephisto(r) || ['enemy_1511_mdrock', 'enemy_1509_mousek'].includes(r.prefabKey) ? null : ({ kind: 'layeredBarrier', params: r => ({ layers: 3, amount: r.talents.bb['shield.dynamic'], type: 'arts',
+  'talent:shield': { covers: (r, n) => isPatriot(r) ? patriotNative(r, n) : isMephisto(r) ? mephistoNative(r, n) : greytailNative(r, n) || zealotNative(r, n) || mudrockNative(r, n) || ratKingNative(r, n),
+    ability: r => isPatriot(r) || isMephisto(r) || ['enemy_1511_mdrock', 'enemy_1509_mousek'].includes(r.prefabKey) ? null : ({ kind: 'layeredBarrier', params: r => ({ layers: 3, amount: r.talents.bb['shield.dynamic'], type: 'arts',
       ...(r.prefabKey.startsWith('enemy_1091_mdhmmr') ? { mods: { hpPct: r.talents.bb['shield.max_hp'], aspd: r.talents.bb['shield.attack_speed'] } }
         : { defense: r.talents.bb['shield.def'], speed: 1 + r.talents.bb['speedup.move_speed'] }) }) }),
     explains: /^(DEF significantly increases when the Barrier is present\.|Has a Barrier that absorbs Arts damage\.|Max HP and ASPD significantly increases while the Barrier persists\.)$/,

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {isPatriot,patriotNative} from './enemy-patriot-features.js';
 const warriorLine = 'When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks.';
 const casterLine = 'When coming into contact with a Pulse Wave, this unit instead takes no damage and their attack range expands';
 const spellLine = "Casts Arts periodically, dealing Arts damage equivalent to unit's ATK to all surrounding units";
@@ -69,5 +70,5 @@ export const PULSE_ENEMY_FEATURES = Object.freeze({
   'skill:Immo': { covers: caster, ability: { kind: 'pulseCaster', params: () => ({ cooldown: 5, radius: 1.5, chargedRadius: 2.5 }) },
     nativeClaim: () => ({ wrappers: 2, active: 2 }), explains: text => [casterLine, spellLine].includes(text),
     note: 'Ground-only periodic Arts splash; pulse changes mode and expands the original circle.' },
-  'skill:Immo[Rage]': { covers: caster, note: 'Charged mode of the shared periodic spell.' },
+  'skill:Immo[Rage]': { covers: (r, n) => isPatriot(r) ? patriotNative(r, n) : caster(r, n), note: 'Charged mode of the shared periodic spell, or Patriot\'s Sacrifice (talent:immo_trigger[rage]).' },
 });

@@ -6,6 +6,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-manfred',load:()=>import('./arkpedia-enemy-manfred.js'),exports:{manfred:'manfred'}},
   {key:'arkpedia-enemy-cocoon-cage',load:()=>import('./arkpedia-enemy-cocoon-cage.js'),exports:{cocoonCage:'cocoonCage'}},
   {key:'arkpedia-enemy-theresa',load:()=>import('./arkpedia-enemy-theresa.js'),exports:{theresa:'theresa'}},
+  {key:'arkpedia-enemy-patriot',load:()=>import('./arkpedia-enemy-patriot.js'),exports:{patriot:'patriot'}},
   {key:'arkpedia-enemy-mephisto',load:()=>import('./arkpedia-enemy-mephisto.js'),exports:{mephisto:'mephisto'}},
   {key:'arkpedia-enemy-awaken',load:()=>import('./arkpedia-enemy-awaken.js'),exports:{awaken:'awaken'}},
   {key:'arkpedia-enemy-mandragora',load:()=>import('./arkpedia-enemy-mandragora.js'),exports:{mandragora:'mandragora'}},

@@ -18,10 +18,11 @@ import {BIG_UGLY_THING_FEATURES,isBigUglyThing,bigUglyThingNative} from './enemy
 import {MANFRED_FEATURES,isManfred,manfredNative} from './enemy-manfred-features.js';
 import {COCOON_CAGE_FEATURES} from './enemy-cocoon-cage-features.js';
 import {THERESA_FEATURES,isTheresa,theresaNative} from './enemy-theresa-features.js';
+import {PATRIOT_FEATURES,isPatriot,patriotNative} from './enemy-patriot-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -500,6 +501,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...MANFRED_FEATURES,
   ...COCOON_CAGE_FEATURES,
   ...THERESA_FEATURES,
+  ...PATRIOT_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },
@@ -617,7 +619,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:ironsandstorm': { matchesRecord: isJesselton, covers: jesseltonNative, nativeClaim: () => ({ wrappers: 1, active: 1 }) },
   'skill:armorpiercing': { matchesRecord: isJesselton, covers: jesseltonNative, nativeClaim: () => ({ wrappers: 1 }) },
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
-  'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
+  'talent:taunt': { covers: (r, n) => isPatriot(r) ? patriotNative(r, n) : sig(r, 'taunt', ['taunt_level']), ability: r => isPatriot(r) ? null : { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
   // Crownslayer: a cooldown blink past the blocker, proven against the reviewed Blink wrapper/ability pair.
   'skill:blink': { covers: (r, nat) => formBoss(r) ? formBoss(r)(r, nat) : isCrownslayerBlink(r, nat) || isCheckpointBlink(r, nat),
@@ -1119,12 +1121,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Attacks deal Physical damage to all surrounding units.'
       || text === 'When inside Originium pollution or an Active Originium Storm, attacks deal Physical damage to all surrounding allied units and all your units inside Originium pollution or Active Originium Storms.' },
   // Guerrilla Herald: a battlefield-wide ATK/DEF buff for every enemy.
-  'talent:strength': { covers: (r,n) => (!isNativeInspiration(r)||inspirationNative(r,n))&&((sig(r, 'strength', ['atk', 'def'])
+  'talent:strength': { covers: (r,n) => isPatriot(r) ? patriotNative(r,n) : (!isNativeInspiration(r)||inspirationNative(r,n))&&((sig(r, 'strength', ['atk', 'def'])
       && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'))
       || (sig(r, 'strength', ['move_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains Movement Speed.'))
       || (sig(r, 'strength', ['atk']) && r.abilities.some(a => (a.text === 'When Inspired, gains greatly increased ATK.' || r.prefabKey==='enemy_1083_sotiab_2'&&a.text==='When Inspired, gains massively increased ATK.')))
       || (sig(r, 'strength', ['attack_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ASPD.'))),
-    ability: r=>isNativeInspiration(r)?nativeInspirationAbility(r):({ kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
+    ability: r=>isPatriot(r)?null:isNativeInspiration(r)?nativeInspirationAbility(r):({ kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
       ? { mode: 'inspired', move: r.talents.bb['strength.move_speed'] }
       : sig(r, 'strength', ['atk'])
         ? { mode: 'inspired', atkPct: r.talents.bb['strength.atk'] }
