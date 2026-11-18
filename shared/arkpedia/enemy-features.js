@@ -14,10 +14,11 @@ import {THE_LEADER_FEATURES,isTheLeader,theLeaderNative} from './enemy-the-leade
 import {MANDRAGORA_FEATURES,isMandragora,mandragoraNative} from './enemy-mandragora-features.js';
 import {AWAKEN_BOSS_FEATURES,isAwaken,awakenBossNative} from './enemy-awaken-boss-features.js';
 import {MEPHISTO_FEATURES,isMephisto,mephistoNative} from './enemy-mephisto-features.js';
+import {BIG_UGLY_THING_FEATURES,isBigUglyThing,bigUglyThingNative} from './enemy-big-ugly-thing-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -491,6 +492,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...MANDRAGORA_FEATURES,
   ...AWAKEN_BOSS_FEATURES,
   ...MEPHISTO_FEATURES,
+  ...BIG_UGLY_THING_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,
@@ -1219,10 +1221,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:Def': { covers: r => sig(r, 'Def', ['def']) && r.abilities.some(a => a.text.startsWith('Gains DEF when blocked')),
     ability: { kind: 'blockedDef', params: r => ({ def: r.talents.bb['Def.def'] }) },
     note: 'flat DEF while blocked', explains: text => text.startsWith('Gains DEF when blocked') },
-  'talent:combat': { covers: (r,n) => isDerisiveAudience(r) ? derisiveAudienceNative(r,n)
+  'talent:combat': { covers: (r,n) => isBigUglyThing(r) ? bigUglyThingNative(r,n) : isDerisiveAudience(r) ? derisiveAudienceNative(r,n)
       : sig(r, 'combat', ['attack@ccwitch_rage_attack.atk_scale'])
         && r.abilities.some(a => /deals (high )?Physical damage with melee attacks/.test(a.text)),
-    ability: r => isDerisiveAudience(r) ? {kind:'elementOnHit',params:r=>({element:'neural',ratio:r.talents.bb['combat.attack@ep_damage_ratio']})}
+    ability: r => isBigUglyThing(r) ? null : isDerisiveAudience(r) ? {kind:'elementOnHit',params:r=>({element:'neural',ratio:r.talents.bb['combat.attack@ep_damage_ratio']})}
       : { kind: 'meleeAttackScale', params: r => ({ scale: r.talents.bb['combat.attack@ccwitch_rage_attack.atk_scale'] }) },
     note: 'Reviewed ordinary melee scale or elemental blackboard binding', explains: (text,r) => isDerisiveAudience(r)
       ? text === 'Attacks inflict additional <$ba.dt.neural>Nervous Impairment</>'

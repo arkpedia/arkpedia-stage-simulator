@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import clocks from '../../data/arkpedia-shredder-animations.json' with { type: 'json' };
 import deviceRuntime from '../../data/arkpedia-device-runtime.json' with { type: 'json' };
+import { isBigUglyThing, bigUglyThingNative } from './enemy-big-ugly-thing-features.js';
 const devices = deviceRuntime.stump;
 const zero = r => r?.m_PathID === '0';
 const matches = (row, fields) => row && Object.entries(fields).every(([k, v]) => row[k] === v);
@@ -63,9 +64,11 @@ export function shredderNative(r, n, stump = devices, animations = clocks) {
   });
 }
 export const SHREDDER_FEATURES = Object.freeze({
-  'skill:cuttree': { matchesRecord: r => ['enemy_1097_cclmbjk', 'enemy_1097_cclmbjk_2'].includes(r.prefabKey), covers: shredderNative, nativeClaim: () => ({ wrappers: 1 }),
+  // The Big Ugly Thing's level-zero cut shares the key; his contract (talent:bird_run) runs and claims it.
+  'skill:cuttree': { matchesRecord: r => isBigUglyThing(r) || ['enemy_1097_cclmbjk', 'enemy_1097_cclmbjk_2'].includes(r.prefabKey),
+    covers: (r, n) => isBigUglyThing(r) ? bigUglyThingNative(r, n) : shredderNative(r, n), nativeClaim: (_p, n) => n?.enemy_1512_mcmstr ? {} : ({ wrappers: 1 }),
     explains: /^After several attacks, destroys Giant Mushrooms and Stumps, rendering them unable to be deployed upon$/,
-    ability: { kind: 'stumpShredder', params: r => ({ attackRadius: Math.fround(1.3), skillRadius: Math.fround(1.8),
+    ability: r => isBigUglyThing(r) ? null : { kind: 'stumpShredder', params: r => ({ attackRadius: Math.fround(1.3), skillRadius: Math.fround(1.8),
       initialSp: r.sp.initSp, increment: r.sp.increment, spCost: r.skills[0].spCost,
       animations: Object.fromEntries(['Attack', 'Attack_Down', 'Attack_Up'].map(clip => [clip,
         { dur: clocks.enemies[r.prefabKey].durations[clip], hit: clocks.enemies[r.prefabKey].events[clip][0].time }])) }) },
