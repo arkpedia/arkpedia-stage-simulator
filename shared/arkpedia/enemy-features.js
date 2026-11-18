@@ -20,10 +20,11 @@ import {COCOON_CAGE_FEATURES} from './enemy-cocoon-cage-features.js';
 import {THERESA_FEATURES,isTheresa,theresaNative} from './enemy-theresa-features.js';
 import {PATRIOT_FEATURES,isPatriot,patriotNative} from './enemy-patriot-features.js';
 import {TALULAH_FEATURES} from './enemy-talulah-features.js';
+import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -504,6 +505,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...THERESA_FEATURES,
   ...PATRIOT_FEATURES,
   ...TALULAH_FEATURES,
+  ...FROSTNOVA_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },
