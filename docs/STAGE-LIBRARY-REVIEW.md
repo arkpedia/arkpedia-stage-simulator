@@ -98,6 +98,8 @@ The FrostNova batch (2026-11-18) published 4-10 (1,017 available, none withdrawn
 
 The Phantom mid-boss batch (2026-11-19: Lost Colossus, Jetman, Wandering Puppet) published ISW-DF b-1 "Mind the Doors", b-2 "Theft from Above" and b-4 "Fatal Melodies" (1,020 available, none withdrawn, no other bundle changed). b-1 also needed the stage enemy check to accept its empty random-group SPAWN choice, which the original wave program already paired with an `emptyChoice`. The smoke check passed all 1,020 graphs, and the browser review passed.
 
+The Basorobeast batch (2026-11-19: Basorobeast and Gravorobeast) published TG-7 "Moving Mountains" and its Challenge (1,022 available, none withdrawn, no other bundle changed). The smoke check passed all 1,022 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
