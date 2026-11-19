@@ -23,6 +23,9 @@ export function assertRegularEnemies(data) {
   }
   for (const wave of data.stage.geometry.waves)
     for (const spawn of wave.spawns) {
+      // An empty random-group choice spawns nothing: the original wave program pairs the row with an emptyChoice
+      // (tools/arkpedia/stage-waves.mjs refuses the stage otherwise), and only that program schedules spawns.
+      if (spawn.enemy_id === '' && spawn.random?.group && data.stage.waveProgram) continue;
       const id = stageEnemyKey(data.stage.rules, spawn.enemy_id);
       if (!approved(id) || !data.enemies[id]) throw Error(`Missing supported enemy record: ${id}`);
     }
