@@ -21,6 +21,7 @@ import {THERESA_FEATURES,isTheresa,theresaNative} from './enemy-theresa-features
 import {PATRIOT_FEATURES,isPatriot,patriotNative} from './enemy-patriot-features.js';
 import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
+import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
 const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
@@ -506,6 +507,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...PATRIOT_FEATURES,
   ...TALULAH_FEATURES,
   ...FROSTNOVA_FEATURES,
+  ...PHANTOM_MIDBOSS_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },
@@ -693,10 +695,11 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'flat RES bonus while blocked; removed synchronously on release',
     explains: /^Gains (?:greatly )?increased RES when blocked$/ },
   // Punisher: every third attack stuns allies in the target's area; on death it is reborn as its reviewed child.
-  'skill:StunAttack': { covers: (r, nat) => isPunisherStunAttack(r, nat),
-    ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
-    note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
-    explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
+  // Lost Colossus shares the key: it dispatches to its own contract (enemy-phantom-midboss-features.js).
+  'skill:StunAttack': { covers: (r, nat) => isLostColossus(r) ? lostColossusNative(r, nat) : isPunisherStunAttack(r, nat),
+    ability: r => isLostColossus(r) ? LOST_COLOSSUS_STUN_ATTACK : { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
+    note: 'Punisher: every third attack stuns the target area; Lost Colossus: a stunning rock every 13 s', nativeClaim: () => ({ wrappers: 1 }),
+    explains: (text, r) => isLostColossus(r) ? LOST_COLOSSUS_EXPLAINS(text) : /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/.test(text) },
   'talent:Attack': { covers: (r, n) => isFlayer(r)?flayerNative(r,n):r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
       ((sig(r, 'Attack', ['enemy_key'])
         || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
