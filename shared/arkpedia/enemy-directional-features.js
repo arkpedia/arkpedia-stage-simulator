@@ -2,6 +2,7 @@
 import { burdenbeastSupplierNative, isBurdenbeastSupplier, burdenbeastSupplierParameters } from './enemy-burdenbeast-features.js';
 import clocks from '../../data/arkpedia-fatty-animations.json' with { type: 'json' };
 import { nativeAuxiliaryClaims } from './enemy-native-auxiliaries.js';
+import { isBasorobeast, basorobeastNative, BASOROBEAST_WEAKNESS, BASOROBEAST_EXPLAINS } from './enemy-basorobeast-features.js';
 const ID = 'enemy_2085_skzjxd', type = s => `Torappu.Battle.Action.Nodes+${s}, Assembly-CSharp`;
 const keys = (o, list) => Object.keys(o ?? {}).sort().join() === [...list].sort().join();
 export function directionalNative(r, n) {
@@ -56,14 +57,16 @@ export function directionalNative(r, n) {
     && !force[0]._checkSkillReady && !force[0]._checkSkillActive && force[0]._interruptCurAbility;
 }
 export const DIRECTIONAL_FEATURES = {
-  'talent:Weakness': { matchesRecord: r => r.prefabKey === ID || isBurdenbeastSupplier(r),
-    covers: (r, n) => directionalNative(r, n) || burdenbeastSupplierNative(r, n),
-    nativeClaim: (p, n) => p.rootName.startsWith('enemy_4007_murino') ? { active: 2 }
+  // Basorobeast/Gravorobeast share the key: they dispatch to their own contract (enemy-basorobeast-features.js).
+  'talent:Weakness': { matchesRecord: r => r.prefabKey === ID || isBurdenbeastSupplier(r) || isBasorobeast(r),
+    covers: (r, n) => isBasorobeast(r) ? basorobeastNative(r, n) : directionalNative(r, n) || burdenbeastSupplierNative(r, n),
+    nativeClaim: (p, n) => p.rootName.startsWith('enemy_1307_mhrhcr') ? { active: 0 }
+      : p.rootName.startsWith('enemy_4007_murino') ? { active: 2 }
       : { wrappers: 1, active: 2 + nativeAuxiliaryClaims(p, n).active },
-    explains: (text, r) => isBurdenbeastSupplier(r)
+    explains: (text, r) => isBasorobeast(r) ? BASOROBEAST_EXPLAINS(text) : isBurdenbeastSupplier(r)
       ? /^(Damage from the front is greatly reduced\.|Always faces the side where you have more units\.)$/.test(text)
       : /^(Always faces the direction with the most Operators\.|Takes 80% less Physical\/Arts damage from the front\.|始终面向我方干员数量较多的方向|受到来自正面的物理\/法术伤害降低80%)$/.test(text),
-    ability: { kind: 'crowdDirectionalGuard', params: r => isBurdenbeastSupplier(r)
+    ability: r => isBasorobeast(r) ? BASOROBEAST_WEAKNESS : { kind: 'crowdDirectionalGuard', params: r => isBurdenbeastSupplier(r)
       ? burdenbeastSupplierParameters(r)
       : ({ reduction: r.talents.bb['Weakness.damage_resistance'],
       poll: Math.fround(.3), interval: r.talents.bb['ShowTrigger.interval'], showDuration: clocks.enemies[ID].durations.Special }) } },

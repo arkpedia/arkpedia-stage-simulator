@@ -93,6 +93,7 @@ import { EPOCH_MARK_FEATURE, isDreadkaz, dreadkazNative, DREADKAZ_ABILITY, DREAD
 import { SPIDER_FEATURE, mutantSpider, mutantSpiderNative } from './enemy-spider-features.js';
 import { INFANTRY_FEATURES } from './enemy-infantry-features.js';
 import { DIRECTIONAL_FEATURES } from './enemy-directional-features.js';
+import { BASOROBEAST_FEATURES } from './enemy-basorobeast-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
 import { SUPPLY_ENEMY_FEATURES } from './enemy-supply-features.js';
@@ -508,6 +509,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...TALULAH_FEATURES,
   ...FROSTNOVA_FEATURES,
   ...PHANTOM_MIDBOSS_FEATURES,
+  ...BASOROBEAST_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },
