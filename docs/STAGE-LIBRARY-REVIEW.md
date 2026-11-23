@@ -124,6 +124,8 @@ The Abandoned batch (2026-11-23: 'The Abandoned' and 'The Cursed') published BP-
 
 The Herald batch (2026-11-23: Multicellular and Allotropic Heralds) published BP-5 "Lethal Fate" and BP-EX-3 "Great Bathhouse - Where Wisdoms Meet" (1,042 available, none withdrawn, no other bundle changed). BP-5's first build failed the smoke check: `compileStage` did not attach the original instances of pre-placed Excrescent Carapaces; it now does, validated through `carapaceDefinition`. After the fix the smoke check passed all 1,042 graphs, and the browser review passed.
 
+The fire elemental batch (2026-11-23: the Kazdel fire elemental `enemy_8017_vcblva`) published VEC-02 "High-Tension Pursuit" (1,043 available, none withdrawn, no other bundle changed). The smoke check passed all 1,043 graphs, and the browser review passed: original art, and the deploy highlight skips the elemental's 3x3.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
