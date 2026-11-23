@@ -2,8 +2,10 @@
 /** A carrier owns existing enemy identities, never replacement spawns. Hidden
  * passengers retain HP/buffs/counts; their attack and route clocks are suspended. */
 export class EnemyPassengerContainer {
-  constructor(b,host,{capacity,radius,offset,eligible}) {
+  constructor(b,host,{capacity,radius,offset,eligible,useHostRoute=true,tileCenter=false}) {
     this.b=b;this.host=host;this.capacity=capacity;this.radius=radius;this.offset=offset;
+    // _useHostRoute 0 keeps each passenger's own route; _appearOnTileCenter 1 drops it on the host's tile centre.
+    this.useHostRoute=useHostRoute;this.tileCenter=tileCenter;
     this.eligible=eligible;this.records=new Map();
   }
   capture(u) {
@@ -29,9 +31,10 @@ export class EnemyPassengerContainer {
       const u=r.unit;delete u.mem.enemyPassengerOf;if(!u.alive||!u.deployed)continue;
       u.pauseUntil=r.pauseUntil;u.x=h.x;u.y=h.y;
       if(reason==='leak'){b.leak(u);continue;}
-      const route=h.route;
+      const route=this.useHostRoute?h.route:u.route;
       if(route)u.route={legs:route.legs.map(leg=>({...leg})),legIdx:route.legIdx,waitLeft:route.waitLeft,
         pts:null,ptIdx:0,suffix:null,version:-1};
+      if(this.tileCenter){u.x=Math.round(h.x);u.y=Math.round(h.y);}
       // Native square scatter is bounded by the board and passable ground.
       const x=u.x+b.rng.range(-this.offset,this.offset),y=u.y+b.rng.range(-this.offset,this.offset);
       const tile=b.grid.tile(Math.round(y),Math.round(x));

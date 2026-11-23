@@ -100,6 +100,7 @@ import { CROSSROADS_FEATURES } from './enemy-crossroads-features.js';
 import { HOARDER_FEATURES } from './enemy-hoarder-features.js';
 import { isBurnSlug, burnSlugNative, BURN_SLUG_ABILITY, BURN_SLUG_EXPLAINS } from './enemy-burn-slug-features.js';
 import { isNethersea, isSpewer, isPredator, netherseaNative, NETHERSEA_ABILITY, NETHERSEA_EXPLAINS } from './enemy-nethersea-features.js';
+import { YUMEN_FEATURES, isSandwalker, SANDWALKER_BUS } from './enemy-yumen-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
 import { SUPPLY_ENEMY_FEATURES } from './enemy-supply-features.js';
@@ -520,6 +521,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...DRIFTER_FEATURES,
   ...CROSSROADS_FEATURES,
   ...HOARDER_FEATURES,
+  ...YUMEN_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },
@@ -536,7 +538,11 @@ export const ENEMY_FEATURES = Object.freeze({
   'native:loggedChest': LOGGED_CHEST_FEATURE,
   ...BEJEWELED_FEATURES,
   'ability:More likely to be attacked': { covers: r => r.stats.tauntLevel > 0, note: 'record taunt level participates in ordinary priority' },
-  'talent:Bus': BEACH_BUS_FEATURE,
+  // The Sandwalkers share the key: they dispatch to their own contract (enemy-yumen-features.js).
+  'talent:Bus': { ...BEACH_BUS_FEATURE, matchesRecord: r => BEACH_BUS_FEATURE.matchesRecord(r) || isSandwalker(r),
+    covers: (r, n) => isSandwalker(r) ? SANDWALKER_BUS.covers(r, n) : BEACH_BUS_FEATURE.covers(r, n),
+    ability: r => isSandwalker(r) ? SANDWALKER_BUS.ability : BEACH_BUS_FEATURE.ability,
+    explains: (text, r) => isSandwalker(r) ? SANDWALKER_BUS.explains.test(text) : BEACH_BUS_FEATURE.explains.test(text) },
   'talent:PhysicalEvade': FLYING_BOOTS_FEATURE,
   'ability:Spawns an <@eb.key>Excrescent Carapace</> at its location when defeated.': DEPOSITOR_FEATURE,
   'ability:Prioritizes attacking Imprisonment Devices': SNIPER_PRISONER_PRIORITY,
