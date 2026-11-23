@@ -148,6 +148,8 @@ Chapter-11 adverse runes (2026-11-23, main story): 11-9, 11-14 and 11-18 adverse
 
 Artillery charge (2026-11-23, main story): 10-6, 10-14 and 13-5 adverse published (1,066 available). 14 published stages changed bundle because their Sarkaz drones and Artificers now charge the Londinium artillery: 10-6, 10-7, 10-11, 10-12, 10-14, 10-15, 10-17, 13-5, TR-20 and adverse variants. The smoke check passed all 1,066 graphs.
 
+Manfred's H10-3 aura (2026-11-23, main story): H10-3 published (1,067 available, none withdrawn). 10-17, 10-17 Adverse, H10-1 and H10-2 changed bundle only because Manfred's runtime parameters gained the `aura` block, which is off there. The smoke check passed all 1,067 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
