@@ -39,10 +39,10 @@ node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab'
 
 ## Current coverage and verification
 
-- **852 / 2,163 enemy records admitted; 1,311 remain.**
-- **934 database levels**, **260 runtime kinds**.
-- **1,046 stages available** in the published library (`data/arkpedia-library.json`), rebuilt and reviewed with every enemy batch since 2026-11-17. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,932 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 644 models.
+- **853 / 2,163 enemy records admitted; 1,310 remain.**
+- **935 database levels**, **261 runtime kinds**.
+- **1,047 stages available** in the published library (`data/arkpedia-library.json`), rebuilt and reviewed with every enemy batch since 2026-11-17. This is not a count of fully certified stage clears or the remaining stage backlog.
+- Asset repository: **3,933 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 645 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -111,6 +111,7 @@ All listed commits were pushed. Their matching original models were published se
 | Fire elemental batch | Kazdel fire elemental `enemy_8017_vcblva` (CN only; `deployDenyZone`: `block_tile`'s nine grid positions around its root tile, resampled by `enemy_vcblva_t_tile` every 0.2 s, refuse deployment while it lives; engine: `b.noDeployZones` beside the permanent `noDeployTiles`). Coverage 850; the library publishes VEC-02 (1,043 available). `docs/ENEMY-VCBLVA-REVIEW.md`. |
 | Leafcarpet batch | Leafcarpet `enemy_8013_mcnrsh` (`leafcarpetRush`: Direswine-shaped rush, 5 s predelay then +0.5 speed stacks on a 0.333 s clock to 2.55; freeze/levitate/bind/fear during it ends it with 6 s Fragile x2; ground-only contact crash 600 x speed Physical + 4 s stun; stun-immune; Unblockable from the handbook line only; `talent:rush` dispatches beside the Lancers). Coverage 851; the library publishes VEC-05 (1,044 available). `docs/ENEMY-LEAFCARPET-REVIEW.md`. |
 | Uproar batch | Uproar `enemy_8015_mcnrhd` (`uproarArrowRain`: unblocked sanctuary 0.8 on Physical/Arts; each such hit triggers multiAttack (4 s) at the source: Skill clip, arc at speed 5, 0.3 s after reaching, 1.2 x ATK Physical within 1.5 on ground operators and -50 ASPD for 10 s; Rebirth 5.667 s via the shared `talent:reborn`, which now accepts Uproar through its contract). Coverage 852; the library publishes VEC-10 and VEC-SP16 (1,046 available). `docs/ENEMY-UPROAR-REVIEW.md`. |
+| Rusthammer batch | Rusthammer Warrior `enemy_2006_flsnip` (`rusthammerWarrior`: Faust's kit; INVINCIBLE 60 s (flag 5, silenceable), BLOCK_FREE + sleep-immune for life (flag 3, combo 0), Physical bolts, CriticalHit every 18 s on the attack clock as a 3 x ATK Arts bolt; SummonBallis inert without a record skill). Coverage 853; the library publishes ISW-DF "Hunting Group" (1,047 available). `docs/ENEMY-RUSTHAMMER-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 

@@ -130,6 +130,8 @@ The Leafcarpet batch (2026-11-23: `enemy_8013_mcnrsh`) published VEC-05 "Deathly
 
 The Uproar batch (2026-11-23: `enemy_8015_mcnrhd`) published VEC-10 "Welcome Contingent" and VEC-SP16 (1,046 available, none withdrawn, no other bundle changed). The smoke check passed all 1,046 graphs, and the browser review passed (original art, no errors); the arrow rain itself is covered by the tests.
 
+The Rusthammer batch (2026-11-23: `enemy_2006_flsnip`) published the ISW-DF stage "Hunting Group" (1,047 available, none withdrawn, no other bundle changed). The smoke check passed all 1,047 graphs; the browser review loaded the original art with no console errors.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
