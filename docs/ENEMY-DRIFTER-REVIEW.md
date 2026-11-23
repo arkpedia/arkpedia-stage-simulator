@@ -13,7 +13,7 @@ Both are admitted from their pinned CN prefabs. `shared/arkpedia/enemy-drifter-f
 - `projectile_enemy_dsflys`;
 - the Attack clip clock from `refs/arts/enm_art_16.ab`: 1.83 s, release at 0.83 s.
 
-The runtime is `server/sim/content/arkpedia-enemy-drifter.js`, kind `drifter`. It sits under `talent:0`, a key only the Drifters use.
+The runtime is `server/sim/content/arkpedia-enemy-drifter.js`, kind `drifter`. It sits under `talent:0`, a key the Divicellular Hoarders share (the key dispatches by record; see `ENEMY-HOARDER-REVIEW.md`).
 
 ## Attack
 

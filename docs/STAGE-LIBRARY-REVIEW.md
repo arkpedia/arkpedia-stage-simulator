@@ -108,6 +108,8 @@ The Drifter batch (2026-11-23: Toxocellular and Allotropic Drifters) published B
 
 The Crossroads batch (2026-11-23: 'Crossroads' Production Model and Prototype) published CW-6 "Gathering of Heroes" (1,027 available, none withdrawn, no other bundle changed). The smoke check passed all 1,027 graphs, and the browser review passed.
 
+The Hoarder batch (2026-11-23: Divicellular and Allotropic Hoarders) published BP-EX-1 "Pillar of Shame - Meaningless Conflict", its Challenge and VEC-SP12 "Unacclimatized" (1,030 available, none withdrawn, no other bundle changed). The smoke check passed all 1,030 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
