@@ -166,11 +166,25 @@ Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249
 
 **Main story first (owner, 2026-11-23).** Unblock main story stages (`0-*` to `17-*`, `h*`, `tr-*`, their Challenge/adverse variants) before other content, earliest chapters first. On 2026-11-23: 361 of 572 available (inventory ids matching `^(\d+-|h\d|tr-)`) (6-7 and H5-4 via Faust, 5-10 and its Challenge via Mephisto, 6-16, its Challenge and H6-4 via Winter's Scar, H7-4 via the sparse-level skill overlay, 11-9/11-14/11-18 adverse via two rune forms, 10-6/10-14/13-5 adverse via the artillery charge, H10-3 via Manfred's aura, 10-4 adverse via artillery instances, 10-5/11-1/11-13 and its adverse via unnamed hidden groups, TR-8 via its hidden supply card). Open, with no source answer yet:
 - **0-6 Challenge** `cbuff_initial_cost` (`cost` 3) exists only in this level. The naming pattern suggests +3 starting DP (11), but PRTS and the wiki both list 8, apparently copying `initialCost`. Needs an in-game check.
+- **6-17** is a training cutscene (`isTrainingLevel`, no deployment, 1 life point; Amiya, Ch'en and Swire appear on script between story lines) with the story-only FrostNova S (`enemy_1510_frstar2_s`). Parked: no gameplay to simulate.
 - **4-10 Challenge** `ebuff_skill_radius` (×1.49, global). FrostNova's selectors are not scalable and her blast range is the blackboard `range_radius`, so which radii scale is not settled (see `docs/ENEMY-FROSTNOVA-REVIEW.md`).
 
 - **Artillery charge (fixed 2026-11-23):** the Sarkaz drones and Heirbearer Artificers now charge `trap_058_gunctrl`; 14 published stages became harder and closer to the game. See `docs/ENEMY-ARTILLERY-CHARGE-REVIEW.md`.
 
-The largest main-story unlocks still ahead are the chapter-15 controller `env_v060_mainline15_prtsCtrl` (sole blocker of 15 stages) and the chapter-12 sight system (41).
+The largest main-story unlocks still ahead are the chapter-15 controller `env_v060_mainline15_prtsCtrl` (sole blocker of 23 stages: 15-4/5/6/8/9/10/12/13/15/17 and their six-star variants, 15-19, H15-1, TR-26) and the chapter-12 sight system (41).
+
+**Chapter-15 controller research (2026-11-23).** The controller is the prefab `env_v060_mainline15_prtsctrl` in the CN bundle `battle/prefabs/[uc]envsystems.ab` (md5 `6e5b86ee21792929fa22dff115ca0009`, cached under `.cache/arkpedia/cn-native-source/bundles/`). Its config:
+- PRTS is the hidden enemy `enemy_10072_mpprhd`. It drags units from `tile_mpprts_enemy_born` tiles (spawn check 0.01). The tile it drags from gets the portal effect, and the target position gets a crosshair.
+- `_enemyTrapKeyPairs` turn a dragged enemy into an enemy-side trap on high ground. Catapult `mpcata` becomes `trap_229`, or `trap_230` for the `_2` tier. Grounder `mpgrou` becomes `trap_231`/`232`. Mage `mpmage` becomes `trap_233`/`234`. The Weakening Node enemy `mpweak` becomes the ally-side `trap_227_mpweak` on either tile height.
+- Buffs `enemy_mpprhd_action_end` and `enemy_mpprhd_subaction_fail` go to PRTS.
+- There is a "PRTS error" event and UI, and a writer that prints one line per 0.15 s, 25 lines at most.
+
+PRTS wiki `弱化节点(装置)` describes the node:
+- `trap_227_mpweak`, ally camp, 10,000 HP, cost 10, range x-4, skill 弱化 at 30 SP.
+- When PRTS activates it, operators nearby get −50% DEF and RES for 20 s.
+- The player can pay 10 DP to activate it instead, giving enemies nearby −50% DEF and RES for 30 s.
+
+Still missing: how PRTS chooses what to drag, where it drops it and when (compiled controller code), and the three trap families' attacks. This needs its own multi-part batch: the traps, the node device, and then PRTS's drag AI, the last needing a source for its rules.
 
 **Straight Shot, remaining.** The crossbowmen and Mateo's first two guards are done. Captain Mateo (`enemy_1551_bolicp`, 2 levels) and his ammo guard `enemy_1409_bdguad_3` block only about 3 stages each, and Mateo is a large boss batch (inspected 2026-11-16, nothing extracted): two forms with `Reborn` at another location; `CrossAttack` of 10 bolts whose last one lowers DEF (`def` −100/−150) after a Begin/Loop/End channel; `SmokeBomb` smoke fields that make enemies invisible for 30 s (one use); `Shotgun` stuns for 6 s using ammo (SP 6, no recovery); `CallBdguad` gathers the guards and holds them for 30 s; `DmgResist` and `Attack` talents. Reuse `straightShotTargets`, `fireStraightBolt` and explicit `releases`. Expose (`enemy_1402_tgshd*`, `enemy_1407_hummbd*`) applies `enemy_tgshd_exposed_mark`, which the selection already honours.
 
