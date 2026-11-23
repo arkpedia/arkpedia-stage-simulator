@@ -43,6 +43,7 @@ export const twigsDefinition = single('twigsDefinition');
 export const sceneryDefinition = keyed('sceneryDefinition');
 export const turretDefinition = single('turretDefinition');
 export const artilleryDefinition = single('artilleryDefinition');
+export const flameDefinition = single('flameDefinition');
 export const predefinedMineDefinition = single('predefinedMineDefinition');
 export const magicCircuitDefinition = (instance, id = 'trap_062_magicstart') => compiledDeviceDefinition('magicCircuitDefinition', id, instance);
 export const electricCoilDefinition = instance => compiledDeviceDefinition('electricCoilDefinition', '', instance && {
@@ -58,6 +59,6 @@ export function stageDeviceSpec(device) {
   return !spec || spec.keys && !spec.keys.includes(device.key)
     || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
       // A hidden Turret or Ice Crystal is accepted only when an activation branch switches it on (as in stage-devices.js).
-      && !((spec.turret || spec.statusPulse) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
+      && !((spec.turret || spec.statusPulse || spec.flame) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
       || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string') ? null : spec;
 }

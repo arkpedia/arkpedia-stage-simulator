@@ -32,7 +32,7 @@ export function emptyActivationBranches(level) {
  * MoveNextLevelBranch on its branch_id: one phase per cast, no loop. Each alias must be a unique hidden instance
  * of one of these keys; it is validated like the static device and compiled as a hidden device the stage
  * activates by alias. Branches of any other shape are left to their owners. */
-const ACTIVATED_DEVICES = { trap_007_ballis: 'Turret', trap_010_frosts: 'Originium Ice Crystal' };
+const ACTIVATED_DEVICES = { trap_007_ballis: 'Turret', trap_010_frosts: 'Originium Ice Crystal', trap_021_flame: 'Energy Aggregate' };
 export function turretActivationBranches(level, originalDeviceDirection) {
   const insts = level.predefines?.tokenInsts ?? [], branches = {}, devices = [], instances = {}, used = new Set();
   for (const [key, branch] of Object.entries(level.branches ?? {})) {
@@ -56,13 +56,17 @@ export function turretActivationBranches(level, originalDeviceDirection) {
       phases.push(aliases); return true;
     });
     if (!valid) continue;
-    for (const alias of phases.flat()) {
+    // Energy Aggregates re-appear: the Black Snake's looping branch re-activates the same alias in later phases
+    // (a new body after the previous one withdrew). Other devices stay one activation per alias.
+    const repeatable = alias => insts.find(e => e.alias === alias)?.inst?.characterKey === 'trap_021_flame';
+    if (phases.flat().some((alias, i, all) => all.indexOf(alias) !== i && !repeatable(alias))) continue;
+    for (const alias of [...new Set(phases.flat())]) {
       if (used.has(alias)) throw Error(`Turret alias activated by more than one branch: ${alias}`);
       used.add(alias);
       const p = insts.find(e => e.alias === alias);
-      const key = p.inst.characterKey, turret = key === 'trap_007_ballis';
+      const key = p.inst.characterKey, turret = key === 'trap_007_ballis', flame = key === 'trap_021_flame';
       // A Turret is instanced (level 1-90, direction); a static Ice Crystal is level 1 (as validateStaticDeviceInstances).
-      if (p.skillIndex !== 0 || p.mainSkillLvl !== 1 || ![0, 'PHASE_0'].includes(p.inst.phase)
+      if (p.skillIndex !== 0 || (flame ? ![1, 2].includes(p.mainSkillLvl) : p.mainSkillLvl !== 1) || ![0, 'PHASE_0'].includes(p.inst.phase)
         || (turret ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > 90 : p.inst.level !== 1)
         || p.overrideSkillBlackboard != null || p.overrideTalents != null || p.uniEquipIds?.length || p.masterInfos?.length
         || !Number.isInteger(p.position?.row) || !Number.isInteger(p.position?.col))
@@ -71,6 +75,7 @@ export function turretActivationBranches(level, originalDeviceDirection) {
       devices.push(device);
       if (turret) instances[`${device.key}:${device.row}:${device.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
         direction: originalDeviceDirection(p.direction) };
+      if (flame) instances[`${device.key}:${device.row}:${device.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl };
     }
     branches[key] = { spawns: [], phases };
   }

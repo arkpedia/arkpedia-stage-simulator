@@ -314,6 +314,7 @@ export class StandardBattle extends Battle {
     this.capturableStageDevices = deviceRuntime.create('capturable', this, data.stage);
     this.electricCoils = deviceRuntime.create('coils', this, data.stage);
     this.stageTurrets = deviceRuntime.create('turrets', this, data.stage);
+    this.stageFlames = deviceRuntime.create('flames', this, data.stage);
     this.stageMagicCircuit = deviceRuntime.create('magicCircuit', this, data.stage);
     installStageEnvironments(this, data.stage.environment);
     this.stageFlowGenerators = deviceRuntime.create('flow', this, data.stage);
@@ -374,6 +375,7 @@ export class StandardBattle extends Battle {
   activateStagePredefined(key) {
     if (this.stageTwigs?.activate(key)) return;
     if (this.stageTurrets?.activate(key)) return;
+    if (this.stageFlames?.activate(key)) return;
     const crystal = this.mvpStageDevices?.find(d => d.alias === key && d.branchActivated && stageDeviceSpec(d)?.statusPulse);
     if (crystal) {
       if (crystal.active) return;

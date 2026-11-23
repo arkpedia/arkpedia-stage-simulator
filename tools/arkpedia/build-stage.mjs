@@ -37,6 +37,7 @@ import { STAGE_TOKEN_UNITS, STAGE_DEVICES } from '../../shared/arkpedia/stage-de
 import { stageDeviceSpec } from '../../shared/arkpedia/stage-devices.js';
 import { manualDeviceDefinition } from '../../shared/arkpedia/stage-manual-devices.js';
 import { artilleryDefinition } from '../../shared/arkpedia/stage-artillery.js';
+import { flameDefinition } from '../../shared/arkpedia/stage-flames.js';
 import { magicCircuitDefinition } from '../../shared/arkpedia/stage-magic-circuit.js';
 import { gramophoneDefinition } from '../../shared/arkpedia/stage-gramophones.js';
 import { flowGeneratorDefinition } from '../../shared/arkpedia/stage-flow-generators.js';
@@ -177,7 +178,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     devices: devices.map(d => {
       const spec = stageDeviceSpec(d);
       // Excrescent Carapaces carry their original instance too (StageCarapaces reads d.instance).
-      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery) return d;
+      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame) return d;
       const instance = deviceInstances[`${d.key}:${d.row}:${d.col}`];
       if (spec.carapace) carapaceDefinition(instance);
       else if (spec.twigs) twigsDefinition(instance);
@@ -188,6 +189,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
       else if (spec.scenery) sceneryDefinition(d.key, instance);
       else if (spec.demolition) { if (!instance) throw Error('Missing original pillar instance'); }
       else if (spec.artillery) artilleryDefinition(instance);
+      else if (spec.flame) flameDefinition(instance);
       else if (spec.gramophone) gramophoneDefinition(instance);
       else if (spec.flowGenerator) flowGeneratorDefinition(instance);
       else if (spec.turret) turretDefinition(instance);

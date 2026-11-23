@@ -20,6 +20,10 @@ this difficulty enables it, off when the only runes are for another difficulty,
 and off when no rune of the level names it (since 2026-11-23: such a group can
 never be enabled; 10-5 `fstar`, 11-1/11-13 `h`). A malformed rule value or group
 name still refuses the stage.
+The published Integrated Strategies entries are the normal variants (`ro1_n_*`):
+the emergency variants (`ro1_e_*`, "more elite enemies") enable groups such as
+`extra`/`raid` from the roguelike, outside the level file, so they are not these
+entries. None of the newly published levels carries `optionalRunes`.
 
 The source exporter's `runFragments` includes a wave's opening delay in spawn
 times, and `buildWaves` includes opening and closing delays in its duration.

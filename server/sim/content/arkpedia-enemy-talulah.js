@@ -3,6 +3,7 @@
 // (shared/arkpedia/enemy-talulah-features.js). Native modes: Default and HalfState (enraged).
 import { sortAllyTargets, canTargetAlly } from '../targeting.js';
 import { ALLY_COLLIDER_RADIUS } from '../constants.js';
+import { applyBurningBreath } from './arkpedia-burning-breath.js';
 
 const BREATH = 'dragon_fire', RAGE = 'ftrtal_t[rage]', CAST = 'ab:talulahCast';
 const live = u => u?.alive && u.deployed !== false && !u.hidden;
@@ -11,15 +12,7 @@ export function talulah(p) {
   validate(p);
 
   // --- Burning Breath: true damage each second rising from `base` to `base + add` over `ramp` s; resisted (duration) ---
-  const breathe = (b, e, target, s) => {
-    if (target.findBuff(BREATH)) return;
-    const duration = s.duration * (1 - (b.resistOf?.(target) ?? 0)), t0 = b.time;
-    b.addBuff(target, { key: BREATH, source: e, duration, visible: true, interval: 1, onTick: ({ battle }) => {
-      if (!target.alive) return;
-      const amount = s.base + s.add * Math.min(1, (battle.time - t0) / s.ramp);
-      battle.dealDamage(e, target, { amount, type: 'true', canDodge: false, noSp: true, applyWay: 'none', tags: ['periodic', 'talulahBreath'] });
-    } });
-  };
+  const breathe = (b, e, target, s) => { applyBurningBreath(b, e, target, s, { tag: 'talulahBreath' }); };
   // DragonFire's trigger has no collider: one operator anywhere on the field that is not already burning.
   const breathTarget = (b, e) => sortAllyTargets(e, b.allies().filter(u => live(u) && canTargetAlly(e, u, true) && !u.findBuff(BREATH)))[0] ?? null;
   const coronaTargets = (b, e, s) => b.alliesInRadius(e.x, e.y, s.radius + ALLY_COLLIDER_RADIUS).filter(u => live(u) && canTargetAlly(e, u, true));

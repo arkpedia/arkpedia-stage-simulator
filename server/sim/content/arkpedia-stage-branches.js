@@ -31,12 +31,14 @@ export class StageBranchScheduler {
     const branch = this.branches[key];
     return Array.isArray(branch?.phases) && (this.phaseIndex?.[key] ?? 0) < branch.phases.length;
   }
-  /** MoveNextLevelBranch (no loop): run the next phase of an activation branch; past the last phase, nothing. */
-  advance(key) {
+  /** MoveNextLevelBranch: run the next phase of an activation branch. Without `loop`, past the last phase nothing
+   * happens; with `loop` (_isLoop, the Black Snake's SummonFlame) it starts again from the first phase. */
+  advance(key, { loop = false } = {}) {
     const branch = this.branches[key];
-    if (!Array.isArray(branch?.phases)) throw Error(`Unknown activation branch: ${key}`);
+    if (!Array.isArray(branch?.phases) || !branch.phases.length) throw Error(`Unknown activation branch: ${key}`);
     const b = this.battle; this.phaseIndex ??= {};
-    const i = this.phaseIndex[key] ?? 0;
+    let i = this.phaseIndex[key] ?? 0;
+    if (loop) i %= branch.phases.length;
     if (b.finished || i >= branch.phases.length) return false;
     this.phaseIndex[key] = i + 1;
     for (const alias of branch.phases[i]) b.activateStagePredefined(alias);

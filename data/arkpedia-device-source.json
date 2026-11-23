@@ -25,6 +25,134 @@
   }
  },
  "devices": {
+  "trap_021_flame": {
+   "name": "能量聚合体",
+   "description": "容易受到我方单位的攻击",
+   "sortIndex": 727,
+   "spTargetType": "NONE",
+   "spTargetId": null,
+   "canUseGeneralPotentialItem": true,
+   "canUseActivityPotentialItem": false,
+   "potentialItemId": null,
+   "activityPotentialItemId": null,
+   "classicPotentialItemId": null,
+   "nationId": null,
+   "groupId": null,
+   "teamId": null,
+   "mainPower": {
+    "nationId": null,
+    "groupId": null,
+    "teamId": null
+   },
+   "subPower": null,
+   "displayNumber": null,
+   "appellation": "Energy Crystal",
+   "position": "NONE",
+   "tagList": null,
+   "itemUsage": null,
+   "itemDesc": null,
+   "itemObtainApproach": null,
+   "isNotObtainable": false,
+   "isSpChar": false,
+   "maxPotentialLevel": 0,
+   "rarity": "TIER_1",
+   "profession": "TRAP",
+   "subProfessionId": "notchar2",
+   "trait": null,
+   "phases": [
+    {
+     "characterPrefabKey": "trap_021_flame",
+     "rangeId": null,
+     "maxLevel": 30,
+     "attributesKeyFrames": [
+      {
+       "level": 1,
+       "data": {
+        "maxHp": 6000,
+        "atk": 0,
+        "def": 200,
+        "magicResistance": 20,
+        "cost": 5,
+        "blockCnt": 0,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 5,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      },
+      {
+       "level": 30,
+       "data": {
+        "maxHp": 6000,
+        "atk": 0,
+        "def": 200,
+        "magicResistance": 20,
+        "cost": 5,
+        "blockCnt": 0,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 5,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      }
+     ],
+     "evolveCost": null
+    }
+   ],
+   "skills": [
+    {
+     "skillId": "sktok_flame",
+     "overridePrefabKey": null,
+     "overrideTokenKey": null,
+     "levelUpCostCond": [],
+     "unlockCond": {
+      "phase": "PHASE_0",
+      "level": 1
+     }
+    }
+   ],
+   "displayTokenDict": null,
+   "talents": null,
+   "potentialRanks": [],
+   "favorKeyFrames": null,
+   "allSkillLvlup": []
+  },
   "trap_025_prison": {
    "name": "禁锢装置",
    "description": null,
@@ -5465,6 +5593,101 @@
   }
  },
  "skills": {
+  "sktok_flame": {
+   "skillId": "sktok_flame",
+   "iconId": null,
+   "hidden": false,
+   "levels": [
+    {
+     "name": "能量结晶",
+     "rangeId": null,
+     "description": "25秒后自爆，向周身四方向发出火球，击中目标时造成<@ba.vup>{damage}</>点法术伤害，并使其施加【烈焚灼息】（每秒受到真实伤害且伤害递增，可被<$ba.buffres>抵抗</>）",
+     "skillType": "AUTO",
+     "durationType": "NONE",
+     "spData": {
+      "spType": "INCREASE_WITH_TIME",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 25,
+      "initSp": 0,
+      "increment": 1
+     },
+     "prefabId": "sktok_flame",
+     "duration": 0,
+     "blackboard": [
+      {
+       "key": "damage",
+       "value": 1000,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.duration",
+       "value": 30.5,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.basedamage",
+       "value": 50,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.addondamage",
+       "value": 180,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.addonduration",
+       "value": 30,
+       "valueStr": null
+      }
+     ]
+    },
+    {
+     "name": "能量结晶",
+     "rangeId": null,
+     "description": "25秒后自爆，向周身四方向发出火球，击中目标时造成<@ba.vup>{damage}</>点法术伤害，并使其施加【烈焚灼息】（每秒受到真实伤害且伤害递增，可被<$ba.buffres>抵抗</>）",
+     "skillType": "AUTO",
+     "durationType": "NONE",
+     "spData": {
+      "spType": "INCREASE_WITH_TIME",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 25,
+      "initSp": 0,
+      "increment": 1
+     },
+     "prefabId": "sktok_flame",
+     "duration": 0,
+     "blackboard": [
+      {
+       "key": "damage",
+       "value": 1500,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.duration",
+       "value": 30.5,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.basedamage",
+       "value": 50,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.addondamage",
+       "value": 180,
+       "valueStr": null
+      },
+      {
+       "key": "dragon_fire.addonduration",
+       "value": 30,
+       "valueStr": null
+      }
+     ]
+    }
+   ]
+  },
   "sktok_prison": {
    "skillId": "sktok_prison",
    "iconId": null,

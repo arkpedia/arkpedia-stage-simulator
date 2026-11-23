@@ -71,7 +71,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     const matching = all.filter(p => p.inst?.characterKey === d.key && p.position?.row === d.row && p.position?.col === d.col);
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;

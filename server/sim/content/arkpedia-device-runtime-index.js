@@ -11,6 +11,7 @@ export const DEVICE_RUNTIME_INDEX=Object.freeze([
   {...ordinary('coils','electricCoil','ElectricCoils',()=>import('./arkpedia-stage-electric-coils.js')),
     selected:stage=>has(stage,'electricCoil')||token(stage,'electric-coil')},
   ordinary('turrets','turret','StageTurrets',()=>import('./arkpedia-stage-turrets.js')),
+  ordinary('flames','flame','StageFlames',()=>import('./arkpedia-stage-flames.js')),
   ordinary('magicCircuit','magicCircuit','StageMagicCircuit',()=>import('./arkpedia-stage-magic-circuit.js')),
   ordinary('flow','flowGenerator','StageFlowGenerators',()=>import('./arkpedia-stage-flow-generators.js')),
   ordinary('gramophones','gramophone','StageGramophones',()=>import('./arkpedia-stage-gramophones.js')),

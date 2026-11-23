@@ -38,6 +38,7 @@ export const DEVICE_FAMILIES = {
   sceneryDefinition: { module: 'stage-scenery', keyed: true, variants: keySet(['trap_001_crate', 'trap_015_tree']) },
   turretDefinition: { module: 'stage-turrets', variants: keySet([''], { ...standard, direction }) },
   artilleryDefinition: { module: 'stage-artillery', variants: keySet([''], { level: [1], skillLevel: [1, 2, 3] }) },
+  flameDefinition: { module: 'stage-flames', variants: keySet([''], { level: [1], skillLevel: [1, 2] }) },
   magicCircuitDefinition: { module: 'stage-magic-circuit', keyLast: true, variants: {
     ...keySet(['trap_062_magicstart', 'trap_063_magicturn'], { ...standard, direction }), ...keySet(['trap_064_magiccircle']) } },
   predefinedMineDefinition: { module: 'stage-mines', variants: keySet(['']) },

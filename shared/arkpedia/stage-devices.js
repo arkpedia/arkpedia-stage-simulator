@@ -95,6 +95,11 @@ export const STAGE_DEVICES = Object.freeze({
     // route and restores 5 DP cap + 5 DP when defeated.
     unit: Object.freeze({ hp: 8000, def: 100, block: 5, dpMax: 5, dp: 5, obstacle: 'crate' }),
   }),
+  'Energy Aggregate': Object.freeze({
+    // PRTS 能量聚合体: the Black Snake's summon. Hidden instances appear when his SummonFlame advances the level branch
+    // (stage-flames.js; runtime arkpedia-stage-flames.js). Enemy-side and attackable; 25 s later it fires four fireballs.
+    keys: Object.freeze(['trap_021_flame']), staticLevelReview: true, flame: true, skillLevels: Object.freeze([1, 2]),
+  }),
   'Londinium Secondary Defense Artillery': Object.freeze({
     // PRTS: 1 meter/s, target = highest-Block visible ally (newest on a tie),
     // 3000 True damage to both sides in the 3x3 core plus 1x3 arms. The cost and starting
@@ -121,7 +126,7 @@ export function stageDeviceSpec(device) {
   const spec = STAGE_DEVICES[device?.name];
   // A hidden Turret or Ice Crystal is accepted only when an activation branch switches it on (Faust's ballistae).
   if (!spec || spec.keys && !spec.keys.includes(device.key) || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
-    && !((spec.turret || spec.statusPulse) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
+    && !((spec.turret || spec.statusPulse || spec.flame) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
       || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string')
     || spec.carapace && !carapaceNativeReviewed()
     || spec.twigs && !twigsNativeReviewed()
