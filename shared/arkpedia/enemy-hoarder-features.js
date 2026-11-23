@@ -11,6 +11,7 @@
 // references reduced to null/local; the variants differ only in their skeleton.
 import clocks from "../../data/arkpedia-hoarder-animations.json" with{type:"json"};
 import {sameOutcomeValue as same} from "./enemy-outcome-contracts.js";
+import {isHerald,HERALD_SKILL0} from "./enemy-herald-features.js";
 export const isHoarder=r=>r?.prefabKey==="enemy_1436_dsdivi"||r?.prefabKey==="enemy_1436_dsdivi_2";
 const norm=v=>Array.isArray(v)?v.map(norm):v&&typeof v==="object"?("m_PathID"in v&&Object.keys(v).length===2?{ref:v.m_PathID==="0"?null:v.m_FileID===0?"local":"ext:"+v.m_PathID}
  :Object.fromEntries(Object.entries(v).filter(([k])=>!["m_GameObject","m_Name","m_Father","m_Children"].includes(k)).map(([k,x])=>[k,norm(x)]))):v;
@@ -54,5 +55,8 @@ export const HOARDER_TALENT={matchesRecord:isHoarder,covers:hoarderNative,abilit
  dependsOn:r=>[r.skills[0]?.bbStr?.enemy_key].filter(Boolean),
  stageMultipliers:{"0.hp_ratio":v=>Number.isFinite(v)&&v>0&&v<=1}};
 export const HOARDER_FEATURES={
- "skill:0":{matchesRecord:isHoarder,covers:hoarderNative,note:"the split cast; run by talent:0's hoarderSplit"},
+ // The Heralds share skill:0: it dispatches to their contract (enemy-herald-features.js).
+ "skill:0":{matchesRecord:r=>isHoarder(r)||isHerald(r),covers:(r,n)=>isHerald(r)?HERALD_SKILL0.covers(r,n):hoarderNative(r,n),
+  ability:r=>isHerald(r)?HERALD_SKILL0.ability:null,nativeClaim:p=>p.rootName.startsWith("enemy_1438_dspred")?HERALD_SKILL0.nativeClaim():{},
+  explains:(text,r)=>isHerald(r)&&HERALD_SKILL0.explains(text,r),note:"Hoarder: the split cast run by talent:0; Herald: the devour"},
 };

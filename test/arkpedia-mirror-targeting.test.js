@@ -36,7 +36,7 @@ test('a handbook claim cannot substitute for the source targeting-priority attri
   const changed = structuredClone(ENEMY_RECORDS.enemies.enemy_1199_sfjin);
   changed.levels[0].stats.tauntLevel = 0;
   assert.equal(enemySupport(changed, index.prefabs, evidence).policy, null);
-  // Sentinels for mechanisms that are still unimplemented (allied Blood Debt actors, carapace devouring).
+  // Sentinel for a mechanism that is still unimplemented (allied Blood Debt actors). Carapace devouring is admitted
+  // since the Herald batch (test/arkpedia-herald.test.js).
   assert.equal(support.enemies.enemy_3004_speople.policy, null, 'unimplemented allied Blood Debt actor remains blocked');
-  assert.equal(support.enemies.enemy_1438_dspred.policy, null, 'unimplemented carapace devouring remains blocked');
 });

@@ -12,6 +12,7 @@
 // A stage is refused unless its route export matches the geometry hash and its
 // spawns only use supported enemy records. Original stage art and gates are
 // optional: the renderer labels the simplified fallback when they are absent.
+import { carapaceDefinition } from '../../shared/arkpedia/stage-carapaces.js';
 import { twigsDefinition } from '../../shared/arkpedia/stage-twigs.js';
 import { powerArmorDeviceDefinition } from '../../shared/arkpedia/stage-power-armor.js';
 import { enemyRuntimeRecord } from '../../shared/arkpedia/enemy-features.js';
@@ -173,9 +174,11 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     conditionalHandled: false,
     devices: devices.map(d => {
       const spec = stageDeviceSpec(d);
-      if (!spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine) return d;
+      // Excrescent Carapaces carry their original instance too (StageCarapaces reads d.instance).
+      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine) return d;
       const instance = deviceInstances[`${d.key}:${d.row}:${d.col}`];
-      if (spec.twigs) twigsDefinition(instance);
+      if (spec.carapace) carapaceDefinition(instance);
+      else if (spec.twigs) twigsDefinition(instance);
       else if (spec.powerArmor) powerArmorDeviceDefinition(d.key, instance);
       else if (spec.magicCircuit) magicCircuitDefinition(instance, d.key);
       else if (spec.reward) rewardDeviceDefinition(d.key, instance);
