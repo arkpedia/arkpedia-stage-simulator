@@ -100,6 +100,8 @@ The Phantom mid-boss batch (2026-11-19: Lost Colossus, Jetman, Wandering Puppet)
 
 The Basorobeast batch (2026-11-19: Basorobeast and Gravorobeast) published TG-7 "Moving Mountains" and its Challenge (1,022 available, none withdrawn, no other bundle changed). The smoke check passed all 1,022 graphs, and the browser review passed.
 
+The Fieldmus batch (2026-11-23: Fieldmus and Hard-Snouted Fieldmus) published VEC-SP04 "Gnawed-Out Holes" and VEC-SP05 "Gnawbeast Tsunami" (1,024 available, none withdrawn, no other bundle changed). The smoke check passed all 1,024 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
