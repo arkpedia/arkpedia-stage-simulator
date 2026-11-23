@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { INFANTRY_ATTACK, isInfantry } from './enemy-infantry-features.js';
+import { isCityDefender, cityDefenderNative, CITY_DEFENDER_ABILITY, CITY_DEFENDER_EXPLAINS } from './enemy-city-defender-features.js';
 import { isEmperorsBlade, emperorsBladeNative } from './enemy-emperors-blade-features.js';
 // Small source-backed families share the regular enemy dispatcher. Registration
 // stays separate from runtime factories and from generated support decisions.
@@ -63,11 +64,12 @@ export const REACTIVE_ENEMY_FEATURES = Object.freeze({
       : /^(?:Attacks <\$ba\.stun>Stun<\/> the target|攻击会<\$ba\.stun>晕眩<\/>目标)$/.test(text),
     note: 'Ordinary melee attacks apply resistance-aware stun, including dodged damage; invisibility restores immediately after unblocking.',
   },
+  // Trimounts City Defenders share the key: they dispatch to their own contract (enemy-city-defender-features.js).
   'talent:ReduceBlockCnt': {
-    covers: agent,
+    covers: (r, n) => isCityDefender(r) ? cityDefenderNative(r, n) : agent(r, n),
     stageMultipliers: { 'ReduceBlockCnt.duration': value => Number.isFinite(value) && value > 0 && value <= 3600 },
-    ability: { kind: 'blockReductionOnHit', params: r => ({ amount: r.talents.bb['ReduceBlockCnt.block_cnt'], duration: r.talents.bb['ReduceBlockCnt.duration'] }) },
-    explains: /^Attacks temporarily reduce allied units' Block$/,
+    ability: r => isCityDefender(r) ? CITY_DEFENDER_ABILITY : { kind: 'blockReductionOnHit', params: r => ({ amount: r.talents.bb['ReduceBlockCnt.block_cnt'], duration: r.talents.bb['ReduceBlockCnt.duration'] }) },
+    explains: (text, r) => isCityDefender(r) ? CITY_DEFENDER_EXPLAINS(text) : /^Attacks temporarily reduce allied units' Block$/.test(text),
     note: 'Shared nonstacking block reduction; repeated hits extend to the greater remaining/source duration.',
   },
   'talent:run': {
