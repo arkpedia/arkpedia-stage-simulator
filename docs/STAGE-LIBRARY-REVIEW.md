@@ -156,6 +156,8 @@ Unnamed hidden groups (2026-11-23, main story): a hidden group that no rune of t
 
 Hidden supply card (2026-11-23, main story): TR-8 published (1,078 available, no published bundle changed). Its 3 Roadblocks sit on a hidden card that one `ACTIVATE_PREDEFINED trap_001_crate` reveals 5 s into wave 1. The card compiles with 0 stock and `hiddenCount` 3, and the battle grants the 3 once when the action runs (`hiddenSupplyCardRevealed` in `tools/arkpedia/stage-supply-cards.mjs`; tests in `test/arkpedia-hidden-supply-card.test.js`). A hidden card with no such single running reveal is still refused.
 
+Black Snake (2026-11-23, main story): H8-4 and JT8-3 published (1,080 available, none withdrawn, no other bundle changed) with the 'Deathless Black Snake' (both levels) and the Energy Aggregate device. `docs/ENEMY-BLACK-SNAKE-REVIEW.md`. The smoke check passed all 1,080 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
