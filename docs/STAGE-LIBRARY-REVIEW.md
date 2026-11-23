@@ -110,6 +110,8 @@ The Crossroads batch (2026-11-23: 'Crossroads' Production Model and Prototype) p
 
 The Hoarder batch (2026-11-23: Divicellular and Allotropic Hoarders) published BP-EX-1 "Pillar of Shame - Meaningless Conflict", its Challenge and VEC-SP12 "Unacclimatized" (1,030 available, none withdrawn, no other bundle changed). The smoke check passed all 1,030 graphs, and the browser review passed.
 
+The Cleanup Squad batch (2026-11-23: the Armorless Union Cleanup Squads) published AW-S-1 "Sheathe" and VEC-SP03 "Covering Fire" (1,032 available, none withdrawn, no other bundle changed). The smoke check passed all 1,032 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
