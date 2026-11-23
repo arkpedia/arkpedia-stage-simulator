@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-/** Original levels can carry unused activation branches with no predefined
- * cards or instances at all. The native executor completes after the failed
- * alias lookup. Only zero-time, unconditional actions are folded here. */
+/** Original levels can carry unused activation branches whose aliases name no
+ * predefined card or instance of the level (H7-4 keeps a frstar_frosts branch
+ * with no Ice Crystal). The native executor completes after the failed alias
+ * lookup. Only zero-time, unconditional actions are folded here. */
 export function emptyActivationBranches(level) {
-  const groups = ['characterInsts', 'tokenInsts', 'characterCards', 'tokenCards'], p = level.predefines;
-  if (!p || groups.some(k => !Array.isArray(p[k]) || p[k].length) || Object.keys(p).some(k => !groups.includes(k))) return {};
+  const groups = ['characterInsts', 'tokenInsts', 'characterCards', 'tokenCards'], p = level.predefines ?? {};
+  if (groups.some(k => p[k] != null && !Array.isArray(p[k])) || Object.keys(p).some(k => !groups.includes(k))) return {};
+  const present = new Set(groups.flatMap(k => (p[k] ?? []).map(e => e?.alias).filter(Boolean)));
   const branches = {};
   for (const [key, branch] of Object.entries(level.branches ?? {})) {
     if (Object.keys(branch).some(k => k !== 'phases') || !branch.phases?.length) continue;
@@ -19,7 +21,8 @@ export function emptyActivationBranches(level) {
         || ![undefined, 0, 'ALWAYS'].includes(a.randomType) || ![undefined, 0, 'ALWAYS'].includes(a.refreshType)) return false;
       aliases.push(a.key); return true;
     }));
-    if (valid) branches[key] = { spawns: [], missingActivationAliases: [...new Set(aliases)], phaseCount: branch.phases.length };
+    if (valid && aliases.every(alias => !present.has(alias)))
+      branches[key] = { spawns: [], missingActivationAliases: [...new Set(aliases)], phaseCount: branch.phases.length };
   }
   return branches;
 }

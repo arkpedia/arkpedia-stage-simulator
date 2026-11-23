@@ -142,6 +142,8 @@ The Mephisto batch (2026-11-23, main story) published 5-10 "The Dark Before Dawn
 
 The Winter's Scar batch (2026-11-23, main story) published 6-16, 6-16 Challenge, H6-4, VI-6 "Yesterday" and VI-6 Challenge (1,059 available, none withdrawn, no other bundle changed). Hidden Ice Crystals raised by her `frstar_frosts` branch are new stage support. The smoke check passed all 1,059 graphs.
 
+H7-4 (2026-11-23, main story) published (1,060 available, none withdrawn, no other bundle changed): Patriot's level-1 skill overlay accepts the stage's 30 s revive, and a dangling crystal branch is a native no-op. The smoke check passed all 1,060 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

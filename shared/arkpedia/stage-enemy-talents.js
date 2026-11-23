@@ -78,6 +78,14 @@ export function applyStageEnemyBlackboard(record, override) {
   applyLiteralParameters(record.key, record.talents, result.talents, override.blackboard,
     features.map(f => f.stageOverrides).filter(Boolean), features.map(f => f.stageInjectedParameters).filter(Boolean));
   const invalid = () => { throw Error(`Unsupported original enemy skill/SP override: ${record.key}`); };
+  let sparse = false;
+  if (override.skills != null) {
+    // A sparse higher level that its contract reads over level zero (Patriot level 1 lists only some skills) takes a
+    // stage skill override against that overlay, never an implicit new kit; the skills it does not name are kept.
+    const bases = features.map(f => f.stageSparseSkills?.(record)).filter(Boolean);
+    if (bases.length > 1) invalid();
+    if (bases.length === 1) { sparse = true; record = { ...record, skills: structuredClone(bases[0]) }; result.skills = structuredClone(bases[0]); }
+  }
   if (override.skills != null) {
     if (!Array.isArray(override.skills)) invalid();
     const keys = override.skills.map(s => s?.prefabKey), canonicalKeys = record.skills.map(s => s.prefabKey);
@@ -87,25 +95,27 @@ export function applyStageEnemyBlackboard(record, override) {
       if (!validators.length || !validators.every(check => check(record, keys))) invalid();
       // Original lists replace the database list. A reviewed subset may omit
       // a skill or change tie priority order, but can never introduce a kit.
-      result.skills = keys.map(key => structuredClone(record.skills.find(s => s.prefabKey === key)));
+      // On a sparse overlay level the named skills are changed in place instead.
+      if (!sparse) result.skills = keys.map(key => structuredClone(record.skills.find(s => s.prefabKey === key)));
     }
-    override.skills.forEach((skill, i) => {
+    override.skills.forEach(skill => {
       const before = record.skills.find(s => s.prefabKey === skill?.prefabKey);
+      const target = result.skills.find(s => s.prefabKey === skill?.prefabKey);
       if (!skill || Object.keys(skill).some(k => !['prefabKey', 'priority', 'cooldown', 'initCooldown', 'spCost', 'blackboard'].includes(k))
         || ['prefabKey', 'spCost'].some(k => skill[k] !== before[k])) invalid();
       // A changed tie priority needs a reviewed feature that declares it for this skill.
       if (skill.priority !== before.priority) {
         const validators = features.map(f => f.stageSkillPriorityOverrides?.[before.prefabKey]).filter(Boolean);
         if (!Number.isInteger(skill.priority) || !validators.length || !validators.every(check => check(skill.priority, before))) invalid();
-        result.skills[i].priority = skill.priority;
+        target.priority = skill.priority;
       }
       for (const key of ['cooldown', 'initCooldown']) {
         if (skill[key] === before[key]) continue;
         const validators = features.map(f => f.stageSkillTimingOverrides?.[before.prefabKey]?.[key]).filter(Boolean);
         if (!Number.isFinite(skill[key]) || !validators.length || !validators.every(check => check(skill[key], before))) invalid();
-        result.skills[i][key] = skill[key];
+        target[key] = skill[key];
       }
-      applyLiteralParameters(`${record.key}.${before.prefabKey}`, before, result.skills[i], skill.blackboard,
+      applyLiteralParameters(`${record.key}.${before.prefabKey}`, before, target, skill.blackboard,
         features.map(f => f.stageSkillOverrides?.[before.prefabKey]).filter(Boolean));
     });
   }

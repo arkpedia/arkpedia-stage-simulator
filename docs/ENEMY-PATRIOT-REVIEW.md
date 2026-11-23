@@ -74,3 +74,20 @@ The library rebuild published exactly two more stages, 7-18 and 7-18 Challenge (
 - **Spear timing.** It lands 0.5 s after the 1.7 s release, the projectile's life.
 - **Not published.** His other stages wait on other work: H7-4 (a branch program), 14-20 and H14-4 (another boss, an environment), the Integrated Strategies and TN-4 bossrush variants, and VI-7.
 - **Presentation.** The stance and revive effects are not reproduced.
+
+## H7-4 (2026-11-23, main story)
+
+H7-4 fields level-1 Patriot with a 30 s revive: the talent `reborn.duration` 30, and the skill `immo_trigger[reborning]` restated with `duration` 30.
+
+**The sparse level.** Level 1 lists only its own `Immo[Rage]`, and the contract reads it over level 0. A new feature hook, `stageSparseSkills` (`shared/arkpedia/stage-enemy-talents.js`), gives the stage-override check that overlay as the skill list:
+- Level 1's `Immo[Rage]`, level 0's `throwspear[Rage]` and `immo_trigger[reborning]`.
+- A stage list naming some of these changes them in place and keeps the rest, instead of replacing the whole list.
+- Patriot declares the hook for level 1 only, with the `reborn.duration` and `duration` overrides and a subset-only skill set.
+
+**The level's branch.** It also carries a `frstar_frosts` branch whose Ice Crystal aliases name nothing in the level. The no-op rule (`emptyActivationBranches`) now accepts a branch whose aliases are all absent from the level's predefined units, not only a level with none at all.
+
+`test/arkpedia-h7-4.test.js` checks:
+- the compiled record: level 1's `Immo[Rage]`, a 30 s revive and reborning duration, and the no-op branch;
+- a battle in which Patriot stands up from his first knock-out after 30 s.
+
+H7-4 is published (1,060 available).

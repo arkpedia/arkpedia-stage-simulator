@@ -69,7 +69,14 @@ const lines=new Set(PATRIOT_ABILITIES.map(a=>a.text));
 export const PATRIOT_FEATURES={
  "talent:immo_trigger[rage]":{...feature,explains:text=>lines.has(text),nativeClaim:()=>({wrappers:3,active:2}),
   note:"Patriot: Inspiring aura, Marching Stance, the wave-releasing 60 s revive with Sacrifice, Ruination Stance and the spear",
-  ability:{kind:"patriot",params:patriotParams}},
+  ability:{kind:"patriot",params:patriotParams},
+  // H7-4 shortens the revive to 30 s: reborn.duration and the reborning skill's own duration, on the sparse level 1.
+  stageOverrides:{"reborn.duration":v=>Number.isFinite(v)&&v>0},
+  stageSparseSkills:r=>r.level===1?S0.map(s=>r.skills.find(x=>x.prefabKey===s.prefabKey)??s):null,
+  // Level 1 lists only Immo[Rage]; a stage list naming some of the overlaid skills changes those in place and keeps
+  // the others (patriotParams' skill() overlay), so a subset is accepted only on that level.
+  stageSkillSetOverride:(r,keys)=>r.level===1&&keys.every(k=>S0.some(s=>s.prefabKey===k)),
+  stageSkillOverrides:{"immo_trigger[reborning]":{duration:v=>Number.isFinite(v)&&v>0}}},
  "skill:throwspear[Rage]":{...feature,note:"the spear at the farthest ranged-tile unit (talent:immo_trigger[rage])"},
  "skill:immo_trigger[reborning]":{...feature,note:"the revive's Sacrifice (talent:immo_trigger[rage])"},
 };
