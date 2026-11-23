@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {nativeBuffProgram,nativeBuffProgramSupported} from './native-buff-programs.js';
+import {isVesperwing,VESPERWING_BLOODHIT} from './enemy-holy-escort-features.js';
 import clocks from '../../data/arkpedia-gnawbeasts-animations.json' with {type:'json'};
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
 const ids=['enemy_1335_bldrat','enemy_1335_bldrat_2'];
@@ -59,11 +60,13 @@ export function gnawbeastNative(r,n){
     &&clock.durations.Attack===Math.fround(31/30)
     &&same(clock.events.Attack,[{time:Math.fround(13/30),name:'OnAttack',int:0,float:0,string:''}])&&bleedTemplates(n)&&nativeBuffProgramSupported('bldrat_t_1[blood]',n);
 }
-const feature={matchesRecord:isGnawbeast,covers:gnawbeastNative};
+// The Vesperwings share BloodHit and its Bleed line: they dispatch to their own contract (enemy-holy-escort-features.js).
+const feature={matchesRecord:r=>isGnawbeast(r)||isVesperwing(r),covers:(r,n)=>isVesperwing(r)?VESPERWING_BLOODHIT.covers(r,n):gnawbeastNative(r,n),
+  explains:(text,r)=>isVesperwing(r)&&VESPERWING_BLOODHIT.explains(text,r)};
 export const GNAWBEAST_FEATURES={
   'ability:Inflicts Bleed on allied Operators after several attacks':feature,
-  'skill:BloodHit':{...feature,nativeClaim:()=>({wrappers:1}),ability:{kind:'chargedMeleeBuffProgram',params:r=>({
+  'skill:BloodHit':{...feature,nativeClaim:()=>({wrappers:1}),ability:r=>isVesperwing(r)?VESPERWING_BLOODHIT.ability(r):({kind:'chargedMeleeBuffProgram',params:r=>({
     initialSp:r.sp.initSp,maxSp:r.sp.maxSp,increment:r.sp.increment,cost:r.skills[0].spCost,
     program:nativeBuffProgram('bldrat_t_1[blood]'),blackboard:{...r.skills[0].bb},silenceBlocksSpend:false,
-    attackAnim:{dur:clocks.enemies[r.prefabKey].durations.Attack,hit:clocks.enemies[r.prefabKey].events.Attack[0].time}})}},
+    attackAnim:{dur:clocks.enemies[r.prefabKey].durations.Attack,hit:clocks.enemies[r.prefabKey].events.Attack[0].time}})})},
 };

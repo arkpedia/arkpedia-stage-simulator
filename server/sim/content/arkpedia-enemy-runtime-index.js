@@ -9,6 +9,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-patriot',load:()=>import('./arkpedia-enemy-patriot.js'),exports:{patriot:'patriot'}},
   {key:'arkpedia-enemy-talulah',load:()=>import('./arkpedia-enemy-talulah.js'),exports:{talulah:'talulah'}},
   {key:'arkpedia-enemy-frostnova',load:()=>import('./arkpedia-enemy-frostnova.js'),exports:{frostNova:'frostNova'}},
+  {key:'arkpedia-enemy-holy-escort',load:()=>import('./arkpedia-enemy-holy-escort.js'),exports:{vesperwing:'vesperwing',wastelandRobber:'wastelandRobber'}},
   {key:'arkpedia-enemy-yumen',load:()=>import('./arkpedia-enemy-yumen.js'),exports:{wallbreaker:'wallbreaker',sandwalker:'sandwalker'}},
   {key:'arkpedia-enemy-nethersea',load:()=>import('./arkpedia-enemy-nethersea.js'),exports:{netherseaSpewer:'netherseaSpewer',netherseaPredator:'netherseaPredator'}},
   {key:'arkpedia-enemy-cleanup-squad',load:()=>import('./arkpedia-enemy-cleanup-squad.js'),exports:{cleanupSquad:'cleanupSquad'}},
