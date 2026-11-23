@@ -57,17 +57,26 @@ test('compiled 6-7: invincible for the overridden 60 s; one SummonBallis at 90 s
   assert.deepEqual(b.errors, []);
 });
 
-test('compiled h5-4: level-1 Faust advances faust_ballis one phase per 45 s cast', async () => {
+test('compiled h5-4: level-1 Faust advances faust_ballis one phase per 45 s cast, and stops casting once it is spent', async () => {
   const { b, stage } = await battle('h5-4');
-  const phases = stage.waveProgram.branches.faust_ballis.phases;
-  let faust = null, spawnedAt = null; const counts = [];
-  run(b, 600, f => { if (f && !faust) { faust = f; spawnedAt = b.time; } if (faust) counts.push([b.time - spawnedAt, ballistae(b).length]); if (faust && b.time > spawnedAt + 95) b.finished = true; });
+  const phases = stage.waveProgram.branches.faust_ballis.phases, total = phases.flat().length;
+  let faust = null, spawnedAt = null, inCast = false; const counts = [], casts = [];
+  const end = () => spawnedAt + 45 * phases.length + 60;
+  run(b, 2000, f => {
+    if (f && !faust) { faust = f; spawnedAt = b.time; }
+    if (!faust) return;
+    counts.push([b.time - spawnedAt, ballistae(b).length]);
+    const casting = f?.mem.regularFormVisual?.clip === 'Skill_2';
+    if (casting && !inCast) casts.push(b.time - spawnedAt); inCast = casting;
+    if (b.time > end()) b.finished = true;
+  });
   assert.ok(faust);
   const at = t => counts.filter(([dt]) => dt <= t).at(-1)?.[1] ?? 0;
   assert.equal(at(1.5), 0, 'not before the first cast event'); // initial 1 s + 0.9 s event
   assert.equal(at(3), phases[0].length);
   assert.equal(at(45.5), phases[0].length, 'second phase waits for the 45 s cooldown');
   assert.equal(at(48), phases[0].length + phases[1].length);
-  assert.equal(at(93), phases[0].length + phases[1].length + phases[2].length);
+  assert.equal(counts.at(-1)[1], total, 'every phase raised');
+  assert.equal(casts.length, phases.length, `one cast per phase, none once spent: ${casts.map(t => t.toFixed(1))}`);
   assert.deepEqual(b.errors, []);
 });

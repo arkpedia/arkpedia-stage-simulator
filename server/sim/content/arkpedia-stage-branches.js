@@ -26,6 +26,11 @@ export class StageBranchScheduler {
     return b.spawnEnemy(stageEnemyKey(this.rules,action.enemyKey),{routeIndex:action.routeIndex,
       countInTotal:false,tag,ownerPlayerId:'arkpedia',initialHpRatio:hpRatio});
   }
+  /** The level-branch trigger: true while an activation branch has a phase left. */
+  hasNext(key) {
+    const branch = this.branches[key];
+    return Array.isArray(branch?.phases) && (this.phaseIndex?.[key] ?? 0) < branch.phases.length;
+  }
   /** MoveNextLevelBranch (no loop): run the next phase of an activation branch; past the last phase, nothing. */
   advance(key) {
     const branch = this.branches[key];

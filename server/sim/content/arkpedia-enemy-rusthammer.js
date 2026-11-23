@@ -37,8 +37,9 @@ export function rusthammerWarrior(p) {
         if (a.cast.elapsed + 1e-9 >= s.cast.dur) finish(b, e, a);
         return;
       }
-      // SummonBallis ignores silence; it needs a live, acting body.
-      if (b.time + 1e-9 < a.summonAt || !e.canAct) return;
+      // SummonBallis ignores silence; it needs a live, acting body, and its trigger (_isLoop 0) needs a phase left in
+      // the level branch: without one it never casts.
+      if (b.time + 1e-9 < a.summonAt || !e.canAct || !b.stageBranches?.hasNext(s.branch)) return;
       a.summonAt = b.time + s.cooldown; a.cast = { elapsed: 0, released: false };
       e.attackControlEpoch = (e.attackControlEpoch ?? 0) + 1;
       e.profile.noAttack = true; e.skillAnimUntil = b.time + s.cast.dur;

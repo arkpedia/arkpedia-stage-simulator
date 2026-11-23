@@ -32,6 +32,7 @@ The runtime is the shared Faust kit, `rusthammerWarrior` (`server/sim/content/ar
    - The cast plays Skill_2 (1.667 s); its wrapper ignores silence and keeps the cast going through stun.
    - At the event (0.9 s), `MoveNextLevelBranch` runs with an empty `_branchId`, so the skill's own `branch_id` is used. The CN database gives `faust_ballis` at both levels, and some levels restate it.
    - It advances that level branch one phase per cast, without looping. Each phase activates hidden predefined Turrets (`trap_007_ballis`).
+   - Its trigger (script `6059112888733225769`, `_isLoop` 0, `_branchId` "") holds while the branch has a phase left. Once the Turrets are spent, Faust no longer casts. Rusthammer's record has no branch, so his copy never fires.
 
 ## Stage support
 
@@ -51,7 +52,7 @@ The runtime is the shared Faust kit, `rusthammerWarrior` (`server/sim/content/ar
 `test/arkpedia-faust.test.js`:
 - **Admission.** Both levels are admitted and Rusthammer keeps its Arts bolt. The parameters are checked, and another bolt speed is refused.
 - **Compiled 6-7.** Five hidden branch-activated Turrets. Faust is invulnerable for the overridden 60 s. One SummonBallis at 90 s raises all five.
-- **Compiled H5-4.** Level-1 Faust: no Turret before his first cast event (1 s + 0.9 s), then one phase per 45 s cast (phases 1, 2 and 3 by 93 s).
+- **Compiled H5-4.** Level-1 Faust: no Turret before his first cast event (1 s + 0.9 s), then one phase per 45 s cast. Every phase is raised, and there is exactly one Skill_2 cast per phase and none after.
 
 The Turret, branch, reward-device, Power Armor, Twigs and Rusthammer suites pass unchanged (48 tests). The library rebuild published 6-7 and H5-4 (1,052 available). Rusthammer's stage bundle changed only by the new `criticalType` parameter; no other bundle changed. `check-stage-library.mjs` smoked all 1,052 graphs with no failures. Browser review: 6-7 runs with no console errors, and Faust's original art loads from asset commit `4858c9db`.
 

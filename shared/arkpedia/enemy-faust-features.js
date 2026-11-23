@@ -7,7 +7,8 @@
 //   projectile_faust_s1, Physical at atk_scale (2 / 2.5) x ATK (_damageType 1, unlike Rusthammer's Arts bolt).
 // - SummonBallis (30/15 s at level 0, 45/1 s at level 1; the wrapper ignores silence): the Skill_2 clip (1.667 s); at its
 //   event (0.9 s) MoveNextLevelBranch on the skill's branch_id (faust_ballis): the next phase of that level branch,
-//   no loop. Each phase activates hidden predefined Turrets (trap_007_ballis).
+//   no loop. Each phase activates hidden predefined Turrets (trap_007_ballis). Its trigger (_isLoop 0, _branchId "")
+//   fires only while that branch has a phase left, so Faust stops casting once the turrets are spent.
 // Every component reachable from the retained abilities, the template and the projectiles are pinned below with local
 // references reduced to null/local.
 import clocks from "../../data/arkpedia-faust-animations.json" with{type:"json"};
