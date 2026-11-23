@@ -150,6 +150,8 @@ Artillery charge (2026-11-23, main story): 10-6, 10-14 and 13-5 adverse publishe
 
 Manfred's H10-3 aura (2026-11-23, main story): H10-3 published (1,067 available, none withdrawn). 10-17, 10-17 Adverse, H10-1 and H10-2 changed bundle only because Manfred's runtime parameters gained the `aura` block, which is off there. The smoke check passed all 1,067 graphs.
 
+Artillery instances (2026-11-23, main story): 10-4 adverse, AW-1 Challenge and `victoria_camp_r_23` published (1,070 available, none withdrawn). Each Londinium artillery now reads its original instance: level 2/3 cost and starting SP (TR-20; 10-6, 10-7, 10-12, 13-5), only the active one of 10-4's two guns, no gun on AW-1 whose `raid` activation is switched off, and a hidden gun switched on by its alias (AW-1 Challenge, `victoria_camp_r_23`). Every artillery stage changed bundle. `docs/STAGE-ARTILLERY-REVIEW.md`. The smoke check passed all 1,070 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
