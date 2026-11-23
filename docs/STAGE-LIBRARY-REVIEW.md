@@ -126,6 +126,8 @@ The Herald batch (2026-11-23: Multicellular and Allotropic Heralds) published BP
 
 The fire elemental batch (2026-11-23: the Kazdel fire elemental `enemy_8017_vcblva`) published VEC-02 "High-Tension Pursuit" (1,043 available, none withdrawn, no other bundle changed). The smoke check passed all 1,043 graphs, and the browser review passed: original art, and the deploy highlight skips the elemental's 3x3.
 
+The Leafcarpet batch (2026-11-23: `enemy_8013_mcnrsh`) published VEC-05 "Deathly Pause" (1,044 available, none withdrawn, no other bundle changed). The smoke check passed all 1,044 graphs, and the browser review passed: original art, and the rush carries her across the map.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

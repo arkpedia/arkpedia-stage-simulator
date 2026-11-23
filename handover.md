@@ -39,10 +39,10 @@ node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab'
 
 ## Current coverage and verification
 
-- **850 / 2,163 enemy records admitted; 1,313 remain.**
-- **932 database levels**, **257 runtime kinds**.
-- **1,043 stages available** in the published library (`data/arkpedia-library.json`), rebuilt and reviewed with every enemy batch since 2026-11-17. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,930 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 642 models.
+- **851 / 2,163 enemy records admitted; 1,312 remain.**
+- **933 database levels**, **258 runtime kinds**.
+- **1,044 stages available** in the published library (`data/arkpedia-library.json`), rebuilt and reviewed with every enemy batch since 2026-11-17. This is not a count of fully certified stage clears or the remaining stage backlog.
+- Asset repository: **3,931 complete models** (includes an upstream chibi sync); simulator original enemy artwork catalogue: 643 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -109,6 +109,7 @@ All listed commits were pushed. Their matching original models were published se
 | Abandoned batch | 'The Abandoned' `enemy_1440_dselec`/'The Cursed' `_2` (`abandonedSplash`: unblocked, an instant x-5 Arts splash around the target; blocked, the blocker alone). Coverage 847; the library publishes BP-EX-3 Challenge (1,040 available). `docs/ENEMY-ABANDONED-REVIEW.md`. |
 | Herald batch | Multicellular Herald `enemy_1438_dspred`/Allotropic `_2` (`heraldDevour`: once, the first unit within 0.35; a Carapace is eaten after the 2.6 s Skill clip for +70% max HP and +40% ATK; `skill:0` dispatches beside the Hoarder). Stage fix: `compileStage` now attaches original Excrescent Carapace instances (BP-5 was the first stage to pre-place them). Coverage 849; the library publishes BP-5 and BP-EX-3 (1,042 available). `docs/ENEMY-HERALD-REVIEW.md`. |
 | Fire elemental batch | Kazdel fire elemental `enemy_8017_vcblva` (CN only; `deployDenyZone`: `block_tile`'s nine grid positions around its root tile, resampled by `enemy_vcblva_t_tile` every 0.2 s, refuse deployment while it lives; engine: `b.noDeployZones` beside the permanent `noDeployTiles`). Coverage 850; the library publishes VEC-02 (1,043 available). `docs/ENEMY-VCBLVA-REVIEW.md`. |
+| Leafcarpet batch | Leafcarpet `enemy_8013_mcnrsh` (`leafcarpetRush`: Direswine-shaped rush, 5 s predelay then +0.5 speed stacks on a 0.333 s clock to 2.55; freeze/levitate/bind/fear during it ends it with 6 s Fragile x2; ground-only contact crash 600 x speed Physical + 4 s stun; stun-immune; Unblockable from the handbook line only; `talent:rush` dispatches beside the Lancers). Coverage 851; the library publishes VEC-05 (1,044 available). `docs/ENEMY-LEAFCARPET-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
