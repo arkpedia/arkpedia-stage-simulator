@@ -154,6 +154,8 @@ Artillery instances (2026-11-23, main story): 10-4 adverse, AW-1 Challenge and `
 
 Unnamed hidden groups (2026-11-23, main story): a hidden group that no rune of the level names stays off. Published 10-5, 11-1, 11-13, 11-13 adverse and ISW-NO 3-3, 4-7 and 6-1 (1,077 available, none withdrawn, no published bundle changed). In the compiled waves, 10-5 drops its two `fstar` ASVs, 11-1 drops two `h` Court Casters, 11-13 keeps the `easy_normal` gun only, and 11-13 adverse keeps the two `h` precision guns only. `docs/STAGE-WAVES-REVIEW.md`.
 
+Hidden supply card (2026-11-23, main story): TR-8 published (1,078 available, no published bundle changed). Its 3 Roadblocks sit on a hidden card that one `ACTIVATE_PREDEFINED trap_001_crate` reveals 5 s into wave 1. The card compiles with 0 stock and `hiddenCount` 3, and the battle grants the 3 once when the action runs (`hiddenSupplyCardRevealed` in `tools/arkpedia/stage-supply-cards.mjs`; tests in `test/arkpedia-hidden-supply-card.test.js`). A hidden card with no such single running reveal is still refused.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
