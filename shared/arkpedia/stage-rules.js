@@ -37,7 +37,7 @@ export function compileStageRules(source, receipt) {
     || !(Array.isArray(receipt.runes) || (!challenge && receipt.runes === null))
     || ((challenge || sixStar) && !receipt.runes?.length))
     throw Error('Invalid or incompatible variant rule receipt');
-  const allyCards = [], forbiddenLocations = [], deviceSkillCost = {}, enemyReplacements = {};
+  const allyCards = [], forbiddenLocations = [], deviceSkillCost = {}, deviceSkillAdd = {}, enemyReplacements = {};
   const enemyDynamicAbilities = {}, environmentBuffs = [], enemyScopedAdd = {};
   const deploymentDamage = [], predefinedDevices = {}, predefinedOperators = {}, environmentOverrides = {};
   const enemyTalentGlobal = {}, enemyTalentAddScoped = {};
@@ -188,6 +188,16 @@ export function compileStageRules(source, receipt) {
         throw Error('Invalid stage token count rune');
       const key = target?.valueStr ?? '*';
       tokenCountAdd[key] = (tokenCountAdd[key] ?? 0) + amount.value;
+      continue;
+    }
+    // JT8-3 Challenge: the Energy Aggregate's skill `damage` + value. The rune names the TRAP profession and its
+    // device; only this reviewed device parameter is accepted.
+    if (rune.key === 'char_skill_blackb_add' && ['TRAP', 256].includes(rune.professionMask) && ['ALL', 3].includes(rune.buildableMask)) {
+      const entries = rune.blackboard ?? [], target = entries.find(x => x.key === 'char'), amount = entries.find(x => x.key === 'damage');
+      if (entries.length !== 2 || target?.value !== 0 || target.valueStr !== 'trap_021_flame'
+        || !Number.isFinite(amount?.value) || amount.value <= 0 || amount.valueStr)
+        throw Error('Unsupported device skill-parameter rule');
+      if (active) { const add = deviceSkillAdd[target.valueStr] ??= {}; add.damage = (add.damage ?? 0) + amount.value; }
       continue;
     }
     // Original enemy-attribute runes also encode NONE/NONE for the unused
@@ -417,6 +427,7 @@ export function compileStageRules(source, receipt) {
     ...(allyCards.length ? { allyCards } : {}),
     ...(forbiddenLocations.length ? { forbiddenLocations } : {}),
     ...(Object.keys(deviceSkillCost).length ? { deviceSkillCost } : {}),
+    ...(Object.keys(deviceSkillAdd).length ? { deviceSkillAdd } : {}),
     ...(Object.keys(enemyReplacements).length ? { enemyReplacements } : {}),
     ...(Object.keys(enemyDynamicAbilities).length ? { enemyDynamicAbilities } : {}),
     ...(Object.keys(enemyScopedAdd).length ? { enemyScopedAdd } : {}),

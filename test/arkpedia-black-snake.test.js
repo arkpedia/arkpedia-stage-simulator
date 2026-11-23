@@ -216,3 +216,30 @@ for (const [stageId, level, maxHp, flameDamage] of [['h8-4', 1, 60000, 1500], ['
     for (let i = 0; i < 200; i++) b.step();
     assert.deepEqual(b.errors, []);
   });
+
+test('JT8-3 Challenge: char_skill_blackb_add adds 400 to the Energy Aggregate damage; other targets and keys stay refused', async () => {
+  const { compileStageRules } = await import('../shared/arkpedia/stage-rules.js');
+  // The rule compiler needs a real variant receipt; the 5-4 Challenge one carries the rune under test.
+  const receipt = (await import('../data/stage-rules/5-4_challenge_mode.json', { with: { type: 'json' } })).default;
+  const normal = (await import('../data/arkpedia-stage-5-4.json', { with: { type: 'json' } })).default;
+  const source = { code: '5-4', name: normal.name, id: 'main_05-04#f#', stage_type: 'main', battle: normal.battle,
+    variant: { kind: 'challenge_mode', of_stage_id: 'main_05-04', shares_parent_level_file: true } };
+  const rune = (bb, professionMask = 'TRAP') => ({ difficultyMask: 'ALL', key: 'char_skill_blackb_add', professionMask, buildableMask: 'ALL', blackboard: bb });
+  const ok = [{ key: 'damage', value: 400, valueStr: null }, { key: 'char', value: 0, valueStr: 'trap_021_flame' }];
+  const compile = runes => compileStageRules(source, { ...structuredClone(receipt), runes });
+  assert.deepEqual(compile([rune(ok)]).deviceSkillAdd, { trap_021_flame: { damage: 400 } });
+  for (const bad of [[ok[0], { key: 'char', value: 0, valueStr: 'trap_007_ballis' }], [{ key: 'atk', value: 400, valueStr: null }, ok[1]], [{ key: 'damage', value: -1, valueStr: null }, ok[1]]])
+    assert.throws(() => compile([rune(bad)]));
+  const { StandardBattle } = await import('../server/sim/arkpedia.js');
+  const { createStageLibraryLoader } = await import('../shared/arkpedia/stage-library.js');
+  const { defaultBuild } = await import('../shared/arkpedia/loadout.js');
+  const mvp = JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json', import.meta.url)));
+  const manifest = JSON.parse(await readFile(new URL('../data/arkpedia-library.json', import.meta.url)));
+  const loader = createStageLibraryLoader(async url => new Response(await readFile(new URL(`..${url}`, import.meta.url))));
+  const found = manifest.stages.find(s => s.id === 'jt8-3_challenge_mode');
+  assert.equal(found.availability, 'available');
+  const stage = await loader.load(found);
+  const b = new StandardBattle({ ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } }, { operators: [{ ...defaultBuild(mvp.operators.char_151_myrtle) }] }, { seed: 1 });
+  assert.deepEqual([...b.stageFlames.hidden.values()].map(x => x.spec.damage), Array(10).fill(1400));
+  assert.ok(Math.abs(stage.enemies[id].stats.maxHp - 55000) < 1e-6, 'Challenge HP x1.1');
+});

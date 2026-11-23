@@ -91,6 +91,8 @@ The gallery review renders his body and 19 clips.
 
 The library rebuild published H8-4 and JT8-3 (1,080 available, none withdrawn, no other bundle changed).
 
+JT8-3 Challenge (published next, 1,081 available): its `char_skill_blackb_add` rune (profession TRAP, `char` `trap_021_flame`, `damage` +400) compiles to `deviceSkillAdd`, and the Aggregates deal 1,400 there. Only this device and this key are accepted; the rune's other uses (DH-EX-6 Challenge, a Contingency Contract level) stay refused. The Challenge also multiplies his HP and ATK by 1.1 (55,000 HP).
+
 ## Boundaries
 
 - **Energy Aggregate art.** Its body is a Unity Animation graphic, not a Spine skeleton. The device model pipeline admits only single-Graphic Spine bodies, so it shows as a labelled marker. The Die clip is not timed, so its four fireballs leave when the charge completes.
@@ -98,6 +100,5 @@ The library rebuild published H8-4 and JT8-3 (1,080 available, none withdrawn, n
 - **Detonate count.** The selector pins `_maxNum` 2, the same as Ignite's, but the stage text, the handbook and PRTS all say "all carriers". The runtime detonates every carrier. An in-game check with three or more carriers would settle it.
 - **Protect source.** Only his own burns count (`_buffSourceType` BUFF_SOURCE). Burns applied by an Energy Aggregate do not reduce his damage taken.
 - **Not published.**
-  - JT8-3 Challenge waits on its `char_skill_blackb_add` rune: `trap_021_flame` damage +400.
   - The TN-4 boss-rush stages wait on the Entitative Program devices.
 - **Presentation.** The Inferno screen effect, the hint marks and the bgm switch are not reproduced.

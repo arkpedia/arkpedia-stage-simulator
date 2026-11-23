@@ -17,7 +17,10 @@ export class StageFlames {
     for (const d of devices) {
       if (!stageDeviceSpec(d)?.flame) continue;
       if (!d.hidden || !d.branchActivated || !d.alias || this.hidden.has(d.alias)) throw Error('Energy Aggregates must be hidden branch-activated aliases');
-      this.hidden.set(d.alias, { d, spec: flameDefinition(d.instance), unit: null });
+      // A stage rune may add to the skill's damage (JT8-3 Challenge: char_skill_blackb_add +400).
+      const spec = flameDefinition(d.instance), add = b.stageCardRules?.deviceSkillAdd?.[d.key]?.damage ?? 0;
+      if (!(add >= 0) || !Number.isFinite(add)) throw Error('Invalid Energy Aggregate damage rule');
+      this.hidden.set(d.alias, { d, spec: { ...spec, damage: spec.damage + add }, unit: null });
     }
     b.on('tick', ({ dt }) => this.tick(dt));
   }
