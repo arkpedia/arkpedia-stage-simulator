@@ -109,6 +109,7 @@ import { UPROAR_FEATURES, isUproar, uproarNative } from './enemy-uproar-features
 import { RUSTHAMMER_FEATURES } from './enemy-rusthammer-features.js';
 import { GRAVESTONE_FEATURES } from './enemy-gravestone-features.js';
 import { FAUST_FEATURES } from './enemy-faust-features.js';
+import { REUNION_MEPHISTO_FEATURES } from './enemy-reunion-mephisto-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
@@ -539,6 +540,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...RUSTHAMMER_FEATURES,
   ...GRAVESTONE_FEATURES,
   ...FAUST_FEATURES,
+  ...REUNION_MEPHISTO_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),

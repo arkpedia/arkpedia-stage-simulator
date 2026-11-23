@@ -3,7 +3,7 @@
   "scope": "Compiled execution plans for already-admitted records; source admission remains separate. Plans belong in shared enemy-definition components, not a duplicated global payload.",
   "source": {
     "data/arkpedia-enemy-records.json": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8",
-    "data/arkpedia-enemy-support.json": "63382fffff666cd2b51bf7d2e399da47b19cabd2984f54dc59a88e6822095e53",
+    "data/arkpedia-enemy-support.json": "eee727ceaa9dc84259c6174b365ed82d549eb95c932eeeb75adb623607761a1f",
     "shared/arkpedia/enemy-runtime-compiler.js": "277cdbe67612b39a03bc0ea0cf9dc57a96a05c877e85b3083d5dd2ac67e34bf6",
     "shared/arkpedia/enemy-runtime-plan.js": "854942a6ddfceb1af2a6dba4ba19a9c3fb2db65122e1789e3ebe8186c908471f",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
@@ -92,7 +92,7 @@
     "shared/arkpedia/enemy-awaken-boss-features.js": "e40cf5b3d879cd962bb0603cae64b0fa0b1af3748e77ec2ac18a00cc4f8c25ba",
     "data/arkpedia-awaken-animations.json": "5f2be553669713eecd3295b73e9ed546cdb04ca222650b52a9640a620aeed061",
     "server/sim/content/arkpedia-enemy-awaken.js": "e8da3806a5b0d2920e013bbefb4baf8049b18a5d6314db34ec8bd2773abab101",
-    "shared/arkpedia/enemy-mephisto-features.js": "62435808bcc25e421f1d9fac7abafff8bf72af120719471782ef8a0825dc9ddd",
+    "shared/arkpedia/enemy-mephisto-features.js": "9e889ab5b3d735f59b72a41fe202ab38de026e6bb47963d62d9a7a7fdab0870e",
     "data/arkpedia-mephisto-animations.json": "2a737d7b35a5ee14b47c2c1b629abf0e6c1bd972e1ffb9c796d036e9cb07fac2",
     "shared/arkpedia/enemy-big-ugly-thing-features.js": "cbf4251de7a6d20b39c4bea4ff734d2a5b8052be9e47c4c664794a726f978c2d",
     "data/arkpedia-big-ugly-thing-animations.json": "2af1fa883ee892734c5170890c99b25d8175fd0d2947b87a100053ad1dd1cff0",
@@ -140,6 +140,8 @@
     "data/arkpedia-gravestone-animations.json": "d842a4d922b9136ef0a3e947607a3bf5338934d571ce74ce4ade0a99ba5005d0",
     "shared/arkpedia/enemy-faust-features.js": "179739c42b7153f5563f279fe5a61b4887341c39e63f83b2d0910b31ad030f7f",
     "data/arkpedia-faust-animations.json": "bd4396d1f9322b3f391a4694097527d8fc6348cc9f67a7746c5b257b0f582644",
+    "shared/arkpedia/enemy-reunion-mephisto-features.js": "18e9eb16909054e86bc8e38ad1c17b8d961c0e879020cfc948b940bafb1e890b",
+    "data/arkpedia-mephi-animations.json": "3bbc75dad0d4f7f6c8e1230dad3227dc013bb9bc517b6b85533e05b02e9f6e81",
     "data/arkpedia-lost-colossus-animations.json": "e4a3824c44d893146b361da1246027b4f166ecde9148a6a488793db5b08a7593",
     "data/arkpedia-jetman-animations.json": "29157c4bbee6e152b47578127882c8cef65ceac45b542053adc47b50fe3881d1",
     "data/arkpedia-wandering-puppet-animations.json": "17e6be1a9193b8eef83910537bb1c3d390944ee9edc307156e2286d5f0605886",
@@ -158,13 +160,13 @@
     "data/arkpedia-famiglia-basics-animations.json": "1566c50c15e3b31c0eea77ed4788ea9a6178dc7b2cfe7ff2f8ab7d06aad11c71"
   },
   "summary": {
-    "records": 938,
-    "entries": 949,
-    "abilities": 887,
+    "records": 940,
+    "entries": 951,
+    "abilities": 889,
     "traits": 67,
     "properties": 1,
-    "serializedBytes": 272874,
-    "plansSha256": "1bc42e455110b60ab786f9f2c8ae77373daf8eff158373642c880df0d729c084",
+    "serializedBytes": 273422,
+    "plansSha256": "1fdc6b6a427087f5e1cda03ac1be8114da254c754ea204af4f9dc78d841efd52",
     "kinds": [
       {
         "kind": "abandonedSplash",
@@ -941,6 +943,10 @@
       {
         "kind": "requiredBlock",
         "instances": 5
+      },
+      {
+        "kind": "reunionMephisto",
+        "instances": 2
       },
       {
         "kind": "revealCamouflage",

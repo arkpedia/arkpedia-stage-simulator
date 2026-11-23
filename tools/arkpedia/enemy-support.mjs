@@ -171,6 +171,7 @@ export async function buildEnemySupport() {
       rusthammerFeatures: { path: 'shared/arkpedia/enemy-rusthammer-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-rusthammer-features.js', root))) },
       gravestoneFeatures: { path: 'shared/arkpedia/enemy-gravestone-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-gravestone-features.js', root))) },
       faustFeatures: { path: 'shared/arkpedia/enemy-faust-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-faust-features.js', root))) },
+      reunionMephistoFeatures: { path: 'shared/arkpedia/enemy-reunion-mephisto-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-reunion-mephisto-features.js', root))) },
       heraldAnimations: { path: 'data/arkpedia-herald-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-herald-animations.json', root))) },
       heraldFeatures: { path: 'shared/arkpedia/enemy-herald-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-herald-features.js', root))) },
       icefieldArtsFeatures: { path: 'shared/arkpedia/enemy-icefield-arts-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-icefield-arts-features.js', root))) },

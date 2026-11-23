@@ -6,6 +6,7 @@
 // pinned below with local references reduced to null/local.
 import clocks from "../../data/arkpedia-mephisto-animations.json" with{type:"json"};
 import {sameOutcomeValue as same} from "./enemy-outcome-contracts.js";
+import {isReunionMephisto,REUNION_MEPHISTO_HEALAURA} from "./enemy-reunion-mephisto-features.js";
 export const isMephisto=r=>r?.prefabKey==="enemy_1514_smephi";
 export const MEPHISTO_ABILITIES=[
  {text:"Activated Form",format:"TITLE"},
@@ -93,5 +94,8 @@ export const MEPHISTO_FEATURES={
  "skill:PoisonRelease":{...feature,note:"Dust Release (talent:rage_aura)"},"skill:PoisonRelease_Rage":{...feature,note:"Dust Release in Rage (talent:rage_aura)"},
 "talent:rage_aura_state_3":{...feature,note:"Rage Host aura (talent:rage_aura)"},
  "talent:poison_trigger_giver":{...feature,note:"Toxicity trigger (talent:rage_aura)"},
- "talent:healaura":{...feature,note:"Dormant healing (talent:rage_aura)"},
+ // Mephisto (enemy_1507_mephi) shares talent:healaura: it dispatches to his contract (enemy-reunion-mephisto-features.js).
+ "talent:healaura":{matchesRecord:r=>isMephisto(r)||isReunionMephisto(r),covers:(r,n)=>isReunionMephisto(r)?REUNION_MEPHISTO_HEALAURA.covers(r,n):feature.covers(r,n),
+  ability:r=>isReunionMephisto(r)?REUNION_MEPHISTO_HEALAURA.ability:null,explains:(text,r)=>isReunionMephisto(r)&&REUNION_MEPHISTO_HEALAURA.explains(text),
+  note:"The Singer: Dormant healing (talent:rage_aura); Mephisto: the heal cycle and the field-wide regeneration aura"},
 };
