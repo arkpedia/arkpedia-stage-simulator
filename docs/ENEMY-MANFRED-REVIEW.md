@@ -47,25 +47,32 @@ The Artificer and the drone keep their existing inert charge. Their charge is no
 
 - **H10-1.** `Shield.disable_duration` is 12. `Funnel_s1.attack@ep_damage_ratio` and `Funnel_s2.attack@ep_damage_ratio` are 0.2: both normal attacks deal an extra 20% ATK as Necrosis. Element 4 is Necrosis per the PRTS H10-1 page ("凋亡损伤"). The funnel keeps its own ratio, which is 0.
 - **H10-2.** `Funnel_s2.times` is 2, so the funnel hits an extra target or the same one twice (PRTS H10-2), and `Funnel_s2_charge.sp` is 12.
-- **H10-3 is not published.** It switches `aura.isenabled` to `aura_on` and changes `aura.range_radius`. The aura sits on other enemies that carry the vampire or bloodsucker buffs ("all reviving enemies and revive creations deal continuous Arts damage around them"). That aura is not built, and the template literals disagree with the blackboard. `aura.isenabled` is admitted only as `aura_off`.
+- **H10-3 (the aura).** The stage sets `aura.isenabled` to `aura_on`, `aura.range_radius` to 1.25 and `Shield.disable_duration` to 8. `enemy_manfri_aura` is a field-wide passive (script `-5793748974791823428`, `_selector` 0). Its validator passes every unit that carries `enemy_vampires[death_rattle]` or `enemy_bloodsucker_mark`. While `isenabled` is `aura_on`, each of those units gets the derived `[damage]` buff. That buff deals sourceless Arts AOE damage around its carrier: `atk_scale` × Manfred's current ATK to every opposing unit, ground and air, target-free units excluded. The `CreateBuff` literal says 1.0 s and the AOE node says radius 1.0. PRTS's H10-3 enemy page gives "every 0.5 s within radius 1.25, 5% of Manfred's ATK", which matches the blackboard (`aura.interval` 0.5, the stage's `range_radius` 1.25, `atk_scale` 0.05). So the blackboard is used, and the buff waits one interval before its first tick.
+  - **Carriers.** Inspected on 2026-11-23, the native prefabs attach `enemy_vampires[death_rattle]` to the Heirbearer Warrior, Artificer, Chain Caster and Hatedrinker lines (`dpvt`, `dmech`, `dkmage` and `dklord`, both tiers). The Bombardier (`dthrow`) and Punisher (`dfat`) lines do not have it, although their reborn text is the same. The contract pins those eight keys. Reborn Creations (the Touch and Gift lines) carry the `ab:bloodsuckerMark` that the Reborn Creation runtime already attaches. This agrees with PRTS's carrier list.
+  - **Duration.** "While present": the ability is not detached by his revive (`_detachAbilityWhenReborn` 0), so the aura runs through the 20 s revive. It ends when he leaves.
+  - **Admission.** `aura.isenabled` is injected through `stageInjectedParameters` and accepts only the two native strings. `aura.range_radius` is a reviewed numeric override.
+  - **Rune note.** H10-3's two `enemy_attribute_mul` runes are NORMAL-difficulty only, so the adverse environment keeps the database stats.
 
 ## Verification
 
 `test/arkpedia-manfred.test.js`:
-- **Admission.** Both levels are admitted. Each of these is refused: a changed dodge, `aura_on`, a changed barrage scale, a revive HP of 0.5, and two revives. The H10-1 and H10-2 overrides are admitted and change the parameters; `aura.isenabled` and `aura.range_radius` overrides throw.
+- **Admission.** Both levels are admitted. Each of these is refused: a changed dodge, an unknown `aura.isenabled` string, a changed barrage scale, a revive HP of 0.5, and two revives. The H10-1, H10-2 and H10-3 overrides are admitted and change the parameters. `aura_on` only on H10-3; a numeric `aura.isenabled` and a zero radius throw.
+- **H10-3 aura.** With real Warrior Captain, Touch of Benevolence and Retrofit ASV records: nothing before Manfred is present; the first tick comes after 0.5 s, then one every 0.5 s; each tick is 60 sourceless Arts (5% of 1,200) to operators within 1.25 of a Warrior or a Touch; an operator 1.3 away, and one beside the ASV (no marker), are untouched; nothing after he leaves.
 - **Form one.** A 50% Arts shot adds 3 SP. Focus caps at 5 stacks (+300 attack speed) and resets on a target switch or after 6 idle seconds. The SP stops at 120.
 - **Military Training.** Only artillery damage strips the dodge. The stun lasts 8 s. A re-hit restarts the 30 s timer, and the dodge returns after it.
 - **Knock-out.** The wave is released with the next-wave option. The barrage hits random near and far operators at 30% Arts and adds 6 SP each. He comes back at full HP with 5 s of invincibility, then does not act until the Pose clip ends. After that come the dodge, a 100% Physical sword hit with no charge, and a 50% Arts funnel hit worth 6 SP. The next knock-out is final.
 - **Overrides.** H10-1 adds 20% Necrosis to the cannon and the sword and gives a 12 s disable. H10-2's funnel hits a neighbour, or the same operator twice, and adds 12 SP a hit.
-- **Compiled stages.** On 10-17, 10-17 Adverse, H10-1 and H10-2, with an invulnerable Myrtle beside him:
+- **Compiled stages.** On 10-17, 10-17 Adverse, H10-1, H10-2 and H10-3, with an invulnerable Myrtle beside him:
   - his shots charge the real artillery;
   - the knock-out moves him to the next wave (H10-2 has one wave);
   - the barrage adds 24 × 6 SP;
   - he ends at full HP in the sword form with the dodge;
-  - each stage's own values are observed in the compiled battle, not read back from the record. Max HP after the stage runes is 40,000, 48,000, 60,000 and 72,000. An artillery hit disables the dodge for 30 s, or 12 s on H10-1. Sword-form funnel hits charge 6 SP each, and on H10-2 12 SP with two hits per shot;
+  - each stage's own values are observed in the compiled battle, not read back from the record. Max HP after the stage runes is 40,000, 48,000, 60,000, 72,000 and 60,000. An artillery hit disables the dodge for 30 s, 12 s on H10-1 and 8 s on H10-3. Only H10-3 has the aura on, at radius 1.25. Sword-form funnel hits charge 6 SP each, and on H10-2 12 SP with two hits per shot;
   - there are no battle errors.
 
 The library rebuild published exactly four more stages: 10-17, 10-17 Adverse, H10-1 and H10-2 (1,009 available). No other stage's bundle changed. `check-stage-library.mjs` smoked every graph with no failures, the browser review passed, and 10-17 opens in the preview.
+
+The H10-3 aura batch (2026-11-23) published H10-3 (1,067 available, none withdrawn). The other four Manfred stages changed bundle only because his runtime parameters gained the `aura` block, which is off there. In a headless run of the compiled H10-3, the aura first ticked 0.5 s after he arrived, at 60 Arts every 0.5 s, with no battle errors. The stage opens in the preview.
 
 ## Boundaries
 
@@ -75,5 +82,6 @@ The library rebuild published exactly four more stages: 10-17, 10-17 Adverse, H1
 - **Bounce target.** The bounce selector has `_targetMotion` 3 and no sort order. The runtime assumes a ground operator and picks the nearest one. Which operator the game picks is unverified.
 - **Barrage count.** 24 shots, from the engine's tick order. The game may fire a 25th at the instant the revive ends.
 - **Artillery targeting.** The device still excludes stealthed and camouflaged operators. PRTS says the blast ignores them. This existing simplification is unchanged.
-- **Artificers and drones.** Their artillery charge stays inert. Wiring it would change the ten published artillery stages and is stages-phase work.
-- **Presentation.** The funnel and mode effects, and the idle-hiding effect buffs, are not reproduced.
+- **Artificers and drones.** Their artillery charge is wired since the artillery-charge batch (`docs/ENEMY-ARTILLERY-CHARGE-REVIEW.md`).
+- **Presentation.** The funnel and mode effects, the idle-hiding effect buffs and the aura's `enemy_manfri_buff_03_start` effect are not reproduced.
+- **Aura clock.** Each carrier's clock starts on the first tick that sees it as a carrier. A unit that keeps the marker through a rebirth is treated as new when its body is replaced.

@@ -95,10 +95,32 @@ export function manfred(p) {
     },
   });
 
+  // --- H10-3 aura (aura_on only): each rebirthable Heirbearer and each Reborn Creation burns its surroundings ---
+  // Every carrier keeps its own clock from the moment it is seen (the derived buff waits one interval first).
+  const rebirthable = new Set(p.aura.rebirthable);
+  const carries = u => u.side === 'enemy' && live(u) && (rebirthable.has(u.def?.key) || !!u.findBuff?.(p.aura.creationMark));
+  const auraTick = (b, e, a) => {
+    const seen = new Set();
+    for (const u of b.units) {
+      if (!carries(u)) continue;
+      seen.add(u);
+      let next = a.aura.get(u);
+      if (next == null) { a.aura.set(u, b.time + p.aura.interval); continue; }
+      if (b.time + 1e-9 < next) continue;
+      a.aura.set(u, next + p.aura.interval);
+      const amount = e.s.atk * p.aura.scale;
+      for (const t of b.allies()) {
+        if (!live(t) || !areaSelectable(u, t) || Math.hypot(t.x - u.x, t.y - u.y) > p.aura.radius + 1e-9) continue;
+        b.dealDamage(null, t, { amount, type: 'arts', sourceless: true, tags: ['manfriAura'] });
+      }
+    }
+    for (const u of a.aura.keys()) if (!seen.has(u)) a.aura.delete(u);
+  };
+
   return {
     ...rebirth,
     spawn(b, e, a) {
-      a.form = 1; a.focus = 0; a.focusTarget = null; a.focusUntil = -Infinity; a.posing = false;
+      a.form = 1; a.focus = 0; a.focusTarget = null; a.focusUntil = -Infinity; a.posing = false; a.aura = new Map();
       e.profile.shot = 'none'; e.profile.deferHit = true;
       e.base.rangeRadius = p.radius; e.markDirty?.();
       e.profile.canTarget = u => !u.isFlying;
@@ -122,6 +144,8 @@ export function manfred(p) {
     },
     tick(b, e, a) {
       if (a.focus > 0 && b.time >= a.focusUntil) setFocus(b, e, a, 0);
+      // "While present": the ability stays attached through the revive (_detachAbilityWhenReborn 0).
+      if (p.aura.on && e.alive) auraTick(b, e, a);
     },
   };
 }
@@ -133,6 +157,8 @@ function validate(p) {
     && nn(p.charge?.attack) && nn(p.charge.funnel) && nn(p.charge.rage)
     && pos(p.funnel?.scale) && nn(p.funnel.ep) && Number.isInteger(p.funnel.times) && p.funnel.times > 0 && pos(p.funnel.speed) && pos(p.funnel.bounceRadius) && pos(p.funnel.bounceInterval)
     && p.evade?.prob > 0 && p.evade.prob <= 1 && pos(p.evade.disable) && pos(p.evade.stun)
-    && pos(p.rebirth?.dur) && pos(p.rebirth.interval) && nn(p.rebirth.invincible) && pos(p.rebirth.rageScale) && pos(p.rebirth.pose);
+    && pos(p.rebirth?.dur) && pos(p.rebirth.interval) && nn(p.rebirth.invincible) && pos(p.rebirth.rageScale) && pos(p.rebirth.pose)
+    && typeof p.aura?.on === 'boolean' && pos(p.aura.interval) && nn(p.aura.scale) && pos(p.aura.radius)
+    && Array.isArray(p.aura.rebirthable) && p.aura.rebirthable.every(k => /^enemy_[a-z0-9_]+$/.test(k)) && p.aura.creationMark === 'ab:bloodsuckerMark';
   if (!ok) throw Error('Invalid Manfred parameters');
 }

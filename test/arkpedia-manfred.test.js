@@ -15,6 +15,7 @@ const id='enemy_1528_manfri',entry=ENEMY_RECORDS.enemies[id],record=entry.levels
 const PREFAB='dyn/battle/prefabs/enemies/enemy_1528_manfri.prefab';
 const ARTILLERY='Londinium Secondary Defense Artillery';
 const H10_1=[{key:'Shield.disable_duration',value:12,valueStr:null},{key:'Funnel_s1.attack@ep_damage_ratio',value:.2,valueStr:null},{key:'Funnel_s2.attack@ep_damage_ratio',value:.2,valueStr:null}];
+const H10_3=[{key:'aura.isenabled',value:0,valueStr:'aura_on'},{key:'Shield.disable_duration',value:8,valueStr:null},{key:'aura.range_radius',value:1.25,valueStr:null}];
 const H10_2=[{key:'Funnel_s2.times',value:2,valueStr:null},{key:'Funnel_s2_charge.sp',value:12,valueStr:null}];
 const staged=(blackboard,r=entry.levels[1])=>applyStageEnemyBlackboard(r,{level:r.level,blackboard,skills:null,spData:null});
 
@@ -49,17 +50,57 @@ test('both levels of Manfred are admitted only with the complete native tree; H1
  const n=nativeComponents(native,id);
  for(const r of Object.values(entry.levels))assert.equal(manfredNative(r,n),true,`level ${r.level}`);
  assert.equal(manfredNative({...record,talents:{...record.talents,bb:{...record.talents.bb,'Shield.prob':.5}}},n),false);
- assert.equal(manfredNative({...record,talents:{...record.talents,bbStr:{'aura.isenabled':'aura_on'}}},n),false,'the H10-3 aura is not built');
+ assert.equal(manfredNative({...record,talents:{...record.talents,bbStr:{'aura.isenabled':'aura_on'}}},n),true,'the H10-3 switch');
+ assert.equal(manfredNative({...record,talents:{...record.talents,bbStr:{'aura.isenabled':'aura_x'}}},n),false,'only the two native values');
  assert.equal(manfredNative({...record,skills:record.skills.map(s=>s.prefabKey==='Funnel_rage'?{...s,bb:{atk_scale:.5}}:s)},n),false);
  assert.equal(manfredNative(record,withComponent(d=>d._hpRechargeRatio===1,d=>{d._hpRechargeRatio=.5;})),false,'revive HP');
  assert.equal(manfredNative(record,withComponent(d=>d._maxRespawnCnt===1,d=>{d._maxRespawnCnt=2;})),false,'one revive');
- // Stage overrides: the reviewed parameters change, the aura stays off.
+ // Stage overrides: the reviewed parameters change; only H10-3 turns the aura on.
  const one=staged(H10_1),two=staged(H10_2);
  for(const r of [one,two])assert.equal(manfredNative(r,n),true);
  assert.deepEqual([manfredParams(one).evade.disable,manfredParams(one).form1.ep,manfredParams(one).form2.ep],[12,.2,.2]);
  assert.deepEqual([manfredParams(two).funnel.times,manfredParams(two).charge.funnel],[2,12]);
- assert.throws(()=>staged([{key:'aura.isenabled',value:0,valueStr:'aura_on'}]),/Unsupported original enemy parameter/);
- assert.throws(()=>staged([{key:'aura.range_radius',value:1.25,valueStr:null}]),/Unsupported original enemy parameter/);
+ for(const r of [one,two])assert.equal(manfredParams(r).aura.on,false);
+ const three=staged(H10_3);
+ assert.equal(manfredNative(three,n),true);
+ assert.deepEqual(manfredParams(three).aura,{on:true,interval:.5,scale:.05,radius:1.25,creationMark:'ab:bloodsuckerMark',
+  rebirthable:['enemy_1222_dpvt','enemy_1222_dpvt_2','enemy_1223_dmech','enemy_1223_dmech_2','enemy_1225_dkmage','enemy_1225_dkmage_2','enemy_1226_dklord','enemy_1226_dklord_2']});
+ assert.equal(manfredParams(three).evade.disable,8);
+ assert.throws(()=>staged([{key:'aura.isenabled',value:0,valueStr:'aura_x'}]),/Unsupported injected enemy parameter/);
+ assert.throws(()=>staged([{key:'aura.isenabled',value:1,valueStr:'aura_on'}]),/Unsupported injected enemy parameter/);
+ assert.throws(()=>staged([{key:'aura.range_radius',value:0,valueStr:null}]),/Unsupported original enemy parameter/);
+});
+
+test('H10-3 aura: rebirthable Heirbearers and Reborn Creations burn nearby operators for 5% of his ATK every 0.5 s',()=>{
+ const rec=staged(H10_3),keys=['enemy_1222_dpvt_2','enemy_1220_dzoms_2','enemy_1224_dsuply_2'];
+ const defs=Object.fromEntries([[id,rec],...keys.map(k=>[k,ENEMY_RECORDS.enemies[k].levels[0]])]);
+ const op=chessRec({id:'manfri_aura_target',stats:{maxHp:1e7,atk:0,def:0,res:0,blockCnt:0}});
+ const h=makeBattle({content:'generic',autoFinish:false,defs:{chess:{[op.chessId]:op},enemies:defs},
+  units:[0,1,2,3].map(i=>({chessId:op.chessId,row:10,col:2+i,dir:'RIGHT'})),setup:b=>installEnemyFeatures(b)});
+ const b=h.b;b.start();const ops=h.allies();
+ const hold=u=>b.addBuff(u,{key:'hold',persist:true,flags:{noMove:true,disarm:true}});
+ const burns=[];b.on('damaged',c=>{if(c.dmg?.tags?.includes('manfriAura'))burns.push([c.target,c.dmg.amount,c.dmg.type,b.time,c.source??null]);});
+ // Warrior Captain at (2,2), Touch of Benevolence at (2,8), Retrofit ASV (no marker) at (6,5); Manfred far away.
+ const [w,t,asv]=[[2,2],[2,8],[6,5]].map((pos,i)=>{const u=b.spawnEnemy(keys[i],{pos,route:0});hold(u);return u;});
+ // Operators: 1.2 from the Warrior (in), 1.3 from the Touch (out), 0.5 from the ASV (no carrier), and one in both.
+ [[w,1.2,0],[t,1.3,0],[asv,.5,0],[w,0,1]].forEach(([u,dx,dy],i)=>{ops[i].x=u.x+dx;ops[i].y=u.y+dy;});
+ h.run(1);assert.equal(burns.length,0,'nothing before Manfred is present');
+ const m=b.spawnEnemy(id,{pos:[9,5],route:0});hold(m);
+ const start=b.time;
+ h.run(.45);assert.equal(burns.length,0,'the derived buff waits one interval');
+ h.run(.1);
+ const amount=m.s.atk*.05;assert.equal(amount,1200*.05);
+ assert.deepEqual(burns.map(x=>[x[0],x[1],x[2],x[4]]),[[ops[0],amount,'arts',null],[ops[3],amount,'arts',null]]);
+ h.run(1.5);
+ assert.equal(burns.filter(x=>x[0]===ops[0]).length,4,'every 0.5 s');
+ assert.equal(burns.some(x=>x[0]===ops[1]||x[0]===ops[2]),false,'outside 1.25 / not a carrier');
+ // The Touch carries it too: move an operator to 1.0 from it.
+ ops[1].x=t.x+1;const before=burns.length;h.run(.5);
+ assert.ok(burns.slice(before).some(x=>x[0]===ops[1]),'a Reborn Creation burns as well');
+ // Manfred's final departure ends the aura.
+ b.removeUnit?.(m)??(m.alive=false);
+ const n=burns.length;h.run(2);assert.equal(burns.length,n,'no ticks once he is gone');
+ assert.ok(b.time>start);assert.deepEqual(b.errors,[]);
 });
 
 test('form one: a 50% Arts shot that charges the artillery 3 SP; Focus stacks on one target and resets',()=>{
@@ -145,8 +186,9 @@ test('H10-1 and H10-2 overrides: Necrosis on both normal attacks, a 12 s disable
 
 // Literal per-stage expectations, so the compiled overrides are observed rather than read back from the record:
 // [stage, level, max HP after the stage runes, funnel hits per shot, SP per funnel hit, dodge disable seconds].
+// H10-3's two attribute runes are NORMAL-difficulty only, so its adverse environment keeps the database HP.
 for(const [stageId,level,maxHp,times,hitSp,disable] of [['10-17',0,40000,1,6,30],['10-17_adverse_environment',0,48000,1,6,30],
- ['h10-1_adverse_environment',1,60000,1,6,12],['h10-2_adverse_environment',1,72000,2,12,30]])
+ ['h10-1_adverse_environment',1,60000,1,6,12],['h10-2_adverse_environment',1,72000,2,12,30],['h10-3_adverse_environment',1,60000,1,6,8]])
  test(`compiled ${stageId}: Manfred (level ${level}) charges the artillery, releases the wave and revives into the sword form`,async()=>{
   const {readFile}=await import('node:fs/promises');
   const {StandardBattle}=await import('../server/sim/arkpedia.js');
@@ -171,7 +213,8 @@ for(const [stageId,level,maxHp,times,hitSp,disable] of [['10-17',0,40000,1,6,30]
   for(let r=0;r<stage.geometry.tileGrid.length&&!myrtle;r++)for(let c=0;c<stage.geometry.tileGrid[0].length&&!myrtle;c++){try{myrtle=b.deployOperator('char_151_myrtle',r,c,'RIGHT');}catch{}}
   assert.ok(myrtle);b.addBuff(myrtle,{key:'probe',persist:true,flags:{invulnerable:true}});myrtle.y=boss.y;myrtle.x=boss.x+1;
   let charged=0;const calls=[];const charge=b.chargeStageArtillery.bind(b);b.chargeStageArtillery=n=>{charged+=n;calls.push(n);return charge(n);};
-  const p=manfredParams(boss.def.raw);
+  const p=manfredParams(boss.def.raw),h3=stageId==='h10-3_adverse_environment';
+  assert.deepEqual([p.aura.on,p.aura.radius],[h3,h3?1.25:1.1],'only H10-3 switches the aura on, at 1.25');
   // At least one shot: an artillery blast aimed at the operator beside him also stuns him for 8 s.
   run(12);assert.ok(charged>=p.charge.attack&&charged%p.charge.attack===0,`his shots charge the artillery (${charged})`);
   const wave=b.stageWaveScheduler.membership(boss).wave;
