@@ -106,6 +106,7 @@ import { ABANDONED_FEATURES } from './enemy-abandoned-features.js';
 import { VCBLVA_FEATURES } from './enemy-vcblva-features.js';
 import { LEAFCARPET_FEATURES } from './enemy-leafcarpet-features.js';
 import { UPROAR_FEATURES, isUproar, uproarNative } from './enemy-uproar-features.js';
+import { RUSTHAMMER_FEATURES } from './enemy-rusthammer-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
@@ -533,6 +534,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...VCBLVA_FEATURES,
   ...LEAFCARPET_FEATURES,
   ...UPROAR_FEATURES,
+  ...RUSTHAMMER_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
