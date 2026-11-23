@@ -102,6 +102,7 @@ import { isBurnSlug, burnSlugNative, BURN_SLUG_ABILITY, BURN_SLUG_EXPLAINS } fro
 import { isNethersea, isSpewer, isPredator, netherseaNative, NETHERSEA_ABILITY, NETHERSEA_EXPLAINS } from './enemy-nethersea-features.js';
 import { YUMEN_FEATURES, isSandwalker, SANDWALKER_BUS } from './enemy-yumen-features.js';
 import { HOLY_ESCORT_FEATURES } from './enemy-holy-escort-features.js';
+import { ABANDONED_FEATURES } from './enemy-abandoned-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
 import { SUPPLY_ENEMY_FEATURES } from './enemy-supply-features.js';
@@ -524,6 +525,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...HOARDER_FEATURES,
   ...YUMEN_FEATURES,
   ...HOLY_ESCORT_FEATURES,
+  ...ABANDONED_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
     note: 'second-form passive (Andoain: talent:SmokeBomb; Theresa: talent:HpCounter)' },

@@ -163,6 +163,8 @@ export async function buildEnemySupport() {
       yumenFeatures: { path: 'shared/arkpedia/enemy-yumen-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-yumen-features.js', root))) },
       holyEscortAnimations: { path: 'data/arkpedia-holy-escort-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-holy-escort-animations.json', root))) },
       holyEscortFeatures: { path: 'shared/arkpedia/enemy-holy-escort-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-holy-escort-features.js', root))) },
+      abandonedAnimations: { path: 'data/arkpedia-abandoned-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-abandoned-animations.json', root))) },
+      abandonedFeatures: { path: 'shared/arkpedia/enemy-abandoned-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-abandoned-features.js', root))) },
       icefieldArtsFeatures: { path: 'shared/arkpedia/enemy-icefield-arts-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-icefield-arts-features.js', root))) },
       icefieldArtsAnimations: { path: 'data/arkpedia-icefield-arts-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-icefield-arts-animations.json', root))) },
       famigliaLimoFeatures: { path: 'shared/arkpedia/enemy-famiglia-limo-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-famiglia-limo-features.js', root))) },
