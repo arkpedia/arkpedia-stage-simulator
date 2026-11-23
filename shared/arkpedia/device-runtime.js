@@ -55,5 +55,7 @@ export const pulseTiles = (row, col) => runtime.pulse.map(([r, c]) => [row + r, 
 export function stageDeviceSpec(device) {
   const spec = Object.hasOwn(runtime.specs, device?.name) && runtime.specs[device.name];
   return !spec || spec.keys && !spec.keys.includes(device.key)
-    || spec.staticLevelReview && !spec.scheduled && device.hidden !== false ? null : spec;
+    || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
+      // A hidden Turret is accepted only when an activation branch switches it on (as in stage-devices.js).
+      && !(spec.turret && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string') ? null : spec;
 }

@@ -114,7 +114,9 @@ export const SUPPORTED_STAGE_DEVICE_NAMES = Object.freeze(Object.keys(STAGE_DEVI
 /** Display names are not identities: alternate devices may share a translation. */
 export function stageDeviceSpec(device) {
   const spec = STAGE_DEVICES[device?.name];
+  // A hidden Turret is accepted only when an activation branch switches it on (Faust's ballistae).
   if (!spec || spec.keys && !spec.keys.includes(device.key) || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
+    && !(spec.turret && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string')
     || spec.carapace && !carapaceNativeReviewed()
     || spec.twigs && !twigsNativeReviewed()
     || spec.powerArmor && !powerArmorDeviceNativeReviewed(device.key)

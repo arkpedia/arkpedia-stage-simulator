@@ -229,6 +229,8 @@ export async function planStage(context, id, { compile = true, waves = false } =
         operators: { ...context.mvp.operators, ...context.supportOperators.operators }, devices, branches });
       waveProgram = prepared.waveProgram;
       geometry = prepared.geometry; localSources.push(...prepared.sources);
+      // Hidden Turrets switched on by an activation branch (Faust's ballistae).
+      devices = [...devices, ...prepared.hiddenTurrets.devices]; Object.assign(deviceInstances, prepared.hiddenTurrets.instances);
     } catch (error) { blockers.push({ kind: 'wave-program', id, message: error.message }); }
   }
   if (compile && blockers.length === 0) {

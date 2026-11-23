@@ -2,7 +2,8 @@
 import { readOriginalLevel } from './original-level.mjs';
 import { compilePredefinedOperators } from './stage-predefined-operators.mjs';
 import { stageDeviceSpec } from '../../shared/arkpedia/stage-devices.js';
-import { emptyActivationBranches } from './stage-branch-noops.mjs';
+import { emptyActivationBranches, turretActivationBranches } from './stage-branch-noops.mjs';
+import { originalDeviceDirection } from './stage-device-instances.mjs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -168,7 +169,10 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
 
 export async function prepareStageWaves({ root, rules, compiledRules, geometry, operators, devices = [], branches }) {
   const { level, source } = await readOriginalLevel(root, rules);
-  const compiledBranches = { ...emptyActivationBranches(level), ...branches };
+  const turrets = turretActivationBranches(level, originalDeviceDirection);
+  for (const d of turrets.devices) if (devices.some(x => x.alias === d.alias || (x.row === d.row && x.col === d.col)))
+    throw Error(`Hidden Turret collides with a compiled device: ${d.alias}`);
+  const compiledBranches = { ...emptyActivationBranches(level), ...turrets.branches, ...branches };
   if (Object.keys(level.branches ?? {}).some(key => !Object.hasOwn(compiledBranches, key)))
     throw Error('Missing original branch program');
   const resolved = resolveStageWaveRoutes(level, geometry);
@@ -186,8 +190,8 @@ export async function prepareStageWaves({ root, rules, compiledRules, geometry, 
     const path = 'data/arkpedia-favor-source.json';
     sources.push({ path, sha256: createHash('sha256').update(await readFile(join(root, path))).digest('hex') });
   }
-  const deviceAliases = devices.filter(d => stageDeviceSpec(d)?.scheduled).map(d => d.alias);
+  const deviceAliases = [...devices.filter(d => stageDeviceSpec(d)?.scheduled).map(d => d.alias), ...turrets.devices.map(d => d.alias)];
   const waveProgram = compileStageWaves(level, resolved, compiledRules, predefined, deviceAliases);
   if (Object.keys(compiledBranches).length) waveProgram.branches = compiledBranches;
-  return { waveProgram, geometry: resolved, sources };
+  return { waveProgram, geometry: resolved, sources, hiddenTurrets: turrets };
 }

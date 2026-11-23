@@ -368,6 +368,7 @@ export class StandardBattle extends Battle {
   }
   activateStagePredefined(key) {
     if (this.stageTwigs?.activate(key)) return;
+    if (this.stageTurrets?.activate(key)) return;
     if (this.stageRewardDevices?.activate(key)) return;
     const entry = this.stagePredefined.get(key);
     if (!entry) throw Error(`Unknown predefined operator: ${key}`);

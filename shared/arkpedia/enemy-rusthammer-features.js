@@ -14,6 +14,7 @@
 // references reduced to null/local.
 import clocks from "../../data/arkpedia-rusthammer-animations.json" with{type:"json"};
 import {sameOutcomeValue as same} from "./enemy-outcome-contracts.js";
+import {isFaust,FAUST_KIT} from "./enemy-faust-features.js";
 export const isRusthammer=r=>r?.prefabKey==="enemy_2006_flsnip";
 const norm=v=>Array.isArray(v)?v.map(norm):v&&typeof v==="object"?("m_PathID"in v&&Object.keys(v).length===2?{ref:v.m_PathID==="0"?null:v.m_FileID===0?"local":"ext:"+v.m_PathID}
  :Object.fromEntries(Object.entries(v).filter(([k])=>!["m_GameObject","m_Name","m_Father","m_Children"].includes(k)).map(([k,x])=>[k,norm(x)]))):v;
@@ -42,11 +43,15 @@ export function rusthammerNative(r,n){
   &&Object.entries(CLOCK.events).every(([k,v])=>same(clock.events[k]?.filter(x=>x.name==="OnAttack").map(x=>x.time),v));
 }
 export const rusthammerParams=r=>({invincible:r.talents.bb["invincible.duration"],cooldown:r.skills[0].cooldown,initial:r.skills[0].initCooldown,
- scale:r.skills[0].bb.atk_scale,speed:10,lifetime:5,attackAnim:{dur:CLOCK.durations.Attack,hit:CLOCK.events.Attack[0]}});
+ scale:r.skills[0].bb.atk_scale,criticalType:"arts",speed:10,lifetime:5,attackAnim:{dur:CLOCK.durations.Attack,hit:CLOCK.events.Attack[0]}});
 const TEXTS=["Cannot be blocked and is initially Invulnerable for a period of time","Periodically releases a special bolt that deals massive Arts damage"];
 const feature={matchesRecord:isRusthammer,covers:rusthammerNative};
+// Faust shares talent:invincible and skill:CriticalHit; both dispatch to his contract (enemy-faust-features.js).
+const shared={matchesRecord:r=>isRusthammer(r)||isFaust(r),covers:(r,n)=>isFaust(r)?FAUST_KIT.covers(r,n):rusthammerNative(r,n)};
 export const RUSTHAMMER_FEATURES={
- "talent:invincible":{...feature,ability:{kind:"rusthammerWarrior",params:rusthammerParams},nativeClaim:()=>({active:1}),
-  explains:text=>TEXTS.includes(text),note:"60 s INVINCIBLE, BLOCK_FREE for life, sleep-immune; CriticalHit every 18 s on the attack clock"},
- "skill:CriticalHit":{...feature,nativeClaim:()=>({wrappers:2}),note:"run by talent:invincible's rusthammerWarrior; SummonBallis has no record skill"},
+ "talent:invincible":{...shared,ability:r=>isFaust(r)?FAUST_KIT.ability:{kind:"rusthammerWarrior",params:rusthammerParams},
+  nativeClaim:()=>({active:1}),explains:(text,r)=>isFaust(r)?FAUST_KIT.explains(text):TEXTS.includes(text),
+  stageOverrides:{"invincible.duration":v=>Number.isFinite(v)&&v>0},
+  note:"INVINCIBLE for invincible.duration, BLOCK_FREE and sleep-immune for life; CriticalHit on the attack clock; Faust also SummonBallis"},
+ "skill:CriticalHit":{...shared,nativeClaim:p=>p.rootName.startsWith("enemy_1508_faust")?{}:{wrappers:2},note:"run by talent:invincible's rusthammerWarrior; Rusthammer's SummonBallis has no record skill"},
 };

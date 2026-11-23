@@ -26,6 +26,17 @@ export class StageBranchScheduler {
     return b.spawnEnemy(stageEnemyKey(this.rules,action.enemyKey),{routeIndex:action.routeIndex,
       countInTotal:false,tag,ownerPlayerId:'arkpedia',initialHpRatio:hpRatio});
   }
+  /** MoveNextLevelBranch (no loop): run the next phase of an activation branch; past the last phase, nothing. */
+  advance(key) {
+    const branch = this.branches[key];
+    if (!Array.isArray(branch?.phases)) throw Error(`Unknown activation branch: ${key}`);
+    const b = this.battle; this.phaseIndex ??= {};
+    const i = this.phaseIndex[key] ?? 0;
+    if (b.finished || i >= branch.phases.length) return false;
+    this.phaseIndex[key] = i + 1;
+    for (const alias of branch.phases[i]) b.activateStagePredefined(alias);
+    return true;
+  }
   start(key, { blockGameFinish = false } = {}) {
     const phase = this.branches[key];
     if (!phase) throw Error(`Unknown stage branch: ${key}`);

@@ -9,22 +9,39 @@ import { segmentCircleEntry } from '../projectile-collision.js';
 
 export class StageTurrets {
   constructor(b, devices) {
-    this.battle = b; this.entries = new Map();
+    this.battle = b; this.entries = new Map(); this.hidden = new Map();
     for (const d of devices) {
       if (!stageDeviceSpec(d)?.turret) continue;
-      const spec = turretDefinition(d.instance), id = `stage-device:${d.key}:${d.row}:${d.col}`;
-      const stats = stageDeviceAttributes(b.stageCardRules, d.key, { hp: spec.hp, atk: spec.atk, block: 0 }, spec.position);
-      const unit = b.spawnDevice(d.key, d.row, d.col, { name: d.name, ...stats, blockCnt: 0, dir: spec.direction });
-      if (!unit) throw Error(`Occupied Turret tile: ${id}`);
-      unit.def.profession = 'TRAP'; unit.deploymentSlotCost = 0; unit.mem.stageDeviceId = id;
-      b.changeDeviceSide(unit, 'enemy');
-      // Native trap category is excluded from character selectors. Keep its
-      // damage source/faction without making it an attackable wave enemy.
-      b.addBuff(unit, { key: 'stage:turret', persist: true,
-        flags: { invulnerable: true, untargetable: true, noMove: true, noDisplace: true, disarm: true, unblockable: true } });
-      this.entries.set(id, { id, name: d.name, unit, spec, sp: spec.initSp, state: 'charging', cast: null });
+      // A hidden Turret waits for its alias: an activation branch (Faust's ballistae) or a wave action.
+      if (d.hidden) {
+        if (!d.alias || this.hidden.has(d.alias)) throw Error('Missing or ambiguous hidden Turret alias');
+        this.hidden.set(d.alias, { d, activated: false }); continue;
+      }
+      this.spawn(d);
     }
-    if (this.entries.size) b.on('tick', ({ dt }) => this.tick(dt));
+    b.on('tick', ({ dt }) => this.tick(dt));
+  }
+  spawn(d, { allowOccupied = false } = {}) {
+    const b = this.battle, spec = turretDefinition(d.instance), id = `stage-device:${d.key}:${d.row}:${d.col}`;
+    const stats = stageDeviceAttributes(b.stageCardRules, d.key, { hp: spec.hp, atk: spec.atk, block: 0 }, spec.position);
+    const unit = b.spawnDevice(d.key, d.row, d.col, { name: d.name, ...stats, blockCnt: 0, dir: spec.direction });
+    // As for reward devices, an activation onto an occupied tile finishes without a body (no retry).
+    if (!unit) { if (allowOccupied) return null; throw Error(`Occupied Turret tile: ${id}`); }
+    unit.def.profession = 'TRAP'; unit.deploymentSlotCost = 0; unit.mem.stageDeviceId = id;
+    b.changeDeviceSide(unit, 'enemy');
+    // Native trap category is excluded from character selectors. Keep its
+    // damage source/faction without making it an attackable wave enemy.
+    b.addBuff(unit, { key: 'stage:turret', persist: true,
+      flags: { invulnerable: true, untargetable: true, noMove: true, noDisplace: true, disarm: true, unblockable: true } });
+    this.entries.set(id, { id, name: d.name, unit, spec, sp: spec.initSp, state: 'charging', cast: null });
+    return unit;
+  }
+  /** ACTIVATE_PREDEFINED on a hidden Turret alias; false when the alias is not a Turret. */
+  activate(alias) {
+    const entry = this.hidden.get(alias);
+    if (!entry) return false;
+    if (!entry.activated) { entry.activated = true; this.spawn(entry.d, { allowOccupied: true }); }
+    return true;
   }
   fire(d) {
     const b = this.battle, source = d.unit, spec = d.spec, [dr, dc] = dirVec(spec.direction);
