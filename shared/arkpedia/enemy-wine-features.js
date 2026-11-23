@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { isCannoneer, cannoneerNative, CANNONEER_ABILITY, CANNONEER_TEXT } from './enemy-firelight-ranged-features.js';
+import { isCleanupSquad, CLEANUP_SQUAD_POWER_ATTACK } from './enemy-cleanup-squad-features.js';
 import clocks from '../../data/arkpedia-wine-animations.json' with { type: 'json' };
 export const brokenBlades = r => ['enemy_1207_sfji', 'enemy_1207_sfji_2'].includes(r.prefabKey);
 const node = (a, name) => a?.$type === `Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
@@ -61,12 +62,14 @@ export function porcelainCasterNative(r, n) {
       && a._useRandomDelay && a._randomDelayRange === Math.fround(.7) && a._managedByScheduler && !a._dontBlockWave);
 }
 export const PORCELAIN_FEATURES = {
-  'skill:PowerAttack': { matchesRecord: r => isCannoneer(r) || porcelainCaster(r), covers: (r,n) => isCannoneer(r) ? cannoneerNative(r,n) : porcelainCasterNative(r,n), nativeClaim: () => ({ wrappers: 1, active: 0 }),
-    ability: r => isCannoneer(r) ? CANNONEER_ABILITY : porcelainCaster(r) ? { kind: 'porcelainCaster', params: r => ({ initialSp: r.sp.initSp, cost: r.skills[0].spCost,
+  // The Cleanup Squads share the key: they dispatch to their own contract (enemy-cleanup-squad-features.js).
+  'skill:PowerAttack': { matchesRecord: r => isCannoneer(r) || porcelainCaster(r) || isCleanupSquad(r),
+    covers: (r,n) => isCleanupSquad(r) ? CLEANUP_SQUAD_POWER_ATTACK.covers(r,n) : isCannoneer(r) ? cannoneerNative(r,n) : porcelainCasterNative(r,n), nativeClaim: () => ({ wrappers: 1, active: 0 }),
+    ability: r => isCleanupSquad(r) ? CLEANUP_SQUAD_POWER_ATTACK.ability : isCannoneer(r) ? CANNONEER_ABILITY : porcelainCaster(r) ? { kind: 'porcelainCaster', params: r => ({ initialSp: r.sp.initSp, cost: r.skills[0].spCost,
       cooldown: r.skills[0].cooldown, initialScale: r.skills[0].bb.atk_scale_init, increment: r.skills[0].bb.atk_scale_add,
       every: r.skills[0].bb.times, duration: r.skills[0].bb.duration,
       attackAnim: { dur: clocks.enemies[r.prefabKey].durations.Attack, hit: clocks.enemies[r.prefabKey].events.Attack[0].time } }) } : null,
-    explains: text => text === CANNONEER_TEXT || /^After several attacks, inflicts continuous Arts damage that slowly increases over time \(can be <\$ba.buffres>Resisted<\/>\)$/.test(text) },
+    explains: (text, r) => isCleanupSquad(r) ? CLEANUP_SQUAD_POWER_ATTACK.explains(text) : text === CANNONEER_TEXT || /^After several attacks, inflicts continuous Arts damage that slowly increases over time \(can be <\$ba.buffres>Resisted<\/>\)$/.test(text) },
 };
 export function brokenBladesNative(r, n) {
   if (!brokenBlades(r) || r.skills.length || r.applyWay !== 'MELEE' || r.stats.dmgType !== 'phys') return false;

@@ -9,6 +9,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-patriot',load:()=>import('./arkpedia-enemy-patriot.js'),exports:{patriot:'patriot'}},
   {key:'arkpedia-enemy-talulah',load:()=>import('./arkpedia-enemy-talulah.js'),exports:{talulah:'talulah'}},
   {key:'arkpedia-enemy-frostnova',load:()=>import('./arkpedia-enemy-frostnova.js'),exports:{frostNova:'frostNova'}},
+  {key:'arkpedia-enemy-cleanup-squad',load:()=>import('./arkpedia-enemy-cleanup-squad.js'),exports:{cleanupSquad:'cleanupSquad'}},
   {key:'arkpedia-enemy-hoarder',load:()=>import('./arkpedia-enemy-hoarder.js'),exports:{hoarderSplit:'hoarderSplit'}},
   {key:'arkpedia-enemy-crossroads',load:()=>import('./arkpedia-enemy-crossroads.js'),exports:{crossroads:'crossroads'}},
   {key:'arkpedia-enemy-drifter',load:()=>import('./arkpedia-enemy-drifter.js'),exports:{drifter:'drifter'}},
