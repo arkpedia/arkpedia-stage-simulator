@@ -102,6 +102,10 @@ The Basorobeast batch (2026-11-19: Basorobeast and Gravorobeast) published TG-7 
 
 The Fieldmus batch (2026-11-23: Fieldmus and Hard-Snouted Fieldmus) published VEC-SP04 "Gnawed-Out Holes" and VEC-SP05 "Gnawbeast Tsunami" (1,024 available, none withdrawn, no other bundle changed). The smoke check passed all 1,024 graphs, and the browser review passed.
 
+The City Defender batch (2026-11-23: Trimounts City Defender and Captain) published CW-1 "Dense Fog" (1,025 available, none withdrawn, no other bundle changed). The smoke check passed all 1,025 graphs, and the browser review passed.
+
+The Drifter batch (2026-11-23: Toxocellular and Allotropic Drifters) published BP-1 "First Contact" (1,026 available, none withdrawn, no other bundle changed). The Toxocellular Drifter is drawn with the labelled fallback marker until its straight-alpha art is reviewed. The smoke check passed all 1,026 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
