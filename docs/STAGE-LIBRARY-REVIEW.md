@@ -146,6 +146,8 @@ H7-4 (2026-11-23, main story) published (1,060 available, none withdrawn, no oth
 
 Chapter-11 adverse runes (2026-11-23, main story): 11-9, 11-14 and 11-18 adverse published (1,063 available, none withdrawn, no other bundle changed). 11-14 adds 30 s to every redeployment, and 11-9 and 11-18 exclude two professions from the squad while keeping preplaced units. The smoke check passed all 1,063 graphs.
 
+Artillery charge (2026-11-23, main story): 10-6, 10-14 and 13-5 adverse published (1,066 available). 14 published stages changed bundle because their Sarkaz drones and Artificers now charge the Londinium artillery: 10-6, 10-7, 10-11, 10-12, 10-14, 10-15, 10-17, 13-5, TR-20 and adverse variants. The smoke check passed all 1,066 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

@@ -111,6 +111,7 @@ import { GRAVESTONE_FEATURES } from './enemy-gravestone-features.js';
 import { FAUST_FEATURES } from './enemy-faust-features.js';
 import { REUNION_MEPHISTO_FEATURES } from './enemy-reunion-mephisto-features.js';
 import { WINTERS_SCAR_FEATURES, isWintersScar, wintersScarNative } from './enemy-wintersscar-features.js';
+import { isChargeDrone, isArtificer, artilleryChargerNative, droneChargeParams, artificerChargeParams } from './enemy-artillery-charge-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
@@ -1012,11 +1013,15 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:C4': { covers: r => r.skills.some(s => s.prefabKey === 'C4'), note: 'C4 skill' },
   // Artificer: charges the artillery, with the reviewed deathrattle child.
   'ability:Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress': {
-    covers: r => r.abilities.some(a => a.text.startsWith('Continuously charges up Londinium Secondary Defense Artillery')),
-    ability: { kind: 'artilleryCharge', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1 }),
-    note: 'artillery charge progress is exposed on the battle; the device is not implemented',
+    covers: (r, n) => isArtificer(r) ? artilleryChargerNative(r, n) : r.abilities.some(a => a.text.startsWith('Continuously charges up Londinium Secondary Defense Artillery')),
+    // Heirbearer Artificers: the pinned charge_gunctrl link (enemy-artillery-charge-features.js).
+    ability: r => isArtificer(r) ? { kind: 'artificerArtilleryCharge', params: artificerChargeParams } : { kind: 'artilleryCharge', params: () => ({}) },
+    nativeClaim: () => ({ wrappers: 1 }),
+    note: 'Heirbearer Artificers: a 20 s link adding 1 SP per second to the artillery, -15 when interrupted',
     explains: /^Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress$/ },
-  'skill:charge_gunctrl': { covers: r => r.skills.some(s => s.prefabKey === 'charge_gunctrl'), note: 'artillery charge skill' },
+  // 10-6 adverse: enemy_skill_blackb_mul charge_gunctrl.sp x2 (artificerChargeParams reads the stage record).
+  'skill:charge_gunctrl': { covers: r => r.skills.some(s => s.prefabKey === 'charge_gunctrl'), note: 'artillery charge skill',
+    stageSkillMultipliers: { charge_gunctrl: { sp: v => Number.isFinite(v) && v > 0 } } },
   'skill:boomb': { covers: isBombtail,
     ability: { kind: 'bombtail', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1 }),
     note: 'one non-silenceable projectile cast, 3x3 physical blast, then double movement speed; shared Bombtail runtime',
@@ -1036,9 +1041,11 @@ export const ENEMY_FEATURES = Object.freeze({
     nativeClaim: () => ({ active: 3 }), note: 'invisible and self-draining',
     explains: /^<\$ba\.invisible>Invisible<\/>, gradually loses HP over time$/ },
   'ability:Attacks charge Londinium Secondary Defense Artillery': {
-    covers: r => r.abilities.some(a => a.text === 'Attacks charge Londinium Secondary Defense Artillery'),
-    note: 'artillery charge is inert without the device', explains: /^Attacks charge Londinium Secondary Defense Artillery$/ },
-  'talent:charge': { covers: (r, n) => sig(r, 'charge', ['sp']) || mudrockNative(r, n), note: 'Artillery charge amount, or Mudrock attack stacks managed by her shared cast/barrier controller.' },
+    covers: (r, n) => isChargeDrone(r) ? artilleryChargerNative(r, n) : r.abilities.some(a => a.text === 'Attacks charge Londinium Secondary Defense Artillery'),
+    ability: r => isChargeDrone(r) ? { kind: 'droneArtilleryCharge', params: droneChargeParams } : null,
+    note: 'each attack cast on a target adds charge.sp to the artillery (enemy-artillery-charge-features.js)', explains: /^Attacks charge Londinium Secondary Defense Artillery$/ },
+  // 10-14 adverse: enemy_talent_blackb_mul charge.sp x3 on the drones (droneChargeParams reads the stage record).
+  'talent:charge': { stageMultipliers: { 'charge.sp': v => Number.isFinite(v) && v > 0 }, covers: (r, n) => sig(r, 'charge', ['sp']) || mudrockNative(r, n), note: 'Artillery charge amount, or Mudrock attack stacks managed by her shared cast/barrier controller.' },
   // Inspired extra target.
   'ability:When Inspired, attacks one additional target.': { covers: r => r.abilities.some(a => a.text === 'When Inspired, attacks one additional target.'),
     ability: { kind: 'inspiredTargets', params: () => ({ base: 1, inspired: 2 }) }, note: 'one extra target while Inspired',
