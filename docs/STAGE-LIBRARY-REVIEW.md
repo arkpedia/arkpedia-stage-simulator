@@ -140,6 +140,8 @@ The Faust batch (2026-11-23, main story) published 6-7 "Broken Strings" and H5-4
 
 The Mephisto batch (2026-11-23, main story) published 5-10 "The Dark Before Dawn" and 5-10 Challenge (1,054 available, none withdrawn, no other bundle changed). The smoke check passed all 1,054 graphs; the browser review ran 5-10 with no errors.
 
+The Winter's Scar batch (2026-11-23, main story) published 6-16, 6-16 Challenge, H6-4, VI-6 "Yesterday" and VI-6 Challenge (1,059 available, none withdrawn, no other bundle changed). Hidden Ice Crystals raised by her `frstar_frosts` branch are new stage support. The smoke check passed all 1,059 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
