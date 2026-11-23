@@ -105,6 +105,7 @@ import { HOLY_ESCORT_FEATURES } from './enemy-holy-escort-features.js';
 import { ABANDONED_FEATURES } from './enemy-abandoned-features.js';
 import { VCBLVA_FEATURES } from './enemy-vcblva-features.js';
 import { LEAFCARPET_FEATURES } from './enemy-leafcarpet-features.js';
+import { UPROAR_FEATURES, isUproar, uproarNative } from './enemy-uproar-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
@@ -285,7 +286,7 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan'
+    covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : isUproar(r) ? uproarNative(r, n) : r.key === 'enemy_1522_captan'
       || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
     ability: r => formBoss(r) || isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
@@ -531,6 +532,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...ABANDONED_FEATURES,
   ...VCBLVA_FEATURES,
   ...LEAFCARPET_FEATURES,
+  ...UPROAR_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
