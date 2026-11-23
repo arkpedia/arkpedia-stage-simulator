@@ -99,6 +99,7 @@ import { DRIFTER_FEATURES } from './enemy-drifter-features.js';
 import { CROSSROADS_FEATURES } from './enemy-crossroads-features.js';
 import { HOARDER_FEATURES } from './enemy-hoarder-features.js';
 import { isBurnSlug, burnSlugNative, BURN_SLUG_ABILITY, BURN_SLUG_EXPLAINS } from './enemy-burn-slug-features.js';
+import { isNethersea, isSpewer, isPredator, netherseaNative, NETHERSEA_ABILITY, NETHERSEA_EXPLAINS } from './enemy-nethersea-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
 import { SUPPLY_ENEMY_FEATURES } from './enemy-supply-features.js';
@@ -711,7 +712,8 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: r => isLostColossus(r) ? LOST_COLOSSUS_STUN_ATTACK : { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
     note: 'Punisher: every third attack stuns the target area; Lost Colossus: a stunning rock every 13 s', nativeClaim: () => ({ wrappers: 1 }),
     explains: (text, r) => isLostColossus(r) ? LOST_COLOSSUS_EXPLAINS(text) : /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/.test(text) },
-  'talent:Attack': { covers: (r, n) => isFlayer(r)?flayerNative(r,n):r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
+  // The Nethersea Spewers' Attack (max_target) is covered by their contract (enemy-nethersea-features.js).
+  'talent:Attack': { covers: (r, n) => isSpewer(r)?netherseaNative(r,n):isFlayer(r)?flayerNative(r,n):r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
       ((sig(r, 'Attack', ['enemy_key'])
         || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
         && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
@@ -720,7 +722,7 @@ export const ENEMY_FEATURES = Object.freeze({
     // reviewed enemy-key form owns a child-spawning component.
     ability: r => isFlayer(r)?FLAYER_DEPARTURE_ABILITY:r.talents.bbStr['Attack.enemy_key'] ? { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) } : null,
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
-    explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
+    explains: (text, r) => isSpewer(r) ? NETHERSEA_EXPLAINS(text, r) : /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(text) },
   // Technical Scout: reveals camouflaged/stealthed allies within range to its own targeting.
   'talent:antiinvi': { covers: r => sig(r, 'antiinvi', ['range_radius'])
       && r.abilities.some(a => a.text === 'Reveals <$ba.invisible>invisible</> allied units in its surroundings'),
@@ -1214,20 +1216,22 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'ATK +atk per attack, capped, cleared by negative statuses',
     explains: /^Gains increased ATK with each attack \(up to a limit\); when affected by certain <\$ba\.debuff>Negative Statuses<\/>, these stacks will be lost$/ },
   // Evade: dodge while unblocked, an initial timed dodge, or a one-time low-HP dodge.
-  'talent:Evade': { covers: r => {
+  // The Nethersea Predators' Evade is covered by their contract (enemy-nethersea-features.js).
+  'talent:Evade': { covers: (r, n) => {
+      if (isPredator(r)) return netherseaNative(r, n);
       if (sig(r, 'Evade', ['prob']) && r.abilities.some(a => a.text === 'Has a chance to dodge Physical attacks when not blocked')) return true;
       if (sig(r, 'Evade', ['duration', 'prob']) && r.abilities.some(a => a.text === 'Initially has 100% Physical Dodge for a period of time')) return true;
       return sig(r, 'Evade', ['duration', 'hp_ratio', 'prob'])
         && r.abilities.some(a => a.text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time');
     },
-    ability: { kind: 'evade', params: r => {
+    ability: r => isPredator(r) ? null : ({ kind: 'evade', params: r => {
       const bb = r.talents.bb;
       if (sig(r, 'Evade', ['prob'])) return { mode: 'unblocked', prob: bb['Evade.prob'] };
       if (sig(r, 'Evade', ['duration', 'prob'])) return { mode: 'timed', prob: bb['Evade.prob'], duration: bb['Evade.duration'], silent: true };
       return { mode: 'low', prob: bb['Evade.prob'], duration: bb['Evade.duration'], ratio: bb['Evade.hp_ratio'], silent: true };
-    } },
-    note: 'physical dodge: unblocked, initial timed, or first low-HP', explains: text =>
-      text === 'Has a chance to dodge Physical attacks when not blocked'
+    } }),
+    note: 'physical dodge: unblocked, initial timed, or first low-HP', explains: (text, r) => (isPredator(r) && NETHERSEA_EXPLAINS(text, r))
+      || text === 'Has a chance to dodge Physical attacks when not blocked'
       || text === 'Initially has 100% Physical Dodge for a period of time'
       || text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time' },
   // Rhine Defense: a one-hit Physical/Arts shield.
@@ -1437,10 +1441,12 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
     note: 'primary and four-neighbour Corrosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/ },
   // The Burn slugs (enemy_1305_mhslim[_2]) dispatch to their own contract (enemy-burn-slug-features.js).
-  'talent:EpDamage': { covers: (r, n) => isBurnSlug(r) ? burnSlugNative(r, n) : sig(r, 'EpDamage', ['attack@ep_damage_ratio']),
-    ability: r => isBurnSlug(r) ? BURN_SLUG_ABILITY : null,
-    explains: (text, r) => isBurnSlug(r) && BURN_SLUG_EXPLAINS(text),
-    stageMultipliers: { 'EpDamage.attack@ep_damage_ratio': value => Number.isFinite(value) && value >= 0 },
+  'talent:EpDamage': { covers: (r, n) => isBurnSlug(r) ? burnSlugNative(r, n) : isNethersea(r) ? netherseaNative(r, n) : sig(r, 'EpDamage', ['attack@ep_damage_ratio']),
+    ability: r => isBurnSlug(r) ? BURN_SLUG_ABILITY : isNethersea(r) ? NETHERSEA_ABILITY(r) : null,
+    // The Predator's BlockFree common ability is run by its netherseaPredator kind.
+    nativeClaim: p => p.rootName.startsWith('enemy_1231_dsrunr') ? { active: 1 } : {},
+    explains: (text, r) => isBurnSlug(r) ? BURN_SLUG_EXPLAINS(text) : isNethersea(r) && NETHERSEA_EXPLAINS(text, r),
+    stageMultipliers: { 'EpDamage.attack@ep_damage_ratio': value => Number.isFinite(value) && value >= 0, 'EpDamage.ep_damage_ratio': value => Number.isFinite(value) && value >= 0 },
     note: 'splash erosion is attached by the handbook-line feature; the Burn slugs own their shot' },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
