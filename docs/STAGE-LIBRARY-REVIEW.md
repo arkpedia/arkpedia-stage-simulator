@@ -132,6 +132,10 @@ The Uproar batch (2026-11-23: `enemy_8015_mcnrhd`) published VEC-10 "Welcome Con
 
 The Rusthammer batch (2026-11-23: `enemy_2006_flsnip`) published the ISW-DF stage "Hunting Group" (1,047 available, none withdrawn, no other bundle changed). The smoke check passed all 1,047 graphs; the browser review loaded the original art with no console errors.
 
+The Gravestone batch (2026-11-23: `enemy_2008_flking`) published the ISW-DF stage "Avoid Unsafe Roads" (1,048 available, none withdrawn, no other bundle changed). The smoke check passed all 1,048 graphs; the browser review showed Gravestone with its original art and the stage's halved DP rate.
+
+Main-story pass (2026-11-23): 4-7 Challenge and 6-9 Challenge published (1,050 available, none withdrawn, no other bundle changed). Their `ebuff_talent_blackb_mul` runes (`boom.atk_scale` ×1.8 on Acid Originium Slugs, `atkup.atk_scale` ×1.667) scale talents the death-blast and atkup runtimes read from the record; the two features now declare those multipliers. The smoke check passed all 1,050 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
