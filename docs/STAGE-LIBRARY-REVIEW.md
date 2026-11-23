@@ -120,6 +120,8 @@ The Yumen batch (2026-11-23: 'Wallbreaker' and 'Sandwalker') published TG-8 "Pri
 
 The Holy escort batch (2026-11-23: Vesperwings and Wasteland Robbers) published HE-EX-1 "Come Ye Faithful" and its Challenge (1,039 available, none withdrawn, no other bundle changed). The smoke check passed all 1,039 graphs, and the browser review passed.
 
+The Abandoned batch (2026-11-23: 'The Abandoned' and 'The Cursed') published BP-EX-3 "Great Bathhouse - Where Wisdoms Meet" Challenge (1,040 available, none withdrawn, no other bundle changed). The smoke check passed all 1,040 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
