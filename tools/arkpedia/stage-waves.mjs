@@ -190,7 +190,7 @@ export async function prepareStageWaves({ root, rules, compiledRules, geometry, 
     const path = 'data/arkpedia-favor-source.json';
     sources.push({ path, sha256: createHash('sha256').update(await readFile(join(root, path))).digest('hex') });
   }
-  const deviceAliases = [...devices.filter(d => stageDeviceSpec(d)?.scheduled).map(d => d.alias), ...turrets.devices.map(d => d.alias)];
+  const deviceAliases = [...devices.filter(d => stageDeviceSpec(d)?.scheduled || d.scheduledActivation && stageDeviceSpec(d)?.activatable).map(d => d.alias), ...turrets.devices.map(d => d.alias)];
   const waveProgram = compileStageWaves(level, resolved, compiledRules, predefined, deviceAliases);
   if (Object.keys(compiledBranches).length) waveProgram.branches = compiledBranches;
   return { waveProgram, geometry: resolved, sources, hiddenTurrets: turrets };

@@ -96,8 +96,13 @@ export const STAGE_DEVICES = Object.freeze({
     unit: Object.freeze({ hp: 8000, def: 100, block: 5, dpMax: 5, dp: 5, obstacle: 'crate' }),
   }),
   'Londinium Secondary Defense Artillery': Object.freeze({
-    // PRTS: 1 meter/s, cap 120, target = highest-Block visible ally (newest on a tie),
-    // 3000 True damage to both sides in the 3x3 core plus 1x3 arms.
+    // PRTS: 1 meter/s, target = highest-Block visible ally (newest on a tie),
+    // 3000 True damage to both sides in the 3x3 core plus 1x3 arms. The cost and starting
+    // SP come from the original instance's skill level (stage-artillery.js); 120 is level 1.
+    // Original instances are reviewed so that a hidden artillery stays off unless a rune enables it.
+    keys: Object.freeze(['trap_058_gunctrl']), staticLevelReview: true, skillLevels: Object.freeze([1, 2, 3]),
+    // A hidden artillery switched on by an ACTIVATE_PREDEFINED of its alias (AW-1 Challenge) stays off until then.
+    activatable: true,
     artillery: Object.freeze({ damage: 3000, spCost: 120, spPerSecond: 1, area: 'artillery' }),
   }),
   'Originium Altar': Object.freeze({
@@ -116,7 +121,8 @@ export function stageDeviceSpec(device) {
   const spec = STAGE_DEVICES[device?.name];
   // A hidden Turret or Ice Crystal is accepted only when an activation branch switches it on (Faust's ballistae).
   if (!spec || spec.keys && !spec.keys.includes(device.key) || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
-    && !((spec.turret || spec.statusPulse) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string')
+    && !((spec.turret || spec.statusPulse) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
+      || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string')
     || spec.carapace && !carapaceNativeReviewed()
     || spec.twigs && !twigsNativeReviewed()
     || spec.powerArmor && !powerArmorDeviceNativeReviewed(device.key)

@@ -48,7 +48,7 @@ import { StageMire } from './content/arkpedia-stage-mire.js';
 import { StageWater } from './content/arkpedia-stage-water.js';
 import { configureStageObstacle } from './content/arkpedia-stage-obstacles.js';
 import { sceneryDefinition } from '../../shared/arkpedia/device-runtime.js';
-import { stageDeviceSpec, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles } from '../../shared/arkpedia/device-runtime.js';
+import { stageDeviceSpec, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles, artilleryDefinition } from '../../shared/arkpedia/device-runtime.js';
 import { compileBuffTemplate } from '../../shared/arkpedia/behavior.js';
 import { prepareSquad, canDeployInViewport } from '../../shared/arkpedia/squad.js';
 
@@ -290,7 +290,11 @@ export class StandardBattle extends Battle {
     this.behaviors = behaviors;
     this.mvpStageDevices = (data.stage.devices ?? [])
       .filter(d => d.kind === 'device' && stageDeviceSpec(d))
-      .map(d => ({ ...d, sp: 0, acc: 0, active: !(d.branchActivated && d.hidden) }));
+      .map(d => {
+        // The artillery's cost and starting SP follow its original skill level (stage-artillery.js).
+        const gun = stageDeviceSpec(d).artillery ? { ...stageDeviceSpec(d).artillery, ...artilleryDefinition(d.instance) } : null;
+        return { ...d, sp: gun?.initSp ?? 0, acc: 0, active: !((d.branchActivated || d.scheduledActivation) && d.hidden), ...(gun ? { artillery: gun } : {}) };
+      });
     const pollution = [];
     data.stage.geometry.tileGrid.forEach((row, r) => row.forEach((type, c) => {
       if (String(data.stage.geometry.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
@@ -380,6 +384,9 @@ export class StandardBattle extends Battle {
       return;
     }
     if (this.stageRewardDevices?.activate(key)) return;
+    // A scheduled artillery: it starts charging from its starting SP when switched on.
+    const gun = this.mvpStageDevices?.find(d => d.alias === key && d.scheduledActivation && d.artillery);
+    if (gun) { gun.active = true; return; }
     const entry = this.stagePredefined.get(key);
     if (!entry) throw Error(`Unknown predefined operator: ${key}`);
     if (entry.activated) return;
@@ -827,9 +834,9 @@ export class StandardBattle extends Battle {
    * artillery in stage order is charged. Returns false when the stage has no artillery. */
   chargeStageArtillery(amount) {
     if (!(amount >= 0)) throw Error('Invalid artillery charge');
-    const d = this.mvpStageDevices?.find(x => stageDeviceSpec(x)?.artillery);
+    const d = this.mvpStageDevices?.find(x => stageDeviceSpec(x)?.artillery && x.active !== false);
     if (!d) return false;
-    d.sp = Math.min(stageDeviceSpec(d).artillery.spCost, d.sp + amount);
+    d.sp = Math.min(d.artillery.spCost, d.sp + amount);
     return true;
   }
   _tickMvpStageDevices(dt) {
@@ -876,7 +883,7 @@ export class StandardBattle extends Battle {
         for (const u of this.allyUnits) if (u.alive && u.deployed && Math.hypot(u.y - target.y, u.x - target.x) <= spec.range)
           this.dealDamage(null, u, { amount: 3000, type: 'phys', sourceless: true, tags: ['device', 'kite'] });
       } else if (def.artillery) {
-        const spec = def.artillery;
+        const spec = d.artillery;
         d.sp = Math.min(spec.spCost, d.sp + spec.spPerSecond * dt);
         if (d.sp < spec.spCost) continue;
         const target = this.allyUnits

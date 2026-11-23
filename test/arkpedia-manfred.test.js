@@ -25,7 +25,7 @@ function fixture(positions=[[9,6]],{rec=record}={}){
  const h=makeBattle({content:'generic',autoFinish:false,defs:{chess:{[op.chessId]:op},enemies:{[id]:rec}},
   units:positions.map((_,i)=>({chessId:op.chessId,row:10,col:2+i,dir:'RIGHT'})),setup:b=>installEnemyFeatures(b)});
  const b=h.b;b.start();const ops=h.allies();ops.forEach((u,i)=>{u.y=positions[i][0];u.x=positions[i][1];});
- const device={kind:'device',name:ARTILLERY,key:'trap_058_gunctrl',row:0,col:0,sp:0,acc:0};
+ const device={kind:'device',name:ARTILLERY,key:'trap_058_gunctrl',row:0,col:0,hidden:false,sp:0,acc:0,artillery:{damage:3000,spCost:120,initSp:0,spPerSecond:1,area:'artillery'}};
  b.mvpStageDevices=[device];
  // The harness battle is not the stage battle; borrow the stage battle's own charge method.
  b.chargeStageArtillery=StandardBattle.prototype.chargeStageArtillery;

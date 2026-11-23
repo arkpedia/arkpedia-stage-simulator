@@ -29,7 +29,10 @@ export function selectStaticDeviceInstances(devices, level, rules = {}) {
     validateStaticDeviceInstances(devices, level);
     return { devices: [], level: { ...level, predefines: { ...level.predefines, tokenInsts: [] } } };
   }
-  const actions = (level.waves ?? []).flatMap(w => (w.fragments ?? []).flatMap(f => f.actions ?? []));
+  // Actions in a hidden group the stage switches off never run (AW-1's `raid` artillery activation).
+  const off = a => a.hiddenGroup && rules?.hiddenGroups?.[a.hiddenGroup] === false;
+  level = { ...level, waves: (level.waves ?? []).map(w => ({ ...w, fragments: (w.fragments ?? []).map(f => ({ ...f, actions: (f.actions ?? []).filter(a => !off(a)) })) })) };
+  const actions = level.waves.flatMap(w => w.fragments.flatMap(f => f.actions));
   const known = d => stageDeviceSpec({ ...d, hidden: false })?.staticLevelReview;
   const reviewedKeys = new Set(devices.filter(known).map(d => d.key));
   const original = source.filter(p => reviewedKeys.has(p.inst?.characterKey));
@@ -42,11 +45,17 @@ export function selectStaticDeviceInstances(devices, level, rules = {}) {
       && p.position?.col === d.col && p.hidden === d.hidden);
     if (candidates.length !== 1 || matched.has(candidates[0])) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = candidates[0]; matched.add(p);
-    const scheduled = stageDeviceSpec({ ...d, hidden: false })?.scheduled;
-    if (!scheduled && actions.some(a => (p.alias && a.key === p.alias) || a.key === d.key))
-      throw Error(`Scheduled device activation requires a controller: ${d.key}`);
+    const base = stageDeviceSpec({ ...d, hidden: false }), scheduled = base?.scheduled;
+    const activations = actions.filter(a => (p.alias && a.key === p.alias) || a.key === d.key);
     const active = Object.hasOwn(toggles, p.alias) ? toggles[p.alias] : p.hidden === false;
+    // An activatable device (the artillery) that starts hidden may be switched on by its own alias; the battle
+    // keeps it off until that action runs. Any other activation still needs a device-specific controller.
+    const switchedOn = base?.activatable && !active && !!p.alias && activations.length > 0 && activations.every(a => a.key === p.alias)
+      && original.filter(e => e.alias === p.alias).length === 1;
+    if (!scheduled && activations.length && !switchedOn)
+      throw Error(`Scheduled device activation requires a controller: ${d.key}`);
     if (active || scheduled) { selected.push({ ...d, hidden: !active, alias: p.alias }); retained.push({ ...p, hidden: !active }); }
+    else if (switchedOn) { selected.push({ ...d, hidden: true, alias: p.alias, scheduledActivation: true }); retained.push({ ...p, hidden: true, scheduledActivation: true }); }
   }
   if (matched.size !== original.length) throw Error('Original device omitted from viewer geometry');
   const selectedLevel = { ...level, predefines: { ...level.predefines,
@@ -62,7 +71,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     const matching = all.filter(p => p.inst?.characterKey === d.key && p.position?.row === d.row && p.position?.col === d.col);
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -74,7 +83,8 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     const actionRow=spec.powerArmor&&Array.isArray(bb)?bb.find(row=>row.key==='action_index'):null;
     const actionIndex=actionRow&&(actionRow.valueStr==null||actionRow.valueStr==='')?actionRow.value:null;
     if (spec.powerArmor && (!Number.isSafeInteger(actionIndex)||actionIndex<0)) throw Error('Unsupported Power Armor action index');
-    if ((spec.scheduled ? typeof p.hidden !== 'boolean' || !p.alias || all.filter(e => e.alias === p.alias).length !== 1 : p.hidden !== false)
+    const switched = spec.activatable && p.scheduledActivation === true && p.hidden === true;
+    if ((spec.scheduled || switched ? typeof p.hidden !== 'boolean' || !p.alias || all.filter(e => e.alias === p.alias).length !== 1 : p.hidden !== false)
       || !(spec.skillIndices ?? [0]).includes(p.skillIndex) || !(spec.skillLevels ?? [1]).includes(p.mainSkillLvl) || ![0, 'PHASE_0'].includes(p.inst.phase)
       || (instanced ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > (spec.maxLevel ?? 90) : p.inst.level !== 1)
       || (spec.mimic || spec.powerArmor ? !branchId || !level.branches?.[branchId] : !spec.mire && p.overrideSkillBlackboard != null) || p.overrideTalents != null
@@ -82,7 +92,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       || p.uniEquipIds?.length || p.masterInfos?.length)
       throw Error(`Unimplemented device instance override: ${d.key}`);
     const actions = (level.waves ?? []).flatMap(w => (w.fragments ?? []).flatMap(f => f.actions ?? []));
-    if (!spec.scheduled && actions.some(a => p.alias && a.key === p.alias || a.key === d.key)) throw Error(`Scheduled device activation requires a controller: ${d.key}`);
+    if (!spec.scheduled && !switched && actions.some(a => p.alias && a.key === p.alias || a.key === d.key)) throw Error(`Scheduled device activation requires a controller: ${d.key}`);
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
       ...(spec.mimic || spec.powerArmor ? { branchId } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
@@ -112,6 +122,7 @@ export async function prepareStageDeviceInstances({ root, rules, compiledRules, 
     const path = 'data/arkpedia-device-native-source.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
   }
+  if (devices.some(d => stageDeviceSpec(d)?.artillery) && !sources.some(x => x.path === 'data/arkpedia-device-source.json')) throw Error('Missing artillery skill source');
   if (devices.some(d => stageDeviceSpec(d)?.gramophone)) {
     const path = 'data/arkpedia-gramophone-animations.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });

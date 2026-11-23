@@ -29,13 +29,17 @@ test('an altar pulses both sides on its own SP clock', () => {
   assert.ok(e.hp <= before - 500 + 1e-6);
 });
 
-test('the Londinium artillery hits both sides in its reviewed shape', () => {
+test('the Londinium artillery hits both sides in its reviewed shape', async () => {
   const tiles = artilleryTiles(4, 4);
   assert.equal(tiles.length, 21);
   assert.ok(tiles.some(([r, c]) => r === 4 && c === 4));
   assert.ok(tiles.some(([r, c]) => r === 2 && c === 4));
   assert.ok(!tiles.some(([r, c]) => r === 2 && c === 2));
-  const stage = JSON.parse(readFileSync(new URL('../data/arkpedia-stage-10-14.json', import.meta.url)));
+  // The compiled library stage: the artillery carries its original instance (the frozen standalone file does not).
+  const { createStageLibraryLoader } = await import('../shared/arkpedia/stage-library.js');
+  const manifest = JSON.parse(readFileSync(new URL('../data/arkpedia-library.json', import.meta.url)));
+  const loader = createStageLibraryLoader(async url => new Response(readFileSync(new URL(`..${url}`, import.meta.url))));
+  const stage = await loader.load(manifest.stages.find(s => s.id === '10-14'));
   const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
   const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 5).map(defaultBuild) });
   battle.setViewport('fullscreen-workspace');
