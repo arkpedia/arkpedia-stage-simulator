@@ -23,7 +23,7 @@ import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
 const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
@@ -110,6 +110,7 @@ import { RUSTHAMMER_FEATURES } from './enemy-rusthammer-features.js';
 import { GRAVESTONE_FEATURES } from './enemy-gravestone-features.js';
 import { FAUST_FEATURES } from './enemy-faust-features.js';
 import { REUNION_MEPHISTO_FEATURES } from './enemy-reunion-mephisto-features.js';
+import { WINTERS_SCAR_FEATURES, isWintersScar, wintersScarNative } from './enemy-wintersscar-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
@@ -541,6 +542,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...GRAVESTONE_FEATURES,
   ...FAUST_FEATURES,
   ...REUNION_MEPHISTO_FEATURES,
+  ...WINTERS_SCAR_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),

@@ -4,6 +4,7 @@
 // +50% ATK, after which her sleep immunity is gone. Every component reachable from the retained abilities, the templates
 // and her two projectiles are pinned below with local references reduced to null/local.
 import clocks from "../../data/arkpedia-frostnova-animations.json" with{type:"json"};
+import {isWintersScar,WINTERS_SCAR_SHARED} from "./enemy-wintersscar-features.js";
 import {sameOutcomeValue as same} from "./enemy-outcome-contracts.js";
 export const isFrostNova=r=>r?.prefabKey==="enemy_1505_frstar";
 export const FROSTNOVA_ABILITIES=[{"text":"Frequently attacks allied units within range with Ice Nova, dealing heavy Arts damage and reducing the ASPD of affected units for a few seconds","format":"NORMAL"},{"text":"Can Freeze the ground with Arts, rendering them unable to be deployed upon","format":"NORMAL"},{"text":"Revives after dying for the first time, gaining increased ATK","format":"NORMAL"}];
@@ -56,7 +57,11 @@ const feature={matchesRecord:isFrostNova,covers:frostNovaNative};
 const lines=new Set(FROSTNOVA_ABILITIES.map(a=>a.text));
 // talent:reborn is a shared key that defers to this contract (form bosses).
 export const FROSTNOVA_FEATURES={
- "skill:IceShield":{...feature,explains:text=>lines.has(text),nativeClaim:()=>({wrappers:2,active:1}),
-  note:"FrostNova: Arts projectile, Ice Nova, Ice Shield sealing tiles, a +50% ATK revive",ability:{kind:"frostNova",params:frostNovaParams}},
+ // Winter's Scar (enemy_1510_frstar2) shares skill:IceShield: it dispatches to her contract (enemy-wintersscar-features.js),
+ // whose talent:attackfreeze carries her runtime and claims.
+ "skill:IceShield":{matchesRecord:r=>feature.matchesRecord(r)||isWintersScar(r),covers:(r,n)=>isWintersScar(r)?WINTERS_SCAR_SHARED.covers(r,n):feature.covers(r,n),
+  explains:(text,r)=>!isWintersScar(r)&&lines.has(text),nativeClaim:p=>p.rootName.startsWith("enemy_1510_frstar2")?{}:{wrappers:2,active:1},
+  note:"FrostNova: Arts projectile, Ice Nova, Ice Shield sealing tiles, a +50% ATK revive; Winter's Scar: run by talent:attackfreeze",
+  ability:r=>isWintersScar(r)?null:{kind:"frostNova",params:frostNovaParams}},
  "skill:ArcticBlast":{...feature,note:"Ice Nova (skill:IceShield)"},
 };

@@ -80,7 +80,8 @@ export function stageAdapter(source) {
   const tileChars = g.tileGrid.map(row => row.map(t => chars[t]));
   for (const [i, device] of devices.entries()) {
     const tile = stageDeviceSpec(device)?.tile;
-    if (!tile) continue;
+    // A branch-activated device changes its tile only when it appears (activateStagePredefined).
+    if (!tile || device.branchActivated && device.hidden) continue;
     if (!Number.isInteger(device.row) || !Number.isInteger(device.col) || !tileChars[device.row]?.[device.col])
       throw Error('Invalid device position');
     const old = tileChars[device.row][device.col], code = String.fromCharCode(0xe000 + i);
@@ -289,7 +290,7 @@ export class StandardBattle extends Battle {
     this.behaviors = behaviors;
     this.mvpStageDevices = (data.stage.devices ?? [])
       .filter(d => d.kind === 'device' && stageDeviceSpec(d))
-      .map(d => ({ ...d, sp: 0, acc: 0 }));
+      .map(d => ({ ...d, sp: 0, acc: 0, active: !(d.branchActivated && d.hidden) }));
     const pollution = [];
     data.stage.geometry.tileGrid.forEach((row, r) => row.forEach((type, c) => {
       if (String(data.stage.geometry.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
@@ -369,6 +370,15 @@ export class StandardBattle extends Battle {
   activateStagePredefined(key) {
     if (this.stageTwigs?.activate(key)) return;
     if (this.stageTurrets?.activate(key)) return;
+    const crystal = this.mvpStageDevices?.find(d => d.alias === key && d.branchActivated && stageDeviceSpec(d)?.statusPulse);
+    if (crystal) {
+      if (crystal.active) return;
+      crystal.active = true; crystal.sp = 0;
+      const tile = stageDeviceSpec(crystal).tile;
+      if (tile) this.grid.setTile(crystal.row, crystal.col, { ...this.grid.tile(crystal.row, crystal.col), ...tile });
+      this.fx?.('explode', { x: crystal.col, y: crystal.row, r: 1, kind: 'cold' });
+      return;
+    }
     if (this.stageRewardDevices?.activate(key)) return;
     const entry = this.stagePredefined.get(key);
     if (!entry) throw Error(`Unknown predefined operator: ${key}`);
@@ -824,6 +834,7 @@ export class StandardBattle extends Battle {
   }
   _tickMvpStageDevices(dt) {
     for (const d of this.mvpStageDevices) {
+      if (d.active === false) continue; // a hidden branch-activated device waits for its alias
       const def = stageDeviceSpec(d);
       if (def.statusPulse) {
         const spec = def.statusPulse;
