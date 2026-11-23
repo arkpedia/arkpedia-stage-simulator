@@ -166,6 +166,7 @@ export async function buildEnemySupport() {
       abandonedAnimations: { path: 'data/arkpedia-abandoned-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-abandoned-animations.json', root))) },
       abandonedFeatures: { path: 'shared/arkpedia/enemy-abandoned-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-abandoned-features.js', root))) },
       vcblvaFeatures: { path: 'shared/arkpedia/enemy-vcblva-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-vcblva-features.js', root))) },
+      leafcarpetFeatures: { path: 'shared/arkpedia/enemy-leafcarpet-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-leafcarpet-features.js', root))) },
       heraldAnimations: { path: 'data/arkpedia-herald-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-herald-animations.json', root))) },
       heraldFeatures: { path: 'shared/arkpedia/enemy-herald-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-herald-features.js', root))) },
       icefieldArtsFeatures: { path: 'shared/arkpedia/enemy-icefield-arts-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-icefield-arts-features.js', root))) },

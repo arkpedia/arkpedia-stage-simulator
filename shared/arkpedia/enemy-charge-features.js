@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { isLeafcarpet, LEAFCARPET_RUSH } from './enemy-leafcarpet-features.js';
 const node = (action, name) => action?.$type === `Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
 const event = (nat, key, name) => {
   const events = nat.$template?.(key)?.eventToActions;
@@ -43,13 +44,15 @@ function lancer(r, nat) {
     && hit[3]._buffKey === 'dlancer_t[trigger]';
 }
 export const CHARGE_ENEMY_FEATURES = Object.freeze({
-  'talent:rush': { covers: lancer,
+  // Leafcarpet shares talent:rush: it dispatches to its contract (enemy-leafcarpet-features.js).
+  'talent:rush': { covers: (r, n) => isLeafcarpet(r) ? LEAFCARPET_RUSH.covers(r, n) : lancer(r, n),
     stageOverrides: { 'rush.dlancer_t[trigger].trig_cnt': value => Number.isInteger(value) && value > 0 },
     stageInjectedParameters: { 'rush.dlancer_t_predelay.predelay': { type: 'number', validate: value => Number.isFinite(value) && value >= 0 } },
-    ability: { kind: 'lancerCharge', params: r => ({ increase: r.talents.bb['rush.dlancer_t[trigger].move_speed'],
+    ability: r => isLeafcarpet(r) ? LEAFCARPET_RUSH.ability : { kind: 'lancerCharge', params: r => ({ increase: r.talents.bb['rush.dlancer_t[trigger].move_speed'],
       interval: r.talents.bb['rush.dlancer_t[trigger].interval'], limit: r.talents.bb['rush.dlancer_t[trigger].trig_cnt'],
       damagePerSpeed: r.talents.bb['firstattack.atk_scale'], predelay: r.talents.bb['rush.dlancer_t_predelay.predelay'] ?? 0 }) },
-    explains: /^Gradually accelerates when moving, and deals additional damage on the first attack after being blocked based upon Movement Speed\.$/,
+    explains: (text, r) => isLeafcarpet(r) ? LEAFCARPET_RUSH.explains(text)
+      : /^Gradually accelerates when moving, and deals additional damage on the first attack after being blocked based upon Movement Speed\.$/.test(text),
     note: 'Unblocked acceleration with source control resets; one separate current-speed damage packet after contact.',
   },
   'talent:firstattack': { covers: lancer,
