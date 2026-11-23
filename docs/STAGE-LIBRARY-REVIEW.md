@@ -158,6 +158,8 @@ Hidden supply card (2026-11-23, main story): TR-8 published (1,078 available, no
 
 Black Snake (2026-11-23, main story): H8-4 and JT8-3 published (1,080 available, none withdrawn, no other bundle changed) with the 'Deathless Black Snake' (both levels) and the Energy Aggregate device. `docs/ENEMY-BLACK-SNAKE-REVIEW.md`. The smoke check passed all 1,080 graphs.
 
+JT8-3 Challenge (2026-11-24): published through its Energy Aggregate damage rune (1,081 available, no published bundle changed). The smoke check passed all 1,081 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

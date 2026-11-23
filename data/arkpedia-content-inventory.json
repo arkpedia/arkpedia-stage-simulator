@@ -711,11 +711,11 @@
     "stages": {
       "total": 3892,
       "public": 597,
-      "loadable": 1080,
-      "capabilityBlocked": 2812,
+      "loadable": 1081,
+      "capabilityBlocked": 2811,
       "testOnly": 341,
-      "ready": 257,
-      "blocked": 2697,
+      "ready": 258,
+      "blocked": 2696,
       "nonCombat": 316,
       "catalogue": 938,
       "embedded": 1
@@ -725,10 +725,10 @@
         "total": 564,
         "public": 350,
         "testOnly": 41,
-        "ready": 44,
-        "blocked": 129,
-        "loadable": 369,
-        "capabilityBlocked": 195
+        "ready": 45,
+        "blocked": 128,
+        "loadable": 370,
+        "capabilityBlocked": 194
       },
       "sub": {
         "total": 86,
@@ -171264,14 +171264,8 @@
       "name": "Arise, Treading Through Flames",
       "mode": "main",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "challenge_mode",
-          "message": "Unsupported rune targeting: char_skill_blackb_add"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_1108_uterer",
@@ -186427,7 +186421,7 @@
         {
           "kind": "stage-rules",
           "id": "level",
-          "message": "Unsupported rune targeting: char_skill_blackb_add"
+          "message": "Unsupported device skill-parameter rule"
         }
       ],
       "dependencies": {
@@ -244572,7 +244566,7 @@
         {
           "kind": "stage-rules",
           "id": "level",
-          "message": "Unsupported rune targeting: char_skill_blackb_add"
+          "message": "Unsupported device skill-parameter rule"
         },
         {
           "kind": "device",
@@ -326558,19 +326552,6 @@
       "id": "Unsupported scheduled predefined target: trap_056_sfsuifire#1"
     },
     {
-      "kind": "stage-rules",
-      "reason": "Unsupported rune targeting: char_skill_blackb_add",
-      "stages": [
-        "jt8-3_challenge_mode",
-        "level_crisis_v2_03-01",
-        "ra-no_level_obt_sandbox_sandbox_1_level_sandbox1_tr03"
-      ],
-      "soleReportedBlockerStages": [
-        "jt8-3_challenge_mode"
-      ],
-      "id": "Unsupported rune targeting: char_skill_blackb_add"
-    },
-    {
       "kind": "enemy",
       "id": "enemy_1530_white",
       "stages": [
@@ -328817,6 +328798,16 @@
         "level_act2multi_raft_tr_end-l"
       ],
       "soleReportedBlockerStages": []
+    },
+    {
+      "kind": "stage-rules",
+      "reason": "Unsupported device skill-parameter rule",
+      "stages": [
+        "level_crisis_v2_03-01",
+        "ra-no_level_obt_sandbox_sandbox_1_level_sandbox1_tr03"
+      ],
+      "soleReportedBlockerStages": [],
+      "id": "Unsupported device skill-parameter rule"
     },
     {
       "kind": "enemy-parameters",
