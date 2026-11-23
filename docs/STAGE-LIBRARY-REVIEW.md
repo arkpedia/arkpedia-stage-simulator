@@ -114,6 +114,8 @@ The Cleanup Squad batch (2026-11-23: the Armorless Union Cleanup Squads) publish
 
 The Burn slug batch (2026-11-23: Blazing and Pyric Originium Slugs) published VEC-A "Passionate Threat" (1,033 available, none withdrawn, no other bundle changed). The smoke check passed all 1,033 graphs, and the browser review passed.
 
+The Nethersea batch (2026-11-23: Nethersea Spewers and Predators) published SN-1 "Center Plaza" and SN-2 "Plaza South" (1,035 available, none withdrawn, no other bundle changed). The smoke check passed all 1,035 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
