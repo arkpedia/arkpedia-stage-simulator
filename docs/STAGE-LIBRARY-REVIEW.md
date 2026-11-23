@@ -138,6 +138,8 @@ Main-story pass (2026-11-23): 4-7 Challenge and 6-9 Challenge published (1,050 a
 
 The Faust batch (2026-11-23, main story) published 6-7 "Broken Strings" and H5-4 (1,052 available, none withdrawn). The Rusthammer stage's bundle changed only by the shared kit's new `criticalType` parameter. Hidden Turrets activated by Faust's `faust_ballis` branch are new stage support. The smoke check passed all 1,052 graphs; the browser review ran 6-7 with no errors.
 
+The Mephisto batch (2026-11-23, main story) published 5-10 "The Dark Before Dawn" and 5-10 Challenge (1,054 available, none withdrawn, no other bundle changed). The smoke check passed all 1,054 graphs; the browser review ran 5-10 with no errors.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
