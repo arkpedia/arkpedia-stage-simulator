@@ -136,6 +136,8 @@ The Gravestone batch (2026-11-23: `enemy_2008_flking`) published the ISW-DF stag
 
 Main-story pass (2026-11-23): 4-7 Challenge and 6-9 Challenge published (1,050 available, none withdrawn, no other bundle changed). Their `ebuff_talent_blackb_mul` runes (`boom.atk_scale` ×1.8 on Acid Originium Slugs, `atkup.atk_scale` ×1.667) scale talents the death-blast and atkup runtimes read from the record; the two features now declare those multipliers. The smoke check passed all 1,050 graphs.
 
+The Faust batch (2026-11-23, main story) published 6-7 "Broken Strings" and H5-4 (1,052 available, none withdrawn). The Rusthammer stage's bundle changed only by the shared kit's new `criticalType` parameter. Hidden Turrets activated by Faust's `faust_ballis` branch are new stage support. The smoke check passed all 1,052 graphs; the browser review ran 6-7 with no errors.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
