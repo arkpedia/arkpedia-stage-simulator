@@ -118,6 +118,8 @@ The Nethersea batch (2026-11-23: Nethersea Spewers and Predators) published SN-1
 
 The Yumen batch (2026-11-23: 'Wallbreaker' and 'Sandwalker') published TG-8 "Prime Alley" and its Challenge (1,037 available, none withdrawn, no other bundle changed). The smoke check passed all 1,037 graphs, and the browser review passed.
 
+The Holy escort batch (2026-11-23: Vesperwings and Wasteland Robbers) published HE-EX-1 "Come Ye Faithful" and its Challenge (1,039 available, none withdrawn, no other bundle changed). The smoke check passed all 1,039 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
