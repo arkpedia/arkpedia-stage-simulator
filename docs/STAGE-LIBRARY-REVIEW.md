@@ -128,6 +128,8 @@ The fire elemental batch (2026-11-23: the Kazdel fire elemental `enemy_8017_vcbl
 
 The Leafcarpet batch (2026-11-23: `enemy_8013_mcnrsh`) published VEC-05 "Deathly Pause" (1,044 available, none withdrawn, no other bundle changed). The smoke check passed all 1,044 graphs, and the browser review passed: original art, and the rush carries her across the map.
 
+The Uproar batch (2026-11-23: `enemy_8015_mcnrhd`) published VEC-10 "Welcome Contingent" and VEC-SP16 (1,046 available, none withdrawn, no other bundle changed). The smoke check passed all 1,046 graphs, and the browser review passed (original art, no errors); the arrow rain itself is covered by the tests.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
