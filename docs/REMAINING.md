@@ -8,9 +8,9 @@ all blocked stage IDs are in `data/arkpedia-content-inventory.json`.
 | Operator forms | 431 | 431 |
 | Source skills registered | 949 | 949 |
 | Enemies supported | 857 | 2163 |
-| Capability-checked combat stages | 1070 | 3892 |
+| Capability-checked combat stages | 1077 | 3892 |
 
-The generated library can load 1070 stages; 2822
+The generated library can load 1077 stages; 2815
 have missing capabilities. The legacy catalogue contains 938
 entries (597 public, 341 developer-only, 1 embedded).
 316 story/non-combat source entries are excluded from the combat target.
@@ -31,13 +31,13 @@ source checks or determine admission to the generated library.
 
 | Mode | Loadable | Missing capabilities | Total |
 |---|---:|---:|---:|
-| main | 363 | 201 | 564 |
+| main | 367 | 197 | 564 |
 | sub | 59 | 27 | 86 |
 | activity | 587 | 1538 | 2125 |
 | event | 0 | 171 | 171 |
 | daily | 35 | 0 | 35 |
 | campaign | 11 | 24 | 35 |
-| integrated_strategies | 15 | 510 | 525 |
+| integrated_strategies | 18 | 507 | 525 |
 | contingency_contract | 0 | 16 | 16 |
 | climb_tower | 0 | 227 | 227 |
 | reclamation | 0 | 106 | 106 |
@@ -50,12 +50,12 @@ not imply that every listed stage becomes playable.
 
 | Kind | Dependency | Affected stages |
 |---|---|---:|
-| branch-program | Missing or unsupported stage branch binding | 897 |
+| branch-program | Missing or unsupported stage branch binding | 896 |
 | mode | climb_tower | 227 |
 | device | Artifact Center | 179 |
 | stage-rules | Invalid or incompatible variant rule receipt | 154 |
 | device | Burdenbeast Traveler | 150 |
-| enemy | enemy_2119_dyshhj_2 | 148 |
+| enemy | enemy_2119_dyshhj_2 | 115 |
 | enemy-alias | Stage-local enemy has unimplemented definition fields | 114 |
 | mode | reclamation | 106 |
 | device | Statuegeist | 94 |
