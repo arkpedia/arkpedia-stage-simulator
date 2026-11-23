@@ -106,6 +106,8 @@ The City Defender batch (2026-11-23: Trimounts City Defender and Captain) publis
 
 The Drifter batch (2026-11-23: Toxocellular and Allotropic Drifters) published BP-1 "First Contact" (1,026 available, none withdrawn, no other bundle changed). The Toxocellular Drifter is drawn with the labelled fallback marker until its straight-alpha art is reviewed. The smoke check passed all 1,026 graphs, and the browser review passed.
 
+The Crossroads batch (2026-11-23: 'Crossroads' Production Model and Prototype) published CW-6 "Gathering of Heroes" (1,027 available, none withdrawn, no other bundle changed). The smoke check passed all 1,027 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
