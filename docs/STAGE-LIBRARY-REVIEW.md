@@ -116,6 +116,8 @@ The Burn slug batch (2026-11-23: Blazing and Pyric Originium Slugs) published VE
 
 The Nethersea batch (2026-11-23: Nethersea Spewers and Predators) published SN-1 "Center Plaza" and SN-2 "Plaza South" (1,035 available, none withdrawn, no other bundle changed). The smoke check passed all 1,035 graphs, and the browser review passed.
 
+The Yumen batch (2026-11-23: 'Wallbreaker' and 'Sandwalker') published TG-8 "Prime Alley" and its Challenge (1,037 available, none withdrawn, no other bundle changed). The smoke check passed all 1,037 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
