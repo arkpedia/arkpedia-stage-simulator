@@ -149,7 +149,7 @@ export async function planStage(context, id, { compile = true, waves = false } =
   let conditional = [], working, branches;
   const enemyIds = new Set(), tokenIds = new Set();
   if (geometry) {
-    try { localSources.push(...await prepareStageSupplyCards({ root: context.root, rules, geometry })); }
+    try { localSources.push(...await prepareStageSupplyCards({ root: context.root, rules, geometry, compiledRules })); }
     catch (error) { blockers.push({ kind: 'supply-card', id, message: error.message }); }
     try { localSources.push(...await prepareStageDeploymentTiles({ root: context.root, geometry, rules, compiledRules })); }
     catch (error) { blockers.push({ kind: 'deployment-tiles', id, message: error.message }); }

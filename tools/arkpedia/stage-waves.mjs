@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { readOriginalLevel } from './original-level.mjs';
 import { compilePredefinedOperators } from './stage-predefined-operators.mjs';
-import { stageDeviceSpec } from '../../shared/arkpedia/stage-devices.js';
+import { stageDeviceSpec, STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { emptyActivationBranches, turretActivationBranches } from './stage-branch-noops.mjs';
 import { originalDeviceDirection } from './stage-device-instances.mjs';
 import { readFile } from 'node:fs/promises';
@@ -191,7 +191,9 @@ export async function prepareStageWaves({ root, rules, compiledRules, geometry, 
     const path = 'data/arkpedia-favor-source.json';
     sources.push({ path, sha256: createHash('sha256').update(await readFile(join(root, path))).digest('hex') });
   }
-  const deviceAliases = [...devices.filter(d => stageDeviceSpec(d)?.scheduled || d.scheduledActivation && stageDeviceSpec(d)?.activatable).map(d => d.alias), ...turrets.devices.map(d => d.alias)];
+  // A hidden supply card is revealed by its own key (validated in stage-supply-cards.mjs).
+  const hiddenCards = (resolved.suppliedUnits?.deployable_tokens ?? []).filter(t => t.hidden === true && STAGE_TOKEN_UNITS[t.unit_id]?.supplyCard).map(t => t.unit_id);
+  const deviceAliases = [...devices.filter(d => stageDeviceSpec(d)?.scheduled || d.scheduledActivation && stageDeviceSpec(d)?.activatable).map(d => d.alias), ...turrets.devices.map(d => d.alias), ...hiddenCards];
   const waveProgram = compileStageWaves(level, resolved, compiledRules, predefined, deviceAliases);
   if (Object.keys(compiledBranches).length) waveProgram.branches = compiledBranches;
   return { waveProgram, geometry: resolved, sources, hiddenTurrets: turrets };

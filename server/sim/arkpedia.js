@@ -384,6 +384,9 @@ export class StandardBattle extends Battle {
       return;
     }
     if (this.stageRewardDevices?.activate(key)) return;
+    // A hidden supply card: its stock arrives once, when the wave action reveals it (TR-8's crates).
+    const supply = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === key && t.hiddenCount > 0);
+    if (supply) { if (!this.revealedStageCards?.has(key)) { (this.revealedStageCards ??= new Set()).add(key); this.grantStageToken(key, supply.hiddenCount); } return; }
     // A scheduled artillery: it starts charging from its starting SP when switched on.
     const gun = this.mvpStageDevices?.find(d => d.alias === key && d.scheduledActivation && d.artillery);
     if (gun) { gun.active = true; return; }

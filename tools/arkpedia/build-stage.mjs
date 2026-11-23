@@ -142,7 +142,8 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
       : spec.behavior === 'withered-altar' ? witheredAltarDefinition(t) : spec.behavior === 'interference-mine' ? mineDefinition(t) : spec.behavior === 'demolition' ? demolitionDefinition(t) : spec.behavior === 'roadblock' ? roadblockDefinition(t)
       : spec.behavior === 'mushroom-worker' ? workerDefinition(t)
       : spec.behavior === 'range-supply' ? rangeSupplyDefinition(t.unit_id, t) : {};
-    return { unitId: t.unit_id, name: token.name, count: t.count, ...behavior,
+    // A hidden supply card (validated as revealed by one wave action) starts empty and holds its stock until then.
+    return { unitId: t.unit_id, name: token.name, count: t.hidden === true ? 0 : t.count, ...(t.hidden === true ? { hiddenCount: t.count } : {}), ...behavior,
       cost: Math.floor((behavior.cost ?? stats.cost) * stageCardMultiplier(compiledRules, { profession: 'TRAP', position: token.position }, 'cost')),
       ...stageDeviceAttributes(compiledRules, t.unit_id, { hp: behavior.hp ?? stats.maxHp, def: stats.def ?? 0, block: stats.block,
         ...(behavior.atk != null ? { atk: behavior.atk } : {}) }, token.position),
@@ -335,7 +336,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const rules = args.rules ? await read(args.rules) : (await loadStageRuleReceipt(root, source.slug)).receipt;
   const { overrides: enemyBlackboards, attributes: enemyAttributes } = await prepareStageEnemyBlackboards({ root, rules });
   const { environment } = await prepareStageEnvironments({ root, rules });
-  await prepareStageSupplyCards({ root, rules, geometry });
+  await prepareStageSupplyCards({ root, rules, geometry, compiledRules: compileStageRules(source, rules) });
   const deviceInstances = {};
   ({ devices } = await prepareStageDeviceInstances({ root, rules, compiledRules: compileStageRules(source, rules), devices, instances: deviceInstances }));
   const { reeds } = await prepareStageReeds({ root, rules, compiledRules: compileStageRules(source, rules), geometry });
