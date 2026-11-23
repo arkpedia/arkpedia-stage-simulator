@@ -9,6 +9,7 @@
 // references reduced to null/local; the variants differ only in their skeleton.
 import clocks from "../../data/arkpedia-drifter-animations.json" with{type:"json"};
 import {sameOutcomeValue as same} from "./enemy-outcome-contracts.js";
+import {isHoarder,HOARDER_TALENT} from "./enemy-hoarder-features.js";
 export const isDrifter=r=>r?.prefabKey==="enemy_1435_dsflys"||r?.prefabKey==="enemy_1435_dsflys_2";
 const norm=v=>Array.isArray(v)?v.map(norm):v&&typeof v==="object"?("m_PathID"in v&&Object.keys(v).length===2?{ref:v.m_PathID==="0"?null:v.m_FileID===0?"local":"ext:"+v.m_PathID}
  :Object.fromEntries(Object.entries(v).filter(([k])=>!["m_GameObject","m_Name","m_Father","m_Children"].includes(k)).map(([k,x])=>[k,norm(x)]))):v;
@@ -45,7 +46,13 @@ export function drifterNative(r,n){
 export const drifterParams=r=>({type:"phys",speed:10,lifetime:10,neural:r.talents.bb["0.attack@ep_damage_ratio"],
  animation:{clip:"Attack",duration:CLOCK.durations.Attack,releases:CLOCK.events.Attack}});
 export const DRIFTER_FEATURES={
- "talent:0":{matchesRecord:isDrifter,covers:drifterNative,ability:{kind:"drifter",params:drifterParams},nativeClaim:()=>({active:2}),
-  explains:text=>DRIFTER_ABILITIES.slice(1).some(x=>x.text===text),
-  stageMultipliers:{"0.attack@ep_damage_ratio":v=>Number.isFinite(v)&&v>=0},note:"high-ground priority, Nervous Impairment shots, unbalance immunity"},
+ // The Hoarders share the talent key "0": it dispatches to their contract (enemy-hoarder-features.js).
+ "talent:0":{matchesRecord:r=>isDrifter(r)||isHoarder(r),
+  covers:(r,n)=>isHoarder(r)?HOARDER_TALENT.covers(r,n):drifterNative(r,n),
+  ability:r=>isHoarder(r)?HOARDER_TALENT.ability:{kind:"drifter",params:drifterParams},
+  nativeClaim:(p,n)=>p.rootName.startsWith("enemy_1436_dsdivi")?HOARDER_TALENT.nativeClaim():{active:2},
+  explains:(text,r)=>isHoarder(r)?HOARDER_TALENT.explains(text):DRIFTER_ABILITIES.slice(1).some(x=>x.text===text),
+  dependsOn:r=>isHoarder(r)?HOARDER_TALENT.dependsOn(r):[],
+  stageMultipliers:{"0.attack@ep_damage_ratio":v=>Number.isFinite(v)&&v>=0,...HOARDER_TALENT.stageMultipliers},
+  note:"Drifter: high-ground priority, Nervous Impairment shots, unbalance immunity; Hoarder: one split below 50% HP"},
 };
