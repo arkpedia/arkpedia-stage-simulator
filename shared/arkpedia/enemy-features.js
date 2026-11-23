@@ -98,6 +98,7 @@ import { FIELDMUS_FEATURES } from './enemy-fieldmus-features.js';
 import { DRIFTER_FEATURES } from './enemy-drifter-features.js';
 import { CROSSROADS_FEATURES } from './enemy-crossroads-features.js';
 import { HOARDER_FEATURES } from './enemy-hoarder-features.js';
+import { isBurnSlug, burnSlugNative, BURN_SLUG_ABILITY, BURN_SLUG_EXPLAINS } from './enemy-burn-slug-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
 import { SUPPLY_ENEMY_FEATURES } from './enemy-supply-features.js';
@@ -1435,7 +1436,12 @@ export const ENEMY_FEATURES = Object.freeze({
     stageMultipliers: {'EpDamage.attack@ep_damage_ratio': value=>Number.isFinite(value)&&value>0},
     ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
     note: 'primary and four-neighbour Corrosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/ },
-  'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
+  // The Burn slugs (enemy_1305_mhslim[_2]) dispatch to their own contract (enemy-burn-slug-features.js).
+  'talent:EpDamage': { covers: (r, n) => isBurnSlug(r) ? burnSlugNative(r, n) : sig(r, 'EpDamage', ['attack@ep_damage_ratio']),
+    ability: r => isBurnSlug(r) ? BURN_SLUG_ABILITY : null,
+    explains: (text, r) => isBurnSlug(r) && BURN_SLUG_EXPLAINS(text),
+    stageMultipliers: { 'EpDamage.attack@ep_damage_ratio': value => Number.isFinite(value) && value >= 0 },
+    note: 'splash erosion is attached by the handbook-line feature; the Burn slugs own their shot' },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
 
