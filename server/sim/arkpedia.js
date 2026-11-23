@@ -478,6 +478,8 @@ export class StandardBattle extends Battle {
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
     if (this.noDeployTiles?.has(`${row},${col}`)) return "Tile is unavailable for deployment.";
+    // Zones that follow a living owner (the Kazdel fire elemental's enemy_vcblva_t_tile).
+    for (const [owner, tiles] of this.noDeployZones ?? []) if (owner.alive && tiles.has(`${row},${col}`)) return "Tile is unavailable for deployment.";
     if (!fromSkill && !canSpendDp(this, 'arkpedia', this.cost(id))) return "Not enough DP.";
     return null;
   }
