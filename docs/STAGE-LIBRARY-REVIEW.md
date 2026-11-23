@@ -112,6 +112,8 @@ The Hoarder batch (2026-11-23: Divicellular and Allotropic Hoarders) published B
 
 The Cleanup Squad batch (2026-11-23: the Armorless Union Cleanup Squads) published AW-S-1 "Sheathe" and VEC-SP03 "Covering Fire" (1,032 available, none withdrawn, no other bundle changed). The smoke check passed all 1,032 graphs, and the browser review passed.
 
+The Burn slug batch (2026-11-23: Blazing and Pyric Originium Slugs) published VEC-A "Passionate Threat" (1,033 available, none withdrawn, no other bundle changed). The smoke check passed all 1,033 graphs, and the browser review passed.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.
