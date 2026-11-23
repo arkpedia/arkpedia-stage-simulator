@@ -144,6 +144,8 @@ The Winter's Scar batch (2026-11-23, main story) published 6-16, 6-16 Challenge,
 
 H7-4 (2026-11-23, main story) published (1,060 available, none withdrawn, no other bundle changed): Patriot's level-1 skill overlay accepts the stage's 30 s revive, and a dangling crystal branch is a native no-op. The smoke check passed all 1,060 graphs.
 
+Chapter-11 adverse runes (2026-11-23, main story): 11-9, 11-14 and 11-18 adverse published (1,063 available, none withdrawn, no other bundle changed). 11-14 adds 30 s to every redeployment, and 11-9 and 11-18 exclude two professions from the squad while keeping preplaced units. The smoke check passed all 1,063 graphs.
+
 ## Remaining work
 
 This is a loading and composition architecture, not complete native fidelity.

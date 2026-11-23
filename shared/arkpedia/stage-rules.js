@@ -82,6 +82,16 @@ export function compileStageRules(source, receipt) {
         throw Error('Invalid stage environment controller identity');
       throw Error(`Unsupported stage environment controller: ${keys[0].valueStr}`);
     }
+    // 11-14 adverse: every operator's redeployment time +value s (no `char` target; other forms stay refused).
+    if (rune.key === 'char_respawntime_add' && rune.blackboard?.length === 1 && rune.blackboard[0].key === 'value') {
+      const professionMask = cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023);
+      const buildableMask = cardRuleMask(rune.buildableMask, BUILDABLE_BITS, 3);
+      const value = rune.blackboard[0].value;
+      if (professionMask !== 1023 || buildableMask !== 3 || !Number.isFinite(value) || value <= 0 || rune.blackboard[0].valueStr)
+        throw Error('Unsupported redeployment-time addition');
+      allyCards.push({ attribute: 'respawnTime', professionMask, buildableMask, add: value });
+      continue;
+    }
     if (['cbuff_char_cost', 'char_cost_mul', 'cbuff_respawn_time', 'char_respawn_time_mul', 'char_respawntime_mul'].includes(rune.key)) {
       const professionMask = cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023);
       const buildableMask = cardRuleMask(rune.buildableMask, BUILDABLE_BITS, 3);
@@ -110,7 +120,10 @@ export function compileStageRules(source, receipt) {
       deploymentExcludedProfessionMask |= mask;
       continue;
     }
-    if (rune.key === 'char_exclude' && rune.blackboard?.length === 0) {
+    // include_predefined 0 (11-9/11-18 adverse) keeps preplaced units, which the exclusion never touches: it only
+    // refuses squad cards (stage-roster.js).
+    if (rune.key === 'char_exclude' && (rune.blackboard?.length === 0 || rune.blackboard?.length === 1
+      && rune.blackboard[0].key === 'include_predefined' && rune.blackboard[0].value === 0 && !rune.blackboard[0].valueStr)) {
       const mask = cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023);
       if (!mask || !['ALL', 3].includes(rune.buildableMask)) throw Error('Unsupported profession exclusion targeting');
       battle.excluded_profession_mask = (battle.excluded_profession_mask ?? 0) | mask;

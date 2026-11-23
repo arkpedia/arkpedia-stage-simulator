@@ -16,6 +16,13 @@ export function stageCardDeploymentBlocked(rules, record) {
 export function stageCardMultiplier(rules, record, attribute) {
   const profession = PROFESSION_BITS[record.profession ?? record.raw?.profession];
   const position = BUILDABLE_BITS[record.position ?? record.raw?.position];
-  return (rules?.allyCards ?? []).reduce((scale, rule) => rule.attribute === attribute
+  return (rules?.allyCards ?? []).reduce((scale, rule) => rule.attribute === attribute && rule.add == null
     && (rule.professionMask & profession) !== 0 && (rule.buildableMask === 3 || (rule.buildableMask & position) !== 0) ? scale * rule.scale : scale, 1);
+}
+/** Additive card rules (char_respawntime_add): seconds added after the multipliers. */
+export function stageCardAddition(rules, record, attribute) {
+  const profession = PROFESSION_BITS[record.profession ?? record.raw?.profession];
+  const position = BUILDABLE_BITS[record.position ?? record.raw?.position];
+  return (rules?.allyCards ?? []).reduce((sum, rule) => rule.attribute === attribute && rule.add != null
+    && (rule.professionMask & profession) !== 0 && (rule.buildableMask === 3 || (rule.buildableMask & position) !== 0) ? sum + rule.add : sum, 0);
 }

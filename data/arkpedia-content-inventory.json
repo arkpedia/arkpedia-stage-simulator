@@ -707,11 +707,11 @@
     "stages": {
       "total": 3892,
       "public": 597,
-      "loadable": 1060,
-      "capabilityBlocked": 2832,
+      "loadable": 1063,
+      "capabilityBlocked": 2829,
       "testOnly": 341,
-      "ready": 246,
-      "blocked": 2708,
+      "ready": 249,
+      "blocked": 2705,
       "nonCombat": 316,
       "catalogue": 938,
       "embedded": 1
@@ -721,10 +721,10 @@
         "total": 564,
         "public": 350,
         "testOnly": 41,
-        "ready": 38,
-        "blocked": 135,
-        "loadable": 356,
-        "capabilityBlocked": 208
+        "ready": 41,
+        "blocked": 132,
+        "loadable": 359,
+        "capabilityBlocked": 205
       },
       "sub": {
         "total": 86,
@@ -8641,14 +8641,8 @@
       "name": "A Face-to-Face Meeting",
       "mode": "main",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "adverse_environment",
-          "message": "Unsupported stage rune: char_respawntime_add"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_1267_nhpbr_2",
@@ -8942,14 +8936,8 @@
       "name": "This is Not What I Wished",
       "mode": "main",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "adverse_environment",
-          "message": "Unsupported rune targeting: char_exclude"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_1229_darmy",
@@ -9761,14 +9749,8 @@
       "name": "A Life for a Life",
       "mode": "main",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "adverse_environment",
-          "message": "Unsupported rune targeting: char_exclude"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_1266_nhapos",
@@ -73454,7 +73436,7 @@
         {
           "kind": "stage-rules",
           "id": "challenge_mode",
-          "message": "Unsupported rune targeting: char_exclude"
+          "message": "Unsupported stage rune: global_enemy_taunt_level_pow"
         },
         {
           "kind": "device",
@@ -319669,6 +319651,27 @@
       "soleReportedBlockerStages": []
     },
     {
+      "kind": "stage-rules",
+      "reason": "Unsupported stage rune: global_enemy_taunt_level_pow",
+      "stages": [
+        "ep-6",
+        "ep-7",
+        "ep-8",
+        "ep-ex-4",
+        "ep-ex-4_challenge_mode",
+        "ep-ex-5",
+        "ep-ex-5_challenge_mode",
+        "ep-ex-6",
+        "ep-ex-6_challenge_mode",
+        "ep-ex-7",
+        "ep-ex-7_challenge_mode",
+        "ep-ex-8",
+        "ep-tr-1"
+      ],
+      "soleReportedBlockerStages": [],
+      "id": "Unsupported stage rune: global_enemy_taunt_level_pow"
+    },
+    {
       "kind": "enemy",
       "id": "enemy_10045_parrot_2",
       "stages": [
@@ -320338,26 +320341,6 @@
         "isw-no_level_obt_roguelike_ro5_level_rogue5_d-4"
       ],
       "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "stage-rules",
-      "reason": "Unsupported stage rune: global_enemy_taunt_level_pow",
-      "stages": [
-        "ep-6",
-        "ep-7",
-        "ep-8",
-        "ep-ex-4",
-        "ep-ex-4_challenge_mode",
-        "ep-ex-5",
-        "ep-ex-5_challenge_mode",
-        "ep-ex-6",
-        "ep-ex-7",
-        "ep-ex-7_challenge_mode",
-        "ep-ex-8",
-        "ep-tr-1"
-      ],
-      "soleReportedBlockerStages": [],
-      "id": "Unsupported stage rune: global_enemy_taunt_level_pow"
     },
     {
       "kind": "enemy",
@@ -327813,20 +327796,6 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "stage-rules",
-      "reason": "Unsupported rune targeting: char_exclude",
-      "stages": [
-        "11-18_adverse_environment",
-        "11-9_adverse_environment",
-        "ep-ex-6_challenge_mode"
-      ],
-      "soleReportedBlockerStages": [
-        "11-18_adverse_environment",
-        "11-9_adverse_environment"
-      ],
-      "id": "Unsupported rune targeting: char_exclude"
-    },
-    {
       "kind": "enemy",
       "id": "enemy_1366_dcolle_2",
       "stages": [
@@ -332378,17 +332347,6 @@
       "soleReportedBlockerStages": [
         "11-13_adverse_environment"
       ]
-    },
-    {
-      "kind": "stage-rules",
-      "reason": "Unsupported stage rune: char_respawntime_add",
-      "stages": [
-        "11-14_adverse_environment"
-      ],
-      "soleReportedBlockerStages": [
-        "11-14_adverse_environment"
-      ],
-      "id": "Unsupported stage rune: char_respawntime_add"
     },
     {
       "kind": "device",
