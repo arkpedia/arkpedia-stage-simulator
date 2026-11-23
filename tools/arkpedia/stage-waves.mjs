@@ -99,7 +99,8 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
           throw Error('Invalid original action count');
         const span = offset + (action.count - 1) * interval;
         exportedSpan = Math.max(exportedSpan, span);
-        if (action.hiddenGroup && rules?.hiddenGroups?.[action.hiddenGroup] === false) continue;
+        // A group no rune names is off, like one a rune enables only on another difficulty.
+        if (action.hiddenGroup && rules?.hiddenGroups?.[action.hiddenGroup] !== true) continue;
         const random = action.randomSpawnGroupKey;
         if (action.managedByScheduler !== true || action.useExtraRoute || action.forceBlockWaveInBranch
           || action.randomSpawnGroupPackKey

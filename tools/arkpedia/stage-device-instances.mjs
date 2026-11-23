@@ -29,8 +29,8 @@ export function selectStaticDeviceInstances(devices, level, rules = {}) {
     validateStaticDeviceInstances(devices, level);
     return { devices: [], level: { ...level, predefines: { ...level.predefines, tokenInsts: [] } } };
   }
-  // Actions in a hidden group the stage switches off never run (AW-1's `raid` artillery activation).
-  const off = a => a.hiddenGroup && rules?.hiddenGroups?.[a.hiddenGroup] === false;
+  // Actions in a hidden group the stage leaves off (or no rune names) never run (AW-1's `raid` artillery activation).
+  const off = a => a.hiddenGroup && rules?.hiddenGroups?.[a.hiddenGroup] !== true;
   level = { ...level, waves: (level.waves ?? []).map(w => ({ ...w, fragments: (w.fragments ?? []).map(f => ({ ...f, actions: (f.actions ?? []).filter(a => !off(a)) })) })) };
   const actions = level.waves.flatMap(w => w.fragments.flatMap(f => f.actions));
   const known = d => stageDeviceSpec({ ...d, hidden: false })?.staticLevelReview;

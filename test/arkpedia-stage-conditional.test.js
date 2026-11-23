@@ -6,13 +6,18 @@ import { mergePristineHiddenGroups } from '../shared/arkpedia/stage-conditional.
 const geometry = () => ({ hasConditionalSpawns: true, waves: [{ spawns: [] }] });
 const hidden = (extra = {}) => ({ enemy_id: 'e', count: 1, time: 0, wave: 0, source: 'wave', condition: { hidden_group: 'h' }, ...extra });
 
-test('hidden groups without reviewed activation stay blocked; inactive groups do not spawn', () => {
-  const g = geometry();
-  assert.equal(mergePristineHiddenGroups(g, [hidden()]), false);
-  assert.equal(g.hasConditionalSpawns, true);
-  assert.equal(mergePristineHiddenGroups(g, [hidden()], { h: false }), true);
-  assert.equal(g.waves[0].spawns.length, 0);
-  assert.equal(g.hiddenGroupsMerged, 0);
+test('a group no rune names stays off like an inactive one; only an enabled group spawns', () => {
+  for (const groups of [undefined, {}, { other: true }, { h: false }]) {
+    const g = geometry();
+    assert.equal(mergePristineHiddenGroups(g, [hidden()], groups), true);
+    assert.equal(g.waves[0].spawns.length, 0);
+    assert.equal(g.hiddenGroupsMerged, 0);
+    assert.equal(g.hasConditionalSpawns, false);
+  }
+  // A malformed rule value or group name still refuses the stage.
+  for (const [entry, groups] of [[hidden(), { h: 1 }], [hidden({ condition: { hidden_group: 7 } }), {}]]) {
+    const g = geometry(); assert.equal(mergePristineHiddenGroups(g, [entry], groups), false); assert.equal(g.hasConditionalSpawns, true);
+  }
 });
 
 test('pristine hidden groups are appended and clear the conditional flag', () => {

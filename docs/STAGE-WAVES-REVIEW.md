@@ -14,7 +14,12 @@ The retained level contains `preDelay`, `postDelay`,
 Named and numeric action enums follow the stage importer's retained decoding.
 The compiler verifies every spawn against the viewer export and resolves its
 original route geometry. Unknown action kinds, random choices, unmanaged actions,
-extra routes and unresolved hidden groups remain explicit blockers.
+extra routes and unresolved hidden groups remain explicit blockers. A hidden group
+is resolved by the level's `level_hidden_group_enable` runes: on when a rune for
+this difficulty enables it, off when the only runes are for another difficulty,
+and off when no rune of the level names it (since 2026-11-23: such a group can
+never be enabled; 10-5 `fstar`, 11-1/11-13 `h`). A malformed rule value or group
+name still refuses the stage.
 
 The source exporter's `runFragments` includes a wave's opening delay in spawn
 times, and `buildWaves` includes opening and closing delays in its duration.
