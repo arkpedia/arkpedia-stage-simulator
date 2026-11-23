@@ -15,6 +15,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-leafcarpet',load:()=>import('./arkpedia-enemy-leafcarpet.js'),exports:{leafcarpetRush:'leafcarpetRush'}},
   {key:'arkpedia-enemy-uproar',load:()=>import('./arkpedia-enemy-uproar.js'),exports:{uproarArrowRain:'uproarArrowRain'}},
   {key:'arkpedia-enemy-rusthammer',load:()=>import('./arkpedia-enemy-rusthammer.js'),exports:{rusthammerWarrior:'rusthammerWarrior'}},
+  {key:'arkpedia-enemy-gravestone',load:()=>import('./arkpedia-enemy-gravestone.js'),exports:{gravestone:'gravestone'}},
   {key:'arkpedia-enemy-holy-escort',load:()=>import('./arkpedia-enemy-holy-escort.js'),exports:{vesperwing:'vesperwing',wastelandRobber:'wastelandRobber'}},
   {key:'arkpedia-enemy-yumen',load:()=>import('./arkpedia-enemy-yumen.js'),exports:{wallbreaker:'wallbreaker',sandwalker:'sandwalker'}},
   {key:'arkpedia-enemy-nethersea',load:()=>import('./arkpedia-enemy-nethersea.js'),exports:{netherseaSpewer:'netherseaSpewer',netherseaPredator:'netherseaPredator'}},

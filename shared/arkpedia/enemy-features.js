@@ -107,6 +107,7 @@ import { VCBLVA_FEATURES } from './enemy-vcblva-features.js';
 import { LEAFCARPET_FEATURES } from './enemy-leafcarpet-features.js';
 import { UPROAR_FEATURES, isUproar, uproarNative } from './enemy-uproar-features.js';
 import { RUSTHAMMER_FEATURES } from './enemy-rusthammer-features.js';
+import { GRAVESTONE_FEATURES } from './enemy-gravestone-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
 import { KNIGHT_FEATURES } from './enemy-knight-features.js';
@@ -535,6 +536,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...LEAFCARPET_FEATURES,
   ...UPROAR_FEATURES,
   ...RUSTHAMMER_FEATURES,
+  ...GRAVESTONE_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
@@ -785,6 +787,8 @@ export const ENEMY_FEATURES = Object.freeze({
       : r.prefabKey === 'enemy_2005_axetro' ? axeRampAbility : { kind: 'atkup', params: r => sig(r, 'atkup', ['atk_scale'])
       ? { scale: r.talents.bb['atkup.atk_scale'] }
       : { ratio: r.talents.bb['atkup.hp_ratio'] ?? 0.5, atkPct: r.talents.bb['atkup.atk'] } },
+    // 6-9 Challenge: ebuff_talent_blackb_mul atkup.atk_scale x1.667; the atkup/buildingAttack params read it.
+    stageMultipliers: { 'atkup.atk_scale': v => Number.isFinite(v) && v > 0 },
     note: 'Reviewed damage stacks with combat-state reset, ATK ×atk_scale against Frozen, or +atk below the hp_ratio threshold',
     explains: text => text === AXE_DESCRIPTION || text === HUI_MING_FURY_DESCRIPTION || /^A berserker of the icefields whose attack power (greatly )?increases when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
@@ -1386,7 +1390,8 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: r => isHuiMingBlaster(r) ? null : isIcefieldArts(r) ? { kind: 'bothSidesDeathBlast', params: icefieldBlastParams } : r.prefabKey.startsWith('enemy_1089_ltlntc') ? GRAMOPHONE_ENEMY_FEATURES['talent:boom'].ability
       : cart(r) ? cartAbility : { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
     stageAdditions: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0 },
-    stageMultipliers: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0,
+    // 4-7 Challenge: ebuff_talent_blackb_mul boom.atk_scale x1.8 on Acid Originium Slugs; deathBlastParams reads it.
+    stageMultipliers: { 'boom.atk_scale': v => Number.isFinite(v) && v > 0, 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0,
       'boom.attack@s2mode_boom_atk_totrap': v => Number.isFinite(v) && v > 0, 'boom.attack@s2mode_ep_fire_damage': v => Number.isFinite(v) && v > 0 },
     note: 'Reviewed death blasts, or the source-gated Snack Cart block/attack-triggered blast',
     explains: (text, r) => deathBlastText(text) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].explains.test(text) || isIcefieldArts(r) && text === ICEFIELD_BLAST_DESCRIPTION
