@@ -75,8 +75,16 @@ export function applyStageEnemyBlackboard(record, override) {
   if (override.level !== record.level) throw Error(`Original enemy level differs from map export: ${record.key}`);
   const result = structuredClone(record);
   const features = recordFeatureIds(record).map(id => enemyFeature(id)).filter(Boolean);
+  // A sparse higher level that its contract reads over level zero (the Steam Knight's level 1 lists only reborn.def)
+  // takes a stage talent override against that overlay; the overlay itself adds no key the database lacks.
+  const talentBases = features.map(f => f.stageSparseTalents?.(record)).filter(Boolean);
+  if (talentBases.length > 1) throw Error(`Unsupported original enemy parameter: ${record.key}`);
+  if (talentBases.length === 1 && override.blackboard?.length) {
+    record = { ...record, talents: structuredClone(talentBases[0]) }; result.talents = structuredClone(talentBases[0]);
+  }
   applyLiteralParameters(record.key, record.talents, result.talents, override.blackboard,
-    features.map(f => f.stageOverrides).filter(Boolean), features.map(f => f.stageInjectedParameters).filter(Boolean));
+    features.map(f => f.stageOverrides).filter(Boolean), features.map(f => f.stageInjectedParameters).filter(Boolean),
+    features.map(f => f.stageStringOverrides).filter(Boolean));
   const invalid = () => { throw Error(`Unsupported original enemy skill/SP override: ${record.key}`); };
   let sparse = false;
   if (override.skills != null) {
@@ -116,7 +124,8 @@ export function applyStageEnemyBlackboard(record, override) {
         target[key] = skill[key];
       }
       applyLiteralParameters(`${record.key}.${before.prefabKey}`, before, target, skill.blackboard,
-        features.map(f => f.stageSkillOverrides?.[before.prefabKey]).filter(Boolean));
+        features.map(f => f.stageSkillOverrides?.[before.prefabKey]).filter(Boolean), [],
+        features.map(f => f.stageSkillStringOverrides?.[before.prefabKey]).filter(Boolean));
     });
   }
   if (override.spData != null) {
@@ -139,7 +148,7 @@ export function applyStageEnemyBlackboard(record, override) {
   return result;
 }
 
-function applyLiteralParameters(id, beforeRecord, result, entries, declarations, injected = []) {
+function applyLiteralParameters(id, beforeRecord, result, entries, declarations, injected = [], strings = []) {
   if (!Array.isArray(entries)) throw Error(`Malformed original enemy blackboard: ${id}`);
   const seen = new Set();
   for (const entry of entries) {
@@ -160,7 +169,14 @@ function applyLiteralParameters(id, beforeRecord, result, entries, declarations,
     // behavioral permission. Changed strings may introduce new dependencies.
     if (str) {
       if (entry.value === 0 && beforeRecord.bbStr[key] === entry.valueStr && !Object.hasOwn(beforeRecord.bb, key)) continue;
-      throw Error(`Unsupported original enemy parameter: ${id}.${key}`);
+      // A changed string is accepted only where a reviewed feature declares that key, for an existing string
+      // parameter of the same entry (never a new dependency or a new key).
+      const validators = strings.map(d => d[key]).filter(Boolean);
+      if (entry.value !== 0 || !Object.hasOwn(beforeRecord.bbStr, key) || Object.hasOwn(beforeRecord.bb, key)
+        || !validators.length || !validators.every(validate => validate(entry.valueStr)))
+        throw Error(`Unsupported original enemy parameter: ${id}.${key}`);
+      result.bbStr[key] = entry.valueStr;
+      continue;
     }
     if (Object.hasOwn(beforeRecord.bb, key) && entry.value === before) continue;
     const validators = declarations.map(d => d[key]).filter(Boolean);

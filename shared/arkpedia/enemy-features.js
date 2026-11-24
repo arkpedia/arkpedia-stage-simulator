@@ -23,9 +23,9 @@ import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative]];
+const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar'];
+const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -112,6 +112,7 @@ import { FAUST_FEATURES } from './enemy-faust-features.js';
 import { REUNION_MEPHISTO_FEATURES } from './enemy-reunion-mephisto-features.js';
 import { WINTERS_SCAR_FEATURES, isWintersScar, wintersScarNative } from './enemy-wintersscar-features.js';
 import { BLACK_SNAKE_FEATURES, isBlackSnake, blackSnakeNative } from './enemy-black-snake-features.js';
+import { STEAM_KNIGHT_FEATURES, isSteamKnight, steamKnightNative } from './enemy-steam-knight-features.js';
 import { isChargeDrone, isArtificer, artilleryChargerNative, droneChargeParams, artificerChargeParams } from './enemy-artillery-charge-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
@@ -546,6 +547,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...REUNION_MEPHISTO_FEATURES,
   ...WINTERS_SCAR_FEATURES,
   ...BLACK_SNAKE_FEATURES,
+  ...STEAM_KNIGHT_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),

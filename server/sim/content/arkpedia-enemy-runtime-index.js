@@ -19,6 +19,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-reunion-mephisto',load:()=>import('./arkpedia-enemy-reunion-mephisto.js'),exports:{reunionMephisto:'reunionMephisto'}},
   {key:'arkpedia-enemy-wintersscar',load:()=>import('./arkpedia-enemy-wintersscar.js'),exports:{wintersScar:'wintersScar'}},
   {key:'arkpedia-enemy-black-snake',load:()=>import('./arkpedia-enemy-black-snake.js'),exports:{blackSnake:'blackSnake'}},
+  {key:'arkpedia-enemy-steam-knight',load:()=>import('./arkpedia-enemy-steam-knight.js'),exports:{steamKnight:'steamKnight'}},
   {key:'arkpedia-enemy-artillery-charge',load:()=>import('./arkpedia-enemy-artillery-charge.js'),exports:{droneArtilleryCharge:'droneArtilleryCharge',artificerArtilleryCharge:'artificerArtilleryCharge'}},
   {key:'arkpedia-enemy-holy-escort',load:()=>import('./arkpedia-enemy-holy-escort.js'),exports:{vesperwing:'vesperwing',wastelandRobber:'wastelandRobber'}},
   {key:'arkpedia-enemy-yumen',load:()=>import('./arkpedia-enemy-yumen.js'),exports:{wallbreaker:'wallbreaker',sandwalker:'sandwalker'}},
