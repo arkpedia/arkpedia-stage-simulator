@@ -218,3 +218,12 @@ test('inert Twigs payload: only one-seed branches in a level that places no Twig
   assert.equal(inertTwigsPayload(two), false, 'two seeds');
   assert.equal(inertTwigsPayload({ ...level, branches: {} }), false, 'no branches');
 });
+
+test("11-19's turret: the Cannon's first cast at 1 s and 50% ATK are accepted; its cooldown stays the database's", () => {
+  const r = ENEMY_RECORDS.enemies.enemy_1273_stmgun_2.levels[0];
+  const cannon = over => ({ prefabKey: 'Cannon', priority: 0, cooldown: 25, initCooldown: 1, spCost: 0,
+    blackboard: [{ key: 'atk_scale', value: .5, valueStr: null }], ...over });
+  const out = applyStageEnemyBlackboard(r, { level: 0, blackboard: [], spData: null, skills: [cannon()] });
+  assert.deepEqual([out.skills[0].initCooldown, out.skills[0].cooldown, out.skills[0].bb.atk_scale], [1, 25, .5]);
+  assert.throws(() => applyStageEnemyBlackboard(r, { level: 0, blackboard: [], spData: null, skills: [cannon({ cooldown: 10 })] }), /Unsupported/);
+});

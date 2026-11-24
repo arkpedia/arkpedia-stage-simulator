@@ -46,6 +46,7 @@ import { electricCoilDefinition } from '../../shared/arkpedia/stage-electric-coi
 import { stunTokenDefinition } from '../../shared/arkpedia/stage-supply-tokens.js';
 import { witheredAltarDefinition } from '../../shared/arkpedia/stage-withered-altars.js';
 import { workerDefinition } from '../../shared/arkpedia/stage-workers.js';
+import { alladyDefinition } from '../../shared/arkpedia/stage-allerdale.js';
 import { mineDefinition, predefinedMineDefinition } from '../../shared/arkpedia/stage-mines.js';
 import { demolitionDefinition } from '../../shared/arkpedia/stage-demolition.js';
 import { roadblockDefinition, sceneryDefinition } from '../../shared/arkpedia/stage-scenery.js';
@@ -142,7 +143,9 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     const behavior = spec.behavior === 'stun-pulse' ? stunTokenDefinition(t) : spec.behavior === 'electric-coil' ? electricCoilDefinition(t)
       : spec.behavior === 'withered-altar' ? witheredAltarDefinition(t) : spec.behavior === 'interference-mine' ? mineDefinition(t) : spec.behavior === 'demolition' ? demolitionDefinition(t) : spec.behavior === 'roadblock' ? roadblockDefinition(t)
       : spec.behavior === 'mushroom-worker' ? workerDefinition(t)
-      : spec.behavior === 'range-supply' ? rangeSupplyDefinition(t.unit_id, t) : {};
+      : spec.behavior === 'range-supply' ? rangeSupplyDefinition(t.unit_id, t)
+      // Allerdale's Guard aims at the ally on the tile it faces (stage-allerdale.js), so the card asks for a facing.
+      : spec.behavior === 'barrier' ? (alladyDefinition({ level: 1, skillLevel: 1, skillIndex: 0 }), { chooseFacing: true }) : {};
     // A hidden supply card (validated as revealed by one wave action) starts empty and holds its stock until then.
     return { unitId: t.unit_id, name: token.name, count: t.hidden === true ? 0 : t.count, ...(t.hidden === true ? { hiddenCount: t.count } : {}), ...behavior,
       cost: Math.floor((behavior.cost ?? stats.cost) * stageCardMultiplier(compiledRules, { profession: 'TRAP', position: token.position }, 'cost')),

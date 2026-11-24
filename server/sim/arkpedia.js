@@ -47,7 +47,8 @@ import { validateHuiMingProgram } from '../../shared/arkpedia/stage-hui-ming.js'
 import { StageMire } from './content/arkpedia-stage-mire.js';
 import { StageWater } from './content/arkpedia-stage-water.js';
 import { configureStageObstacle } from './content/arkpedia-stage-obstacles.js';
-import { sceneryDefinition } from '../../shared/arkpedia/device-runtime.js';
+import { sceneryDefinition, alladyDefinition } from '../../shared/arkpedia/device-runtime.js';
+import { installAllerdaleGuard } from './content/arkpedia-stage-allerdale.js';
 import { stageDeviceSpec, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles, artilleryDefinition } from '../../shared/arkpedia/device-runtime.js';
 import { compileBuffTemplate } from '../../shared/arkpedia/behavior.js';
 import { prepareSquad, canDeployInViewport } from '../../shared/arkpedia/squad.js';
@@ -558,10 +559,8 @@ export class StandardBattle extends Battle {
       obstacle: token.obstacle ?? !token.supplyCard, obstacleKind: token.obstacle, name: token.name });
     if (!unit) throw new Error('Token cannot be placed here.');
     if (token.platform) { unit.mem.regularHost = { accepts: () => true }; this.platformTiles ??= new Set(); this.platformTiles.add(`${row},${col}`); }
-    if (token.behavior === 'barrier') {
-      for (const ally of [unit, ...this.units.filter(u => u.side === 'ally' && u.alive && u.deployed && u !== unit && Math.max(Math.abs(u.tileR - row), Math.abs(u.tileC - col)) <= 1)])
-        this.addBuff(ally, { key: 'ab:allerdale-barrier', source: unit, visible: true, shield: 1000 });
-    }
+    // Allerdale's Guard: after 1 s it shields the ally it faces and the 3x3 around it for 10 s, then leaves.
+    if (token.behavior === 'barrier') installAllerdaleGuard(this, unit, alladyDefinition({ level: 1, skillLevel: 1, skillIndex: 0 }), dir);
     if (token.behavior === 'stun-pulse') startStunToken(this, unit, token);
     if (token.behavior === 'electric-coil') this.electricCoils.add(unit, token);
     if (token.behavior === 'mushroom-worker') installStageWorker(this, unit, token, dir);

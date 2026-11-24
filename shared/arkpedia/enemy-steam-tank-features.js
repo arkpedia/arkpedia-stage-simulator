@@ -50,6 +50,9 @@ export function steamTankNative(r, n) {
 }
 export const STEAM_TANK_FEATURE = {
   matchesRecord: r => ids.includes(r.prefabKey), covers: steamTankNative, nativeClaim: () => ({ wrappers: 1 }),
+  // 11-19's scripted turret fires its first Cannon at 1 s and at 50% ATK; the runtime reads both from the record.
+  stageSkillTimingOverrides: { Cannon: { initCooldown: v => Number.isFinite(v) && v >= 0 && v <= 600 } },
+  stageSkillOverrides: { Cannon: { atk_scale: v => Number.isFinite(v) && v > 0 && v <= 5 } },
   explains: text => text === 'Capable of long-range attacks'
     || text === 'Locks on to the target with the highest max HP and bombards it several times, dealing Arts damage to the unit in range with the highest HP percentage',
   ability: { kind: 'steamTank', params: r => ({ initial: r.skills[0].initCooldown, cooldown: r.skills[0].cooldown,
