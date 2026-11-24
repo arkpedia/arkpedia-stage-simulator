@@ -51,7 +51,8 @@ registered stages rather than silently keeping incomplete simulations available.
   the class deployment restriction and predefined detector removal, and confirm
   that requests use the library rather than legacy stage JSON files.
 - On both layouts, 0-6 Challenge explains its missing stage modifier and fetches
-  no stage components. The unchanged operator-review fixture server retains its
+  no stage components. (0-6 Challenge has since been published, 2026-11-24; the
+  script now uses 4-10 Challenge, blocked by its `ebuff_skill_radius` rune.) The unchanged operator-review fixture server retains its
   controlled home scene (99 initial DP and empty waves).
 
 Shared components total 9,605,133 bytes, compared with 13,379,534 bytes for inline
@@ -175,3 +176,12 @@ skill/module fidelity is a separate remaining implementation task. The home
 page temporarily reuses the embedded default scene, preserving existing
 controlled reviews. Explicit stage selections always load the component graph.
 Whole mode runs and carried progression remain outside the agreed scope.
+
+## 0-6 Challenge (2026-11-24)
+
+Its fourth rune, `cbuff_initial_cost` (`cost` 3), appears in no other level. PRTS and the wiki list 8 starting DP,
+which looks copied from the level's `initialCost`. The owner checked in game: the stage starts with 11 DP. The rune
+now adds its `cost` to `initial_dp`. It must be a positive whole number, with `cost` as its only key and the usual
+masks (`test/arkpedia-stage-budget-rules.test.js`). A headless run loads the library stage at 11 DP, 1 life point
+and half-rate DP recovery, with no battle errors. The library rebuild published only this stage (1,082 available).
+

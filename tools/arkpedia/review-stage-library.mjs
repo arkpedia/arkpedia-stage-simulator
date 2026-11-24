@@ -119,10 +119,10 @@ try {
       if (id === '0-4_challenge_mode') await page.screenshot({ path: `${directory}${mobile ? 'touch' : 'desktop'}.png` });
     }
     errors = []; requested = [];
-    await page.goto(`${origin}/arkpedia/?stage=0-6_challenge_mode`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${origin}/arkpedia/?stage=4-10_challenge_mode`, { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => document.body.innerText.includes('Still needed: Stage modifiers.'));
     assert.equal(await page.$('#start'), null); assert.equal(requested.some(path => path.includes('/objects/')), false);
-    results.push({ id: '0-6_challenge_mode', mobile, blockedBeforeComponentFetch: true });
+    results.push({ id: '4-10_challenge_mode', mobile, blockedBeforeComponentFetch: true });
     await page.close();
   }
   // Existing controlled operator reviews intentionally replace the embedded

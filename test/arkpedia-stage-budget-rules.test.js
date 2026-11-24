@@ -71,3 +71,16 @@ test('initial DP additions compose and reject unsupported masks, fractional coun
     assert.throws(() => compileStageRules(source, bad), /Unsupported|Invalid/);
   }
 });
+
+test('0-6 Challenge adds its cbuff_initial_cost to the starting DP (8 + 3 = 11, checked in game)', async () => {
+  const receipt = await receiptFor('0-6_challenge_mode'), source = sourceFor(receipt);
+  source.battle.initial_dp = 8;
+  const compiled = compileStageRules(source, receipt);
+  assert.equal(compiled.battle.initial_dp, 11);
+  assert.equal(battle(compiled.battle).dp, 11);
+  for (const change of [r => r.blackboard[0].value = .5, r => r.blackboard[0].key = 'value', r => r.blackboard[0].value = 0,
+    r => r.blackboard.push({ key: 'scale', value: 1, valueStr: null }), r => r.professionMask = 1]) {
+    const bad = structuredClone(receipt); change(bad.runes.find(r => r.key === 'cbuff_initial_cost'));
+    assert.throws(() => compileStageRules(source, bad), /Unsupported|Invalid/);
+  }
+});

@@ -369,6 +369,12 @@ export function compileStageRules(source, receipt) {
       const value = (battle[field] ?? source.battle?.[field]) + bb.value;
       if (!Number.isSafeInteger(value) || value < 0) throw Error(`Invalid stage budget: ${field}`);
       battle[field] = value;
+    } else if (rune.key === 'cbuff_initial_cost' && Object.keys(bb).join() === 'cost' && Number.isSafeInteger(bb.cost)) {
+      // The legacy starting-DP rune (only 0-6 Challenge): `cost` DP added to the level's initialCost.
+      // Confirmed in game by the owner (2026-11-24): 0-6 Challenge starts with 8 + 3 = 11 DP.
+      const value = (battle.initial_dp ?? source.battle?.initial_dp) + bb.cost;
+      if (!Number.isSafeInteger(value) || value < 0) throw Error('Invalid stage budget: initial_dp');
+      battle.initial_dp = value;
     } else if (['cbuff_cost_recovery', 'global_cost_recovery_mul'].includes(rune.key) && Object.keys(bb).join() === 'scale') {
       // This legacy rune multiplies the recovery INTERVAL: OF-EX5's scale 3
       // means one third the ordinary natural DP rate, not triple recovery.
