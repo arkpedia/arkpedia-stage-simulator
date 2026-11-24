@@ -105,11 +105,22 @@ test('Detonate: each carrier takes 100% Arts and loses its burn; its tile and th
   ab.left.ignite = 1e9; ab.left.explode = 0;
   run(p.explode.anim[0].hit + .05);
   const by = tag => hits.filter(x => x.tag === tag).map(x => x.target);
-  assert.deepEqual(by('bsnakeDetonate'), [c1, c2]);
+  assert.deepEqual(new Set(by('bsnakeDetonate')), new Set([c1, c2]));
   assert.deepEqual(by('bsnakeSplash'), [n1]);
   assert.ok(!burning(c1) && !burning(c2), 'carriers lose their burn');
   assert.ok(burning(n1) && !burning(diag) && !burning(far));
   assert.ok(hits.filter(x => x.tag !== 'bsnakeAttack').every(x => x.type === 'arts' && x.amount === e.s.atk));
+});
+
+test('Detonate takes at most two carriers (the selector\'s _maxNum; checked in game); a third keeps its burn', () => {
+  const { b, e, ops, hits, run, p, ab } = fixture([[0, 2], [3, 5], [6, 8]]);
+  assert.equal(p.explode.count, 2);
+  for (const u of ops) b.addBuff(u, { key: 'dragon_fire', source: e, duration: 100 });
+  ab.left.ignite = 1e9; ab.left.explode = 0;
+  run(p.explode.anim[0].hit + .05);
+  const detonated = hits.filter(x => x.tag === 'bsnakeDetonate').map(x => x.target);
+  assert.equal(detonated.length, 2); assert.equal(new Set(detonated).size, 2);
+  assert.deepEqual(ops.filter(u => burning(u)), ops.filter(u => !detonated.includes(u)));
 });
 
 test('first knock-out: wave released and tracked; 5 s revive; +50% max HP and ATK at full HP; the Inferno; then the second form', () => {

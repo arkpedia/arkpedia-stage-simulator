@@ -22,9 +22,10 @@ export function blackSnake(p) {
   // --- Skills ---
   const igniteTargets = (b, e) => sortAllyTargets(e, b.allies().filter(u => live(u) && canTargetAlly(e, u, true) && !u.findBuff(BURNING_BREATH))).slice(0, p.ignite.count);
   const explode = (b, e) => {
-    // Every carrier in order: 100% Arts; its Burning Breath ends; 100% Arts to the operators on its tile and the four
-    // around it except itself, which are re-ignited. A carrier killed by the first step ends its chain (PRTS).
-    for (const target of carriers(b)) {
+    // Up to `count` carriers (the selector's _maxNum, default order; checked in game), each in turn: 100% Arts; its
+    // Burning Breath ends; 100% Arts to the operators on its tile and the four around it except itself, which are
+    // re-ignited. A carrier killed by the first step ends its chain (PRTS).
+    for (const target of sortAllyTargets(e, carriers(b)).slice(0, p.explode.count)) {
       if (!live(target)) continue;
       b.dealDamage(e, target, { amount: e.s.atk * p.explode.scale, type: 'arts', isSkill: true, applyWay: 'none', tags: ['bsnakeDetonate'] });
       if (!live(target)) continue;
@@ -176,7 +177,7 @@ function validate(p) {
   const skill = s => pos(s?.cooldown) && nn(s.initial);
   const ok = pos(p?.radius) && pos(p.attack?.scale) && pair(p.attack.anim) && breath(p.attack.breath)
     && skill(p.ignite) && Number.isInteger(p.ignite.count) && p.ignite.count > 0 && breath(p.ignite.breath) && pair(p.ignite.anim)
-    && skill(p.explode) && pos(p.explode.scale) && breath(p.explode.breath) && pair(p.explode.anim) && Array.isArray(p.explode.tiles) && p.explode.tiles.length === 5
+    && skill(p.explode) && Number.isInteger(p.explode.count) && p.explode.count > 0 && pos(p.explode.scale) && breath(p.explode.breath) && pair(p.explode.anim) && Array.isArray(p.explode.tiles) && p.explode.tiles.length === 5
     && p.protect?.resistance > 0 && p.protect.resistance < 1
     && pos(p.revive?.dur) && pos(p.revive.down) && nn(p.revive.hpPct) && nn(p.revive.atkPct)
     && pos(p.inferno?.duration) && pos(p.inferno.interval) && Number.isInteger(p.inferno.volleys) && p.inferno.volleys > 0 && nn(p.inferno.invincible)

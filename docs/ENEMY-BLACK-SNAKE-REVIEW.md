@@ -22,7 +22,7 @@ The rules not fixed by the data come from PRTS (`“不死的黑蛇”`, `能量
 - **Attack.** He targets one ground operator in range 2.0 and deals 100% ATK True damage at the clip's OnAttack. He then applies Burning Breath (talent `fire.attack@dragon_fire.*`).
 - **Burning Breath (`dragon_fire`).** True damage every second, rising linearly from 50 to 230 over 30 s, for 30.5 s. Resistance cuts the duration; the tick interval and the ramp are fixed. A re-application refreshes the duration without stacking and without restarting the ramp (PRTS). Talulah's burn now uses the same helper, `server/sim/content/arkpedia-burning-breath.js`; her selectors never re-apply it, and her tests are unchanged.
 - **Ignite.** 19 s, first at 19 s. Up to two operators anywhere (ground and air) that carry no Burning Breath. It needs at least one target.
-- **Detonate (`DragonFireExplode`).** 35 s, first at 35 s. It casts even with no carrier. At the release, every unit carrying Burning Breath (PRTS: all carriers) goes through these steps in order:
+- **Detonate (`DragonFireExplode`).** 35 s, first at 35 s. It casts even with no carrier. At the release, up to two units carrying Burning Breath go through these steps in order. The two are the selector's `_maxNum` 2, taken in the default targeting order because the selector has no post-filter. PRTS, the stage text and the handbook say "all carriers"; the owner checked in game on 2026-11-24, and it is two.
   1. it takes 100% ATK Arts damage;
   2. its Burning Breath ends;
   3. the operators on its tile and the four orthogonal tiles around it (range `x-5`), except itself, take 100% ATK Arts damage and are re-ignited.
@@ -68,7 +68,7 @@ The rules not fixed by the data come from PRTS (`“不死的黑蛇”`, `能量
 - **Attack.** True damage and the burn; a second hit refreshes the same burn.
 - **Protect.** Damage is halved only from a carrier of his own burn.
 - **Ignite.** At most the two operators without a burn, at the release after 19 s.
-- **Detonate.** Two carriers each take 100% Arts and lose their burn. The orthogonal neighbour is hit and re-ignited; the diagonal neighbour and a far operator are not.
+- **Detonate.** Two carriers each take 100% Arts and lose their burn; with three carriers only two detonate and the third keeps its burn. The orthogonal neighbour is hit and re-ignited; the diagonal neighbour and a far operator are not.
 - **First knock-out.** The release is tracked. After 5 s he is at 1.5× max HP and ATK at full HP. He takes no damage through the Inferno. Thirty fireball hits (ten volleys over three occupied rows) land, none before 2 s, at the enraged ATK. He then enters the second form with 15 s of invincibility, and all three skills restart from their initial cooldowns.
 - **SummonFlame.** The branch runs at 75 + 0.9 s, then every 50 s, and loops back to phase 1.
 - **Second knock-out.** The release is not tracked; 5 s down, then the final Inferno, then death.
@@ -97,7 +97,7 @@ JT8-3 Challenge (published next, 1,081 available): its `char_skill_blackb_add` r
 
 - **Energy Aggregate art.** Its body is a Unity Animation graphic, not a Spine skeleton. The device model pipeline admits only single-Graphic Spine bodies, so it shows as a labelled marker. The Die clip is not timed, so its four fireballs leave when the charge completes.
 - **Civilians.** The Ursus Civilians are enemy-side in the simulator, so fireballs hit operators only. PRTS's footnote names overlapping civilians as collision candidates; that is not modelled.
-- **Detonate count.** The selector pins `_maxNum` 2, the same as Ignite's, but the stage text, the handbook and PRTS all say "all carriers". The runtime detonates every carrier. An in-game check with three or more carriers would settle it.
+- **Detonate order.** When more than two units burn, which two detonate follows the default targeting order. The selector has no post-filter, so the game's order is not pinned.
 - **Protect source.** Only his own burns count (`_buffSourceType` BUFF_SOURCE). Burns applied by an Energy Aggregate do not reduce his damage taken.
 - **Not published.**
   - The TN-4 boss-rush stages wait on the Entitative Program devices.

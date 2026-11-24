@@ -6,8 +6,8 @@
 //   a re-application refreshes the duration (PRTS).
 // - Ignite (19/19 s): up to two operators anywhere (ground and air) that carry no Burning Breath (_buffKeyExcluded),
 //   Burning Breath from the skill blackboard. Skill_1 1.967 s, release 1.167 s. Needs at least one target.
-// - DragonFireExplode (35/35 s): every unit carrying Burning Breath (the selector's buff filter; PRTS: all of them,
-//   cast even with none), in order: 100% ATK Arts to it; its Burning Breath ends; 100% ATK Arts to the operators on its
+// - DragonFireExplode (35/35 s): up to two units carrying Burning Breath (the selector's buff filter and _maxNum 2,
+//   default order; PRTS says all of them, the owner checked in game on 2026-11-24: two), cast even with none, in order: 100% ATK Arts to it; its Burning Breath ends; 100% ATK Arts to the operators on its
 //   tile and the four around it (range x-5) except itself, re-igniting them. Any failed step ends that unit's chain
 //   (PRTS). Skill_2 1.967 s, release 1.033 s.
 // - Protect (talent): damage from a unit carrying this Black Snake's Burning Breath (BUFF_SOURCE) x (1 - 0.5).
@@ -79,7 +79,7 @@ export function blackSnakeParams(r){
   attack:{scale:1,anim:[anim("Attack_A"),anim("Attack_B")],breath:{duration:t["fire.attack@dragon_fire.duration"],base:t["fire.attack@dragon_fire.baseDamage"],
    add:t["fire.attack@dragon_fire.addOnDamage"],ramp:t["fire.attack@dragon_fire.addOnDuration"]}},
   ignite:{cooldown:ig.cooldown,initial:ig.initCooldown,count:2,breath:breath(ig.bb),anim:[anim("Skill_1_A"),anim("Skill_1_B")]},
-  explode:{cooldown:ex.cooldown,initial:ex.initCooldown,scale:ex.bb.atk_scale,breath:breath(ex.bb),anim:[anim("Skill_2_A"),anim("Skill_2_B")],
+  explode:{cooldown:ex.cooldown,initial:ex.initCooldown,count:2,scale:ex.bb.atk_scale,breath:breath(ex.bb),anim:[anim("Skill_2_A"),anim("Skill_2_B")],
    tiles:[[0,0],[-1,0],[1,0],[0,-1],[0,1]]},
   protect:{resistance:t["protect.bsnake_t[protect].damage_resistance"]},
   revive:{dur:t["reborn.duration"],hpPct:t["reborn.max_hp"],atkPct:t["reborn.atk"],down:t["reborn.duration"]},
