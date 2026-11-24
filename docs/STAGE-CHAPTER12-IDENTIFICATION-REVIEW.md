@@ -15,9 +15,15 @@ Ten stages became available: 12-2, 12-2 adverse, 12-6, 12-8, 12-8 adverse, 12-17
 
 - **Pathfinder Spy `enemy_1314_wdnjd_2`:** its native tree and templates equal the base record's (only the skeleton differs; the animation clock is the same: `Die_A` 1 s, `Attack` 1 s with OnAttack at 0.4 s). Higher stats; the same +0.05 speed and doubled first attack.
 - **Sentry Spy `enemy_1315_wdyjd` and `_2`:** the same identification templates as the Pathfinder Spy, without `EnhancedAttack`. On reveal, `moveSpeed` adds 0.2 (`enemy_wdyjd[moveSpeed]`), and `enemyModeTalent` toggles on `enemy_wdyjd[enemyMode]`: abnormal flag 9 (`INVISIBLE` in the pinned enum) with the `common_invisible` effect, `_disableWhenBlocked` 1, `_restoreDelay` 3. The simulator's enemy Invisible already behaves so (`BattleCore._stealthSwitch`: lifted while blocked, back 3 s after release); the buff carries `stealthRestore` 3.
-- **Still refused:** `enemy_1313_wdfmr_2` and the Armed Spy `enemy_1316_wdpjd(_2)`.
 
 Fifteen stages became available: 12-3, 12-4, 12-10, 12-12, 12-14, 12-18 and their adverse variants, 12-6 adverse, 12-7 and 12-13. The library has 1,114 available; the main story 392 of 572. 12-18 adverse starts its DP cap at 15 (its own `cbuff_max_cost`). The eight first-slice bundles changed only by the spy parameters' new `atkScale`/`invisible` fields. All fifteen run headless with no errors and clear (12-18 adverse reaches the 1,500 s limit with the weak probe squad).
+
+## Third slice: the Armed Spy and the elite civilian (2026-11-24)
+
+- **Armed Spy `enemy_1316_wdpjd` and `_2`** (12,000/15,000 HP, 1,200/1,500 DEF): the same identification templates, with no talent component at all. The database lists `moveSpeed.move_speed` 0, but there is no `moveSpeed` object to apply it. Once revealed it is only a heavy melee attacker, using its own clock (`Attack` 1.5 s, OnAttack at 0.6 s). The two levels differ natively only in the FaceSwitcher's default side.
+- **Elite civilian `enemy_1313_wdfmr_2`** ("Norport Spy" in the EN handbook, but a civilian): the Norport Civilian's tree and skeleton plus the marker `civilian_mainline12[civilianElite]`. The only thing that reads it is `detect_p2_progressController`, which picks the `appraisal_l3` instead of the `l2` phase-2 effect art. Its `civilianTalent.max_cost` is 5.
+
+With these, every identity record is reviewed (`IDENTITY_PREFABS`). Eleven stages became available: 12-5, 12-9, 12-15, 12-19 and their adverse variants, 12-7 adverse, 12-13 adverse and H12-2 adverse. That gives 1,125 available and 403 of 572 main-story stages. No published bundle changed. 12-5 adverse starts its DP cap at 15. All eleven run headless without errors; 12-5 adverse, 12-7 adverse and 12-19 adverse reach the 1,500 s limit with the weak probe squad.
 
 ## Legacy chapter-12 stage files retired
 
@@ -58,4 +64,4 @@ This also changes already published stages that place such objects. A headless c
 - **Not checked in game.** The bit-8 reading of `KEEP_REVEALED`, the per-unit 0.5 s sight refresh and the 1 s spy switch come from the prefabs and PRTS.
 - **Sight is range tiles only.** Devices and tokens contribute when they are own-side units with a range; a NeverTrigger unit's empty range and an AlwaysTrigger unit's whole-map sight are not special-cased yet.
 - **The identity markers** (the phase colours over each unit) are not drawn.
-- **Next slices:** the Armed Spy `wdpjd(_2)` and `wdfmr_2` ("Norport Spy"), then 12-16 and 12-20's own needs. The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.
+- **Left in chapter 12:** 12-16 (bosses `enemy_1540_wdncr`, `enemy_1541_wdslms`), 12-20 and the hard H12-1/3/4 adverse stages (Smoke/`enemy_1542_wdslm` and stage programs). The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.

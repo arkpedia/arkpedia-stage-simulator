@@ -34,18 +34,21 @@ test('the published chapter-12 stages are available with the sight environment a
   // First slice (Pathfinder Spy, Norport Civilian), then the Sentry Spies and the Pathfinder Spy _2.
   const ids = ['12-2', '12-2_adverse_environment', '12-6', '12-8', '12-8_adverse_environment', '12-17', '12-17_adverse_environment', 'tr-22', 'tr-23',
     '12-3', '12-3_adverse_environment', '12-4', '12-4_adverse_environment', '12-6_adverse_environment', '12-7', '12-10', '12-10_adverse_environment',
-    '12-12', '12-12_adverse_environment', '12-13', '12-14', '12-14_adverse_environment', '12-18', '12-18_adverse_environment'];
+    '12-12', '12-12_adverse_environment', '12-13', '12-14', '12-14_adverse_environment', '12-18', '12-18_adverse_environment',
+    // Armed Spies and the elite civilian.
+    '12-5', '12-5_adverse_environment', '12-7_adverse_environment', '12-9', '12-9_adverse_environment', '12-13_adverse_environment',
+    '12-15', '12-15_adverse_environment', '12-19', '12-19_adverse_environment', 'h12-2_adverse_environment'];
   for (const id of ids) {
     const stage = await load(id);
     assert.deepEqual(stage.environment?.filter(e => e.kind === 'mainline12_sightManager'), [{ kind: 'mainline12_sightManager', interval: .5 }], id);
-    // Every level's cbuff_max_cost is 20 / 99, except 12-18 adverse (15 / 99).
-    assert.deepEqual([stage.battle.max_dp, stage.battle.max_dp_ceil], [id === '12-18_adverse_environment' ? 15 : 20, 99], id);
+    // Every level's cbuff_max_cost is 20 / 99, except 12-5 and 12-18 adverse (15 / 99).
+    assert.deepEqual([stage.battle.max_dp, stage.battle.max_dp_ceil], [['12-5_adverse_environment', '12-18_adverse_environment'].includes(id) ? 15 : 20, 99], id);
   }
   const b = battle(await load('tr-22'));
   assert.equal(typeof b.stageSight?.inSight, 'function');
   assert.deepEqual([b.flags.dpMax, b.flags.dpMaxCeil], [20, 99]);
-  // The rest of chapter 12 waits for its unreviewed identity variants.
-  assert.notEqual(manifest.stages.find(s => s.id === '12-5')?.availability, 'available');
+  // 12-16 and 12-20 wait for their own bosses and stage programs.
+  assert.notEqual(manifest.stages.find(s => s.id === '12-16')?.availability, 'available');
 });
 
 test('placed enemy-side objects hold neither a kill-all wave nor the battle (12-8 wave 0, TR-18)', async () => {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Chapter-12 identification (鉴定) for the reviewed Pathfinder Spy, Sentry Spy and Norport Civilian. Every number arrives in `p`
+// Chapter-12 identification (鉴定) for the reviewed Pathfinder, Sentry and Armed Spies and the Norport Civilians. Every number arrives in `p`
 // from shared/arkpedia/enemy-norport-identity-features.js; sight comes from the level's chapter-12 sight
 // (arkpedia-stage-sight.js). Without that environment only blocking identifies.
 const DISGUISE = 'enemy_mainline12[civilianMode]', CIVILIAN = 'unit_mainline12[civilianMode]',
@@ -29,13 +29,13 @@ export function norportIdentity(p) {
     b.addBuff(e, { key: SWITCH, duration: p.switchDur, flags: { invulnerable: true, disarm: true, noMove: true } });
   };
   const reveal = (b, e, a) => {
-    // switchMode: mode 1. The disguise ends; melee attacks and moveSpeed +move (ADDITION). The Pathfinder Spy's next
-    // attack is x atk_scale; the Sentry Spy turns INVISIBLE, lifted while blocked and back `restore` s after release
-    // (BattleCore._stealthSwitch).
+    // switchMode: mode 1. The disguise ends; melee attacks and moveSpeed +move (ADDITION; the Armed Spy has none). The
+    // Pathfinder Spy's next attack is x atk_scale; the Sentry Spy turns INVISIBLE, lifted while blocked and back
+    // `restore` s after release (BattleCore._stealthSwitch).
     a.state = 'revealed'; a.bonus = p.atkScale != null;
     b.removeBuff(e, DISGUISE);
     e.profile.noAttack = false; e.atkCd = 0;
-    b.addBuff(e, { key: p.invisible ? SENTRY_MOVE : MOVE, persist: true, mods: { moveFlat: p.move } });
+    if (p.move != null) b.addBuff(e, { key: p.invisible ? SENTRY_MOVE : MOVE, persist: true, mods: { moveFlat: p.move } });
     if (p.invisible) b.addBuff(e, { key: p.invisible.key, persist: true, visible: true, flags: { stealth: true }, data: { stealthRestore: p.invisible.restore } });
   };
   return {
@@ -79,8 +79,9 @@ function validate(p) {
   const d = p?.detect;
   const ok = ['spy', 'civilian'].includes(p?.kind) && pos(d?.interval) && pos(d.threshold) && d.cap >= d.threshold
     && Array.isArray(d.gain) && d.gain.length === 2 && d.gain.every(pos) && pos(d.loss)
-    && (p.kind === 'spy' ? pos(p.switchDur) && Number.isFinite(p.move) && pos(p.attackAnim?.dur)
-      && ((pos(p.atkScale) && p.invisible == null) || (p.atkScale == null && typeof p.invisible?.key === 'string' && pos(p.invisible.restore)))
+    && (p.kind === 'spy' ? pos(p.switchDur) && (p.move === null || Number.isFinite(p.move)) && pos(p.attackAnim?.dur)
+      && ((pos(p.atkScale) && p.invisible == null) || (p.atkScale == null && p.invisible == null)
+        || (p.atkScale == null && typeof p.invisible?.key === 'string' && pos(p.invisible.restore)))
       && Number.isFinite(p.attackAnim.hit) && typeof p.clips?.disguised === 'string' && typeof p.clips.revealed === 'string'
       : pos(p.dp));
   if (!ok) throw Error('Invalid Norport identity parameters');

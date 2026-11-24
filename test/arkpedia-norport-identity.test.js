@@ -14,10 +14,11 @@ import { enemyStealthed } from '../server/sim/targeting.js';
 import native from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
 
 const SPY = 'enemy_1314_wdnjd', CIVILIAN = 'enemy_1313_wdfmr', SENTRY = 'enemy_1315_wdyjd';
-const REVIEWED = [SPY, 'enemy_1314_wdnjd_2', SENTRY, 'enemy_1315_wdyjd_2', CIVILIAN];
+const ARMED = 'enemy_1316_wdpjd';
+const REVIEWED = [SPY, 'enemy_1314_wdnjd_2', SENTRY, 'enemy_1315_wdyjd_2', ARMED, 'enemy_1316_wdpjd_2', CIVILIAN, 'enemy_1313_wdfmr_2'];
 const rec = id => ENEMY_RECORDS.enemies[id].levels[0];
 
-test('the pinned Pathfinder Spies, Sentry Spies and Norport Civilian are reviewed; the other identity records are not', () => {
+test('every chapter-12 identity record is pinned and reviewed; changed kits are refused', () => {
   for (const id of REVIEWED) {
     assert.equal(isReviewedIdentity(rec(id)), true, id);
     assert.equal(norportIdentityNative(rec(id), nativeComponents(native, id)), true, id);
@@ -29,12 +30,12 @@ test('the pinned Pathfinder Spies, Sentry Spies and Norport Civilian are reviewe
   assert.equal(norportIdentityNative({ ...s, talents: { ...s.talents, bb: { 'moveSpeed.move_speed': .3 } } }, nativeComponents(native, SENTRY)), false,
     'a changed sentry speed');
   assert.equal(norportIdentityNative(s, nativeComponents(native, SPY)), false, 'the Pathfinder tree is not the Sentry tree');
-  const unreviewed = IDENTITY_PREFABS.filter(k => !REVIEWED.includes(k));
-  assert.deepEqual(unreviewed, ['enemy_1313_wdfmr_2', 'enemy_1316_wdpjd', 'enemy_1316_wdpjd_2']);
-  for (const id of unreviewed) {
-    const levels = Object.values(ENEMY_RECORDS.enemies[id]?.levels ?? {});
-    for (const l of levels) assert.equal(isUnreviewedIdentity(l), true, id);
-  }
+  assert.deepEqual(IDENTITY_PREFABS.filter(k => !REVIEWED.includes(k)), []);
+  for (const id of REVIEWED) assert.equal(isUnreviewedIdentity(rec(id)), false, id);
+  assert.equal(isUnreviewedIdentity({ ...rec(ARMED), level: 1 }), true, 'an unpinned level');
+  const c2 = rec('enemy_1313_wdfmr_2');
+  assert.equal(norportIdentityNative({ ...c2, talents: { ...c2.talents, bb: { 'civilianTalent.max_cost': 2 } } },
+    nativeComponents(native, 'enemy_1313_wdfmr_2')), false, 'a changed elite reward');
   assert.equal(sightNativeReviewed(), true);
 });
 
@@ -45,6 +46,12 @@ test('parameters: 0.1 s identification steps, +2 then +3 to 300, -1 out of sight
   assert.deepEqual([civ.kind, civ.dp], ['civilian', 2]);
   const spy2 = norportIdentityParams(rec('enemy_1314_wdnjd_2'));
   assert.deepEqual([spy2.move, spy2.atkScale, spy2.invisible], [.05, 2, null]);
+  for (const id of [ARMED, 'enemy_1316_wdpjd_2']) {
+    const p = norportIdentityParams(rec(id));
+    assert.deepEqual([p.kind, p.switchDur, p.move, p.atkScale, p.invisible, p.attackAnim.dur, Math.round(p.attackAnim.hit * 10)],
+      ['spy', 1, null, null, null, 1.5, 6], id);
+  }
+  assert.deepEqual([norportIdentityParams(rec('enemy_1313_wdfmr_2')).kind, norportIdentityParams(rec('enemy_1313_wdfmr_2')).dp], ['civilian', 5]);
   for (const id of [SENTRY, 'enemy_1315_wdyjd_2']) {
     const p = norportIdentityParams(rec(id));
     assert.deepEqual([p.kind, p.switchDur, p.move, p.atkScale, p.invisible], ['spy', 1, .2, null, { key: 'enemy_wdyjd[enemyMode]', restore: 3 }], id);
@@ -145,4 +152,22 @@ test('the revealed Sentry Spy is Invisible except while blocked, and again 3 s a
   const hits = []; b.on('damaged', c => { if (c.source === e) hits.push(c.dmg.amount); });
   b.dealDamage(e, op, { amount: 100, type: 'phys', isAttack: true, canDodge: false });
   assert.deepEqual(hits, [100]);
+});
+
+test('the revealed Armed Spy just fights: no speed buff, no attack bonus, not Invisible', () => {
+  const { b, e, a, sight, op, run } = fixture(ARMED);
+  sight.seen = true; run(26.15); assert.equal(a.state, 'revealed');
+  assert.equal(e.profile.noAttack, false);
+  assert.equal(e.buffs.some(x => /moveSpeed|enemyMode/.test(x.key)), false);
+  assert.equal(enemyStealthed(e), false);
+  const hits = []; b.on('damaged', c => { if (c.source === e) hits.push(c.dmg.amount); });
+  b.dealDamage(e, op, { amount: 100, type: 'phys', isAttack: true, canDodge: false });
+  assert.deepEqual(hits, [100]);
+});
+
+test('the elite civilian (enemy_1313_wdfmr_2) raises max DP by 5 once confirmed', () => {
+  const { b, e, a, sight, run } = fixture('enemy_1313_wdfmr_2');
+  b.flags.dpMax = 20; b.flags.dpMaxCeil = 99;
+  sight.seen = true; run(25.05); assert.equal(a.state, 'confirmed');
+  b.leak(e); assert.equal(b.flags.dpMax, 25);
 });
