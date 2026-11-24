@@ -68,6 +68,17 @@ export function compileStageBranches(level, input, conditional, bindings) {
   return { geometry, branches };
 }
 
+const TWIGS = 'trap_086_larva', TWIGS_PAYLOAD = 'enemy_1266_nhapos';
+/** Every branch is a single one-seed Twigs payload and the level places no Twigs anywhere. */
+export function inertTwigsPayload(level) {
+  const branches = Object.values(level.branches ?? {});
+  if (!branches.length || !branches.every(b => b.phases?.length === 1 && b.phases[0].actions?.length === 1
+    && b.phases[0].actions[0].key === TWIGS_PAYLOAD && b.phases[0].actions[0].count === 1)) return false;
+  const placed = [level.predefines, level.hardPredefines].flatMap(p => [...(p?.tokenInsts ?? []), ...(p?.tokenCards ?? []),
+    ...(p?.characterInsts ?? []), ...(p?.characterCards ?? [])]);
+  return !placed.some(p => p?.inst?.characterKey === TWIGS);
+}
+
 export async function prepareStageBranches({ root, rules, compiledRules, geometry, conditional, devices, instances }) {
   const { level, source } = await readOriginalLevel(root, rules);
   // Normal/challenge variants share original branches. A source-hidden armour
@@ -85,6 +96,18 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
     .map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId)
     .concat(Object.values(inactiveInstances).map(i => i.branchId));
+  // A level can keep the Twigs payload branches (one Corrupted Seed each) without placing any Twigs (11-20 and its
+  // adverse variant): nothing can advance them, and the stage's target count excludes them. Accept exactly that case:
+  // validate and consume the viewer's branch entries, then compile each as a no-op (no spawns), like the unreferenced
+  // activation branches in stage-branch-noops.mjs. Any other unbound branch still fails.
+  if (!bindings.length && inertTwigsPayload(level)) {
+    compileStageBranches(level, geometry, conditional, Object.keys(level.branches));
+    // The viewer lists the payload among the stage's enemies; the level has no database entry for it (it never spawns).
+    const inert = structuredClone(geometry);
+    if (!(level.enemyDbRefs ?? []).some(r => r.id === TWIGS_PAYLOAD) && inert.enemyConfigurations)
+      inert.enemyConfigurations = inert.enemyConfigurations.filter(c => c.enemy_id !== TWIGS_PAYLOAD);
+    return { geometry: inert, branches: Object.fromEntries(Object.keys(level.branches).map(key => [key, { spawns: [] }])), sources: [source] };
+  }
   const compiled=compileStageBranches(level, geometry, conditional, bindings);
   for(const d of [...devices.filter(d=>POWER_ARMOR_DEVICE_KEYS.includes(d.key)), ...inactiveDevices]){
     const key=`${d.key}:${d.row}:${d.col}`,instance=instances[key]??inactiveInstances[key],branch=compiled.branches[instance.branchId];

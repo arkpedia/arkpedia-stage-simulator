@@ -711,11 +711,11 @@
     "stages": {
       "total": 3892,
       "public": 597,
-      "loadable": 1084,
-      "capabilityBlocked": 2808,
+      "loadable": 1086,
+      "capabilityBlocked": 2806,
       "testOnly": 341,
-      "ready": 260,
-      "blocked": 2694,
+      "ready": 262,
+      "blocked": 2692,
       "nonCombat": 316,
       "catalogue": 938,
       "embedded": 1
@@ -734,10 +734,10 @@
         "total": 86,
         "public": 39,
         "testOnly": 11,
-        "ready": 14,
-        "blocked": 22,
-        "loadable": 62,
-        "capabilityBlocked": 24
+        "ready": 16,
+        "blocked": 20,
+        "loadable": 64,
+        "capabilityBlocked": 22
       },
       "activity": {
         "total": 2125,
@@ -9136,18 +9136,8 @@
       "name": "The Last Steam Knight",
       "mode": "sub",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "branch-program",
-          "id": "11-20",
-          "message": "Missing or unsupported stage branch binding"
-        },
-        {
-          "kind": "conditional",
-          "id": "11-20"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_1266_nhapos",
@@ -9183,18 +9173,8 @@
       "name": "The Last Steam Knight",
       "mode": "sub",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "branch-program",
-          "id": "11-20_adverse_environment",
-          "message": "Missing or unsupported stage branch binding"
-        },
-        {
-          "kind": "conditional",
-          "id": "11-20_adverse_environment"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_1266_nhapos",
@@ -303720,8 +303700,6 @@
       "kind": "branch-program",
       "reason": "Missing or unsupported stage branch binding",
       "stages": [
-        "11-20",
-        "11-20_adverse_environment",
         "12-20",
         "12-20_adverse_environment",
         "13-10",
@@ -329670,22 +329648,6 @@
       "id": "enemy_1534_stmkgt2",
       "stages": [
         "11-19"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "11-20",
-      "stages": [
-        "11-20"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "11-20_adverse_environment",
-      "stages": [
-        "11-20_adverse_environment"
       ],
       "soleReportedBlockerStages": []
     },

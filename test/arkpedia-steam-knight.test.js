@@ -175,9 +175,11 @@ test('revive: the wave is released, 8 s later the second form with 15 s invincib
 
 // Literal per-stage expectations, observed in the compiled stage (level 1 x 1.2 from the adverse rune: 96,000 HP).
 for (const [stageId, expect] of [
-  ['h11-2_adverse_environment', { boost: [40, 40, true], bombs: [false, false], revive: [.3, -2000, true] }],
-  ['h11-4_adverse_environment', { boost: [25, 40, true], bombs: [true, true], revive: [.5, -2000, true] }]])
-  test(`compiled ${stageId}: level 1 at 96000 HP, Boost ${expect.boost.join('/')}, sealing ${expect.bombs[0]}`, async () => {
+  ['h11-2_adverse_environment', { level: 1, hp: 96000, boost: [40, 40, true], bombs: [false, false], revive: [.3, -2000, true] }],
+  ['h11-4_adverse_environment', { level: 1, hp: 96000, boost: [25, 40, true], bombs: [true, true], revive: [.5, -2000, true] }],
+  ['11-20', { level: 0, hp: 65000, boost: [25, 45, false], bombs: [false, false], revive: [.3, -1500, false] }],
+  ['11-20_adverse_environment', { level: 0, hp: 78000, boost: [25, 45, false], bombs: [false, false], revive: [.3, -1500, false] }]])
+  test(`compiled ${stageId}: level ${expect.level} at ${expect.hp} HP, Boost ${expect.boost.join('/')}, sealing ${expect.bombs[0]}`, async () => {
     const { StandardBattle } = await import('../server/sim/arkpedia.js');
     const { createStageLibraryLoader } = await import('../shared/arkpedia/stage-library.js');
     const { defaultBuild } = await import('../shared/arkpedia/loadout.js');
@@ -187,7 +189,10 @@ for (const [stageId, expect] of [
     const found = manifest.stages.find(s => s.id === stageId);
     assert.equal(found.availability, 'available');
     const stage = await loader.load(found), rec = stage.enemies[id];
-    assert.equal(rec.level, 1); assert.equal(rec.stats.maxHp, 96000);
+    assert.equal(rec.level, expect.level); assert.equal(rec.stats.maxHp, expect.hp);
+    // 11-20's Twigs payload branches compile as no-ops: nothing spawns a Corrupted Seed.
+    if (stageId.startsWith('11-20')) for (const branch of Object.values(stage.waveProgram?.branches ?? {}))
+      assert.ok(!branch.spawns?.some(x => x.enemyKey === 'enemy_1266_nhapos'));
     const p = rec.runtimeFeatures.entries.find(x => x.ability?.kind === 'steamKnight').ability.params;
     assert.deepEqual([p.boost.initial, p.boost.cooldown, p.boost.hard], expect.boost);
     assert.deepEqual([p.bomb.first.hard, p.bomb.second.hard], expect.bombs);
@@ -197,3 +202,19 @@ for (const [stageId, expect] of [
     for (let i = 0; i < 200; i++) b.step();
     assert.deepEqual(b.errors, []);
   });
+
+test('inert Twigs payload: only one-seed branches in a level that places no Twigs', async () => {
+  const { inertTwigsPayload } = await import('../tools/arkpedia/stage-branches.mjs');
+  const seed = r => ({ phases: [{ preDelay: 0, actions: [{ actionType: 'SPAWN', key: 'enemy_1266_nhapos', count: 1, routeIndex: r }] }] });
+  const level = { branches: { route1: seed(0), route2: seed(1) }, predefines: { tokenInsts: [], tokenCards: [{ inst: { characterKey: 'trap_087_allady' } }] },
+    hardPredefines: { tokenInsts: [], tokenCards: [] } };
+  assert.equal(inertTwigsPayload(level), true);
+  const twig = { inst: { characterKey: 'trap_086_larva' } };
+  assert.equal(inertTwigsPayload({ ...level, predefines: { ...level.predefines, tokenInsts: [twig] } }), false, 'Twigs placed');
+  assert.equal(inertTwigsPayload({ ...level, hardPredefines: { tokenInsts: [], tokenCards: [twig] } }), false, 'Twigs card on hard');
+  const other = structuredClone(level); other.branches.route2.phases[0].actions[0].key = 'enemy_1267_nhpbr_2';
+  assert.equal(inertTwigsPayload(other), false, 'another enemy');
+  const two = structuredClone(level); two.branches.route1.phases[0].actions[0].count = 2;
+  assert.equal(inertTwigsPayload(two), false, 'two seeds');
+  assert.equal(inertTwigsPayload({ ...level, branches: {} }), false, 'no branches');
+});

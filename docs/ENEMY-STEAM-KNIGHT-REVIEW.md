@@ -1,8 +1,10 @@
 # "The Last Steam Knight"
 
 `enemy_1533_stmkgt` has two database levels:
-- **Level 0:** 65,000 HP, 1,600 ATK, 2,000 DEF, 40 RES. Used by 11-20 and its adverse variant (not published yet, see Boundaries).
-- **Level 1:** 80,000 HP, 1,800 ATK, 2,400 DEF, 40 RES. Used by H11-2 adverse and H11-4 adverse, both published here.
+- **Level 0:** 65,000 HP, 1,600 ATK, 2,000 DEF, 40 RES. Used by 11-20 and its adverse variant.
+- **Level 1:** 80,000 HP, 1,800 ATK, 2,400 DEF, 40 RES. Used by H11-2 adverse and H11-4 adverse.
+
+All four stages are published.
 
 Level 1 lists only `reborn.def` (-2,000) and its Boost (40/40 s, hard). Like the other sparse higher levels, it is read over level 0: talents by key, skills by prefab key. PRTS lists the full kit for both levels.
 
@@ -93,7 +95,8 @@ The runtime is the new `steamKnight` kind (`server/sim/content/arkpedia-enemy-st
   - The wave is released; 8 s later he is in the second form at full HP, with 15 s of invincibility and DEF -1,500.
   - He is stun-immune, and a HeroBomb comes at once on two targets.
   - The second knock-out kills him.
-- **Compiled stages.** H11-2 and H11-4 adverse: level 1 at 96,000 HP (×1.2 rune) with the literal Boost, bomb and revive values, and no battle errors.
+- **Compiled stages.** H11-2 and H11-4 adverse: level 1 at 96,000 HP (×1.2 rune). 11-20: level 0 at 65,000 HP. 11-20 adverse: 78,000 HP. Each has its literal Boost, bomb and revive values and no battle errors; 11-20's branches spawn no seed.
+- **Inert payload rule.** It refuses a level with Twigs placed or as a hard-level card, a branch with another enemy or two seeds, and a level without branches.
 
 **Headless runs.** Waves were cleared and his HP drained.
 - **H11-2 adverse:** five Boosts and no stuns, 57 Zantetsuken hits, first-form HeroBomb at 50%, the revive, four second-form HeroBombs (at entry, 70%, 39% and 9%), death, and no errors.
@@ -103,9 +106,23 @@ The gallery review renders his body and 21 clips.
 
 The library rebuild published H11-2 adverse and H11-4 adverse (1,084 available); no other available stage changed.
 
+## 11-20 and 11-20 adverse: the inert Twigs payload
+
+Both levels keep four branches, `route1`–`route4`, each a single Corrupted Seed (`enemy_1266_nhapos`). That is the Twigs payload (`trap_086_larva`), but these levels place no Twigs: none in `predefines` or `hardPredefines`, as an instance or a card. No wave action, device, template or enemy prefab in them names a branch (the chapter-11 enemies' prefabs were inspected). PRTS's 35 targets match the waves without the seeds, and the levels have no database entry for the seed.
+
+`inertTwigsPayload` in `tools/arkpedia/stage-branches.mjs` accepts exactly that case:
+- it still validates and consumes the viewer's branch entries;
+- it compiles each branch as a no-op (`{ spawns: [] }`, as for the unreferenced activation branches);
+- it drops the viewer's unused seed configuration.
+
+Any other unbound branch still fails; AK-4 and IG-7 keep their branch blockers. Among the cached original levels only these two match, and the rebuild published only them (1,086 available).
+
+**Headless runs.**
+- **11-20:** three Boosts. The first ends in the 5 s self-stun. The second ends during the HeroBomb, where he is immune. HeroBomb at 50%; no errors.
+- **11-20 adverse:** the same, with no errors.
+
 ## Boundaries
 
-- **11-20 and 11-20 adverse.** Their four `route1`–`route4` branches spawn Corrupted Seeds (`enemy_1266_nhapos`), the Twigs payload, but the levels place no Twigs and no wave, device or enemy names those branches. PRTS's 35 targets match the waves without them. They stay blocked until the branch compiler accepts that exact case.
 - **Assumptions:**
   - A HeroBomb restarts the Boost cooldown from its initial value, read from the FSM restart as for the Black Snake.
   - The bombardment area is `x-4` (3×3); the projectile's selector has no range of its own.
