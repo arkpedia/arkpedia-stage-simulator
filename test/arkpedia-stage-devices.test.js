@@ -87,8 +87,13 @@ test('a pulse-charged enemy ignores the altar pulse', () => {
   assert.equal(charged.profile.dmgType, 'arts');
 });
 
-test('roadside reserves block, can be destroyed, and restore DP', () => {
-  const stage = JSON.parse(readFileSync(new URL('../data/arkpedia-stage-12-8.json', import.meta.url)));
+test('roadside reserves block, can be destroyed, and restore DP', async () => {
+  // The compiled library 12-8 (the legacy chapter-12 files were retired with the chapter-12 sight system).
+  const { createStageLibraryLoader } = await import('../shared/arkpedia/stage-library.js');
+  const { readFile } = await import('node:fs/promises');
+  const manifest = JSON.parse(await readFile(new URL('../data/arkpedia-library.json', import.meta.url)));
+  const loader = createStageLibraryLoader(async url => new Response(await readFile(new URL(`..${url}`, import.meta.url))));
+  const stage = await loader.load(manifest.stages.find(s => s.id === '12-8'));
   const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
   const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 5).map(defaultBuild) });
   const device = battle.enemies.find(e => e.mem?.stageUnitDevice);

@@ -249,6 +249,7 @@ export class StandardBattle extends Battle {
         layerGainsEnabled: false,
         dpInit: config.initial_dp,
         dpMax: config.max_dp,
+        ...(Number.isSafeInteger(config.max_dp_ceil) ? { dpMaxCeil: config.max_dp_ceil } : {}),
         dpPerSec: config.dp_per_second,
         startOpCooldown: 0,
         moveScale: data.stage.pathing?.moveScale ?? 0.65,
@@ -832,7 +833,9 @@ export class StandardBattle extends Battle {
           stats: { maxHp: spec.hp, hp: spec.hp, atk: spec.atk ?? 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
       if (!e) continue;
       e.mem.stageUnitDevice = { ...spec, name: d.name, row: d.row, col: d.col, dir: d.dir ?? 'RIGHT', state: spec.pillar ? 'intact' : null };
-      e.profile.noAttack = true; e.counted = false; e.lpr = 0; e.blockWeight = 0;
+      // A placed enemy-side object (Ice Crystal, Roadside Emergency Reserves, pillar…) is no enemy: it neither holds a
+      // kill-all wave nor the battle's end (12-8's wave 0 waited for its five Reserves forever).
+      e.profile.noAttack = true; e.counted = false; e.lpr = 0; e.blockWeight = 0; e.profile.holdsBattle = false;
       e.route = { legs: [{ t: 'wait', time: 1e9 }], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
       e.s.moveSpeed = 0;
       this.grid.setObstacle(d.row, d.col, true, spec.obstacle);
@@ -841,7 +844,7 @@ export class StandardBattle extends Battle {
       const d = unit.mem?.stageUnitDevice;
       if (!d) return;
       this.grid.setObstacle(d.row, d.col, false, d.obstacle);
-      this.flags.dpMax += d.dpMax;
+      this.flags.dpMax = Math.min(this.flags.dpMaxCeil ?? Infinity, this.flags.dpMax + d.dpMax);
       this.addDp('arkpedia', d.dp);
     });
   }

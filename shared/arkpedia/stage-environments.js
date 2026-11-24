@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { SIGHT_ENVIRONMENT, sightNativeReviewed } from './stage-sight.js';
 import native from '../../data/arkpedia-environment-native-source.json' with { type: 'json' };
 import { dangerNativeReviewed, compileStageDanger } from './stage-danger.js';
 import { PARASITIC_ENVIRONMENT, parasiticNativeReviewed, compileParasiticEnvironment } from './stage-parasitic.js';
@@ -9,6 +10,7 @@ export function stageEnvironmentEnemyDependencies(environments) {
 
 export function environmentNativeReviewed(key, evidence = native) {
   if (key === PARASITIC_ENVIRONMENT) return parasiticNativeReviewed(evidence);
+  if (key === SIGHT_ENVIRONMENT) return sightNativeReviewed(evidence);
   if (key === 'legion_mode_enemy_boost') return dangerNativeReviewed(evidence);
   const rows = evidence.prefabs?.[key], c = rows?.[0]?.data, buff = c?._buffs?.[0];
   // This is a specialized timed-wave controller, despite its empty buff list.
@@ -72,6 +74,10 @@ export function compileStageEnvironments(instances, evidence = native) {
       || ![undefined, 'ALL'].includes(instance.playerSideMask) || instance.overrideCameraEffect != null)
       throw Error(`Unsupported stage environment targeting: ${key}`);
     if (key === 'legion_mode_enemy_boost') return compileStageDanger(instance.blackboard);
+    if (key === SIGHT_ENVIRONMENT) {
+      if (instance.blackboard != null && instance.blackboard.length) throw Error('Unsupported sight parameters');
+      return { kind: SIGHT_ENVIRONMENT, interval: .5 };
+    }
     if (key === PARASITIC_ENVIRONMENT) return compileParasiticEnvironment(instance.blackboard);
     if (key === 'strife_mode_feature') {
       const rows = instance.blackboard;

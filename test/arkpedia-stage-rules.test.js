@@ -23,8 +23,13 @@ const source={code:'5-4',name:normal.name,id:'main_05-04#f#',stage_type:'main',b
 test('environment-system blockers identify the shared controller instead of misreading its string key as a number', () => {
  const changed = structuredClone(receipt);
  changed.runes = [{ key: 'env_system_new', difficultyMask: 'ALL', professionMask: 'ALL', buildableMask: 'ALL',
-  blackboard: [{ key: 'key', value: 0, valueStr: 'env_005_mainline12_sightSystem' }] }];
- assert.throws(() => compileStageRules(source, changed), /Unsupported stage environment controller: env_005_mainline12_sightSystem/);
+  blackboard: [{ key: 'key', value: 0, valueStr: 'env_031_act43side' }] }];
+ assert.throws(() => compileStageRules(source, changed), /Unsupported stage environment controller: env_031_act43side/);
+ // The chapter-12 sight system is admitted once (stage-sight.js); a second one is refused.
+ const sight = structuredClone(changed); sight.runes[0].blackboard[0].valueStr = 'env_005_mainline12_sightSystem';
+ assert.doesNotThrow(() => compileStageRules(source, sight));
+ sight.runes.push(structuredClone(sight.runes[0]));
+ assert.throws(() => compileStageRules(source, sight), /Unsupported stage environment controller: env_005_mainline12_sightSystem/);
  changed.runes[0].blackboard.push(changed.runes[0].blackboard[0]);
  assert.throws(() => compileStageRules(source, changed), /Invalid stage environment controller identity/);
 });

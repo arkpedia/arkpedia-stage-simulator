@@ -7,12 +7,12 @@ all blocked stage IDs are in `data/arkpedia-content-inventory.json`.
 |---|---:|---:|
 | Operator forms | 431 | 431 |
 | Source skills registered | 949 | 949 |
-| Enemies supported | 860 | 2163 |
-| Capability-checked combat stages | 1089 | 3892 |
+| Enemies supported | 854 | 2163 |
+| Capability-checked combat stages | 1099 | 3892 |
 
-The generated library can load 1089 stages; 2803
-have missing capabilities. The legacy catalogue contains 938
-entries (597 public, 341 developer-only, 1 embedded).
+The generated library can load 1099 stages; 2793
+have missing capabilities. The legacy catalogue contains 905
+entries (564 public, 341 developer-only, 1 embedded).
 316 story/non-combat source entries are excluded from the combat target.
 The stage sources also reference 0 enemy IDs absent from the
 pinned enemy catalogue; those require source import before behavior admission.
@@ -31,9 +31,9 @@ source checks or determine admission to the generated library.
 
 | Mode | Loadable | Missing capabilities | Total |
 |---|---:|---:|---:|
-| main | 372 | 192 | 564 |
+| main | 381 | 183 | 564 |
 | sub | 64 | 22 | 86 |
-| activity | 589 | 1536 | 2125 |
+| activity | 590 | 1535 | 2125 |
 | event | 0 | 171 | 171 |
 | daily | 35 | 0 | 35 |
 | campaign | 11 | 24 | 35 |
@@ -72,9 +72,9 @@ not imply that every listed stage becomes playable.
 | environment | Unsupported stage environment: night_map_default | 69 |
 | environment | Unsupported stage environment: act1vautochess_time_out_global_buff | 65 |
 | device | Blizzard | 64 |
-| environment | Unsupported stage environment: mainline12_sightManager | 63 |
 | device | City Neon | 63 |
 | device | Vengeful Mafioso | 60 |
+| environment | Unsupported stage environment: act27sisde_enemy_global_buff | 60 |
 
 ## Workflow
 

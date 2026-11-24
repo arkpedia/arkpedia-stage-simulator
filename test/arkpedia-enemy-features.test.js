@@ -451,23 +451,18 @@ test('Sudaram: the attack hits both adjacent guards', () => {
   h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 25);
   assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
 });
-test('Norport Civilian: friendly, untargetable, and grants max DP on the objective', () => {
+test('Norport Civilian: friendly and untargetable; only a confirmed civilian grants max DP on the objective', () => {
+  // Identification itself is covered in test/arkpedia-norport-identity.test.js.
   const key = 'enemy_1313_wdfmr', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
-  assert.equal(e.profile.friendly, true); assert.equal(e.profile.civilianDp, 2);
+  assert.equal(e.profile.friendly, true); assert.equal(e.profile.civilianDp, undefined);
   assert.equal(canTargetEnemy(guard, e, {}), false);
   const before = h.b.flags.dpMax, leaked = h.b.leakedCount; h.b.leak(e);
-  assert.equal(h.b.flags.dpMax, before + 2); assert.equal(h.b.leakedCount, leaked); assert.ok(!e.alive);
+  assert.equal(h.b.flags.dpMax, before); assert.equal(h.b.leakedCount, leaked); assert.ok(!e.alive);
 });
-test('Spies: reveal is one-shot and applies the reviewed consequence', () => {
-  const stealthKey = 'enemy_1315_wdyjd', h1 = spawnAny(stealthKey, { seconds: 0.1 }), e1 = enemy(h1, stealthKey);
-  assert.equal(e1.profile.spy, true); assert.ok(e1.findBuff('ab:moveSpeed'));
-  assert.equal(h1.b.revealIdentity(e1), true); assert.equal(e1.s.flags.stealth, true); assert.equal(h1.b.revealIdentity(e1), false);
-
-  const attackKey = 'enemy_1314_wdnjd', h2 = spawnAny(attackKey, { seconds: 0.1 }), e2 = enemy(h2, attackKey);
-  h2.b.revealIdentity(e2);
-  const arm = e2.mem.ab.list.find(a => a.reveal); assert.ok(arm.armed);
-  const c = { dmg: { isAttack: true, amount: 100 } }; arm.hitOut(c, h2.b, e2, arm);
-  assert.equal(c.dmg.amount, 200); assert.equal(arm.armed, false);
+test('Spies and civilians without a reviewed identification contract are refused', () => {
+  for (const key of ['enemy_1313_wdfmr_2', 'enemy_1314_wdnjd_2', 'enemy_1315_wdyjd', 'enemy_1315_wdyjd_2', 'enemy_1316_wdpjd', 'enemy_1316_wdpjd_2'])
+    assert.equal(support.enemies[key].policy, null, key);
+  for (const key of ['enemy_1313_wdfmr', 'enemy_1314_wdnjd']) assert.ok(support.enemies[key].policy, key);
 });
 test('Instigator: unrevealed spies cannot be blocked while it is unblocked', () => {
   const spy = 'enemy_1315_wdyjd', lock = 'enemy_1319_wdfmpm';

@@ -112,6 +112,7 @@ import { FAUST_FEATURES } from './enemy-faust-features.js';
 import { REUNION_MEPHISTO_FEATURES } from './enemy-reunion-mephisto-features.js';
 import { WINTERS_SCAR_FEATURES, isWintersScar, wintersScarNative } from './enemy-wintersscar-features.js';
 import { BLACK_SNAKE_FEATURES, isBlackSnake, blackSnakeNative } from './enemy-black-snake-features.js';
+import { isReviewedIdentity, isUnreviewedIdentity, norportIdentityNative, norportIdentityParams } from './enemy-norport-identity-features.js';
 import { STEAM_KNIGHT_FEATURES, isSteamKnight, steamKnightNative, isSteamKnightS, steamKnightSNative } from './enemy-steam-knight-features.js';
 import { isChargeDrone, isArtificer, artilleryChargerNative, droneChargeParams, artificerChargeParams } from './enemy-artillery-charge-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
@@ -1148,31 +1149,33 @@ export const ENEMY_FEATURES = Object.freeze({
     dependsOn: r => isDreadkaz(r) ? [EPOCH_MARK] : [], explains: DREADKAZ_TEXT,
     note: 'dpDrain reads attack@cost/attack@sp. Window and Portal each require their complete native contract; effect_duration is visual only.' },
   // Instigator: while unblocked, unrevealed civilians/spies cannot be blocked.
+  // Chapter-12 identification: the reviewed Pathfinder Spy and Norport Civilian run the norportIdentity contract
+  // (enemy-norport-identity-features.js); other identity-bearing records wait for their own review.
   'ability:When not blocked, all unrevealed Civilians or Spies cannot be blocked': { covers: r => r.abilities.some(a => a.text === 'When not blocked, all unrevealed Civilians or Spies cannot be blocked'),
     ability: { kind: 'identityLock', params: () => ({}) }, note: 'locks unrevealed civilian/spy blocking while unblocked',
     explains: /^When not blocked, all unrevealed Civilians or Spies cannot be blocked$/ },
   // Spy support talents: the movement bonus and the EnhancedAttack scale.
-  'talent:moveSpeed': { covers: r => sig(r, 'moveSpeed', ['move_speed']),
-    ability: { kind: 'moveSpeedBonus', params: r => ({ mul: 1 + r.talents.bb['moveSpeed.move_speed'] }) },
+  'talent:moveSpeed': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && sig(r, 'moveSpeed', ['move_speed']),
+    ability: r => isReviewedIdentity(r) ? null : { kind: 'moveSpeedBonus', params: r => ({ mul: 1 + r.talents.bb['moveSpeed.move_speed'] }) },
     note: 'passive movement multiplier' },
-  'talent:EnhancedAttack': { covers: r => sig(r, 'EnhancedAttack', ['atk_scale']),
+  'talent:EnhancedAttack': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && sig(r, 'EnhancedAttack', ['atk_scale']),
     note: 'the reveal ability consumes EnhancedAttack.atk_scale' },
   // Spies: profile marker plus the two reviewed reveal consequences.
-  'ability:Spy': { covers: r => r.abilities.some(a => a.text === 'Spy'),
-    ability: { kind: 'spyProfile', params: () => ({}) }, note: 'spy profile; reveal via Battle.revealIdentity',
+  'ability:Spy': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'Spy'),
+    ability: r => isReviewedIdentity(r) ? { kind: 'norportIdentity', params: norportIdentityParams } : { kind: 'spyProfile', params: () => ({}) }, note: 'spy profile; reveal via Battle.revealIdentity',
     nativeClaim: () => ({ active: 1 }), explains: /^Spy$/ },
   'ability:When their identity is revealed, becomes <$ba.invisible>Invisible</>': { covers: r => r.abilities.some(a => a.text === 'When their identity is revealed, becomes <$ba.invisible>Invisible</>'),
     ability: { kind: 'revealedStealth', params: () => ({}) }, note: 'revealed Sentry Spy becomes stealthy',
     explains: /^When their identity is revealed, becomes <\$ba\.invisible>Invisible<\/>$/ },
-  "ability:When their identity is revealed, the next attack's ATK is greatly increased": { covers: r => r.abilities.some(a => a.text === "When their identity is revealed, the next attack's ATK is greatly increased"),
-    ability: { kind: 'revealedAttack', params: r => ({ scale: r.talents.bb['EnhancedAttack.atk_scale'] ?? 2 }) },
+  "ability:When their identity is revealed, the next attack's ATK is greatly increased": { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === "When their identity is revealed, the next attack's ATK is greatly increased"),
+    ability: r => isReviewedIdentity(r) ? null : { kind: 'revealedAttack', params: r => ({ scale: r.talents.bb['EnhancedAttack.atk_scale'] ?? 2 }) },
     note: 'revealed Pathfinder Spy arms one scaled attack', explains: /^When their identity is revealed, the next attack's ATK is greatly increased$/ },
   // Norport Civilian: a friendly unit that is not targetable and grants max DP on reaching the objective.
-  'ability:Friendly Unit': { covers: r => r.abilities.some(a => a.text === 'Friendly Unit'),
-    ability: { kind: 'friendlyUnit', params: () => ({}) }, note: 'friendly, untargetable, objective reward',
+  'ability:Friendly Unit': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'Friendly Unit'),
+    ability: r => isReviewedIdentity(r) ? { kind: 'norportIdentity', params: norportIdentityParams } : { kind: 'friendlyUnit', params: () => ({}) }, note: 'friendly, untargetable, objective reward',
     explains: text => text === 'Friendly Unit' || /^Once their identity is confirmed, restores your max DP after retreating to the Objective Point$/.test(text) },
-  'talent:civilianTalent': { covers: r => sig(r, 'civilianTalent', ['max_cost']),
-    ability: { kind: 'civilianReward', params: r => ({ dp: r.talents.bb['civilianTalent.max_cost'] }) },
+  'talent:civilianTalent': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && sig(r, 'civilianTalent', ['max_cost']),
+    ability: r => isReviewedIdentity(r) ? null : { kind: 'civilianReward', params: r => ({ dp: r.talents.bb['civilianTalent.max_cost'] }) },
     note: 'adds max DP when the civilian reaches the objective' },
   // Sudaram: its attack hits everything around it, and pollution/storm extends the hit to polluted allies.
   'ability:Attacks deal Physical damage to all surrounding units.': {

@@ -14,7 +14,98 @@
   "templates": {
    "gitBlob": "a94bbb391fded80e59db38ad7c3ded89e25fd682",
    "sha256": "b119917318c464f92d28fc5eb40b2069e3644674d26cace165f17bf9044e00ff"
+  },
+  "envBundle": {
+   "path": "battle/prefabs/[uc]envsystems.ab",
+   "bytes": 168719,
+   "md5": "6e5b86ee21792929fa22dff115ca0009",
+   "sha256": "42d2b4ed4b533fa4f001107f476c4cc6a10ff8d8e7c04448b9886a8052058e3f"
   }
+ },
+ "envSystems": {
+  "env_005_mainline12_sightSystem": [
+   {
+    "object": "env_005_mainline12_sightSystem",
+    "pathId": "-4148774087979712370",
+    "data": {
+     "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": "4757900957367189646"
+     },
+     "m_Enabled": 1,
+     "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": "-2081027859263501444"
+     },
+     "m_Name": "",
+     "_sideType": 2,
+     "_blackboard": [],
+     "_lifeTimeSetting": {
+      "allowAutoLoad": 0,
+      "autoReleaseBehaviour": {
+       "m_FileID": 0,
+       "m_PathID": "0"
+      }
+     }
+    },
+    "sha256": "f912b3c1ee824cac036b994b42f4c1faef4bdf063174224ac83b97ea2669ae7b"
+   },
+   {
+    "object": "env_005_mainline12_sightSystem",
+    "pathId": "7089603829985099918",
+    "data": {
+     "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": "4757900957367189646"
+     },
+     "m_Enabled": 1,
+     "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": "900435397854099108"
+     },
+     "m_Name": "",
+     "_allowNotAliveTarget": 0,
+     "_maskSettings": [
+      {
+       "statusKey": "inSight",
+       "tileInfoMask": [
+        4,
+        8
+       ],
+       "isEnable": 1
+      },
+      {
+       "statusKey": "outOfSight",
+       "tileInfoMask": [
+        8
+       ],
+       "isEnable": 0
+      }
+     ]
+    },
+    "sha256": "323d51290ca42eca07c4521e53b01467920f79403134519dd5e8ef14913fbfbb"
+   },
+   {
+    "object": "env_005_mainline12_sightSystem",
+    "pathId": "-2582934341195743090",
+    "data": {
+     "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": "4757900957367189646"
+     },
+     "m_Enabled": 1,
+     "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": "6126865866491063469"
+     },
+     "m_Name": "",
+     "_inSight": "inSight",
+     "_outOfSight": "outOfSight",
+     "_notViewed": "ontViewed"
+    },
+    "sha256": "9858f76d50ebd6efaebe1d3de92c512015b87b6f4f77ac7fdb0fc2e68f4370a0"
+   }
+  ]
  },
  "prefabs": {
   "periodic_damage": [
@@ -806,9 +897,147 @@
     },
     "sha256": "7c5e8c5aae96f19226b1e2cccfc57eb01a31a90b499981d01c60488234faebb3"
    }
+  ],
+  "mainline12_sightManager": [
+   {
+    "object": "mainline12_sightManager",
+    "pathId": "-4954911737513850890",
+    "data": {
+     "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": "1672052233351645174"
+     },
+     "m_Enabled": 1,
+     "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": "-6296718861144211397"
+     },
+     "m_Name": "",
+     "_key": "",
+     "_options": {
+      "targetSide": 1,
+      "targetMotion": 3,
+      "targetCategory": 3,
+      "enableAdvancedOptions": 0,
+      "ignoreTargetFree": 0,
+      "ignoreAllyTargetFree": 0,
+      "ignoreHealFree": 0,
+      "ignoreMotionMode": 0,
+      "ignoreTargetSide": 0,
+      "excludeSomeAbnormalFlags": 0,
+      "containSomeAbnormalFlags": 0,
+      "excludeAbnormalFlag": 0,
+      "containAbnormalFlag": 0,
+      "purposeMask": 0,
+      "professionMask": 0,
+      "checkUnitType": 0,
+      "unitTypeMask": 0,
+      "onlyIgnoreSomeOfTargetFreeCase": 0,
+      "abnormalFlag": 0,
+      "abnormalCombo": 0
+     },
+     "_buffs": [
+      {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "[g]mainline12_sightManager",
+       "loadFromDB": 0,
+       "isDurableBuff": 0,
+       "isDamageMissable": 0,
+       "isSilenceable": 0,
+       "isStunnable": 0,
+       "isFreezable": 0,
+       "isLevitatable": 0,
+       "isGroundBoundable": 0,
+       "statusResistable": 2,
+       "templateKey": "[g]mainline12_sightManager",
+       "disableOverride": 1,
+       "overrideKey": "",
+       "overrideType": 0,
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": 0,
+       "clearAllStackCntWhenTimeUp": 0,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": 0,
+       "overrideEffectKey": "",
+       "overrideOnEventPriority": 0,
+       "onEventPriority": 0,
+       "audioSignal": "",
+       "lifeTimeType": 2,
+       "takeSnapshotWhenExtend": 0,
+       "durationKey": "",
+       "remainingTimeKey": "",
+       "lifeTime": 0.0,
+       "triggerLifeType": 2,
+       "triggerCnt": 0,
+       "triggerInterval": 0.5,
+       "waitFirstTriggerInterval": 0,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": 0,
+       "blackboard": [],
+       "enableInitDirectionFromSource": 0
+      }
+     ],
+     "_overrideCameraEffect": "",
+     "_deckBuffs": [],
+     "_sourceType": 0
+    },
+    "sha256": "4b59b32dd79d2056613fb73911a0d9b2c849826bc25b26bbfc41e45f723ea5bf"
+   }
   ]
  },
  "templates": {
+  "[g]mainline12_sightManager": {
+   "templateKey": "[g]mainline12_sightManager",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerEnvSystem, Assembly-CSharp",
+      "_envKey": "env_005_mainline12_sightSystem",
+      "_target": "BUFF_OWNER",
+      "_triggerWithEvent": false,
+      "_eventName": null,
+      "_triggerWithBlackboard": false,
+      "_readResultFromBlackboard": false,
+      "_tryRuntimeLoad": false
+     }
+    ],
+    "ON_SKILL_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerEnvSystem, Assembly-CSharp",
+      "_envKey": "env_005_mainline12_sightSystem",
+      "_target": "BUFF_OWNER",
+      "_triggerWithEvent": false,
+      "_eventName": null,
+      "_triggerWithBlackboard": false,
+      "_readResultFromBlackboard": false,
+      "_tryRuntimeLoad": false
+     }
+    ],
+    "ON_SKILL_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerEnvSystem, Assembly-CSharp",
+      "_envKey": "env_005_mainline12_sightSystem",
+      "_target": "BUFF_OWNER",
+      "_triggerWithEvent": false,
+      "_eventName": null,
+      "_triggerWithBlackboard": false,
+      "_readResultFromBlackboard": false,
+      "_tryRuntimeLoad": false
+     }
+    ]
+   }
+  },
   "character_in_magiccircuit_env": {
    "templateKey": "character_in_magiccircuit_env",
    "effectKey": "",

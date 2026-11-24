@@ -1173,7 +1173,8 @@ export class Battle {
     if (!e || !e.alive || e.side !== 'enemy' || e.profile?.cannotExit) return;
     if (e.profile?.friendly) {
       // A friendly civilian reaching the objective raises the reviewed max DP instead of costing life.
-      if (e.profile.civilianDp > 0) this.flags.dpMax += e.profile.civilianDp;
+      // ModifyMaxCost: never past the stage's ceiling (cbuff_max_cost's max_cost_ceil) when it has one.
+      if (e.profile.civilianDp > 0) this.flags.dpMax = Math.min(this.flags.dpMaxCeil ?? Infinity, this.flags.dpMax + e.profile.civilianDp);
       this._remove(e, 'leak');
       this._ev(['leak', e.id]);
       if (this._hooks.enemyLeak) this.emit('enemyLeak', { enemy: e });

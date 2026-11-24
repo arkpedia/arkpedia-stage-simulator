@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { SIGHT_SYSTEM, sightNativeReviewed } from './stage-sight.js';
 import { PROFESSION_BITS, BUILDABLE_BITS, cardRuleMask } from './stage-card-rules.js';
 import { nativeStageRuleReviewed, STAGE_DYNAMIC_ABILITIES } from './stage-native-rules.js';
 import { compileStageEnvironments } from './stage-environments.js';
@@ -38,6 +39,7 @@ export function compileStageRules(source, receipt) {
     || ((challenge || sixStar) && !receipt.runes?.length))
     throw Error('Invalid or incompatible variant rule receipt');
   const allyCards = [], forbiddenLocations = [], deviceSkillCost = {}, deviceSkillAdd = {}, enemyReplacements = {};
+  let sightSystem = false;
   const enemyDynamicAbilities = {}, environmentBuffs = [], enemyScopedAdd = {};
   const deploymentDamage = [], predefinedDevices = {}, predefinedOperators = {}, environmentOverrides = {};
   const enemyTalentGlobal = {}, enemyTalentAddScoped = {};
@@ -80,6 +82,8 @@ export function compileStageRules(source, receipt) {
       const keys = (rune.blackboard ?? []).filter(entry => entry.key === 'key');
       if (keys.length !== 1 || keys[0].value !== 0 || !/^env_[a-z0-9_]+$/i.test(keys[0].valueStr ?? ''))
         throw Error('Invalid stage environment controller identity');
+      // Chapter 12: the sight system (stage-sight.js); the level must also carry its global buff (stage-environments.mjs).
+      if (keys[0].valueStr === SIGHT_SYSTEM && sightNativeReviewed() && !sightSystem) { sightSystem = true; continue; }
       throw Error(`Unsupported stage environment controller: ${keys[0].valueStr}`);
     }
     // 11-14 adverse: every operator's redeployment time +value s (no `char` target; other forms stay refused).
@@ -369,6 +373,12 @@ export function compileStageRules(source, receipt) {
       const value = (battle[field] ?? source.battle?.[field]) + bb.value;
       if (!Number.isSafeInteger(value) || value < 0) throw Error(`Invalid stage budget: ${field}`);
       battle[field] = value;
+    } else if (rune.key === 'cbuff_max_cost' && Object.keys(bb).sort().join() === 'max_cost,max_cost_ceil'
+      && Number.isSafeInteger(bb.max_cost) && Number.isSafeInteger(bb.max_cost_ceil) && bb.max_cost <= bb.max_cost_ceil) {
+      // Chapter 12: the DP cap starts at max_cost; ModifyMaxCost (the Norport Civilian's reward) may raise it up to
+      // max_cost_ceil.
+      if (battle.max_dp_ceil != null) throw Error('Duplicate stage DP capacity rule');
+      battle.max_dp = bb.max_cost; battle.max_dp_ceil = bb.max_cost_ceil;
     } else if (rune.key === 'cbuff_initial_cost' && Object.keys(bb).join() === 'cost' && Number.isSafeInteger(bb.cost)) {
       // The legacy starting-DP rune (only 0-6 Challenge): `cost` DP added to the level's initialCost.
       // Confirmed in game by the owner (2026-11-24): 0-6 Challenge starts with 8 + 3 = 11 DP.
@@ -419,6 +429,7 @@ export function compileStageRules(source, receipt) {
     } else throw Error(`Unsupported stage rune: ${rune.key}`);
   }
   return { variant: source.variant?.kind ?? null, source: receipt.source, battle, enemies, enemyAdd, hiddenGroups,
+    ...(sightSystem ? { sightSystem } : {}),
     ...(Object.keys(reedTileParameters).length ? { reedTileParameters } : {}),
     ...(reedIgnitions.length ? { reedIgnitions } : {}),
     ...(deploymentExcludedProfessionMask ? { deploymentExcludedProfessionMask } : {}),

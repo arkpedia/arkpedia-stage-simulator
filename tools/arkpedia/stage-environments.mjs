@@ -16,6 +16,9 @@ export async function prepareStageEnvironments({ root, rules, compiledRules }) {
       || wave.maxTimeWaitingForNextWave !== -1)
       throw Error('Unsupported Strife deadline wave program');
   }
+  // The chapter-12 sight system and its global buff come as a pair.
+  if (!!compiledRules?.sightSystem !== environment.some(e => e.kind === 'mainline12_sightManager'))
+    throw Error('Unpaired chapter-12 sight system');
   const danger = environment.find(e => e.kind === 'legion_mode_enemy_boost');
   if (danger?.limits.length && danger.limits.length !== level.waves?.length)
     throw Error('Unsupported danger-limit wave mapping');

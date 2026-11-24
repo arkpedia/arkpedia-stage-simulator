@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { installStageDanger } from './arkpedia-stage-danger.js';
 import { installParasiticEnvironment } from './arkpedia-stage-parasitic.js';
+import { installStageSight } from './arkpedia-stage-sight.js';
 /** Level-wide effects share the ordinary damage, buff and DP accounts. */
 export function installStageEnvironments(b, environments = []) {
   if (b.stageEnvironments) throw Error('Stage environments already installed');
@@ -44,6 +45,8 @@ export function installStageEnvironments(b, environments = []) {
         }
       };
       b.on('deploy', update); b.on('death', update); b.on('tick', update, { priority: 200 }); update();
+    } else if (environment.kind === 'mainline12_sightManager') {
+      installStageSight(b, environment);
     } else if (environment.kind === 'kill_to_add_cost') {
       b.on('death', ({ unit, reason }) => {
         if (reason === 'killed' && unit.side === 'enemy' && unit.kind === 'enemy') b.addDp('arkpedia', environment.cost);

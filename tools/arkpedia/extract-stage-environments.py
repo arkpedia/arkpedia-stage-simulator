@@ -24,7 +24,7 @@ def exact(v, key=''):
     return str(v) if key == 'm_PathID' else v
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 prefabs = {}
-for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_env', 'legion_mode_enemy_boost', 'strife_mode_feature', 'rogue_4_parasitic_buff', 'rogue_4_apoptosis[random_tile]']:
+for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_env', 'legion_mode_enemy_boost', 'strife_mode_feature', 'rogue_4_parasitic_buff', 'rogue_4_apoptosis[random_tile]', 'mainline12_sightManager']:
     rows = []
     def walk(go):
         d = go.read_typetree()
@@ -37,8 +37,26 @@ for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_en
             if o.type.name == 'Transform':
                 for child in data['m_Children']:
                     walk(by[by[child['m_PathID']].read_typetree()['m_GameObject']['m_PathID']])
-    walk(env.container[f'dyn/battle/prefabs/[uc]globalbuffs/{key}.prefab'])
+    walk(env.container[f'dyn/battle/prefabs/[uc]globalbuffs/{key.lower()}.prefab'])
     prefabs[key] = rows
+# Level environment systems (compiled controllers): retain their serialized configuration.
+env_bundle = 'battle/prefabs/[uc]envsystems.ab'
+env_row = next(r for r in manifest['abInfos'] if r['name'] == env_bundle)
+env_raw = (C / 'bundles' / env_bundle).read_bytes()
+assert len(env_raw) == env_row['abSize'] and hashlib.md5(env_raw).hexdigest() == env_row['md5']
+env_by = {o.path_id: o for o in UnityPy.load(env_raw).objects}
+env_container = UnityPy.load(env_raw).container
+env_systems = {}
+for key in ['env_005_mainline12_sightSystem']:
+    rows = []
+    go = env_container[f'dyn/battle/prefabs/[uc]envsystems/{key.lower()}.prefab'].read_typetree()
+    for c in go['m_Component']:
+        o = env_by[c['component']['m_PathID']]
+        if o.type.name != 'MonoBehaviour': continue
+        data = exact(o.read_typetree())
+        rows.append({'object': go['m_Name'], 'pathId': str(o.path_id), 'data': data,
+                     'sha256': sha(json.dumps(data, sort_keys=True, separators=(',', ':')).encode())})
+    env_systems[key] = rows
 template_raw = (C / 'tables/buff_template_data.json').read_bytes()
 assert hashlib.sha1(f'blob {len(template_raw)}\0'.encode() + template_raw).hexdigest() == 'a94bbb391fded80e59db38ad7c3ded89e25fd682'
 table = json.loads(template_raw)
@@ -59,7 +77,9 @@ result = {'schemaVersion': 1, 'source': {
     'repository': 'Kengxxiao/ArknightsGameData', 'commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',
     'resourceVersion': manifest['versionId'], 'manifestSha256': sha(manifest_raw),
     'bundle': {'path': bundle, 'bytes': len(raw), 'md5': row['md5'], 'sha256': sha(raw)},
-    'templates': {'gitBlob': 'a94bbb391fded80e59db38ad7c3ded89e25fd682', 'sha256': sha(template_raw)}},
+    'templates': {'gitBlob': 'a94bbb391fded80e59db38ad7c3ded89e25fd682', 'sha256': sha(template_raw)},
+    'envBundle': {'path': env_bundle, 'bytes': len(env_raw), 'md5': env_row['md5'], 'sha256': sha(env_raw)}},
+    'envSystems': env_systems,
     'prefabs': prefabs, 'templates': dict(sorted(templates.items()))}
 path = ROOT / 'data/arkpedia-environment-native-source.json'
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
