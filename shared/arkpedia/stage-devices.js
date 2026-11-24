@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { alladyNativeReviewed } from './stage-allerdale.js';
 import { carapaceNativeReviewed } from './stage-carapaces.js';
 import { twigsNativeReviewed } from './stage-twigs.js';
 import { powerArmorDeviceNativeReviewed } from './stage-power-armor.js';
@@ -95,6 +96,12 @@ export const STAGE_DEVICES = Object.freeze({
     // route and restores 5 DP cap + 5 DP when defeated.
     unit: Object.freeze({ hp: 8000, def: 100, block: 5, dpMax: 5, dp: 5, obstacle: 'crate' }),
   }),
+  "Allerdale's Guard": Object.freeze({
+    // PRTS 阿勒黛的卫护 placed as hidden instances (11-19): a wave action or the Steam Knight S's checkpoint branch makes
+    // one appear; skill index 0 is the barrier, 1 the protection-point mode (stage-allerdale.js). The card itself is
+    // STAGE_TOKEN_UNITS.trap_087_allady.
+    keys: Object.freeze(['trap_087_allady']), staticLevelReview: true, guard: true, activatable: true, skillIndices: Object.freeze([0, 1]),
+  }),
   'Energy Aggregate': Object.freeze({
     // PRTS 能量聚合体: the Black Snake's summon. Hidden instances appear when his SummonFlame advances the level branch
     // (stage-flames.js; runtime arkpedia-stage-flames.js). Enemy-side and attackable; 25 s later it fires four fireballs.
@@ -126,7 +133,7 @@ export function stageDeviceSpec(device) {
   const spec = STAGE_DEVICES[device?.name];
   // A hidden Turret or Ice Crystal is accepted only when an activation branch switches it on (Faust's ballistae).
   if (!spec || spec.keys && !spec.keys.includes(device.key) || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
-    && !((spec.turret || spec.statusPulse || spec.flame) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
+    && !((spec.turret || spec.statusPulse || spec.flame || spec.guard) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
       || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string')
     || spec.carapace && !carapaceNativeReviewed()
     || spec.twigs && !twigsNativeReviewed()
@@ -142,6 +149,7 @@ export function stageDeviceSpec(device) {
     || spec.gramophone && !gramophoneNativeReviewed()
     || spec.flowGenerator && !flowGeneratorNativeReviewed()
     || spec.turret && !turretNativeReviewed()
+    || spec.guard && !alladyNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;
 }

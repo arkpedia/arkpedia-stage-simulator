@@ -171,7 +171,8 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
 export async function prepareStageWaves({ root, rules, compiledRules, geometry, operators, devices = [], branches }) {
   const { level, source } = await readOriginalLevel(root, rules);
   const turrets = turretActivationBranches(level, originalDeviceDirection);
-  for (const d of turrets.devices) if (devices.some(x => x.alias === d.alias || (x.row === d.row && x.col === d.col)))
+  for (const d of turrets.devices) if (devices.some(x => x.alias === d.alias || (x.row === d.row && x.col === d.col
+    && !(d.key === 'trap_087_allady' && x.key === d.key))))
     throw Error(`Hidden Turret collides with a compiled device: ${d.alias}`);
   const compiledBranches = { ...emptyActivationBranches(level), ...turrets.branches, ...branches };
   if (Object.keys(level.branches ?? {}).some(key => !Object.hasOwn(compiledBranches, key)))

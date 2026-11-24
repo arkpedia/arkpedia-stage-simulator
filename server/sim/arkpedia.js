@@ -393,6 +393,18 @@ export class StandardBattle extends Battle {
     // A scheduled artillery: it starts charging from its starting SP when switched on.
     const gun = this.mvpStageDevices?.find(d => d.alias === key && d.scheduledActivation && d.artillery);
     if (gun) { gun.active = true; return; }
+    // A hidden Allerdale's Guard (11-19): it appears on its tile and runs its instance's skill (stage-allerdale.js).
+    const guard = this.mvpStageDevices?.find(d => d.alias === key && d.hidden && (d.branchActivated || d.scheduledActivation)
+      && stageDeviceSpec(d)?.guard);
+    if (guard) {
+      if (guard.active) return;
+      guard.active = true;
+      const def = alladyDefinition(guard.instance);
+      const unit = this.spawnDevice('device:trap_087_allady', guard.row, guard.col, { hp: def.hp, blockCnt: def.block, obstacle: false,
+        name: "Allerdale's Guard" });
+      if (unit) installAllerdaleGuard(this, unit, def, guard.instance.direction);
+      return;
+    }
     const entry = this.stagePredefined.get(key);
     if (!entry) throw Error(`Unknown predefined operator: ${key}`);
     if (entry.activated) return;

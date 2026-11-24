@@ -128,4 +128,41 @@ Any other unbound branch still fails; AK-4 and IG-7 keep their branch blockers. 
   - The bombardment area is `x-4` (3×3); the projectile's selector has no range of its own.
   - Ties in max HP and HP ratio go to the earlier-deployed unit.
 - **Presentation.** Sealed tiles have no tile marker yet, only the deployment refusal. The mark, the range effect and the shadow toggles are not drawn.
-- **Steam Knight S** (`enemy_1534_stmkgt2`, 11-19) shares his skeleton but has its own kit (branch `allady`, HeroBomb[failure]); it is not admitted.
+
+## Steam Knight S (11-19)
+
+`enemy_1534_stmkgt2` (level 0: 60,000 HP, 1,600 ATK, 2,000 DEF, 40 RES, BAT 7.5, life cost 0, no ability lines) is 11-19's scripted knight. He shares the Steam Knight's skeleton and clocks and is admitted from his own pinned tree: 44 components, two modes (Second and HeroBomb), and his own templates. The same `steamKnight` runtime runs him through these parameters (`steamKnightSParams`), held by `skill:HeroBomb[failure]`.
+
+- **Entry.** His talent `kill` (`stmkgt2_t[failure_level_buff]`, `InstantKill`) kills him on spawn. His one revive (`_maxRespawnCnt` 1, `reborn.duration` 8 s, `_hpRechargeRatio` 1) brings him back at full HP. Invincibility is 0 s and no HeroBomb follows. PRTS: "出现并进入重生状态".
+- **Boost (`stmkgt2_boost`).** Attack speed +200 and movement ×1.3 (formula MULTIPLIER), with control immunity, for `boost_duration` 999 s. When it ends, DEF -1,400 and RES -40 (`stmkgt2_after_boost[weak]`).
+- **Checkpoint (`stmkgt2_reach_checkpoint`, every 0.1 s).** Once he has reached his route's checkpoint 1 counted from the end, `MoveNextLevelBranch` runs on `reborn.branch_id` (`allady`). In 11-19 that is (5,4), just before Siege, and the branch makes the protection-point Allerdale's Guard appear. The compiled route repeats the end tile as an ordinary leg; it is not counted.
+- **Zantetsuken.** SP 3; three hits of 120% after charging until 8 s less Skill_1_Attack.
+- **HeroBomb[failure].** At 50% HP: one ground target, 20% ATK, no sealing.
+- **Second knock-out.** It is his death.
+
+**Tests.**
+- Admission, with a changed branch id refused; literal parameters.
+- Spawn into an invulnerable, unmovable 8 s revive, then full HP with no invincibility, attack speed +200 and stun immunity.
+- The branch advances once, only after checkpoint index 5.
+- The compiled 11-19 run.
+
+## 11-19
+
+11-19 (直指命运) has a fixed squad of no operators, 3 starting DP and 1 life point. Four operators are preplaced: Dagda, Totter, Hibiscus and Siege. Three Allerdale's Guards are hidden instances (`docs/STAGE-ALLERDALE-GUARD-REVIEW.md`):
+
+| Alias | Tile, facing | Skill | Switched on by |
+|---|---|---|---|
+| `trap_087_allady#1` | (5,6) left | barrier | wave 0 at 56 s |
+| `trap_087_allady#3` | (2,9) left | barrier | wave 1 |
+| `trap_087_allady` | (5,6) right | protection point (no effect) | the `allady` branch |
+
+A hidden Guard card (`#2`) is never revealed.
+
+**Compiler changes:**
+- Guards may share a tile, so their instances are keyed by alias, and the viewer's alias-less entries match the original instances in order.
+- A single activation's `interval` is ignored, because it is moot when the count is 1. That also opened `lk-dp-d` (FrostNova's Ice Crystals) and `vi-5` (Faust's Turrets), whose branch actions carried `interval` 1. Both run without errors.
+
+**What the tests check:**
+- Guard `#1` shields Siege and Dagda at 59.2 s.
+- Unassisted (no skills used), the preplaced operators fall to the turret and the Withered, and the knight walks his route. Past (5,4) the protection-point Guard appears, he walks into the goal at no life cost, and the stage clears without errors.
+- In the game, the player uses the operators' skills; PRTS: "推进之王阻挡<蒸汽骑士S>".

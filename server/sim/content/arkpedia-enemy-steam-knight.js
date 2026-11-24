@@ -5,7 +5,7 @@
 import { canTargetAlly } from '../targeting.js';
 
 const CAST = 'ab:stmkgtCast', HOLD = 'ab:stmkgtHold', DEBUFF = 'stmkgt_t_debuff', BOOST = 'stmkgt_t_boost',
-  SECOND = 'stmkgt_boost[second]', INV = 'stmkgt_t_state_2[reborn_invincible]';
+  SECOND = 'stmkgt_boost[second]', INV = 'stmkgt_t_state_2[reborn_invincible]', AFTER = 'stmkgt2_after_boost[weak]';
 // Boost (stmkgt_t_boost) and the second form: abnormalImmunes STUNNED, SILENCED, DISARMED, FROZEN, COLD, LEVITATE and
 // the SLEEPING combo. HeroBomb (stmkgt_invincible[hero_bomb]): STUNNED, SILENCED, FROZEN, LEVITATE, DISARMED_COMBAT,
 // PALSY/PALSYING and SLEEPING.
@@ -22,7 +22,7 @@ export function steamKnight(p) {
 
   // --- Immunities: the record's own set plus whatever the current state grants ---
   const immunity = (e, a) => {
-    const extra = [...(a.boosting || form2(a) ? BOOST_IMMUNE : []), ...(a.bomb ? BOMB_IMMUNE : [])];
+    const extra = [...(a.boosting || a.secondBoost ? BOOST_IMMUNE : []), ...(a.bomb ? BOMB_IMMUNE : [])];
     e.def = { ...e.def, immune: new Set([...a.baseImmune, ...extra]) };
   };
   const clearControl = (b, e) => { for (const k of CONTROL) if (e.findBuff(k)) b.removeStatus(e, k); };
@@ -119,16 +119,26 @@ export function steamKnight(p) {
     }
   };
 
-  const resetSkills = a => { a.left = { boost: form2(a) ? Infinity : p.boost.initial }; };
+  const resetSkills = a => { a.left = { boost: form2(a) || !p.boost ? Infinity : p.boost.initial }; };
 
   const enterSecond = (b, e, a) => {
     a.form = 'second'; unhold(b, e); e.hp = e.s.maxHp;
-    b.addBuff(e, { key: SECOND, persist: true, visible: true, mods: { aspd: p.revive.aspd, moveFlat: p.revive.move,
-      defFlat: p.revive.def, resFlat: p.revive.res, ...(p.revive.hard ? { dmgTakenMul: 1 - p.revive.resistance } : {}) } });
+    // The second-form boost: permanent for the Steam Knight; Steam Knight S's lasts boost_duration (999 s), then
+    // stmkgt2_after_boost[weak] lowers DEF and RES.
+    a.secondBoost = true;
+    const finite = Number.isFinite(p.revive.boostDuration);
+    b.addBuff(e, { key: SECOND, ...(finite ? { duration: p.revive.boostDuration } : { persist: true }), visible: true,
+      mods: { aspd: p.revive.aspd, moveFlat: p.revive.move, moveMul: 1 + p.revive.moveMul,
+        defFlat: p.revive.def, resFlat: p.revive.res, ...(p.revive.hard ? { dmgTakenMul: 1 - p.revive.resistance } : {}) },
+      ...(finite ? { onExpire: () => {
+        a.secondBoost = false; immunity(e, a);
+        b.addBuff(e, { key: AFTER, persist: true, visible: true, mods: { defFlat: p.revive.after.def, resFlat: p.revive.after.res } });
+      } } : {}) });
     if (p.revive.invincible > 0) b.addBuff(e, { key: INV, duration: p.revive.invincible, visible: true, flags: { invulnerable: true } });
     immunity(e, a); resetSkills(a); a.mark = 1;
-    // stmkgt_t[reborn_bomb]: 0.1 s later, HeroBomb[second_state].
-    b.after(p.revive.bombDelay, () => { if (e.alive && a.form === 'second' && !a.bomb) startBomb(b, e, a); }, { owner: e });
+    // stmkgt_t[reborn_bomb]: 0.1 s later, HeroBomb[second_state] (the Steam Knight only).
+    if (p.revive.bombDelay != null)
+      b.after(p.revive.bombDelay, () => { if (e.alive && a.form === 'second' && !a.bomb) startBomb(b, e, a); }, { owner: e });
   };
 
   return {
@@ -138,7 +148,9 @@ export function steamKnight(p) {
       e.profile.deferHit = true; e.profile.canTarget = u => u === e.blockedBy;
       e.def = { ...e.def, attackAnim: p.attack.anim[0] };
       // BornWeak: attack speed -50 and movement x0.5 until the first Boost.
-      b.addBuff(e, { key: DEBUFF, persist: true, visible: true, mods: { aspd: p.debut.aspd, moveMul: 1 + p.debut.move } });
+      if (p.debut) b.addBuff(e, { key: DEBUFF, persist: true, visible: true, mods: { aspd: p.debut.aspd, moveMul: 1 + p.debut.move } });
+      // Steam Knight S: talent `kill` (stmkgt2_t[failure_level_buff], InstantKill) at once, so he enters his revive.
+      if (p.entry === 'reviving') { a.form = 'reviving'; a.until = b.time + p.revive.duration; hold(b, e, a); immunity(e, a); e.hp = Math.min(1, e.s.maxHp); }
     },
     attack(c, b, e, a) {
       if (!['first', 'second'].includes(a.form) || a.bomb) return;
@@ -163,6 +175,19 @@ export function steamKnight(p) {
       if (!e.alive) return;
       if (a.form === 'reviving') { if (b.time + 1e-9 >= a.until) enterSecond(b, e, a); return; }
       if (a.bomb) { tickBomb(b, e, a, dt); return; }
+      // stmkgt2_reach_checkpoint: once past his route's checkpoint `fromEnd` counted from the last one, the stage branch
+      // advances once (MoveNextLevelBranch on reborn.branch_id).
+      if (p.checkpoint && a.form === 'second' && !a.checkpointDone && e.route?.legs) {
+        // The compiled route repeats the end tile as a last ordinary leg before the final one; that is not an original
+        // checkpoint, so it is not counted from the back.
+        const legs = e.route.legs, last = legs.at(-1), cps = legs.filter(l => !l.final);
+        const repeat = last?.final && cps.length && cps.at(-1).t === 'move' && cps.at(-1).r === last.r && cps.at(-1).c === last.c;
+        const checkpoints = cps.length - (repeat ? 1 : 0), index = checkpoints - 1 - p.checkpoint.fromEnd;
+        if (index >= 0 && e.route.legIdx > index) {
+          a.checkpointDone = true;
+          if (b.stageBranches?.branches?.[p.checkpoint.branch]) b.stageBranches.advance(p.checkpoint.branch);
+        }
+      }
       e.def.attackAnim = pick(a, p.attack.anim);
       // HpRatioTrigger: every `threshold` of max HP lost since the mark (spawn, revive or the last HeroBomb). During
       // Zantetsuken (stmkgt_s_zantetsuken[flag]) the HeroBomb waits for the cast to end.
@@ -183,7 +208,7 @@ export function steamKnight(p) {
         return;
       }
       if (!e.canAct) return;
-      if (a.form === 'first' && a.left.boost <= 1e-9) {
+      if (a.form === 'first' && p.boost && a.left.boost <= 1e-9) {
         // Boost needs no target; its effects start with the cast (_runActionOnEvent 2) and the cooldown restarts.
         a.left.boost = p.boost.cooldown;
         startCast(b, e, a, { kind: 'boost', dur: p.boost.anim.dur, hit: Infinity });
@@ -210,15 +235,19 @@ function validate(p) {
   const bomb = s => pos(s?.threshold) && s.threshold < 1 && Number.isInteger(s.targets) && s.targets > 0 && pos(s.scale) && pos(s.mark) && typeof s.hard === 'boolean';
   const ok = pos(p?.attack?.scale) && pair(p.attack.anim)
     && Number.isInteger(p.sp?.max) && p.sp.max > 0 && nn(p.sp.initial) && pos(p.sp.increment)
-    && Number.isFinite(p.debut?.aspd) && p.debut.move > -1 && p.debut.move <= 0
-    && pos(p.boost?.cooldown) && nn(p.boost.initial) && pos(p.boost.duration) && nn(p.boost.aspd) && nn(p.boost.move)
-    && p.boost.resistance > 0 && p.boost.resistance < 1 && pos(p.boost.stun) && typeof p.boost.hard === 'boolean' && anim(p.boost.anim)
+    && (p.debut == null || Number.isFinite(p.debut.aspd) && p.debut.move > -1 && p.debut.move <= 0)
+    && (p.boost == null ? p.entry === 'reviving' : pos(p.boost.cooldown) && nn(p.boost.initial) && pos(p.boost.duration) && nn(p.boost.aspd)
+      && nn(p.boost.move) && p.boost.resistance > 0 && p.boost.resistance < 1 && pos(p.boost.stun) && typeof p.boost.hard === 'boolean' && anim(p.boost.anim))
+    && [undefined, 'reviving'].includes(p.entry)
+    && (p.checkpoint == null || Number.isInteger(p.checkpoint.fromEnd) && p.checkpoint.fromEnd >= 0 && typeof p.checkpoint.branch === 'string')
     && pos(p.zantetsuken?.cost) && p.zantetsuken.cost <= p.sp.max && Number.isInteger(p.zantetsuken.times) && p.zantetsuken.times > 0
     && pos(p.zantetsuken.scale) && pos(p.zantetsuken.duration) && pair(p.zantetsuken.strike)
     && p.zantetsuken.strike.every(s => s.dur <= p.zantetsuken.duration)
     && bomb(p.bomb?.first) && bomb(p.bomb.second) && two(p.bomb.fly) && two(p.bomb.land) && pos(p.bomb.life) && pos(p.bomb.interval)
     && Number.isInteger(p.bomb.maxHits) && p.bomb.maxHits > 0 && nn(p.bomb.delay) && Array.isArray(p.bomb.tiles) && p.bomb.tiles.length === 9
     && pos(p.revive?.duration) && nn(p.revive.invincible) && nn(p.revive.aspd) && Number.isFinite(p.revive.move) && Number.isFinite(p.revive.def)
-    && Number.isFinite(p.revive.res) && p.revive.resistance > 0 && p.revive.resistance < 1 && typeof p.revive.hard === 'boolean' && nn(p.revive.bombDelay);
+    && Number.isFinite(p.revive.res) && typeof p.revive.hard === 'boolean' && (!p.revive.hard || p.revive.resistance > 0 && p.revive.resistance < 1)
+    && (p.revive.bombDelay == null || nn(p.revive.bombDelay)) && Number.isFinite(p.revive.moveMul) && p.revive.moveMul > -1
+    && (p.revive.boostDuration == null || pos(p.revive.boostDuration) && Number.isFinite(p.revive.after?.def) && Number.isFinite(p.revive.after?.res));
   if (!ok) throw Error('Invalid Steam Knight parameters');
 }

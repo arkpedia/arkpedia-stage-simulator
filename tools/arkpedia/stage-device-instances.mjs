@@ -43,6 +43,12 @@ export function selectStaticDeviceInstances(devices, level, rules = {}) {
     if (!known(d)) { selected.push(d); continue; }
     const candidates = original.filter(p => p.inst.characterKey === d.key && p.position?.row === d.row
       && p.position?.col === d.col && p.hidden === d.hidden);
+    // Allerdale's Guards may share a tile (11-19); the viewer lists them in original order without aliases.
+    if (stageDeviceSpec({ ...d, hidden: false })?.guard) {
+      const free = candidates.filter(p => !matched.has(p));
+      if (!free.length || free.some(p => !p.alias)) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
+      candidates.splice(0, candidates.length, free[0]);
+    }
     if (candidates.length !== 1 || matched.has(candidates[0])) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = candidates[0]; matched.add(p);
     const base = stageDeviceSpec({ ...d, hidden: false }), scheduled = base?.scheduled;
@@ -68,10 +74,11 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
   const reviewed = devices.filter(d => stageDeviceSpec(d)?.staticLevelReview);
   const all = level.predefines?.tokenInsts ?? [];
   for (const d of reviewed) {
-    const matching = all.filter(p => p.inst?.characterKey === d.key && p.position?.row === d.row && p.position?.col === d.col);
+    const matching = all.filter(p => p.inst?.characterKey === d.key && p.position?.row === d.row && p.position?.col === d.col
+      && (!stageDeviceSpec(d)?.guard || p.alias === d.alias));
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -93,6 +100,8 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       throw Error(`Unimplemented device instance override: ${d.key}`);
     const actions = (level.waves ?? []).flatMap(w => (w.fragments ?? []).flatMap(f => f.actions ?? []));
     if (!spec.scheduled && !switched && actions.some(a => p.alias && a.key === p.alias || a.key === d.key)) throw Error(`Scheduled device activation requires a controller: ${d.key}`);
+    if (spec.guard) { instances[`${d.key}:${d.alias}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl, skillIndex: p.skillIndex,
+      direction: originalDeviceDirection(p.direction) }; continue; }
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
       ...(spec.mimic || spec.powerArmor ? { branchId } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),

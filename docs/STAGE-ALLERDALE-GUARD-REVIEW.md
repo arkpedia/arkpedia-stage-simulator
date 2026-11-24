@@ -41,6 +41,10 @@ The compiled family is `alladyDefinition`, with variants level 1, skill level 1,
 
 In the browser, 11-5's card now shows the facing picker. The library rebuild changed exactly the 24 stages with the card (the `chooseFacing` flag); the legacy 11-5 smoke files carry the same flag.
 
+## Placed instances (11-19)
+
+Hidden instances use the device spec `Allerdale's Guard` (`guard`, `activatable`). A wave action (`#1`, `#3`) or the `allady` branch makes one appear on its tile with its instance's facing and skill index. Two of them share (5,6), so instances are keyed by alias. See `docs/ENEMY-STEAM-KNIGHT-REVIEW.md` (11-19).
+
 ## Boundaries
 
 - **Unconfirmed in game.** The 3×3 centred on the faced ally and the 10 s duration come from the prefab and templates, not from a game check.

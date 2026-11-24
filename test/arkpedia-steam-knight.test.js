@@ -46,7 +46,7 @@ test('parameters: level 0 database, level 1 read over level 0, and the stage ove
   assert.deepEqual([p0.zantetsuken.cost, p0.zantetsuken.times, p0.zantetsuken.scale, p0.zantetsuken.duration], [4, 3, 1.25, 7]);
   assert.deepEqual([p0.bomb.first.threshold, p0.bomb.first.targets, p0.bomb.first.scale, p0.bomb.first.hard], [.5, 1, .5, true]);
   assert.deepEqual([p0.bomb.second.threshold, p0.bomb.second.targets, p0.bomb.second.scale, p0.bomb.second.hard], [.3, 2, .4, true]);
-  assert.deepEqual(p0.revive, { duration: 8, invincible: 15, aspd: 100, move: .3, def: -1500, res: -40, resistance: .3, hard: true, bombDelay: .1 });
+  assert.deepEqual(p0.revive, { duration: 8, invincible: 15, aspd: 100, move: .3, def: -1500, res: -40, resistance: .3, hard: true, bombDelay: .1, moveMul: 0 });
   const p1 = steamKnightParams(entry.levels[1]);
   assert.deepEqual([p1.boost.cooldown, p1.boost.initial, p1.boost.hard, p1.revive.def, p1.bomb.first.hard, p1.debut.aspd], [40, 40, true, -2000, true, -50]);
   const s20 = steamKnightParams(STAGE['11-20'](entry.levels[0]));
@@ -226,4 +226,72 @@ test("11-19's turret: the Cannon's first cast at 1 s and 50% ATK are accepted; i
   const out = applyStageEnemyBlackboard(r, { level: 0, blackboard: [], spData: null, skills: [cannon()] });
   assert.deepEqual([out.skills[0].initCooldown, out.skills[0].cooldown, out.skills[0].bb.atk_scale], [1, 25, .5]);
   assert.throws(() => applyStageEnemyBlackboard(r, { level: 0, blackboard: [], spData: null, skills: [cannon({ cooldown: 10 })] }), /Unsupported/);
+});
+
+// ---- Steam Knight S (11-19) ----
+import { steamKnightSNative, steamKnightSParams } from '../shared/arkpedia/enemy-steam-knight-features.js';
+const sid = 'enemy_1534_stmkgt2', sentry = ENEMY_RECORDS.enemies[sid];
+
+test('Steam Knight S: admitted from his pinned tree; scripted entry, 999 s boost, checkpoint branch, HeroBomb[failure]', () => {
+  assert.ok(enemySupport(sentry, clocks.prefabs, native).policy);
+  const r = sentry.levels[0], n = nativeComponents(native, sid);
+  assert.equal(steamKnightSNative(r, n), true);
+  assert.equal(steamKnightSNative({ ...r, talents: { ...r.talents, bbStr: { ...r.talents.bbStr, 'reborn.branch_id': 'x' } } }, n), false);
+  const p = steamKnightSParams(r);
+  assert.deepEqual([p.entry, p.checkpoint.fromEnd, p.checkpoint.branch, p.boost, p.debut], ['reviving', 1, 'allady', null, null]);
+  assert.deepEqual([p.revive.duration, p.revive.invincible, p.revive.aspd, p.revive.moveMul, p.revive.boostDuration, p.revive.after.def, p.revive.after.res, p.revive.bombDelay],
+    [8, 0, 200, .3, 999, -1400, -40, null]);
+  assert.deepEqual([p.zantetsuken.cost, p.zantetsuken.times, p.zantetsuken.scale, p.zantetsuken.duration], [3, 3, 1.2, 8]);
+  assert.deepEqual([p.bomb.second.threshold, p.bomb.second.targets, p.bomb.second.scale, p.bomb.second.hard], [.5, 1, .2, false]);
+});
+
+test('Steam Knight S spawns into his 8 s revive, then fights boosted and control-immune; past his checkpoint the branch advances once', () => {
+  const op = chessRec({ id: 'stmkgt2_target', stats: { maxHp: 1e7, atk: 0, def: 0, res: 0, blockCnt: 1 } });
+  const h = makeBattle({ content: 'generic', autoFinish: false, timeLimit: 1000, defs: { chess: { [op.chessId]: op }, enemies: { [sid]: sentry.levels[0] } },
+    units: [], setup: b => installEnemyFeatures(b) });
+  const b = h.b; b.start();
+  const advanced = []; b.stageBranches = { branches: { allady: {} }, advance: k => advanced.push([k, b.time]) };
+  const e = b.spawnEnemy(sid, { pos: [10, 0], route: 0 }), a = e.mem.ab.list.find(x => x.stmkgt);
+  const aspd0 = e.s.aspd;
+  b.step(); assert.equal(a.form, 'reviving'); assert.ok(e.s.flags.invulnerable && e.s.flags.noMove);
+  const run = s => { const until = b.time + s; while (b.time < until - 1e-9) b.step(); };
+  run(7.8); assert.equal(a.form, 'reviving'); run(.3);
+  assert.equal(a.form, 'second'); assert.equal(e.hp, e.s.maxHp); assert.ok(!e.s.flags.invulnerable, 'no reborn invincibility (0 s)');
+  assert.equal(e.s.aspd, aspd0 + 200); assert.ok(e.def.immune.has('stun'));
+  // Route: 7 checkpoints, the end repeated as a leg, then the final leg; checkpoint 1 from the end is index 5.
+  e.route.legs = [...Array.from({ length: 8 }, (_, i) => ({ t: 'move', r: 10, c: i === 7 ? 9 : i })), { t: 'move', r: 10, c: 9, final: true }];
+  e.route.legIdx = 5; run(.2); assert.deepEqual(advanced, []);
+  e.route.legIdx = 6; run(.2); e.route.legIdx = 7; run(.2);
+  assert.equal(advanced.length, 1); assert.equal(advanced[0][0], 'allady');
+});
+
+test('compiled 11-19: three hidden Guards (two on one tile), the allady branch, the scripted knight; the run clears without errors', async () => {
+  const { StandardBattle } = await import('../server/sim/arkpedia.js');
+  const { createStageLibraryLoader } = await import('../shared/arkpedia/stage-library.js');
+  const mvp = JSON.parse(await readFile(new URL('../data/arkpedia-mvp.json', import.meta.url)));
+  const manifest = JSON.parse(await readFile(new URL('../data/arkpedia-library.json', import.meta.url)));
+  const loader = createStageLibraryLoader(async url => new Response(await readFile(new URL(`..${url}`, import.meta.url))));
+  const found = manifest.stages.find(s => s.id === '11-19');
+  assert.equal(found.availability, 'available');
+  const stage = await loader.load(found);
+  const guards = stage.devices.filter(d => d.key === 'trap_087_allady');
+  assert.deepEqual(guards.map(d => [d.alias, d.row, d.col, d.instance.skillIndex, !!d.branchActivated, !!d.scheduledActivation]).sort(),
+    [['trap_087_allady#1', 5, 6, 0, false, true], ['trap_087_allady#3', 2, 9, 0, false, true], ['trap_087_allady', 5, 6, 1, true, false]]);
+  assert.deepEqual(stage.waveProgram.branches.allady.phases, [['trap_087_allady']]);
+  const make = () => { const b = new StandardBattle({ ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } }, { operators: [] }, { seed: 1 });
+    b.setViewport('fullscreen-workspace'); b.life = 99; return b; };
+  // Guard #1 (56 s, facing Siege): Siege and Dagda (in Siege's 3x3) are shielded at 59.2 s. Operators held alive here.
+  const b1 = make(); b1.step(); for (const u of b1.allies()) b1.addBuff(u, { key: 'probe', persist: true, flags: { invulnerable: true } });
+  while (b1.time < 59.1) b1.step();
+  const shielded = () => b1.allies().filter(u => u.findBuff('allady_shield')).map(u => u.defId).sort();
+  assert.deepEqual(shielded(), []); while (b1.time < 59.4) b1.step();
+  assert.deepEqual(shielded(), ['char_112_siege', 'char_157_dagda']);
+  // Unassisted (no skills, the preplaced operators fall): the knight revives, passes (5,4), the protection-point Guard
+  // appears, he walks in (no life lost) and the stage clears.
+  const b = make(), acts = [], act = b.activateStagePredefined.bind(b);
+  b.activateStagePredefined = k => { acts.push([k, Math.round(b.time)]); return act(k); };
+  while (!b.finished && b.time < 600) b.step();
+  assert.equal(b.reason, 'cleared'); assert.deepEqual(b.errors, []);
+  assert.deepEqual(acts.map(x => x[0]), ['trap_087_allady#1', 'trap_087_allady#3', 'trap_087_allady']);
+  assert.equal(acts[0][1], 56);
 });

@@ -32,7 +32,8 @@ export function emptyActivationBranches(level) {
  * MoveNextLevelBranch on its branch_id: one phase per cast, no loop. Each alias must be a unique hidden instance
  * of one of these keys; it is validated like the static device and compiled as a hidden device the stage
  * activates by alias. Branches of any other shape are left to their owners. */
-const ACTIVATED_DEVICES = { trap_007_ballis: 'Turret', trap_010_frosts: 'Originium Ice Crystal', trap_021_flame: 'Energy Aggregate' };
+const ACTIVATED_DEVICES = { trap_007_ballis: 'Turret', trap_010_frosts: 'Originium Ice Crystal', trap_021_flame: 'Energy Aggregate',
+  trap_087_allady: "Allerdale's Guard" };
 export function turretActivationBranches(level, originalDeviceDirection) {
   const insts = level.predefines?.tokenInsts ?? [], branches = {}, devices = [], instances = {}, used = new Set();
   for (const [key, branch] of Object.entries(level.branches ?? {})) {
@@ -43,7 +44,7 @@ export function turretActivationBranches(level, originalDeviceDirection) {
       const aliases = [];
       for (const a of phase.actions) {
         if (![6, 'ACTIVATE_PREDEFINED'].includes(a.actionType) || typeof a.key !== 'string' || !a.key
-          || a.managedByScheduler !== true || a.count !== 1 || a.preDelay !== 0 || a.interval !== 0
+          || a.managedByScheduler !== true || a.count !== 1 || a.preDelay !== 0 /* the interval of a single activation is moot */
           || ['hiddenGroup', 'randomSpawnGroupKey', 'randomSpawnGroupPackKey', 'extraMeta', 'useExtraRoute',
             'blockFragment', 'dontBlockWave', 'forceBlockWaveInBranch', 'isUnharmfulAndAlwaysCountAsKilled',
             'notCountInTotal'].some(k => !!a[k])
@@ -64,9 +65,9 @@ export function turretActivationBranches(level, originalDeviceDirection) {
       if (used.has(alias)) throw Error(`Turret alias activated by more than one branch: ${alias}`);
       used.add(alias);
       const p = insts.find(e => e.alias === alias);
-      const key = p.inst.characterKey, turret = key === 'trap_007_ballis', flame = key === 'trap_021_flame';
+      const key = p.inst.characterKey, turret = key === 'trap_007_ballis', flame = key === 'trap_021_flame', guard = key === 'trap_087_allady';
       // A Turret is instanced (level 1-90, direction); a static Ice Crystal is level 1 (as validateStaticDeviceInstances).
-      if (p.skillIndex !== 0 || (flame ? ![1, 2].includes(p.mainSkillLvl) : p.mainSkillLvl !== 1) || ![0, 'PHASE_0'].includes(p.inst.phase)
+      if ((guard ? ![0, 1].includes(p.skillIndex) : p.skillIndex !== 0) || (flame ? ![1, 2].includes(p.mainSkillLvl) : p.mainSkillLvl !== 1) || ![0, 'PHASE_0'].includes(p.inst.phase)
         || (turret ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > 90 : p.inst.level !== 1)
         || p.overrideSkillBlackboard != null || p.overrideTalents != null || p.uniEquipIds?.length || p.masterInfos?.length
         || !Number.isInteger(p.position?.row) || !Number.isInteger(p.position?.col))
@@ -76,6 +77,9 @@ export function turretActivationBranches(level, originalDeviceDirection) {
       if (turret) instances[`${device.key}:${device.row}:${device.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
         direction: originalDeviceDirection(p.direction) };
       if (flame) instances[`${device.key}:${device.row}:${device.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl };
+      // Guards may share a tile, so their instances are keyed by alias.
+      if (guard) instances[`${device.key}:${alias}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl, skillIndex: p.skillIndex,
+        direction: originalDeviceDirection(p.direction) };
     }
     branches[key] = { spawns: [], phases };
   }
