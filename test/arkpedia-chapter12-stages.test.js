@@ -30,18 +30,22 @@ test('cbuff_max_cost: the DP cap starts at max_cost and may rise only to max_cos
   }
 });
 
-test('the first chapter-12 slice is available with its sight environment and DP ceiling', async () => {
-  const ids = ['12-2', '12-2_adverse_environment', '12-6', '12-8', '12-8_adverse_environment', '12-17', '12-17_adverse_environment', 'tr-22', 'tr-23'];
+test('the published chapter-12 stages are available with the sight environment and their DP ceiling', async () => {
+  // First slice (Pathfinder Spy, Norport Civilian), then the Sentry Spies and the Pathfinder Spy _2.
+  const ids = ['12-2', '12-2_adverse_environment', '12-6', '12-8', '12-8_adverse_environment', '12-17', '12-17_adverse_environment', 'tr-22', 'tr-23',
+    '12-3', '12-3_adverse_environment', '12-4', '12-4_adverse_environment', '12-6_adverse_environment', '12-7', '12-10', '12-10_adverse_environment',
+    '12-12', '12-12_adverse_environment', '12-13', '12-14', '12-14_adverse_environment', '12-18', '12-18_adverse_environment'];
   for (const id of ids) {
     const stage = await load(id);
     assert.deepEqual(stage.environment?.filter(e => e.kind === 'mainline12_sightManager'), [{ kind: 'mainline12_sightManager', interval: .5 }], id);
-    assert.deepEqual([stage.battle.max_dp, stage.battle.max_dp_ceil], [20, 99], id);
+    // Every level's cbuff_max_cost is 20 / 99, except 12-18 adverse (15 / 99).
+    assert.deepEqual([stage.battle.max_dp, stage.battle.max_dp_ceil], [id === '12-18_adverse_environment' ? 15 : 20, 99], id);
   }
   const b = battle(await load('tr-22'));
   assert.equal(typeof b.stageSight?.inSight, 'function');
   assert.deepEqual([b.flags.dpMax, b.flags.dpMaxCeil], [20, 99]);
   // The rest of chapter 12 waits for its unreviewed identity variants.
-  assert.notEqual(manifest.stages.find(s => s.id === '12-3')?.availability, 'available');
+  assert.notEqual(manifest.stages.find(s => s.id === '12-5')?.availability, 'available');
 });
 
 test('placed enemy-side objects hold neither a kill-all wave nor the battle (12-8 wave 0, TR-18)', async () => {

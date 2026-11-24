@@ -10,20 +10,28 @@ import { norportIdentityNative, norportIdentityParams, isReviewedIdentity, isUnr
   from '../shared/arkpedia/enemy-norport-identity-features.js';
 import { sightNativeReviewed } from '../shared/arkpedia/stage-sight.js';
 import { COLS } from '../server/sim/constants.js';
+import { enemyStealthed } from '../server/sim/targeting.js';
 import native from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
 
-const SPY = 'enemy_1314_wdnjd', CIVILIAN = 'enemy_1313_wdfmr';
+const SPY = 'enemy_1314_wdnjd', CIVILIAN = 'enemy_1313_wdfmr', SENTRY = 'enemy_1315_wdyjd';
+const REVIEWED = [SPY, 'enemy_1314_wdnjd_2', SENTRY, 'enemy_1315_wdyjd_2', CIVILIAN];
 const rec = id => ENEMY_RECORDS.enemies[id].levels[0];
 
-test('the pinned Pathfinder Spy and Norport Civilian are reviewed; the other identity records are not', () => {
-  for (const id of [SPY, CIVILIAN]) {
+test('the pinned Pathfinder Spies, Sentry Spies and Norport Civilian are reviewed; the other identity records are not', () => {
+  for (const id of REVIEWED) {
     assert.equal(isReviewedIdentity(rec(id)), true, id);
     assert.equal(norportIdentityNative(rec(id), nativeComponents(native, id)), true, id);
   }
   const r = rec(SPY);
   assert.equal(norportIdentityNative({ ...r, talents: { ...r.talents, bb: { ...r.talents.bb, 'EnhancedAttack.atk_scale': 3 } } },
     nativeComponents(native, SPY)), false, 'a changed attack bonus');
-  for (const id of IDENTITY_PREFABS.filter(k => k !== SPY && k !== CIVILIAN)) {
+  const s = rec(SENTRY);
+  assert.equal(norportIdentityNative({ ...s, talents: { ...s.talents, bb: { 'moveSpeed.move_speed': .3 } } }, nativeComponents(native, SENTRY)), false,
+    'a changed sentry speed');
+  assert.equal(norportIdentityNative(s, nativeComponents(native, SPY)), false, 'the Pathfinder tree is not the Sentry tree');
+  const unreviewed = IDENTITY_PREFABS.filter(k => !REVIEWED.includes(k));
+  assert.deepEqual(unreviewed, ['enemy_1313_wdfmr_2', 'enemy_1316_wdpjd', 'enemy_1316_wdpjd_2']);
+  for (const id of unreviewed) {
     const levels = Object.values(ENEMY_RECORDS.enemies[id]?.levels ?? {});
     for (const l of levels) assert.equal(isUnreviewedIdentity(l), true, id);
   }
@@ -35,6 +43,12 @@ test('parameters: 0.1 s identification steps, +2 then +3 to 300, -1 out of sight
   assert.deepEqual(spy.detect, { interval: .1, threshold: 300, cap: 301, gain: [2, 3], loss: 1 });
   assert.deepEqual([spy.kind, spy.switchDur, spy.move, spy.atkScale, spy.clips.disguised, spy.clips.revealed], ['spy', 1, .05, 2, 'A', 'B']);
   assert.deepEqual([civ.kind, civ.dp], ['civilian', 2]);
+  const spy2 = norportIdentityParams(rec('enemy_1314_wdnjd_2'));
+  assert.deepEqual([spy2.move, spy2.atkScale, spy2.invisible], [.05, 2, null]);
+  for (const id of [SENTRY, 'enemy_1315_wdyjd_2']) {
+    const p = norportIdentityParams(rec(id));
+    assert.deepEqual([p.kind, p.switchDur, p.move, p.atkScale, p.invisible], ['spy', 1, .2, null, { key: 'enemy_wdyjd[enemyMode]', restore: 3 }], id);
+  }
 });
 
 /** One identity unit held at row 2, col 6; `seen` controls the stubbed chapter-12 sight. */
@@ -118,4 +132,17 @@ test('sight: each own-side unit contributes its range tiles, refreshed every 0.5
   u.rangeKeySet = new Set([key(3, 3)]); b.emit('skillStart', { unit: u });
   assert.equal(sight.inSight(3, 3), true, 'skill start refreshes at once');
   u.alive = false; assert.equal(sight.inSight(3, 3), false, 'a unit that leaves stops contributing');
+});
+
+test('the revealed Sentry Spy is Invisible except while blocked, and again 3 s after its release; no attack bonus', () => {
+  const { b, e, a, sight, op, run } = fixture(SENTRY);
+  sight.seen = true; run(26.15); assert.equal(a.state, 'revealed');
+  assert.ok(e.findBuff('enemy_wdyjd[moveSpeed]')); assert.equal(e.findBuff('enemy_wdnjd[moveSpeed]'), null);
+  assert.equal(enemyStealthed(e), true);
+  e.blockedBy = op; assert.equal(enemyStealthed(e), false, 'blocked');
+  e.blockedBy = null; b._stealthSwitch(e); run(2.9); assert.equal(enemyStealthed(e), false, 'within 3 s of the release');
+  run(.2); assert.equal(enemyStealthed(e), true, 'Invisible again');
+  const hits = []; b.on('damaged', c => { if (c.source === e) hits.push(c.dmg.amount); });
+  b.dealDamage(e, op, { amount: 100, type: 'phys', isAttack: true, canDodge: false });
+  assert.deepEqual(hits, [100]);
 });

@@ -11,6 +11,14 @@ Chapter 12 hides hostile Spies among Norport Civilians. Every unit starts uniden
 
 Ten stages became available: 12-2, 12-2 adverse, 12-6, 12-8, 12-8 adverse, 12-17, 12-17 adverse, TR-22, TR-23 and VEC-SP07 act2break. The library now has 1,099 available stages; the main story has 377 of 572.
 
+## Second slice: the Sentry Spy and the Pathfinder Spy _2 (2026-11-24)
+
+- **Pathfinder Spy `enemy_1314_wdnjd_2`:** its native tree and templates equal the base record's (only the skeleton differs; the animation clock is the same: `Die_A` 1 s, `Attack` 1 s with OnAttack at 0.4 s). Higher stats; the same +0.05 speed and doubled first attack.
+- **Sentry Spy `enemy_1315_wdyjd` and `_2`:** the same identification templates as the Pathfinder Spy, without `EnhancedAttack`. On reveal, `moveSpeed` adds 0.2 (`enemy_wdyjd[moveSpeed]`), and `enemyModeTalent` toggles on `enemy_wdyjd[enemyMode]`: abnormal flag 9 (`INVISIBLE` in the pinned enum) with the `common_invisible` effect, `_disableWhenBlocked` 1, `_restoreDelay` 3. The simulator's enemy Invisible already behaves so (`BattleCore._stealthSwitch`: lifted while blocked, back 3 s after release); the buff carries `stealthRestore` 3.
+- **Still refused:** `enemy_1313_wdfmr_2` and the Armed Spy `enemy_1316_wdpjd(_2)`.
+
+Fifteen stages became available: 12-3, 12-4, 12-10, 12-12, 12-14, 12-18 and their adverse variants, 12-6 adverse, 12-7 and 12-13. The library has 1,114 available; the main story 392 of 572. 12-18 adverse starts its DP cap at 15 (its own `cbuff_max_cost`). The eight first-slice bundles changed only by the spy parameters' new `atkScale`/`invisible` fields. All fifteen run headless with no errors and clear (12-18 adverse reaches the 1,500 s limit with the weak probe squad).
+
 ## Legacy chapter-12 stage files retired
 
 The 33 hand-made files `data/arkpedia-stage-12-*.json` and `data/arkpedia-stage-h12-2_adverse_environment.json` (reviewed 2026-10-21) were removed with their entries in `data/arkpedia-stages.json` (938 → 905 legacy entries, 597 → 564 public). They had no sight environment and no DP ceiling, and 26 of them listed the withdrawn identity variants. The compiled library is the primary catalogue; its 12-2, 12-6, 12-8 and 12-17 (and adverse) replace the seven that still loaded. The Roadside Emergency Reserves test now reads the compiled 12-8.
@@ -50,4 +58,4 @@ This also changes already published stages that place such objects. A headless c
 - **Not checked in game.** The bit-8 reading of `KEEP_REVEALED`, the per-unit 0.5 s sight refresh and the 1 s spy switch come from the prefabs and PRTS.
 - **Sight is range tiles only.** Devices and tokens contribute when they are own-side units with a range; a NeverTrigger unit's empty range and an AlwaysTrigger unit's whole-map sight are not special-cased yet.
 - **The identity markers** (the phase colours over each unit) are not drawn.
-- **Next slices:** Sentry Spy `wdyjd` (becomes Invisible), Armed Spy `wdpjd`, the `_2` tiers and `wdfmr_2` ("Norport Spy"), and the Instigator `wdfmpm`, family by family; then 12-16 and 12-20's own needs.
+- **Next slices:** the Armed Spy `wdpjd(_2)` and `wdfmr_2` ("Norport Spy"), then 12-16 and 12-20's own needs. The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.

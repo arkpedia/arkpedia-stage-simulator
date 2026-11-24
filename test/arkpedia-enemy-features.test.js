@@ -460,9 +460,10 @@ test('Norport Civilian: friendly and untargetable; only a confirmed civilian gra
   assert.equal(h.b.flags.dpMax, before); assert.equal(h.b.leakedCount, leaked); assert.ok(!e.alive);
 });
 test('Spies and civilians without a reviewed identification contract are refused', () => {
-  for (const key of ['enemy_1313_wdfmr_2', 'enemy_1314_wdnjd_2', 'enemy_1315_wdyjd', 'enemy_1315_wdyjd_2', 'enemy_1316_wdpjd', 'enemy_1316_wdpjd_2'])
+  for (const key of ['enemy_1313_wdfmr_2', 'enemy_1316_wdpjd', 'enemy_1316_wdpjd_2'])
     assert.equal(support.enemies[key].policy, null, key);
-  for (const key of ['enemy_1313_wdfmr', 'enemy_1314_wdnjd']) assert.ok(support.enemies[key].policy, key);
+  for (const key of ['enemy_1313_wdfmr', 'enemy_1314_wdnjd', 'enemy_1314_wdnjd_2', 'enemy_1315_wdyjd', 'enemy_1315_wdyjd_2'])
+    assert.ok(support.enemies[key].policy, key);
 });
 test('Instigator: unrevealed spies cannot be blocked while it is unblocked', () => {
   const spy = 'enemy_1315_wdyjd', lock = 'enemy_1319_wdfmpm';

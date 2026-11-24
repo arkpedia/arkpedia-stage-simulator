@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Chapter-12 identification (鉴定) for the reviewed Pathfinder Spy and Norport Civilian. Every number arrives in `p`
+// Chapter-12 identification (鉴定) for the reviewed Pathfinder Spy, Sentry Spy and Norport Civilian. Every number arrives in `p`
 // from shared/arkpedia/enemy-norport-identity-features.js; sight comes from the level's chapter-12 sight
 // (arkpedia-stage-sight.js). Without that environment only blocking identifies.
 const DISGUISE = 'enemy_mainline12[civilianMode]', CIVILIAN = 'unit_mainline12[civilianMode]',
-  SWITCH = 'enemy_mainline12[switchModeAbnormals]', MOVE = 'enemy_wdnjd[moveSpeed]', CONFIRMED = 'civilian_mainline12[detectComplete]';
+  SWITCH = 'enemy_mainline12[switchModeAbnormals]', MOVE = 'enemy_wdnjd[moveSpeed]', SENTRY_MOVE = 'enemy_wdyjd[moveSpeed]', CONFIRMED = 'civilian_mainline12[detectComplete]';
 
 export function norportIdentity(p) {
   validate(p);
@@ -29,11 +29,14 @@ export function norportIdentity(p) {
     b.addBuff(e, { key: SWITCH, duration: p.switchDur, flags: { invulnerable: true, disarm: true, noMove: true } });
   };
   const reveal = (b, e, a) => {
-    // switchMode: mode 1. The disguise ends; melee attacks, moveSpeed +0.05 (ADDITION), the next attack x atk_scale.
-    a.state = 'revealed'; a.bonus = true;
+    // switchMode: mode 1. The disguise ends; melee attacks and moveSpeed +move (ADDITION). The Pathfinder Spy's next
+    // attack is x atk_scale; the Sentry Spy turns INVISIBLE, lifted while blocked and back `restore` s after release
+    // (BattleCore._stealthSwitch).
+    a.state = 'revealed'; a.bonus = p.atkScale != null;
     b.removeBuff(e, DISGUISE);
     e.profile.noAttack = false; e.atkCd = 0;
-    b.addBuff(e, { key: MOVE, persist: true, mods: { moveFlat: p.move } });
+    b.addBuff(e, { key: p.invisible ? SENTRY_MOVE : MOVE, persist: true, mods: { moveFlat: p.move } });
+    if (p.invisible) b.addBuff(e, { key: p.invisible.key, persist: true, visible: true, flags: { stealth: true }, data: { stealthRestore: p.invisible.restore } });
   };
   return {
     spawn(b, e, a) {
@@ -76,7 +79,8 @@ function validate(p) {
   const d = p?.detect;
   const ok = ['spy', 'civilian'].includes(p?.kind) && pos(d?.interval) && pos(d.threshold) && d.cap >= d.threshold
     && Array.isArray(d.gain) && d.gain.length === 2 && d.gain.every(pos) && pos(d.loss)
-    && (p.kind === 'spy' ? pos(p.switchDur) && Number.isFinite(p.move) && pos(p.atkScale) && pos(p.attackAnim?.dur)
+    && (p.kind === 'spy' ? pos(p.switchDur) && Number.isFinite(p.move) && pos(p.attackAnim?.dur)
+      && ((pos(p.atkScale) && p.invisible == null) || (p.atkScale == null && typeof p.invisible?.key === 'string' && pos(p.invisible.restore)))
       && Number.isFinite(p.attackAnim.hit) && typeof p.clips?.disguised === 'string' && typeof p.clips.revealed === 'string'
       : pos(p.dp));
   if (!ok) throw Error('Invalid Norport identity parameters');

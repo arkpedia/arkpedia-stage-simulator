@@ -1164,8 +1164,9 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Spy': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'Spy'),
     ability: r => isReviewedIdentity(r) ? { kind: 'norportIdentity', params: norportIdentityParams } : { kind: 'spyProfile', params: () => ({}) }, note: 'spy profile; reveal via Battle.revealIdentity',
     nativeClaim: () => ({ active: 1 }), explains: /^Spy$/ },
-  'ability:When their identity is revealed, becomes <$ba.invisible>Invisible</>': { covers: r => r.abilities.some(a => a.text === 'When their identity is revealed, becomes <$ba.invisible>Invisible</>'),
-    ability: { kind: 'revealedStealth', params: () => ({}) }, note: 'revealed Sentry Spy becomes stealthy',
+  'ability:When their identity is revealed, becomes <$ba.invisible>Invisible</>': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n)
+      : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'When their identity is revealed, becomes <$ba.invisible>Invisible</>'),
+    ability: r => isReviewedIdentity(r) ? null : { kind: 'revealedStealth', params: () => ({}) }, note: 'revealed Sentry Spy becomes Invisible (identity contract)',
     explains: /^When their identity is revealed, becomes <\$ba\.invisible>Invisible<\/>$/ },
   "ability:When their identity is revealed, the next attack's ATK is greatly increased": { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === "When their identity is revealed, the next attack's ATK is greatly increased"),
     ability: r => isReviewedIdentity(r) ? null : { kind: 'revealedAttack', params: r => ({ scale: r.talents.bb['EnhancedAttack.atk_scale'] ?? 2 }) },
