@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Bloodcalling Altar (trap_125_bonore). Reviewed in shared/arkpedia/stage-blood-altar.js. An enemy-side trap that no
-// selector takes; every 20 s its pulse travels along its facing and, on its first contact with Blood Amber, turns
+// selector takes; every 20 s its pulse (3 tiles across, 1 along) travels along its facing and, on its first contact with Blood Amber, turns
 // every Blood Amber in the pulse (up to 10) into a Bloodborn Spawn through the Altar's own branch. A Blood Collector
 // in the pulse gives up the Amber it holds (its `enemy_bonore_mark` count, e.mem.bonoreMarks): one Spawn each, and it
 // survives empty.

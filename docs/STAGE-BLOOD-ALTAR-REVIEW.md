@@ -26,7 +26,10 @@ It also checks two CN buff templates and the CN tables.
 - Blackboard: `talent@branch_id`, which each instance overrides (13-12: `bonore_dfello1`, `bonore_dfello2`); `talent@enemy_key` `enemy_1367_dseed`; `max_target` 10.
 
 **The pulse**
-- **Movement:** speed 8, lifetime 10 s. It turns to its travel, so its 3 × 1 box is 3 long along the travel and 1 wide.
+- **Movement:** speed 8, lifetime 10 s.
+- **Footprint:** its box is 3 × 1. It is read as a wave front 3 tiles across the travel and 1 along it, so a pulse sweeps the Altar's lane and the lane either side (corrected 2026-11-25; it was first read as 3 along and 1 across). Two sources support it:
+  - the Altar's own range validators (`SpnwizInRange`, `SpnwizInRange2`) take the Altar's line and one line either side (`_offset` 1), from the Altar's tile onward (`_includeSameLine` 1);
+  - PRTS describes the affected range as what the pulse sweeps and draws it three lanes wide.
 - **Hit checks:** every 0.03 s (`_hitPasserby`).
 - **Selector:** enemy-side units, ground and air, carrying `enemy_bonore_mark`, up to `max_target`.
 - **One hit:** `_maxHitNum` 1, then it stops.
@@ -49,7 +52,7 @@ Not modelled, because none of these appear in 13-12:
 
 **Firing:** at 20 SP, with no pulse already out, it launches a pulse along its facing. Rows count from the bottom, so DOWN is −row.
 
-**Contact:** every 0.03 s the pulse checks its box for Blood Amber (centre within ±1.5 along and ±0.5 across). On the first contact:
+**Contact:** every 0.03 s the pulse checks its box for Blood Amber (centre within ±0.5 along and ±1.5 across). On the first contact:
 - it kills up to 10 of them, nearest to the Altar first;
 - it runs the Altar's branch once per Amber;
 - it ends.
@@ -61,9 +64,9 @@ Instances compile through `bloodAltarDefinition`, whose device-runtime family bi
 ## Checked
 
 `test/arkpedia-blood-altar.test.js`:
-- **Pins:** the review passes and refuses each of these: a slower pulse, a wider box, two hits, a branch that holds the end, a faster charge, and an instance without a branch.
+- **Pins:** the review passes and refuses each of these: a slower pulse, a wider box, a one-lane range validator, two hits, a branch that holds the end, a faster charge, and an instance without a branch.
 - **13-12 setup:** two Altars, at (6,4) facing DOWN and (4,9) facing LEFT, each on its own branch; enemy side, untargetable.
-- **First pulse:** before 20 s nothing happens. At about 20.3 s the first pulse hits the two Amber sharing (4,4), and two Bloodborn Spawn appear on the branch. The Amber a tile further on survives, because the pulse has stopped, and the 40 s pulse takes it. An Amber off both lanes is untouched.
+- **First pulse:** before 20 s nothing happens. Just after 20 s the first pulse hits the two Amber sharing (4,4) and the one beside them in a side lane, (4,5), and three Bloodborn Spawn appear on the branch. The Amber two tiles further on survives, because the pulse has stopped, and the 40 s pulse takes it. An Amber off both Altars' three lanes is untouched.
 - **Cap:** a pile of 12 Amber loses exactly 10.
 - **Refusal:** an Altar stage containing a Sarkaz pilot is refused.
 - **Headless run:** 13-12 clears with both Altars pulsing every 20 s.
@@ -74,6 +77,7 @@ Instances compile through `bloodAltarDefinition`, whose device-runtime family bi
 - **Inferences**
   - The pulse starts at the Altar's centre. The skill object sits one unit ahead, which may be a mount offset.
   - It travels along the facing. The ability aims at a tile filter (type 12) whose rule is not decoded; PRTS says the model's facing gives the direction.
+  - The footprint (3 across, 1 along), above. The projectile turns to its target (`_rotateToTarget`) but also sets `_freezeRotationZ`, so which box axis leads is not settled by the prefab alone.
   - Contact is the unit's centre inside the box, not its collider.
   - With several Amber hit, the nearest to the Altar go first.
 - Blood Amber keeps its existing behaviour: it walks its route and costs a life point if it leaks. Its HP decay (`enemy_dseed_hp_loss`) is suppressed by the Altar's `DseedHpCtrl`, so its current no-decay model is right on Altar stages.

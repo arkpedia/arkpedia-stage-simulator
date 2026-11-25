@@ -2,7 +2,10 @@
 // Bloodcalling Altar (trap_125_bonore, PRTS 唤血祭坛; chapter 13). An enemy-side trap (side 2, category 2: no character
 // selector takes it, so it cannot be attacked), HEAL_FREE. Skill sktok_bonore (AUTO, 20 SP at 1 SP/s from 0): its
 // ability fires projectile_trap_bonore along the Altar's facing (the model's direction, PRTS). The pulse:
-// - moves at 8 tiles/s for at most 10 s, rotated to its travel: its 3 x 1 box is 3 long along the travel and 1 wide;
+// - moves at 8 tiles/s for at most 10 s. Its 3 x 1 box is read as a wave front 3 tiles across the travel and 1 along it
+//   (an inference): the Altar's own range validators (SpnwizInRange, SpnwizInRange2) take the Altar's line and one line
+//   either side (`_offset` 1) from the Altar's tile onward (`_includeSameLine`), and PRTS describes the affected range
+//   as what the pulse sweeps, drawn three lanes wide;
 // - every 0.03 s checks the box for enemy-side units (ground and air) carrying `enemy_bonore_mark`;
 // - one hit (`_maxHitNum` 1, stop after it) takes every such unit in the box, up to `max_target` (10).
 // Each hit unit gets trap_bonore_s: its mark stacks are counted into `buff_cnt`, the mark is finished (Blood Amber:
@@ -39,6 +42,7 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
   const stacked = s?._failNodes?.[2], pick = T['trap_bonore_branch[dfello]']?.eventToActions?.ON_BUFF_START?.[0];
   const kill = P('trap_125_bonore').find(c => c.object === 'KillBmbcar' && c.data.m_Radius !== undefined)?.data;
   const killSelect = P('trap_125_bonore').find(c => c.object === 'KillBmbcar' && c.data._buffs)?.data;
+  const lines = P('trap_125_bonore').filter(c => c.object === 'Validators' && '_offset' in c.data).map(c => c.data);
   const record = t.devices?.trap_125_bonore, frames = record?.phases?.[0]?.attributesKeyFrames ?? [];
   const skill = t.skills?.sktok_bonore?.levels, bb = Object.fromEntries((skill?.[0]?.blackboard ?? []).map(x => [x.key, x.valueStr ?? x.value]));
   return root?._sideType === 2 && root._category === 2 && root._withdrawable === 0 && root._modes?.length === 1
@@ -50,6 +54,7 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
     && move?._speed === 8 && move._moveType === 1 && move._comeBack === 0 && move._delayToStart === 0 && move._rotateToTarget !== 0
     && check?._interval === f32(.03) && check._hitPasserby === 1
     && same(box?.m_Size, { x: 3, y: 1 }) && same(box.m_Offset, { x: 0, y: 0 })
+    && lines.length === 2 && lines.every(v => v._offset === 1 && v._includeSameLine === 1)
     && select?._targetSide === 1 && select._targetMotion === 3 && select._buffKeyExcluded === 0 && select._maxTargetKey === 'max_target'
     && same(fail, ['AssignBuffCountIntoBlackboard', 'FinishBuffsById', 'CreateBuffStacked'])
     && s._failNodes[0]._buffKey === BLOOD_ALTAR_MARK && s._failNodes[1]._buffKey === BLOOD_ALTAR_MARK
@@ -69,7 +74,7 @@ export function bloodAltarDefinition(instance) {
     || typeof instance.branchId !== 'string' || !instance.branchId) throw Error('Unsupported original Bloodcalling Altar instance');
   const d = tables.devices.trap_125_bonore.phases[0].attributesKeyFrames[0].data;
   return { kind: 'bloodAltar', hp: d.maxHp, def: d.def, res: d.magicResistance, direction: instance.direction, branchId: instance.branchId,
-    spCost: 20, initSp: 0, spPerSecond: 1, speed: 8, lifetime: 10, interval: f32(.03), length: 3, width: 1, maxTargets: 10,
+    spCost: 20, initSp: 0, spPerSecond: 1, speed: 8, lifetime: 10, interval: f32(.03), length: 1, width: 3, maxTargets: 10,
     mark: BLOOD_ALTAR_MARK,
     description: 'Every 20 s sends a pulse along its facing; the first Blood Amber it reaches (and any others in the pulse, up to 10) become Bloodborn Spawn on the Altar\'s route.' };
 }

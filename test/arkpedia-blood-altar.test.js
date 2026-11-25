@@ -30,6 +30,8 @@ test('the Altar prefab, pulse and templates are reviewed; changes are refused', 
   assert.equal(bloodAltarNativeReviewed(speed), false, 'a slower pulse');
   const box = clone(native); box.prefabs.projectile_trap_bonore.components.find(c => c.data.m_Size).data.m_Size = { x: 3, y: 3 };
   assert.equal(bloodAltarNativeReviewed(box), false, 'a wider pulse');
+  const lanes = clone(native); lanes.prefabs.trap_125_bonore.components.find(c => '_offset' in c.data).data._offset = 0;
+  assert.equal(bloodAltarNativeReviewed(lanes), false, 'a one-lane range');
   const many = clone(native); many.prefabs.projectile_trap_bonore.components.find(c => '_maxHitNum' in c.data).data._maxHitNum = 2;
   assert.equal(bloodAltarNativeReviewed(many), false, 'a pulse that hits twice');
   const block = clone(native); block.templates['trap_bonore_branch[dfello]'].eventToActions.ON_BUFF_START[0]._blockGameFinish = true;
@@ -38,7 +40,7 @@ test('the Altar prefab, pulse and templates are reviewed; changes are refused', 
   assert.equal(bloodAltarNativeReviewed(native, sp), false, 'a faster charge');
   assert.throws(() => bloodAltarDefinition({ level: 1, skillLevel: 1, direction: 'UP' }), /Unsupported/, 'no branch');
   const d = bloodAltarDefinition({ level: 1, skillLevel: 1, direction: 'UP', branchId: 'x' });
-  assert.deepEqual([d.spCost, d.speed, d.lifetime, d.length, d.width, d.maxTargets], [20, 8, 10, 3, 1, 10]);
+  assert.deepEqual([d.spCost, d.speed, d.lifetime, d.length, d.width, d.maxTargets], [20, 8, 10, 1, 3, 10]);
 });
 
 test('13-12 places two untargetable enemy-side Altars, each with its own branch', async () => {
@@ -49,32 +51,34 @@ test('13-12 places two untargetable enemy-side Altars, each with its own branch'
   for (const x of a) assert.deepEqual([x.unit.side, !!x.unit.s.flags.untargetable, !!x.unit.s.flags.invulnerable], ['enemy', true, true]);
 });
 
-test('a pulse ends at its first contact, taking the Blood Amber in its 3x1 box, each becoming a Bloodborn Spawn', async () => {
+test('a pulse ends at its first contact, taking the Blood Amber in its box (3 lanes across, 1 along), each becoming a Bloodborn Spawn', async () => {
   const b = battle(await load('13-12'));
   b.life = 999;
-  // The first Altar (6,4) faces DOWN (row 0 is the bottom): its lane is column 4 below it. Two Amber share (4,4);
-  // (3,4) lies a tile past the box when it first touches them, (2,5) lies off both Altars' lanes (the second Altar's lane is row 4).
-  const first = amber(b, 4, 4), twin = amber(b, 4, 4), past = amber(b, 3, 4), beside = amber(b, 2, 5);
+  // The first Altar (6,4) faces DOWN (row 0 is the bottom): its pulse sweeps columns 3-5 below it. Two Amber share
+  // (4,4) and one stands beside them at (4,5), in a side lane; (2,4) lies two tiles past the box when it first touches
+  // them; (2,7) lies off both Altars' lanes (the second Altar, (4,9) facing LEFT, sweeps rows 3-5).
+  const first = amber(b, 4, 4), twin = amber(b, 4, 4), side = amber(b, 4, 5), past = amber(b, 2, 4), beside = amber(b, 2, 7);
   const branch = [];
   b.on('enemySpawn', ({ enemy: e }) => { if (e.mem.stageBranch) branch.push({ t: b.time, id: e.defId }); });
   while (b.time < 19.9) b.step();
-  assert.ok([first, twin, past, beside].every(e => e.alive), 'nothing before 20 SP');
+  assert.ok([first, twin, side, past, beside].every(e => e.alive), 'nothing before 20 SP');
   while (b.time < 20.6) b.step();
-  assert.deepEqual([first.alive, twin.alive, past.alive, beside.alive], [false, false, true, true]);
+  assert.deepEqual([first.alive, twin.alive, side.alive, past.alive, beside.alive], [false, false, false, true, true]);
   const spawns = branch.filter(s => s.t >= 20 && s.t < 20.6);
-  assert.equal(spawns.length, 2);
+  assert.equal(spawns.length, 3);
   assert.ok(spawns.every(s => s.id === 'enemy_1360_dfello'));
-  assert.equal(b.stageBloodAltars.entries[0].conversions, 2);
-  // The next pulse (40 s) reaches the Amber left at (3,4).
+  assert.equal(b.stageBloodAltars.entries[0].conversions, 3);
+  // The next pulse (40 s) reaches the Amber left at (2,4); the one at (2,7) stays.
   while (b.time < 40.8) b.step();
   assert.equal(past.alive, false);
+  assert.equal(beside.alive, true);
 });
 
 test('a pulse converts at most 10, and a stage with unmodelled pulse reactions is refused', async () => {
   const stage = await load('13-12');
   const b = battle(stage);
   b.life = 999;
-  const pile = Array.from({ length: 12 }, () => amber(b, 3, 4));
+  const pile = Array.from({ length: 12 }, () => amber(b, 2, 4)); // the first Altar's lane only
   while (b.time < 20.6) b.step();
   assert.equal(pile.filter(e => !e.alive).length, 10);
   assert.equal(b.stageBloodAltars.entries[0].conversions, 10);
