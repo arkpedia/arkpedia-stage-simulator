@@ -124,6 +124,18 @@ export function enemyAttackRadius(e){
  return (e.profile?.melee??e.def.applyWay==='MELEE')?0:e.profile?.globalRange?Infinity:e.base.rangeRadius;
 }
 
+/**
+ * Neutral units an enemy's ordinary selectors may take (PRTS: Ursus crossbowmen prefer Talulah, the Fighter at equal
+ * taunt; the Anti-Witchcraft bomb is "prioritized by both enemy and friendly units"): only those whose reviewed runtime
+ * opts in with `profile.enemyTargetable` (the Mark of Epoch never does). Centre within `reach` of (x, y).
+ */
+export function targetableNeutrals(b, e, x, y, reach) {
+  if (!b.neutralUnits?.length || !(reach > 0)) return [];
+  const r2 = reach * reach + 1e-9;
+  return b.neutralUnits.filter(u => u !== e && u.alive && !u.hidden && u.deployed !== false && u.profile?.enemyTargetable === true
+    && !u.s.flags.untargetable && (u.x - x) ** 2 + (u.y - y) ** 2 <= r2);
+}
+
 /** Ordinary enemy attack candidates, shared by attack execution and combat-state abilities. */
 export function enemyAttackTargets(b, e, radius) {
   const reach = radius > 0 ? radius + ALLY_COLLIDER_RADIUS : 0;
@@ -133,8 +145,10 @@ export function enemyAttackTargets(b, e, radius) {
     if (radius > 0) {
       targets = b.alliesInRadius(e.x, e.y, reach, null).filter(a => a === bl || canTargetAlly(e, a, true));
       if (!targets.includes(bl) && bl.alive) targets.push(bl);
+      targets.push(...targetableNeutrals(b, e, e.x, e.y, reach));
     } else if (bl.alive && bl.deployed) targets = [bl];
-  } else if (radius > 0) targets = b.alliesInRadius(e.x, e.y, reach, null).filter(a => canTargetAlly(e, a, true));
+  } else if (radius > 0) targets = [...b.alliesInRadius(e.x, e.y, reach, null).filter(a => canTargetAlly(e, a, true)),
+    ...targetableNeutrals(b, e, e.x, e.y, reach)];
   const own = e.profile?.canTarget;
   return typeof own === 'function' ? targets.filter(a => own(a)) : targets;
 }
@@ -280,5 +294,6 @@ export function aggroCmp(a, b, sameTauntPriority = null) {
   const ta = a.s.taunt || 0, tb = b.s.taunt || 0;
   if (ta !== tb) return tb - ta;
   if (sameTauntPriority) { const compared = sameTauntPriority(a, b); if (compared) return compared; }
-  return (b.aggroSeq || b.deploySeq) - (a.aggroSeq || a.deploySeq);
+  // A neutral unit has no deployment order: it ranks after every deployed ally at equal taunt.
+  return (b.aggroSeq || b.deploySeq || 0) - (a.aggroSeq || a.deploySeq || 0);
 }

@@ -89,11 +89,25 @@ export function patrolCaptainParams(r){
  const c=shooterClock(r);
  return {radius:1.2,mark:NEUTRAL_MARK,scale:1,speed:10,anim:{dur:c.durations.Attack,hit:c.events.Attack}};
 }
+/** Ursus Assault Crossbowmen (enemy_1109_uabone, _2): their ordinary selector (side 2, ground, one target, sorted by
+ * taunt) carries `_secondaryFilter` 3 on mark_neutral[effect]. PRTS: "目标嘲讽等级相同时，远程攻击优先攻击乌萨斯平民/斗士塔露拉/
+ * 矿工游击队": at equal taunt a marked neutral unit goes first. */
+export const isNeutralPreferringCrossbow=r=>r?.prefabKey==="enemy_1109_uabone"||r?.prefabKey==="enemy_1109_uabone_2";
+export function neutralPreferenceNative(r,n){
+ if(!isNeutralPreferringCrossbow(r)||r.applyWay!=="RANGED")return false;
+ const mode=n?.Default?.find(c=>"_attackTrigger"in c),trigger=n?.$ref?.(mode?._attackTrigger);
+ const selectors=trigger?[trigger,...n.$siblings(trigger)].filter(c=>"_targetSide"in c):[];
+ return selectors.length===1&&[selectors[0]].every(c=>c._targetSide===2&&c._targetMotion===1&&c._targetCategory===1&&c._postFilter===4
+  &&c._maxNum===1&&c._buffKey===NEUTRAL_MARK&&c._secondaryFilter===3&&c._withoutThisBuff===0&&c._sortByTauntAtLast===1);
+}
 export const TALULAH_FIGHTER_FEATURES={
  [`ability:${FIGHTER_BREATH_TEXT}`]:{matchesRecord:isTalulahFighter,covers:talulahFighterNative,unitProperties:{side:"neutral"},
   explains:text=>text===FIGHTER_LIFE_TEXT,nativeClaim:()=>({wrappers:4,active:2}),
   note:"Talulah, the Fighter: a neutral route actor with Talulah's kit against hostile enemies; 2 life points when killed",
   ability:{kind:"talulahFighter",params:talulahFighterParams}},
+ "native:neutralPreference":{matchesRecord:isNeutralPreferringCrossbow,covers:neutralPreferenceNative,
+  note:"Ursus crossbowmen: a unit carrying the neutral mark goes first at equal taunt",
+  ability:{kind:"neutralPreference",params:()=>({mark:NEUTRAL_MARK})}},
  [`ability:${CAPTAIN_TEXT}`]:{matchesRecord:isPatrolCaptain,covers:patrolCaptainNative,
   note:"Patrol Captain: ranged shots at units carrying the neutral mark within 1.2; melee on its blocker",
   ability:{kind:"neutralShot",params:patrolCaptainParams}},

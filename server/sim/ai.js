@@ -26,7 +26,7 @@
 // both re-plan the route when released (恐惧 outranks 诱导).
 
 import { ATTACK_PAUSE, ALLY_COLLIDER_RADIUS, MOVE_SCALE, PROJECTILE_SPEEDS, PROJECTILE_SPEED, BOOMERANG_RETURN_SPEED, COLS, CHAIN_RADIUS } from './constants.js';
-import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, enemyAttackTargets, enemyAttackRadius, tileKeyOf, characterLikeTarget } from './targeting.js';
+import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, enemyAttackTargets, enemyAttackRadius, targetableNeutrals, tileKeyOf, characterLikeTarget } from './targeting.js';
 import { reduceElement } from './damage.js';
 import { straightClear } from './grid.js';
 import { moveFeared, endFear } from './fear.js';
@@ -833,7 +833,8 @@ function enemyAttack(b, e) {
   if (e.atkCd > 0) {
     // the wind-up of the next attack (GitHub #58): an unblocked ranged enemy stands once a target is in range
     if (e.blockedBy || radius <= 0 || !(e.atkCd <= attackStand(e, STAND).wind + 1e-9)) return false;
-    return b.alliesInRadius(e.x, e.y, reach, null).some((a) => canTargetAlly(e, a, true) && (!own || own(a)));
+    return b.alliesInRadius(e.x, e.y, reach, null).some((a) => canTargetAlly(e, a, true) && (!own || own(a)))
+      || targetableNeutrals(b, e, e.x, e.y, reach).some(a => !own || own(a));
   }
   let targets = enemyAttackTargets(b, e, radius);
   if (targets.length > 1) sortAllyTargets(e, targets);

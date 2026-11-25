@@ -41,6 +41,8 @@ export function talulahFighter(p) {
       for (const s of p.skills) if (!s.half) a.left[s.key] = s.initial;
       // The generic enemy attack selects operators; she never attacks them.
       e.profile.noAttack = true; e.profile.neutralExit = true;
+      // Hostile ranged selectors take her (PRTS: Ursus crossbowmen prefer her at equal taunt; the Targeteers' shells).
+      e.profile.enemyTargetable = true;
       e.base.rangeRadius = p.radius; e.markDirty?.();
       // NeutralTag: mark_neutral[effect] (BLOCK_FREE, sleep immune), for life.
       b.addBuff(e, { key: p.mark, persist: true, flags: { unblockable: true } });
@@ -119,6 +121,13 @@ export function neutralShot(p) {
       b.addBuff(e, { key: SHOT_CAST, duration: p.anim.dur, refresh: 'replace', flags: { noMove: true } });
     },
   };
+}
+
+/** At equal taunt, a unit carrying the neutral mark goes first (the crossbowmen's secondary filter). */
+export function neutralPreference(p) {
+  if (typeof p?.mark !== 'string') throw Error('Invalid neutral preference parameters');
+  const marked = u => (u.findBuff?.(p.mark) ? 1 : 0);
+  return { spawn(b, e) { e.profile.sameTauntPriority = (x, y) => marked(y) - marked(x); } };
 }
 
 const pos = v => Number.isFinite(v) && v > 0;

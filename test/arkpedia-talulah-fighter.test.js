@@ -10,7 +10,7 @@ import { ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { nativeComponents } from '../shared/arkpedia/enemy-support.js';
 import { talulahFighterNative, talulahFighterParams, patrolCaptainNative, patrolCaptainParams, NEUTRAL_MARK }
   from '../shared/arkpedia/enemy-talulah-fighter-features.js';
-import { canTargetEnemy } from '../server/sim/targeting.js';
+import { canTargetEnemy, aggroCmp } from '../server/sim/targeting.js';
 import { createStageLibraryLoader } from '../shared/arkpedia/stage-library.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
@@ -87,4 +87,24 @@ test('killing her costs 2 life points; her exit costs none; the battle never wai
   until(b, () => b.finished, 900);
   assert.equal(b.reason, 'cleared');
   assert.ok(b.life > 0);
+});
+
+test('in R8-8 the Crossbowmen and the Targeteers take her: ranged selectors include her, and crossbowmen prefer her at equal taunt', async () => {
+  const b = battle(await load('r8-8'));
+  b.life = 999;
+  const hits = [];
+  b.on('damaged', c => { if (c.target?.defId === FIGHTER) hits.push({ src: c.source?.defId ?? null, tag: c.dmg?.tags?.[0] ?? null, type: c.type }); });
+  assert.ok(until(b, () => hits.some(h => /uabone/.test(h.src ?? '')) && hits.some(h => h.tag === 'shell'), 200));
+  // Equal taunt (0): a Crossbowman with both her and a deployed operator in range picks her.
+  const f = fighterOf(b), cb = b.enemies.find(e => e.defId.startsWith('enemy_1109_uabone'));
+  assert.ok(f && cb, 'both on the field');
+  const op = { alive: true, deployed: true, findBuff: () => null, s: { taunt: 0 }, aggroSeq: 99, deploySeq: 99 };
+  assert.deepEqual([op, f].sort((x, y) => aggroCmp(x, y, cb.profile.sameTauntPriority))[0], f, 'equal taunt: the marked Fighter first');
+  op.s.taunt = 1;
+  assert.deepEqual([op, f].sort((x, y) => aggroCmp(x, y, cb.profile.sameTauntPriority))[0], op, 'higher taunt still wins');
+  let atDeath = null;
+  b.on('death', ({ unit }) => { if (unit === f) atDeath = b.life; }, { priority: -1000 });
+  const before = []; b.on('death', ({ unit }) => { if (unit === f) before.push(b.life); }, { priority: 1000 });
+  assert.ok(until(b, () => !f.alive, 400), 'she falls with no operator to protect her');
+  assert.equal(before[0] - atDeath, 2, 'her death costs exactly 2');
 });

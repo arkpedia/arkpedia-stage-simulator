@@ -2,7 +2,7 @@
 import {configureMarkedEnemyTargets,validateMarkedEnemyTargets} from './arkpedia-enemy-marked-targets.js';
 import {ordinaryEnemyAttackSequence,validateEnemyAttackAnimation} from './arkpedia-enemy-attack-sequence.js';
 import { ALLY_COLLIDER_RADIUS } from '../constants.js';
-import { areaSelectable } from '../targeting.js';
+import { areaSelectable, targetableNeutrals } from '../targeting.js';
 import { makeDamageInfo } from '../damage.js';
 
 export function inProjectileBox(unit, x, y, width, height) {
@@ -26,8 +26,9 @@ export function delayedAreaAttack({ delay, radius, type, priorityBuff = null, st
         b.fx('bombardShell', { x, y, id: e.id, r: radius, t: delay });
         b.after(delay, () => {
           b.fx('bombard', { x, y, r: radius, kind: 'emppnt' });
-          for (const unit of b.allies(null, { includeTargetableDevices: true })) {
-            if (!areaSelectable(e, unit) || Math.hypot(unit.x - x, unit.y - y) > radius + 1e-9) continue;
+          // The shell's selector takes the same neutral units its aim does (Talulah, the Fighter: mark_neutral[effect]).
+          for (const unit of [...b.allies(null, { includeTargetableDevices: true }), ...targetableNeutrals(b, e, x, y, radius)]) {
+            if (unit.side !== 'neutral' && !areaSelectable(e, unit) || Math.hypot(unit.x - x, unit.y - y) > radius + 1e-9) continue;
             b.dealDamage(null, unit, { amount, type, sourceless: true, isAttack: false, isSkill: false,
               canDodge: false, tags: ['shell'] });
           }

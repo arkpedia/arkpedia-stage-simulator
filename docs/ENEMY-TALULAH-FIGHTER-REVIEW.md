@@ -45,12 +45,15 @@ Her kit is the boss Talulah's prefab layout. The selectors are the boss's, exclu
 
 ## Who attacks her
 
-Neither ordinary enemies nor operators ever select a neutral unit. The Patrol Captain and Ursus Raider prefabs each have a ranged `Attack` whose trigger selects only units carrying `mark_neutral[effect]`, ground only. PRTS: "可对半径1.2范围内的乌萨斯平民/斗士塔露拉/矿工游击队进行普通攻击（不可对空）".
+**Corrected 2026-11-25.** The first version said only the Captains and Raiders could reach her. That was wrong: ordinary ranged enemy selectors take her too.
+- The Crossbowman's and Targeteer's selectors are side 2 with a `_secondaryFilter` (3) on `mark_neutral[effect]`. A filter can only narrow a pool, so their pool already holds neutral units.
+- PRTS on the Ursus Assault Crossbowman: "目标嘲讽等级相同时，远程攻击优先攻击乌萨斯平民/斗士塔露拉/矿工游击队".
 
-The new kind `neutralShot` replaces the old name-priority flag, which had no effect:
-- **When it fires:** while unblocked and off cooldown, the shooter fires its own projectile at the nearest marked ground unit within 1.2, for ATK ×1 Physical.
-- **Clips:** the Captain's `Attack` is 1 s (OnAttack 0.5 s); the Raider's is 1.17 s (0.57 s).
-- **Otherwise** they fight as before: melee on their blocker.
+Now:
+- **Engine:** an enemy's ordinary attack (target list, ranged wind-up) also takes neutral units whose reviewed runtime opts in (`profile.enemyTargetable`; she does, the Mark of Epoch does not). At equal taunt they rank after deployed operators unless a selector says otherwise. Melee enemies still only hit their blocker, and nothing blocks her.
+- **Crossbowmen** `enemy_1109_uabone(_2)` (new native feature `neutralPreference`, selector pinned): at equal taunt a unit carrying the neutral mark goes first.
+- **Targeteers** `enemy_1112_emppnt(_2)`: their shell already preferred the mark. Its blast now also damages opted-in neutral units in its radius.
+- **Patrol Captains and Ursus Raiders:** their ranged trigger selects ONLY units carrying `mark_neutral[effect]` (`_buffKeyExcluded` 0). PRTS: "可对半径1.2范围内的乌萨斯平民/斗士塔露拉/矿工游击队进行普通攻击（不可对空）". The kind `neutralShot` replaces their old name-priority flag: while unblocked and off cooldown, the shooter fires its own projectile at the nearest marked ground unit within 1.2, for ATK ×1 Physical. Clips: the Captain's `Attack` is 1 s (OnAttack 0.5 s), the Raider's 1.17 s (0.57 s). Otherwise they fight as before: melee on their blocker.
 
 ## Evidence
 
@@ -69,7 +72,7 @@ The 1.2 radius comes from PRTS: the trigger collider is not retained. Her two co
 - **R8-3 headless run:** she spawns neutral, uncounted, unblockable and sleep-immune, and operators cannot select her. She hits only enemies (her Arts shot and Burning Breath). Only Captain or Raider `neutralShot` hits reach her.
 - **Life points:** killing her takes exactly 2 life points; her exit takes none.
 - **Victory:** the stage clears once every counted enemy is gone.
-- **R8-8 (probe):** she shoots the flying Targeteers and leaves at her exit without cost. Nobody there can hurt her.
+- **R8-8:** Crossbowman bolts and Targeteer shells hit her. At equal taunt a Crossbowman ranks her ahead of an operator, but not ahead of a higher-taunt one. With nobody protecting her she falls (exactly 2 life points).
 
 Of the published stages, only the Captain and Raider definitions changed (37 bundles, Chapter 8 and events). With no neutral unit on the map their behaviour is unchanged.
 
@@ -80,4 +83,4 @@ Of the published stages, only the Captain and Raider definitions changed (37 bun
   - She picks the nearest hostile enemy.
   - She stands through each shot and skill clip.
   - The shooters choose the nearest marked unit.
-  - Whether area attacks from enemies (the Targeteers' shells) can hurt her: the engine says no.
+  - Neutral units rank after deployed operators at equal taunt for selectors without the mark filter.

@@ -459,6 +459,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1541_wdslms:'native:damaztiDisguise',
+  enemy_1109_uabone:'native:neutralPreference',enemy_1109_uabone_2:'native:neutralPreference',
   enemy_1284_sgprst:'native:fatherAgenirLog',
   enemy_1432_lrccon:'native:cocoonCage',
   enemy_1184_cadkgt_3:'native:vivianaLog',
