@@ -34,7 +34,7 @@ It also checks two CN buff templates and the CN tables.
 - **Selector:** enemy-side units, ground and air, carrying `enemy_bonore_mark`, up to `max_target`.
 - **One hit:** `_maxHitNum` 1, then it stops.
 
-**`trap_bonore_s` on each hit unit** (not a drifting Bone Drifter)
+**`trap_bonore_s` on each hit unit** (not a drifting Boneguard Fluxcaster, which it revives instead; `docs/ENEMY-BONEGUARD-REVIEW.md`)
 - It counts the unit's `enemy_bonore_mark` stacks into `buff_cnt` and finishes the mark. For Blood Amber, `enemy_dseed_bonore[action]` then kills it.
 - It stacks `trap_bonore_branch[dfello]` that many times (up to 10).
 - Each stack runs `PickRandomBranchPhase` on the Altar's branch, with `_blockGameFinish` false. 13-12's branches each have one phase, which spawns one Bloodborn Spawn on its route.
@@ -42,7 +42,7 @@ It also checks two CN buff templates and the CN tables.
 Not modelled, because none of these appear in 13-12:
 - the event upgrade (`trap_bonore_upgraded[summon]`);
 - the bomb-cart kill within radius 1;
-- the Bone Drifter switches;
+- the Boneguard Fluxcaster switches (built since; `docs/ENEMY-BONEGUARD-REVIEW.md`);
 - the pilot summon;
 - `ActiveOutset` (its forced exit when a bomb is detonated on it).
 

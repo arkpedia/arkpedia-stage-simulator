@@ -3,7 +3,8 @@
 // selector takes; every 20 s its pulse (3 tiles across, 1 along) travels along its facing and, on its first contact with Blood Amber, turns
 // every Blood Amber in the pulse (up to 10) into a Bloodborn Spawn through the Altar's own branch. A Blood Collector
 // in the pulse gives up the Amber it holds (its `enemy_bonore_mark` count, e.mem.bonoreMarks): one Spawn each, and it
-// survives empty.
+// survives empty. A drifting Boneguard Fluxcaster in the pulse revives (no Spawn). `covers` is the Altar's range,
+// read by the Fluxcaster's rebirth.
 import { bloodAltarDefinition, stageDeviceSpec } from '../../../shared/arkpedia/device-runtime.js';
 import { BLOOD_AMBER, BLOOD_ALTAR_UNMODELLED } from '../../../shared/arkpedia/stage-blood-altar.js';
 import { dirVec } from '../dir.js';
@@ -11,8 +12,7 @@ import { dirVec } from '../dir.js';
 const MAX_STACK = 10; // trap_bonore_branch[dfello] maxStackCnt
 const live = u => u?.alive && u.deployed !== false && !u.hidden;
 const isAmber = e => e.defId === BLOOD_AMBER || e.def?.key === BLOOD_AMBER;
-/** The unit's `enemy_bonore_mark` count: Blood Amber carries one; a Collector one per held Amber. */
-const marks = e => isAmber(e) ? 1 : Math.max(0, e.mem?.bonoreMarks ?? 0);
+const isGhost = e => !!e.mem?.boneguardGhost;
 
 export class StageBloodAltars {
   constructor(b, devices, geometry, stage = null) {
@@ -35,6 +35,23 @@ export class StageBloodAltars {
     }
     if (this.entries.length) b.on('tick', ({ dt }) => this.tick(dt));
   }
+  /** The unit's `enemy_bonore_mark` count: Blood Amber carries one; a Collector one per held Amber; a drifting
+   * Boneguard one while an Altar covers it (SpnwizInRange2), or always for the Captain. */
+  marks(e) {
+    if (isAmber(e)) return 1;
+    if (isGhost(e)) return e.mem.boneguardOwnMark || this.covers(e) ? 1 : 0;
+    return Math.max(0, e.mem?.bonoreMarks ?? 0);
+  }
+  /** SpnwizInRange / SpnwizInRange2: a live Altar whose range holds the unit's tile — the Altar's line and one line
+   * either side (`_offset` 1), from the Altar's own tile line onward along its facing (`_includeSameLine`). */
+  covers(e) {
+    const r = Math.round(e.y), c = Math.round(e.x);
+    return this.entries.some(a => {
+      if (!a.unit.alive || a.destroyed) return false;
+      const [dr, dc] = dirVec(a.spec.direction), along = (r - a.row) * dr + (c - a.col) * dc, across = (r - a.row) * dc - (c - a.col) * dr;
+      return along >= 0 && Math.abs(across) <= a.spec.rangeOffset;
+    });
+  }
   tick(dt) {
     for (const a of this.entries) {
       if (!a.unit.alive) { a.pulse = null; continue; }
@@ -54,7 +71,7 @@ export class StageBloodAltars {
     while (p.nextCheck <= end + 1e-9) {
       const along = s.speed * p.nextCheck, cx = a.col + p.dc * along, cy = a.row + p.dr * along;
       if (cx < -2 || cy < -2 || cx > b.regularMapSize.cols + 1 || cy > b.regularMapSize.rows + 1) { a.pulse = null; return; }
-      const hits = b.enemies.filter(e => live(e) && marks(e) > 0 && inBox(e, cx, cy, p, s))
+      const hits = b.enemies.filter(e => live(e) && this.marks(e) > 0 && inBox(e, cx, cy, p, s))
         .sort((x, y) => (x.x - a.col) ** 2 + (x.y - a.row) ** 2 - ((y.x - a.col) ** 2 + (y.y - a.row) ** 2) || String(x.id).localeCompare(String(y.id)))
         .slice(0, s.maxTargets);
       if (hits.length) { this.convert(a, hits); a.pulse = null; return; }
@@ -76,7 +93,10 @@ export class StageBloodAltars {
     for (const e of hits) {
       // trap_bonore_s: its mark count → that many branch phases (CreateBuffStacked, at most 10); the marks finish.
       // Amber's mark end kills it (enemy_dseed_bonore[action]); a Collector's only empties it.
-      const n = Math.min(MAX_STACK, marks(e));
+      // A drifting Boneguard (enemy_spnwiz_ghost_mark) takes the other branch: trap_bonore_spnwiz_revive[trigger]
+      // finishes its ghost mark, which revives it (enemy-boneguard runtime), and its mark finishes; no phase runs.
+      if (isGhost(e)) { e.mem.boneguardRevive = true; continue; }
+      const n = Math.min(MAX_STACK, this.marks(e));
       if (isAmber(e)) b.kill(e, null); else e.mem.bonoreMarks = 0;
       for (let i = 0; i < n; i++) {
         b.stageBranches.startRandomPhase(a.spec.branchId, { blockGameFinish: false });

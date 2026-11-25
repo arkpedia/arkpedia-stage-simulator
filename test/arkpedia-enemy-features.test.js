@@ -50,7 +50,8 @@ for (const key of usedBy('ability:Attacks two targets simultaneously.')) test(`A
   const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   assert.equal(e.profile.maxTargets, 2);
 });
-for (const key of ['enemy_1365_spnwiz', 'enemy_1104_lfkght']) test(`Reborn (${key}): the first knock-out starts a rebirth of the talent duration, then it stands up again`, () => {
+// The Boneguard Fluxcaster's Reborn is its own Altar-bound rebirth (test/arkpedia-boneguard.test.js).
+for (const key of ['enemy_1104_lfkght']) test(`Reborn (${key}): the first knock-out starts a rebirth of the talent duration, then it stands up again`, () => {
   const r = ENEMY_RECORDS.enemies[key].levels[0], g = Object.keys(r.talents.groups).find(x => x.toLowerCase() === 'reborn');
   // Blade Knight's native rebirth component supplies 20%; it is not in the database blackboard.
   const dur = r.talents.bb[`${g}.duration`], ratio = key === 'enemy_1104_lfkght' ? .2 : r.talents.bb[`${g}.hp_ratio`] ?? 1;

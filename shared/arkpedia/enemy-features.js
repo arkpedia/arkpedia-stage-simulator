@@ -23,6 +23,7 @@ import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 import { TALULAH_FIGHTER_FEATURES, isTalulahFighter, talulahFighterNative } from './enemy-talulah-fighter-features.js';
 import { BOMB_FEATURES, isBombCart, bombCartNative } from './enemy-bomb-features.js';
 import { BLOOD_COLLECTOR_FEATURES } from './enemy-blood-collector-features.js';
+import { BONEGUARD_FEATURES, isBoneguard, boneguardNative, boneguardParams } from './enemy-boneguard-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
@@ -299,9 +300,9 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : isUproar(r) ? uproarNative(r, n) : r.key === 'enemy_1522_captan'
+    covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : isBoneguard(r) ? boneguardNative(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : isUproar(r) ? uproarNative(r, n) : r.key === 'enemy_1522_captan'
       || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
-    ability: r => formBoss(r) || isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+    ability: r => isBoneguard(r) ? { kind: 'boneguard', params: () => boneguardParams(r) } : formBoss(r) || isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
 }
@@ -545,6 +546,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...TALULAH_FIGHTER_FEATURES,
   ...BOMB_FEATURES,
   ...BLOOD_COLLECTOR_FEATURES,
+  ...BONEGUARD_FEATURES,
   ...FROSTNOVA_FEATURES,
   ...PHANTOM_MIDBOSS_FEATURES,
   ...BASOROBEAST_FEATURES,
