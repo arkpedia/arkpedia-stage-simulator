@@ -91,7 +91,7 @@ test('12-20: disguise, first form, fragment, shared revive, Lifeline Burst, the 
   assert.equal(sync1.length, 1); assert.ok(near(sync1[0].t, 6 + 10 + Math.fround(11 / 6), .1), String(sync1[0].t));
   assert.equal(sync1[0].target, 'char_122_beagle');
   // The rune: every damage the family deals adds 25% of it as Corrosion.
-  assert.ok(hits.some(h => h.tag === 'stage:apply_elemental_damage' && near(h.amount, sync1[0].amount * .25, 1e-6) || h.type === 'element'));
+  assert.ok(hits.some(h => h.type === 'element' && near(h.t, sync1[0].t, 1e-9) && h.target === sync1[0].target), 'Corrosion with the sync hit');
 
   // Below 50%: the first fragment on branch_2's route (4,1), disguised; the group is invincible until it is identified.
   strike(host, .52); until(b.time + .2);
@@ -123,6 +123,8 @@ test('12-20: disguise, first form, fragment, shared revive, Lifeline Burst, the 
   const dots = hits.filter(h => h.tag === 'wdslmRebornDot');
   assert.ok(dots.length >= 29 && dots.every(h => h.amount > 0 && h.type === 'arts'), String(dots.length));
   assert.equal(hits.filter(h => h.tag === 'stage:apply_elemental_damage' && h.t > ko && h.t < ko + 29.8).length, 0, 'the aura has no source');
+  b.dealDamage(null, host, { amount: 1e9, type: 'true', tags: ['test'] });
+  assert.equal(host.alive, true, 'damage during the revive does not end it');
   until(ko + 30.2);
   assert.deepEqual([form(host), form(fragment), host.hp, !!host.s.flags.invulnerable], ['p2', 'p2', host.s.maxHp, true]);
   const p2 = ko + 30;
@@ -183,4 +185,28 @@ test('a member that leaks finishes the whole group without revives', async () =>
   assert.equal(host.alive, false, 'the host goes with the leaking fragment');
   assert.notEqual(host.mem.damazti.form, 'reborn');
   assert.deepEqual(b.errors, []);
+});
+
+test('12-20 and H12-1 adverse: wave 1 follows with the boss alive in its second form, and the battle clears', async () => {
+  for (const id of ['12-20', 'h12-1_adverse_environment']) {
+    const stage = await load(id);
+    const b = new StandardBattle({ ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } }, { operators: [defaultBuild(mvp.operators.char_151_myrtle)] }, { seed: 1 });
+    b.setViewport('fullscreen-workspace'); b.life = 999;
+    // Every other enemy is removed as it appears; the boss group is held in place and taken to its second form.
+    const until = t => { while (!b.finished && b.time < t) { b.step(); for (const u of b.enemies) if (u.alive && !/wdslm|wdbshd/.test(u.defId)) b.kill(u, null); } };
+    until(3.5);
+    const host = b.enemies.find(u => u.alive && u.defId === HOST);
+    b.addBuff(host, { key: 'test:hold', persist: true, flags: { noMove: true } }); host.mem.norportIdentity.forceReveal(); until(7);
+    b.dealDamage(null, host, { amount: host.s.maxHp * .55, type: 'true' }); until(7.5);
+    const fragment = b.enemies.find(u => u.alive && u.defId === FRAGMENT);
+    b.addBuff(fragment, { key: 'test:hold', persist: true, flags: { noMove: true } }); fragment.mem.norportIdentity.forceReveal(); until(10);
+    b.dealDamage(null, host, { amount: host.s.maxHp, type: 'true' }); until(41);
+    assert.equal(host.mem.damazti.form, 'p2', id);
+    until(400);
+    assert.equal(b.stageWaveScheduler.done, true, `${id}: every wave ran with the boss alive`);
+    assert.equal(b.finished, false);
+    b.dealDamage(null, host, { amount: host.s.maxHp, type: 'true' }); until(b.time + 20);
+    assert.deepEqual([b.finished, b.reason], [true, 'cleared'], id);
+    assert.deepEqual(b.errors, []);
+  }
 });

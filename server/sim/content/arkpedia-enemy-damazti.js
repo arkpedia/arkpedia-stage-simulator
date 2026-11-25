@@ -277,6 +277,8 @@ export function damaztiCluster(p) {
       }
     },
     killed(c, b, e, a) {
+      // An HP loss (it bypasses INVINCIBLE) during the revive cannot cut it short; a group finish still can.
+      if (a.form === 'reborn' && !e.mem.damaztiNoReborn) { e.hp = Math.min(1, e.s.maxHp); return true; }
       if (e.mem.damaztiNoReborn || !p.reborn.available || a.form !== 'p1' || a.reborn) return false;
       // syncReborn: the first knock-out takes the whole group into its revive.
       a.reborn = true;
