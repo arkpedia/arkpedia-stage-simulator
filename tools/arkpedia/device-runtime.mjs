@@ -45,6 +45,7 @@ export const DEVICE_FAMILIES = {
   predefinedMineDefinition: { module: 'stage-mines', variants: keySet(['']) },
   shieldguardDefinition: { module: 'stage-shieldguard', variants: keySet([''], { ...standard, direction }) },
   bloodAltarDefinition: { module: 'stage-blood-altar', variants: keySet([''], { ...standard, direction }, ['branchId']) },
+  bombLoaderDefinition: { module: 'stage-bomb-loader', variants: keySet([''], { ...standard, direction }, ['branchId']) },
 };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 

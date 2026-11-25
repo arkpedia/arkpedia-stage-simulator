@@ -58,12 +58,20 @@ export class StageBloodAltars {
     p.age = end;
     if (p.age + 1e-9 >= s.lifetime) a.pulse = null;
   }
+  /** The bomb's Explosion (trap_bonore_kill[bmbcar] -> ActiveOutset): the Altar dies and pulses no more. Its
+   * ActivePredifinedInst names no alias on any reviewed stage, so it activates nothing. */
+  destroy(a) {
+    if (!a?.unit.alive) return;
+    a.pulse = null; a.destroyed = true;
+    this.battle.removeBuff(a.unit, 'stage:bloodAltar');
+    this.battle.kill(a.unit, null);
+  }
   convert(a, hits) {
     const b = this.battle;
     for (const e of hits) {
       // trap_bonore_s: one mark stack on Blood Amber → one branch phase; the mark's end kills it.
       b.kill(e, null);
-      b.stageBranches.start(a.spec.branchId, { blockGameFinish: false });
+      b.stageBranches.startRandomPhase(a.spec.branchId, { blockGameFinish: false });
       a.conversions++;
     }
   }

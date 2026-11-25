@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { BLOOD_ALTAR_UNMODELLED } from '../../shared/arkpedia/stage-blood-altar.js';
 import { readFile, readdir, access } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -208,6 +209,12 @@ export async function planStage(context, id, { compile = true, waves = false } =
   // The Deconstructed Distortion's and the family's Corrosion is a stage rune, not an enemy ability (PRTS).
   if ([...enemyIds].some(id => DAMAZTI_RUNE_TARGETS.includes(id)) && !damaztiStageRuleOk(compiledRules))
     blockers.push({ kind: 'stage-rules', id: 'damazti-corrosion', message: "Missing the 'Damazti Cluster' Corrosion rune" });
+  // Chapter 13: the Altar's pulse and the bomb react to records whose reactions are not built yet.
+  const altarStage = devices.some(d => d.key === 'trap_125_bonore'), loaderStage = devices.some(d => d.key === 'trap_126_outset');
+  const unbuiltAltar = altarStage ? [...enemyIds].filter(id => BLOOD_ALTAR_UNMODELLED.includes(id)) : [];
+  if (unbuiltAltar.length) blockers.push({ kind: 'device', id: 'Bloodcalling Altar', message: `Pulse reactions not built: ${unbuiltAltar.sort().join(', ')}` });
+  const unbuiltBomb = loaderStage ? [...enemyIds].filter(id => /^enemy_1363_spnshd(?:_2)?$/.test(id)) : [];
+  if (unbuiltBomb.length) blockers.push({ kind: 'device', id: 'Bomb Loading Point', message: `Boneguard bomb stop (talent:BmbcarBuff) not built: ${unbuiltBomb.sort().join(', ')}` });
   if ([...enemyIds].some(id => /^enemy_(?:121[78]|1105)_/.test(id))) {
     for (const path of ['data/arkpedia-enemy-records.json', 'data/arkpedia-enemy-support.json', 'data/arkpedia-enemy-native-abilities.json', 'data/arkpedia-snack-animations.json'])
       localSources.push({ path, sha256: digest(await readFile(join(context.root, path))) });

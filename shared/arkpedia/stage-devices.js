@@ -18,6 +18,7 @@ import { manualDeviceNativeReviewed } from './stage-manual-devices.js';
 import { capturableDeviceNativeReviewed } from './stage-capturable-devices.js';
 import { shieldguardNativeReviewed } from './stage-shieldguard.js';
 import { bloodAltarNativeReviewed } from './stage-blood-altar.js';
+import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
@@ -129,6 +130,11 @@ export const STAGE_DEVICES = Object.freeze({
     // (stage-blood-altar.js; runtime arkpedia-stage-blood-altars.js).
     keys: Object.freeze(['trap_125_bonore']), staticLevelReview: true, bloodAltar: true, maxLevel: 30,
   }),
+  'Bomb Loading Point': Object.freeze({
+    // PRTS 炸弹载荷点 (chapter 13): spend 10 DP to send an Anti-Witchcraft bomb along its own branch route, one at a time
+    // (stage-bomb-loader.js; runtime arkpedia-stage-bomb-loaders.js).
+    keys: Object.freeze(['trap_126_outset']), staticLevelReview: true, bombLoader: true, maxLevel: 30,
+  }),
   'Originium Altar': Object.freeze({
     // PRTS 源石祭坛: auto-recovery/auto-trigger skill, initial 0, SP cost 7,
     // 500 True damage to allied and enemy characters in the 13-tile x-1 diamond, including
@@ -164,6 +170,7 @@ export function stageDeviceSpec(device) {
     || spec.guard && !alladyNativeReviewed()
     || spec.shieldguard && !shieldguardNativeReviewed()
     || spec.bloodAltar && !bloodAltarNativeReviewed()
+    || spec.bombLoader && !bombLoaderNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;
 }

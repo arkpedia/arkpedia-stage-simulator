@@ -117,7 +117,7 @@ import { pulseCharged, pulseCaster } from './arkpedia-enemy-pulse.js';
 import { blockedDuel } from './arkpedia-enemy-duel.js';
 import { deathAreaDebuff, deathAreaBuff } from './arkpedia-enemy-death-area.js';
 import { TICK, MOVE_SCALE, ELEMENT, ATTACK_PAUSE, PROJECTILE_SPEEDS, ALLY_COLLIDER_RADIUS, COLS } from '../constants.js';
-import { canTargetAlly, sortAllyTargets, aggroCmp, enemyStealthed, areaSelectable, auraSelectable } from '../targeting.js';
+import { canTargetAlly, sortAllyTargets, aggroCmp, enemyStealthed, areaSelectable, auraSelectable, targetableNeutrals } from '../targeting.js';
 import { mitigate, periodicDamage } from '../damage.js';
 import { projectileBoxAttack, projectileCircleAttack, projectileSingleAttack, projectileBurstAttack, delayedAreaAttack, taggedProjectileAttack } from './arkpedia-enemy-projectiles.js';
 import { ammoSummoner, blockedCartBlast } from './arkpedia-enemy-snack.js';
@@ -458,7 +458,8 @@ export const featureAbilities = Object.freeze({
   bombard: ({ delay, radius }) => ({
     attack(c, b, e) {
       const t = c.target; if (!t) return;
-      b.after(delay ?? 1, () => { for (const u of b.alliesInRadius(t.x, t.y, radius ?? 1.1)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['bombard'] }); });
+      // The blast takes the neutral units the aim can (the Anti-Witchcraft bomb, Talulah, the Fighter).
+      b.after(delay ?? 1, () => { for (const u of [...b.alliesInRadius(t.x, t.y, radius ?? 1.1), ...targetableNeutrals(b, e, t.x, t.y, radius ?? 1.1)]) hurt(b, e, u, e.s.atk, 'phys', { tags: ['bombard'] }); });
     },
   }),
   // Ursus Civilian: spared at the objective, one life lost if killed.

@@ -26,6 +26,17 @@ export class StageBranchScheduler {
     return b.spawnEnemy(stageEnemyKey(this.rules,action.enemyKey),{routeIndex:action.routeIndex,
       countInTotal:false,tag,ownerPlayerId:'arkpedia',initialHpRatio:hpRatio});
   }
+  /** SummonEnemiesFollowBranchRoute with _unharmful, _alwaysCountAsKilled and no scheduler management (the Explosives
+   * Loading Point): the branch's single body, uncounted, never holding the battle, costing nothing if it leaks. */
+  summonUnharmful(key) {
+    const action = this.branches[key]?.spawns;
+    if (!Array.isArray(action) || action.length !== 1 || action[0].count !== 1 || action[0].offset !== 0) throw Error('Invalid unharmful branch summon');
+    const b = this.battle; if (b.finished) return null;
+    const e = b.spawnEnemy(stageEnemyKey(this.rules, action[0].enemyKey), { routeIndex: action[0].routeIndex, countInTotal: false,
+      tag: `stage-unharmful:${++this.serial}`, ownerPlayerId: 'arkpedia' });
+    if (e) { e.mem.stageWaveUnharmful = true; e.profile.holdsBattle = false; e.counted = false; }
+    return e;
+  }
   /** The level-branch trigger: true while an activation branch has a phase left. */
   hasNext(key) {
     const branch = this.branches[key];
@@ -44,12 +55,26 @@ export class StageBranchScheduler {
     for (const alias of branch.phases[i]) b.activateStagePredefined(alias);
     return true;
   }
+  /** PickRandomBranchPhase with _notRepeatInOneLoop: a random phase not yet run in this loop (seeded battle RNG). A
+   * single-phase branch is ordinary start(). */
+  startRandomPhase(key, { blockGameFinish = false } = {}) {
+    const branch = this.branches[key];
+    if (!branch) throw Error(`Unknown stage branch: ${key}`);
+    if (!Array.isArray(branch.randomPhases)) return this.start(key, { blockGameFinish });
+    this.randomLeft ??= {};
+    if (!this.randomLeft[key]?.length) this.randomLeft[key] = branch.randomPhases.map((_, i) => i);
+    const left = this.randomLeft[key], index = left.splice(this.battle.rng.int(left.length), 1)[0];
+    return this._startSpawns(branch.randomPhases[index], { blockGameFinish });
+  }
   start(key, { blockGameFinish = false } = {}) {
     const phase = this.branches[key];
     if (!phase) throw Error(`Unknown stage branch: ${key}`);
+    return this._startSpawns(phase.spawns, { blockGameFinish });
+  }
+  _startSpawns(spawns, { blockGameFinish = false } = {}) {
     const b = this.battle, serial = ++this.serial;
     if (b.finished) return false;
-    for (const action of phase.spawns) for (let i = 0; i < action.count; i++) {
+    for (const action of spawns) for (let i = 0; i < action.count; i++) {
       const tag = `stage-branch:${serial}:${action.order}:${i}`; this.tags.add(tag);
       const spawn = () => b.spawnEnemy(stageEnemyKey(this.rules, action.enemyKey), {
         routeIndex: action.routeIndex, countInTotal: false, tag, ownerPlayerId: 'arkpedia',

@@ -8,8 +8,9 @@
 // Each hit unit gets trap_bonore_s: its mark stacks are counted into `buff_cnt`, the mark is finished (Blood Amber:
 // enemy_dseed_bonore[action] kills it), and trap_bonore_branch[dfello] is stacked that many times; each stack runs
 // PickRandomBranchPhase on the Altar's branch (`talent@branch_id`, set per instance), which never blocks the end.
-// A Bone Drifter in its drifting form (enemy_spnwiz_ghost_mark), Blood Collectors, bomb carts and Sarkaz pilots react
-// differently; stages with them are refused until those reactions are built (server runtime).
+// A Bone Drifter in its drifting form (enemy_spnwiz_ghost_mark), Blood Collectors and Sarkaz pilots react differently;
+// stages with them are refused until those reactions are built (server runtime). The bomb's KillBmbcar trigger (radius
+// 1) is checked by the bomb (arkpedia-enemy-bombs.js), which then destroys the Altar (destroy()).
 import native from '../../data/arkpedia-device-native-source.json' with { type: 'json' };
 import tables from '../../data/arkpedia-device-source.json' with { type: 'json' };
 
@@ -17,9 +18,11 @@ const f32 = Math.fround;
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 export const BLOOD_ALTAR_MARK = 'enemy_bonore_mark';
 export const BLOOD_AMBER = 'enemy_1367_dseed';
+/** KillBmbcar: a radius-1 trigger circle around the Altar that forces a bomb carrying enemy_bmbcar1_passive to explode. */
+export const BLOOD_ALTAR_BOMB_RADIUS = 1;
 /** Records the pulse reacts to in ways this runtime does not model yet. */
 export const BLOOD_ALTAR_UNMODELLED = Object.freeze(['enemy_1365_spnwiz', 'enemy_1365_spnwiz_2', 'enemy_1366_dcolle', 'enemy_1366_dcolle_2',
-  'enemy_1368_spilot', 'enemy_1369_bmbcar1']);
+  'enemy_1368_spilot']);
 
 export function bloodAltarNativeReviewed(e = native, t = tables) {
   const P = k => e.prefabs?.[k]?.components ?? [], rows = k => P(k).map(c => c.data);
@@ -34,6 +37,8 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
   const T = e.templates ?? {}, s = T.trap_bonore_s?.eventToActions?.ON_BUFF_START?.[0];
   const fail = (s?._failNodes ?? []).map(n => n.$type.split('+')[1].split(',')[0]);
   const stacked = s?._failNodes?.[2], pick = T['trap_bonore_branch[dfello]']?.eventToActions?.ON_BUFF_START?.[0];
+  const kill = P('trap_125_bonore').find(c => c.object === 'KillBmbcar' && c.data.m_Radius !== undefined)?.data;
+  const killSelect = P('trap_125_bonore').find(c => c.object === 'KillBmbcar' && c.data._buffs)?.data;
   const record = t.devices?.trap_125_bonore, frames = record?.phases?.[0]?.attributesKeyFrames ?? [];
   const skill = t.skills?.sktok_bonore?.levels, bb = Object.fromEntries((skill?.[0]?.blackboard ?? []).map(x => [x.key, x.valueStr ?? x.value]));
   return root?._sideType === 2 && root._category === 2 && root._withdrawable === 0 && root._modes?.length === 1
@@ -50,6 +55,7 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
     && s._failNodes[0]._buffKey === BLOOD_ALTAR_MARK && s._failNodes[1]._buffKey === BLOOD_ALTAR_MARK
     && stacked?._buff?.templateKey === 'trap_bonore_branch[dfello]' && stacked._buff.maxStackCnt === 10
     && pick?.$type.includes('PickRandomBranchPhase') && pick._blockGameFinish === false
+    && kill?.m_Radius === 1 && killSelect?._buffs?.[0]?.templateKey === 'trap_bonore_kill[bmbcar]'
     && record?.profession === 'TRAP' && frames.length === 2 && ['maxHp', 'def', 'magicResistance'].every(k => frames[0].data[k] === frames[1].data[k])
     && skill?.length === 1 && skill[0].skillType === 'AUTO' && skill[0].spData.spType === 'INCREASE_WITH_TIME'
     && skill[0].spData.spCost === 20 && skill[0].spData.initSp === 0 && skill[0].spData.increment === 1
