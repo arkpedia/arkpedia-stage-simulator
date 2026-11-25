@@ -6,7 +6,8 @@ import { ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 import { installStageSight } from '../server/sim/content/arkpedia-stage-sight.js';
 import { nativeComponents } from '../shared/arkpedia/enemy-support.js';
-import { norportIdentityNative, norportIdentityParams, isReviewedIdentity, isUnreviewedIdentity, IDENTITY_PREFABS }
+import { norportIdentityNative, norportIdentityParams, isReviewedIdentity, isUnreviewedIdentity, IDENTITY_PREFABS, PENDING_IDENTITY_PREFABS,
+  eblanaNative, eblanaParams }
   from '../shared/arkpedia/enemy-norport-identity-features.js';
 import { sightNativeReviewed } from '../shared/arkpedia/stage-sight.js';
 import { COLS } from '../server/sim/constants.js';
@@ -15,7 +16,8 @@ import native from '../data/arkpedia-enemy-native-abilities.json' with { type: '
 
 const SPY = 'enemy_1314_wdnjd', CIVILIAN = 'enemy_1313_wdfmr', SENTRY = 'enemy_1315_wdyjd';
 const ARMED = 'enemy_1316_wdpjd';
-const REVIEWED = [SPY, 'enemy_1314_wdnjd_2', SENTRY, 'enemy_1315_wdyjd_2', ARMED, 'enemy_1316_wdpjd_2', CIVILIAN, 'enemy_1313_wdfmr_2'];
+const CLUSTER = 'enemy_1541_wdslms', EBLANA = 'enemy_1540_wdncr';
+const REVIEWED = [SPY, 'enemy_1314_wdnjd_2', SENTRY, 'enemy_1315_wdyjd_2', ARMED, 'enemy_1316_wdpjd_2', CIVILIAN, 'enemy_1313_wdfmr_2', CLUSTER];
 const rec = id => ENEMY_RECORDS.enemies[id].levels[0];
 
 test('every chapter-12 identity record is pinned and reviewed; changed kits are refused', () => {
@@ -37,6 +39,26 @@ test('every chapter-12 identity record is pinned and reviewed; changed kits are 
   assert.equal(norportIdentityNative({ ...c2, talents: { ...c2.talents, bb: { 'civilianTalent.max_cost': 2 } } },
     nativeComponents(native, 'enemy_1313_wdfmr_2')), false, 'a changed elite reward');
   assert.equal(sightNativeReviewed(), true);
+  // The H12/12-20 boss family carries `ability:Spy` but is not reviewed: every level is refused.
+  for (const id of PENDING_IDENTITY_PREFABS) for (const r of Object.values(ENEMY_RECORDS.enemies[id].levels))
+    assert.equal(isUnreviewedIdentity(r), true, `${id}@${r.level}`);
+  assert.equal(norportIdentityNative(rec(CLUSTER), nativeComponents(native, SPY)), false, 'the Cluster tree is its own');
+});
+
+test('12-16: the Damazti Cluster and Eblana are pinned; changed kits are refused', () => {
+  const e = rec(EBLANA), n = nativeComponents(native, EBLANA);
+  assert.equal(eblanaNative(e, n), true);
+  assert.equal(eblanaNative({ ...e, stats: { ...e.stats, aspd: 100 } }, n), false, 'a changed attack speed');
+  assert.equal(eblanaNative({ ...e, skills: [{ ...e.skills[0], initCooldown: 60 }] }, n), false, 'a changed detectAll');
+  assert.equal(eblanaNative(e, nativeComponents(native, CLUSTER)), false);
+  const c = rec(CLUSTER);
+  assert.equal(norportIdentityNative({ ...c, stats: { ...c.stats, lpr: 1 } }, nativeComponents(native, CLUSTER)), false, 'a changed life cost');
+  const p = norportIdentityParams(c);
+  assert.deepEqual([p.kind, p.switchDur, p.move, p.atkScale, p.invisible, p.attackAnim, p.guarded, p.clips.switch, p.clips.revealed],
+    ['spy', 2, null, null, null, null, { key: 'enemy_wdslms[invincibleAndBlockFree]' }, 'Die', { move: '2_Move', idle: '2_Idle', die: '2_Die_2' }]);
+  const q = eblanaParams(e);
+  assert.deepEqual([q.range, q.aspd, q.attack.dur, q.attack.hit, q.detectAll.initCooldown, q.detectAll.clip, Math.round(q.detectAll.dur * 100),
+    Math.round(q.detectAll.hit * 10)], [2, 0, 1.5, .5, 92, 'Skill_b_3', 1167, 92]);
 });
 
 test('parameters: 0.1 s identification steps, +2 then +3 to 300, -1 out of sight; spy and civilian outcomes', () => {

@@ -1,4 +1,4 @@
-# Chapter 12: sight and identification (first slice)
+# Chapter 12: sight and identification
 
 Chapter 12 hides hostile Spies among Norport Civilians. Every unit starts unidentified and invincible; identification (鉴定) fills while the unit is blocked or stands in own-side sight. The research and source readings are in `docs/CHAPTER-12-IDENTIFICATION-RESEARCH.md`. This document covers what was built on 2026-11-24.
 
@@ -23,7 +23,18 @@ Fifteen stages became available: 12-3, 12-4, 12-10, 12-12, 12-14, 12-18 and thei
 - **Armed Spy `enemy_1316_wdpjd` and `_2`** (12,000/15,000 HP, 1,200/1,500 DEF): the same identification templates, with no talent component at all. The database lists `moveSpeed.move_speed` 0, but there is no `moveSpeed` object to apply it. Once revealed it is only a heavy melee attacker, using its own clock (`Attack` 1.5 s, OnAttack at 0.6 s). The two levels differ natively only in the FaceSwitcher's default side.
 - **Elite civilian `enemy_1313_wdfmr_2`** ("Norport Spy" in the EN handbook, but a civilian): the Norport Civilian's tree and skeleton plus the marker `civilian_mainline12[civilianElite]`. The only thing that reads it is `detect_p2_progressController`, which picks the `appraisal_l3` instead of the `l2` phase-2 effect art. Its `civilianTalent.max_cost` is 5.
 
-With these, every identity record is reviewed (`IDENTITY_PREFABS`). Eleven stages became available: 12-5, 12-9, 12-15, 12-19 and their adverse variants, 12-7 adverse, 12-13 adverse and H12-2 adverse. That gives 1,125 available and 403 of 572 main-story stages. No published bundle changed. 12-5 adverse starts its DP cap at 15. All eleven run headless without errors; 12-5 adverse, 12-7 adverse and 12-19 adverse reach the 1,500 s limit with the weak probe squad.
+With these, every identity record of the regular spies and civilians is reviewed (`IDENTITY_PREFABS`). Eleven stages became available: 12-5, 12-9, 12-15, 12-19 and their adverse variants, 12-7 adverse, 12-13 adverse and H12-2 adverse. That gives 1,125 available and 403 of 572 main-story stages. No published bundle changed. 12-5 adverse starts its DP cap at 15. All eleven run headless without errors; 12-5 adverse, 12-7 adverse and 12-19 adverse reach the 1,500 s limit with the weak probe squad.
+
+## Fourth slice: 12-16, Eblana and the 'Damazti Cluster' (2026-11-25)
+
+- **'Damazti Cluster' `enemy_1541_wdslms`** (100,000 HP, life cost 0; no handbook lines, so `native:damaztiDisguise` routes it by key): the spies' `civilianModeTalent`, `pretending` and the same ten identification templates, byte for byte. Its `SwitchMode` plays `Die` (2 s). Its revealed mode (`Default`) carries `enemy_wdslms[invincibleAndBlockFree]` (INVINCIBLE, BLOCK_FREE) and an empty attack: it never fights and walks out. Clips: `Move`/`Idle`, then `2_Move`/`2_Idle`/`2_Die_2`.
+- **Eblana `enemy_1540_wdncr`** (50,000 HP, life cost 0): always `enemy_wdncr[invincibleAndBlockFree]` (INVINCIBLE, BLOCK_FREE). Both her abilities select only units carrying `enemy_mainline12[civilianMode]` (disguised spies and Clusters; never civilians, whose disguise is `unit_mainline12[civilianMode]`, nor operators), and both deliver `enemy_wdncr[triggerSwitchMode]`: unless the unit already has `switchModeExternally`, its identification buffs end and `switchModeTrigger` starts the normal switch.
+  - **Attack** (`Attack_b`, 1.5 s, OnAttack 0.5 s): one target in her radius-2 selector. Her database `attackSpeed` is a defined 0. The engine's ASPD floor is 20, so she attacks every 2.5 × 100 / 20 = 12.5 s. The generic enemy loader reads a defined 0 as 100 (also for nine other records: `crzjdg_2`, `ymgpck(_2)`, `achunt(_2)`, `acduml(_2)`, `acdumm`, and the Cluster, which never attacks); Eblana's runtime takes `aspd` from her record instead.
+  - **detectAll** (initCooldown 92 s, cooldown 999, not silence-proof): `Skill_b_3` (11.67 s, OnAttack 9.2 s) with the global-range selector (script `6275044311115013764`, as in `enemy-marked-target-contract.js`): every such unit on the map switches at once.
+- Both clocks come from `enm_art_17.ab` (`data/arkpedia-norport-boss-animations.json`). In 12-16 she spawns at 3 s and reveals Pathfinder Spies at 3.5, 16.0 and 28.5 s. detectAll then reveals the remaining spies and all three Clusters at 104.2 s. She and the Clusters reach the exit before wave 1 spawns.
+- **Still unreviewed:** the H12/12-20 boss family `enemy_1542_wdslm` (and `_2` to `_4`) carries `ability:Spy` but runs its own program. `PENDING_IDENTITY_PREFABS` refuses it in the generic spy keys.
+
+12-16 became available: 1,126 stages, 404 of 572 main-story. No published bundle changed. Headless with the probe squad it clears at 1,270 s with no errors.
 
 ## Legacy chapter-12 stage files retired
 
@@ -64,4 +75,5 @@ This also changes already published stages that place such objects. A headless c
 - **Not checked in game.** The bit-8 reading of `KEEP_REVEALED`, the per-unit 0.5 s sight refresh and the 1 s spy switch come from the prefabs and PRTS.
 - **Sight is range tiles only.** Devices and tokens contribute when they are own-side units with a range; a NeverTrigger unit's empty range and an AlwaysTrigger unit's whole-map sight are not special-cased yet.
 - **The identity markers** (the phase colours over each unit) are not drawn.
-- **Left in chapter 12:** 12-16 (bosses `enemy_1540_wdncr`, `enemy_1541_wdslms`), 12-20 and the hard H12-1/3/4 adverse stages (Smoke/`enemy_1542_wdslm` and stage programs). The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.
+- **Eblana's targeting and timing.** Her selector's `_postFilter` 4 and `_abnormalFlag` 29 are not decoded, so nearest-first is an inference. Her projectile's flight is not modelled: the switch starts at the OnAttack. She only targets units still identifying, never one already switching. The 12.5 s interval rests on the engine's ASPD floor. Each cast holds her in place.
+- **Left in chapter 12:** 12-20 and the hard H12-1/3/4 adverse stages (`enemy_1542_wdslm` and stage programs). The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.

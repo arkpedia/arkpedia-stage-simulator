@@ -112,7 +112,7 @@ import { FAUST_FEATURES } from './enemy-faust-features.js';
 import { REUNION_MEPHISTO_FEATURES } from './enemy-reunion-mephisto-features.js';
 import { WINTERS_SCAR_FEATURES, isWintersScar, wintersScarNative } from './enemy-wintersscar-features.js';
 import { BLACK_SNAKE_FEATURES, isBlackSnake, blackSnakeNative } from './enemy-black-snake-features.js';
-import { isReviewedIdentity, isUnreviewedIdentity, norportIdentityNative, norportIdentityParams } from './enemy-norport-identity-features.js';
+import { isReviewedIdentity, isUnreviewedIdentity, norportIdentityNative, norportIdentityParams, isEblana, eblanaNative, eblanaParams } from './enemy-norport-identity-features.js';
 import { STEAM_KNIGHT_FEATURES, isSteamKnight, steamKnightNative, isSteamKnightS, steamKnightSNative } from './enemy-steam-knight-features.js';
 import { isChargeDrone, isArtificer, artilleryChargerNative, droneChargeParams, artificerChargeParams } from './enemy-artillery-charge-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
@@ -456,6 +456,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1541_wdslms:'native:damaztiDisguise',
   enemy_1284_sgprst:'native:fatherAgenirLog',
   enemy_1432_lrccon:'native:cocoonCage',
   enemy_1184_cadkgt_3:'native:vivianaLog',
@@ -1175,6 +1176,14 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Friendly Unit': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'Friendly Unit'),
     ability: r => isReviewedIdentity(r) ? { kind: 'norportIdentity', params: norportIdentityParams } : { kind: 'friendlyUnit', params: () => ({}) }, note: 'friendly, untargetable, objective reward',
     explains: text => text === 'Friendly Unit' || /^Once their identity is confirmed, restores your max DP after retreating to the Objective Point$/.test(text) },
+  // 12-16: the disguised 'Damazti Cluster' (no handbook lines; routed by key) and Eblana, who forces disguised units
+  // to switch (enemy-norport-identity-features.js).
+  'native:damaztiDisguise': { covers: (r, n) => NATIVE_ONLY_FEATURES[r.key] === 'native:damaztiDisguise' && isReviewedIdentity(r) && norportIdentityNative(r, n),
+    ability: { kind: 'norportIdentity', params: norportIdentityParams }, nativeClaim: () => ({ active: 1 }),
+    note: 'disguised like a spy; once revealed INVINCIBLE and BLOCK_FREE with an empty attack' },
+  'skill:detectAll': { matchesRecord: isEblana, covers: (r, n) => eblanaNative(r, n),
+    ability: { kind: 'eblanaReveal', params: eblanaParams }, nativeClaim: () => ({ wrappers: 1 }),
+    note: 'Eblana: her attack and her one detectAll make disguised units switch; she never fights' },
   'talent:civilianTalent': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && sig(r, 'civilianTalent', ['max_cost']),
     ability: r => isReviewedIdentity(r) ? null : { kind: 'civilianReward', params: r => ({ dp: r.talents.bb['civilianTalent.max_cost'] }) },
     note: 'adds max DP when the civilian reaches the objective' },

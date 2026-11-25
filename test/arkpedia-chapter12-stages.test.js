@@ -37,7 +37,9 @@ test('the published chapter-12 stages are available with the sight environment a
     '12-12', '12-12_adverse_environment', '12-13', '12-14', '12-14_adverse_environment', '12-18', '12-18_adverse_environment',
     // Armed Spies and the elite civilian.
     '12-5', '12-5_adverse_environment', '12-7_adverse_environment', '12-9', '12-9_adverse_environment', '12-13_adverse_environment',
-    '12-15', '12-15_adverse_environment', '12-19', '12-19_adverse_environment', 'h12-2_adverse_environment'];
+    '12-15', '12-15_adverse_environment', '12-19', '12-19_adverse_environment', 'h12-2_adverse_environment',
+    // Eblana and the 12-16 'Damazti Cluster'.
+    '12-16'];
   for (const id of ids) {
     const stage = await load(id);
     assert.deepEqual(stage.environment?.filter(e => e.kind === 'mainline12_sightManager'), [{ kind: 'mainline12_sightManager', interval: .5 }], id);
@@ -47,8 +49,51 @@ test('the published chapter-12 stages are available with the sight environment a
   const b = battle(await load('tr-22'));
   assert.equal(typeof b.stageSight?.inSight, 'function');
   assert.deepEqual([b.flags.dpMax, b.flags.dpMaxCeil], [20, 99]);
-  // 12-16 and 12-20 wait for their own bosses and stage programs.
-  assert.notEqual(manifest.stages.find(s => s.id === '12-16')?.availability, 'available');
+  // 12-20 waits for its own boss (enemy_1542_wdslm) and stage programs.
+  assert.notEqual(manifest.stages.find(s => s.id === '12-20')?.availability, 'available');
+});
+
+test('12-16: Eblana makes disguised units switch, and she and the Damazti Clusters walk out before wave 1', async () => {
+  const b = battle(await load('12-16'));
+  b.life = 999;
+  const tag = e => e.defId.replace(/^enemy_\d+_/, '');
+  const reveals = [], gone = new Map(), clusters = [];
+  let eblana = null, wave1 = null;
+  b.on('enemySpawn', ev => {
+    const e = ev.enemy ?? ev;
+    if (tag(e) === 'wdncr') eblana = e;
+    if (tag(e) === 'wdslms') clusters.push(e);
+    if (wave1 == null && /duskls|wdgyht|wdpjd|wdexg/.test(e.defId)) wave1 = b.time;
+  });
+  const leaks = [];
+  b.on('enemyLeak', ({ enemy }) => leaks.push([tag(enemy), b.life]));
+  b.on('identityRevealed', ev => reveals.push([+b.time.toFixed(1), tag(ev.enemy), eblana?.mem.ab.list.find(x => x.eblana)?.cast?.clip ?? null]));
+  while (!b.finished && b.time < 300) {
+    b.step();
+    for (const e of [eblana, ...clusters]) if (e && !e.alive && !gone.has(e)) gone.set(e, b.time);
+    if (eblana?.alive) {
+      // Always INVINCIBLE and BLOCK_FREE; she never attacks an operator.
+      assert.equal(eblana.s.flags.invulnerable && eblana.s.flags.unblockable, true);
+      assert.equal(eblana.profile.noAttack, true);
+    }
+    for (const c of clusters) if (c.alive && c.mem.ab.list.find(x => x.norportIdentity)?.state === 'revealed')
+      assert.deepEqual([!!c.s.flags.invulnerable, !!c.s.flags.unblockable, c.profile.noAttack, !!c.blockedBy], [true, true, true, false]);
+  }
+  // Her Attack_b reveals one disguised spy in range at its OnAttack (0.5 s); her database attackSpeed 0 under the
+  // ASPD floor of 20 gives 2.5 x 100 / 20 = 12.5 s between attacks. She spawns at 3 s.
+  const byAttack = reveals.filter(r => r[2] === 'Attack_b');
+  assert.deepEqual(byAttack.slice(0, 3).map(r => r[0]), [3.5, 16, 28.5]);
+  // detectAll: initCooldown 92 s, then Skill_b_3's OnAttack at 9.2 s reveals every disguised unit on the map at once.
+  const byAll = reveals.filter(r => r[2] === 'Skill_b_3');
+  assert.deepEqual([...new Set(byAll.map(r => r[0]))], [104.2]);
+  assert.deepEqual(byAll.filter(r => r[1] === 'wdslms').length, 3);
+  assert.equal(reveals.some(r => r[1] === 'wdfmr' && r[2] != null), false, 'civilians are never her targets');
+  // All four walk out (life cost 0) and wave 1 spawns afterwards.
+  assert.equal(gone.size, 4);
+  assert.ok(wave1 > Math.max(...gone.values()), `wave 1 at ${wave1}`);
+  const bosses = leaks.filter(l => ['wdncr', 'wdslms'].includes(l[0]));
+  assert.equal(bosses.length, 4, 'all four reach the exit');
+  for (const e of [eblana, ...clusters]) assert.equal(e.lpr ?? e.def.lpr, 0);
 });
 
 test('placed enemy-side objects hold neither a kill-all wave nor the battle (12-8 wave 0, TR-18)', async () => {
