@@ -908,8 +908,7 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Upon receiving damage, reduces the ASPD of the attacker\.$/ },
   'ability:Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby.': {
     covers: r => r.abilities.some(a => a.text === 'Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby.'),
-    note: 'no bombs in the stage set that uses this record', explains: /^Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby\.$/ },
-  'talent:BmbcarBuff': { covers: r => sig(r, 'BmbcarBuff', ['range_radius']), note: 'bomb movement aura, inert without bombs' },
+    note: 'the bomb stop is talent:BmbcarBuff (enemy-bomb-features.js)', explains: /^Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby\.$/ },
   'talent:Summon': { covers: r => (sig(r, 'Summon', ['cnt', 'enemy_key']) || sig(r, 'Summon', ['attack_speed', 'cnt', 'duration', 'enemy_key']))
       && r.abilities.some(a => a.text === 'Leaves behind <Blood Amber> when defeated.' || a.text === 'Leaves behind 2 <Blood Amber> when defeated.'),
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },

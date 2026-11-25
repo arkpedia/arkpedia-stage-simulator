@@ -148,10 +148,28 @@ test('an Altar with a multi-phase branch spawns a different route each time unti
   assert.equal(new Set(routes).size, 3, 'three different phases in one loop');
 });
 
-test('stages with Boneguards and a Loading Point stay blocked until the bomb stop is built', () => {
-  for (const id of ['13-10', '13-10_adverse_environment']) {
-    const s = inventory.stages.find(x => x.id === id);
-    assert.ok(s.blockers.some(x => x.id === 'Bomb Loading Point' && /BmbcarBuff/.test(x.message)), id);
-    assert.notEqual(manifest.stages.find(x => x.id === id)?.availability, 'available', id);
-  }
+test('a charged bomb inside a Boneguard\'s circle cannot move until it dies (talent:BmbcarBuff)', async () => {
+  for (const id of ['13-10_adverse_environment', 'vec-sp08_act1break_sp08']) await load(id);
+  // 13-7 has no Boneguards of its own: only the one placed here (with 13-10's compiled record) acts.
+  const withGuard = await load('13-10'), stage = await load('13-7');
+  const b = battle({ ...stage, enemies: { ...stage.enemies, enemy_1363_spnshd: withGuard.enemies.enemy_1363_spnshd } });
+  const { bomb, a } = send(b);
+  for (let i = 0; i < 10; i++) b.dealDamage(null, a.carrier, { amount: 1, type: 'phys', sourceless: true });
+  const guard = b.spawnEnemy('enemy_1363_spnshd', { pos: [Math.round(bomb.y), Math.round(bomb.x)], countInTotal: false });
+  b.addBuff(guard, { key: 'test:hold', persist: true, flags: { noMove: true, invulnerable: true } });
+  guard.x = bomb.x + 1.05; guard.y = bomb.y;
+  b.addBuff(bomb, { key: 'test:unselectable', persist: true, flags: { untargetable: true } });
+  b.step();
+  const at = [bomb.x, bomb.y];
+  let last = b.time;
+  const drive = until => { while (b.time < until) { if (b.time - last >= .9) { last = b.time; b.dealDamage(null, a.carrier, { amount: 1, type: 'phys', sourceless: true }); } b.step(); } };
+  drive(b.time + 2);
+  assert.ok(a.sp >= 9, 'charged');
+  assert.deepEqual([bomb.x, bomb.y], at, 'held within 1 + 0.1 of the Boneguard');
+  b.removeBuff(guard, 'test:hold');
+  b.dealDamage(null, guard, { amount: 1e8, type: 'true', sourceless: true, ignoreSelect: true });
+  b.removeBuff(guard, 'test:hold');
+  if (guard.alive) b.kill(guard, null);
+  drive(b.time + 2);
+  assert.ok(Math.hypot(bomb.x - at[0], bomb.y - at[1]) > .1, 'released when the Boneguard dies');
 });

@@ -61,6 +61,24 @@ export function bombCartParams(r){
   // bomb's own collider radius (0.1, the prefab's root CircleCollider2D).
   explosion:{scale:r.skills[0].bb.atk_scale,radius:r.stats.rangeRadius,trigger:BLOOD_ALTAR_BOMB_RADIUS+BOMB_COLLIDER,anim:{dur:CLOCK.durations.Explode,hit:CLOCK.events.Explode}}};
 }
+/** Sarkaz Boneguards (enemy_1363_spnshd, _2), talent BmbcarBuff: a trigger circle of radius `BmbcarBuff.range_radius`
+ * (1) whose validator admits units carrying enemy_bmbcar1_passive (the bombs) puts enemy_spnshd_bmbcar_buff on them:
+ * UNMOVABLE (flag 13) for as long as they stay inside (`_removeBuffWhenTargetLeave`). PRTS: "Prevents <Anti-Witchcraft
+ * Repositionable Bombs> from moving when nearby." */
+export const isBoneguard=r=>r?.prefabKey==="enemy_1363_spnshd"||r?.prefabKey==="enemy_1363_spnshd_2";
+export function boneguardBombStopNative(r,n){
+ const rows=n?.BmbcarBuff??[],aura=rows.find(c=>c._buffs?.[0]?.buffKey==="enemy_spnshd_bmbcar_buff"),buff=aura?._buffs?.[0];
+ const validator=n?.$ref?.(aura?._targetValidator);
+ return isBoneguard(r)&&r.talents.bb["BmbcarBuff.range_radius"]===1
+  &&aura?._buffs.length===1&&same(buff.attributes.abnormalFlags,[13])&&buff.attributes.attributeModifiers.length===0&&buff.lifeTimeType===2
+  &&aura._removeBuffWhenTargetLeave===1&&aura._removeBuffWhenAbilityDetached===1&&aura._selfOption===0
+  &&validator?._targetOptions?.targetSide===2&&validator._targetOptions.targetMotion===3&&validator._excludeKey===0
+  &&same(validator._buffs,["enemy_bmbcar1_passive"]);
+}
+export function boneguardBombStopParams(r){
+ const radius=r.talents.bb["BmbcarBuff.range_radius"];
+ return {radius,contact:radius+BOMB_COLLIDER,bomb:BOMB_CART};
+}
 const lines=new Set(BOMB_TEXTS.slice(0,2));
 export const BOMB_FEATURES={
  [`ability:${BOMB_TEXTS[2]}`]:{matchesRecord:isBombCart,covers:bombCartNative,unitProperties:{side:"neutral"},
@@ -68,6 +86,8 @@ export const BOMB_FEATURES={
   note:"Anti-Witchcraft bomb: a neutral, SP-driven walker that explodes at a Bloodcalling Altar",
   ability:{kind:"antiWitchcraftBomb",params:bombCartParams}},
  "talent:SpCtrl":{matchesRecord:isBombCart,covers:bombCartNative,note:"bomb SP decay (antiWitchcraftBomb)"},
+ "talent:BmbcarBuff":{matchesRecord:isBoneguard,covers:boneguardBombStopNative,
+  note:"Boneguard: bombs within its circle cannot move",ability:{kind:"bombStopAura",params:boneguardBombStopParams}},
  "skill:Explosion":{matchesRecord:r=>isBombCart(r)||isBombCarrier(r),covers:(r,n)=>isBombCart(r)?bombCartNative(r,n):bombCarrierNative(r,n),
   note:"bomb Explosion (antiWitchcraftBomb); the carrier's record lists it but its prefab has no such ability",
   nativeClaim:(_p,n)=>n?.[BOMB_CARRIER]?{active:1}:{},

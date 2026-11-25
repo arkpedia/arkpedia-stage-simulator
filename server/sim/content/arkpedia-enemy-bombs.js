@@ -90,6 +90,24 @@ export function bombCarrier() {
   };
 }
 
+/** Sarkaz Boneguard: bombs whose collider overlaps its circle (`contact`) are UNMOVABLE while inside; leaving the circle
+ * or the Boneguard's death releases them (enemy_spnshd_bmbcar_buff, removed when the target leaves). */
+export function bombStopAura(p) {
+  if (!(p?.radius > 0 && p.contact >= p.radius && typeof p.bomb === 'string')) throw Error('Invalid bomb stop parameters');
+  const release = (b, e, a) => { for (const u of a.held) if (u.alive) b.removeBuff(u, a.key); a.held.clear(); };
+  return {
+    spawn(b, e, a) { a.held = new Set(); a.key = `ab:bombStop:${e.id}`; },
+    tick(b, e, a) {
+      if (!e.alive) return;
+      const inside = new Set(b.neutralUnits.filter(u => u.alive && !u.hidden && u.defId === p.bomb
+        && (u.x - e.x) ** 2 + (u.y - e.y) ** 2 <= p.contact ** 2 + 1e-9));
+      for (const u of a.held) if (!inside.has(u)) { if (u.alive) b.removeBuff(u, a.key); a.held.delete(u); }
+      for (const u of inside) if (!a.held.has(u)) { b.addBuff(u, { key: a.key, source: e, persist: true, flags: { noMove: true } }); a.held.add(u); }
+    },
+    death(c, b, e, a) { release(b, e, a); },
+  };
+}
+
 function validate(p) {
   const pos = v => Number.isFinite(v) && v > 0;
   const ok = pos(p?.maxSp) && p.initSp >= 0 && p.initSp <= p.maxSp && pos(p.speedPerSp) && pos(p.speedInterval) && typeof p.carrier === 'string'

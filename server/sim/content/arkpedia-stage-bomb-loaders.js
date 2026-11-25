@@ -5,15 +5,11 @@
 import { bombLoaderDefinition, stageDeviceSpec } from '../../../shared/arkpedia/device-runtime.js';
 import { canSpendDp, spendDp } from './arkpedia-dp-budget.js';
 
-/** Boneguards stop nearby bombs (talent:BmbcarBuff), which is not built yet: their stages are refused. */
-const UNMODELLED = Object.freeze(['enemy_1363_spnshd', 'enemy_1363_spnshd_2']);
 
 export class StageBombLoaders {
   constructor(b, devices, geometry, stage = null) {
     this.battle = b; this.entries = new Map();
     const loaders = devices.filter(d => stageDeviceSpec(d)?.bombLoader);
-    const unmodelled = Object.keys(stage?.enemies ?? {}).filter(k => UNMODELLED.includes(k));
-    if (loaders.length && unmodelled.length) throw Error(`Bomb reactions not modelled: ${unmodelled.join(', ')}`);
     for (const d of loaders) {
       if (d.hidden) throw Error('Hidden Explosives Loading Point requires an activation controller');
       const spec = bombLoaderDefinition(d.instance), id = `stage-device:${d.key}:${d.row}:${d.col}`;

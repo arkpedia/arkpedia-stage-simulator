@@ -2,9 +2,7 @@
 
 Chapter 13's second mechanism. The player sends a bomb from a Loading Point. Enemies attack it to slow it, operators attack its carrier to drive it, and when it reaches a Bloodcalling Altar it explodes and destroys the Altar.
 
-This batch publishes 13-7, 13-20, their adverse variants, and TR-24 (1,146 available; main story 422 of 564).
-
-13-10 and its adverse variant, plus the event stage VEC-SP08 break, stay blocked. Boneguards there stop nearby bombs (`talent:BmbcarBuff`), which is not built; the inventory now records this as a "Bomb Loading Point" blocker.
+This batch publishes 13-7, 13-20, their adverse variants, and TR-24. A follow-up the same day (the Boneguard bomb stop, below) publishes 13-10, its adverse variant, and the event stage VEC-SP08 break (1,149 available; main story 424 of 564).
 
 ## Explosives Loading Point
 
@@ -57,6 +55,22 @@ This batch publishes 13-7, 13-20, their adverse variants, and TR-24 (1,146 avail
 - The Bombardier's delayed blast (`bombard`) now hits opted-in neutral units in its radius.
 - The Flayer goes through the ordinary attack.
 
+## Boneguard bomb stop
+
+Sarkaz Boneguards (`enemy_1363_spnshd`, `_2`), `talent:BmbcarBuff`. Reviewed in `boneguardBombStopNative`, against the pinned `BmbcarBuff` components.
+
+**The aura**
+- A trigger circle of radius `BmbcarBuff.range_radius` (1).
+- Its validator admits only units carrying `enemy_bmbcar1_passive`, which are the bombs.
+- It puts `enemy_spnshd_bmbcar_buff` on them: UNMOVABLE (flag 13), with no modifiers, removed when the target leaves or the ability detaches. PRTS: "Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby."
+
+**Runtime (`bombStopAura`)**
+- Bombs whose collider overlaps the circle (centres within 1 + 0.1) are held in place.
+- Leaving the circle releases them, and so does the Boneguard's death.
+- The bomb's own SP and decay continue meanwhile.
+
+The aura was previously admitted as inert, because no bomb stage had been built. Its stages are no longer blockers.
+
 ## Other changes
 
 - **Altar branches with several phases.** In 13-7 and TR-24 each Altar branch has 3 phases. `PickRandomBranchPhase` with `_notRepeatInOneLoop` picks a random phase, seeded by the battle RNG, without repeating until all have run (`StageBranchScheduler.startRandomPhase`). The branch compiler accepts several phases only for Altar-bound branches.
@@ -81,7 +95,7 @@ This batch publishes 13-7, 13-20, their adverse variants, and TR-24 (1,146 avail
 - **Targeting:** a Bombardier next to the bomb ranks it first.
 - **Victory:** with every counted enemy dead and a bomb parked, the battle clears.
 - **Random phases:** three conversions in TR-24 take three different phases.
-- **Blockers:** 13-10 and its adverse variant stay blocked with the Boneguard message.
+- **Boneguard stop:** a charged bomb 1.05 from a Boneguard does not move, and moves again once the Boneguard dies.
 - **Headless 13-7:** the Point is ready at 40 s, the bomb waits, then after hits it explodes at 72.5 s, 2.9 rows from its start. It deals 5,000 True to three Bombardiers, the Altar falls, and the stage clears.
 
 ## Not checked
