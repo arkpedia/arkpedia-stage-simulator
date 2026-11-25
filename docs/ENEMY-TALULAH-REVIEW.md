@@ -17,7 +17,7 @@ She is admitted from her pinned CN prefab and the Global buff templates. Her ext
 
 The runtime is the new `talulah` kind, attached through `talent:halfhp`, which claims her four skill wrappers. No shared key is involved.
 
-"Talulah, the Fighter" (`enemy_3002_ftrtal`) is a different record: a neutral unit that attacks the Ursus enemies. It waits on the parked allied-route-actor concept and is not part of this batch.
+"Talulah, the Fighter" (`enemy_3002_ftrtal`) is a different record: a neutral unit that attacks the Ursus enemies. She shares these talent and skill keys and is reviewed in `docs/ENEMY-TALULAH-FIGHTER-REVIEW.md`.
 
 The rules not fixed by the data come from PRTS (`塔露拉(敌方)`).
 

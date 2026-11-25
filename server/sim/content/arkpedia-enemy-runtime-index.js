@@ -8,6 +8,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-theresa',load:()=>import('./arkpedia-enemy-theresa.js'),exports:{theresa:'theresa'}},
   {key:'arkpedia-enemy-patriot',load:()=>import('./arkpedia-enemy-patriot.js'),exports:{patriot:'patriot'}},
   {key:'arkpedia-enemy-talulah',load:()=>import('./arkpedia-enemy-talulah.js'),exports:{talulah:'talulah'}},
+  {key:'arkpedia-enemy-talulah-fighter',load:()=>import('./arkpedia-enemy-talulah-fighter.js'),exports:{talulahFighter:'talulahFighter',neutralShot:'neutralShot'}},
   {key:'arkpedia-enemy-frostnova',load:()=>import('./arkpedia-enemy-frostnova.js'),exports:{frostNova:'frostNova'}},
   {key:'arkpedia-enemy-herald',load:()=>import('./arkpedia-enemy-herald.js'),exports:{heraldDevour:'heraldDevour'}},
   {key:'arkpedia-enemy-abandoned',load:()=>import('./arkpedia-enemy-abandoned.js'),exports:{abandonedSplash:'abandonedSplash'}},

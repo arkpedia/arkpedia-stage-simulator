@@ -1170,7 +1170,15 @@ export class Battle {
 
   /** Leak: an enemy reached its goal. */  /** Leak: an enemy reached its goal. */
   leak(e) {
-    if (!e || !e.alive || e.side !== 'enemy' || e.profile?.cannotExit) return;
+    if (!e || !e.alive || e.profile?.cannotExit) return;
+    // A reviewed neutral route actor (Talulah, the Fighter) leaves at its exit without costing life.
+    if (e.side === 'neutral' && e.profile?.neutralExit) {
+      this._remove(e, 'leak');
+      this._ev(['leak', e.id]);
+      if (this._hooks.enemyLeak) this.emit('enemyLeak', { enemy: e });
+      return;
+    }
+    if (e.side !== 'enemy') return;
     if (e.profile?.friendly) {
       // A friendly civilian reaching the objective raises the reviewed max DP instead of costing life.
       // ModifyMaxCost: never past the stage's ceiling (cbuff_max_cost's max_cost_ceil) when it has one.

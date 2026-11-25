@@ -20,6 +20,7 @@ import {COCOON_CAGE_FEATURES} from './enemy-cocoon-cage-features.js';
 import {THERESA_FEATURES,isTheresa,theresaNative} from './enemy-theresa-features.js';
 import {PATRIOT_FEATURES,isPatriot,patriotNative} from './enemy-patriot-features.js';
 import {TALULAH_FEATURES} from './enemy-talulah-features.js';
+import { TALULAH_FIGHTER_FEATURES, isTalulahFighter, talulahFighterNative } from './enemy-talulah-fighter-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
@@ -531,6 +532,14 @@ export const ENEMY_FEATURES = Object.freeze({
   ...THERESA_FEATURES,
   ...PATRIOT_FEATURES,
   ...TALULAH_FEATURES,
+  // Talulah, the Fighter shares Talulah's talent and skill keys; her runtime is on her own Burning Breath line.
+  ...Object.fromEntries(Object.entries(TALULAH_FEATURES).map(([key, f]) => [key, { ...f,
+    matchesRecord: r => f.matchesRecord(r) || isTalulahFighter(r),
+    covers: (r, n) => isTalulahFighter(r) ? talulahFighterNative(r, n) : f.covers(r, n),
+    ...(f.explains ? { explains: (text, r) => !isTalulahFighter(r) && f.explains(text, r) } : {}),
+    ...(f.nativeClaim ? { nativeClaim: (p, n) => n?.enemy_3002_ftrtal ? {} : f.nativeClaim(p, n) } : {}),
+    ...(f.ability ? { ability: r => isTalulahFighter(r) ? null : f.ability } : {}) }])),
+  ...TALULAH_FIGHTER_FEATURES,
   ...FROSTNOVA_FEATURES,
   ...PHANTOM_MIDBOSS_FEATURES,
   ...BASOROBEAST_FEATURES,
@@ -1087,11 +1096,7 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'prtsProp', params: () => ({}) }, nativeClaim: p => String(p.rootName ?? '').includes('10072') ? { active: 1 } : {},
     note: 'inert PRTS controller/node; activation not yet modeled' },
   'native:beacon': BEACON_FEATURE,
-  // Ursus patrol: prioritize the named civilian/Talulah targets.
-  'ability:Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>': {
-    covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>'),
-    ability: { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) }, note: 'named-target priority; otherwise normal targeting',
-    explains: /^Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>$/ },
+  // Ursus patrol: the Captains' neutral-mark shots (enemy-talulah-fighter-features.js).
   // Witherer: a lingering corruption zone on death.
   'talent:PollutedDie': { covers: (r, n) => withererNative(r, n)
       && r.abilities.some(a => a.text === 'Releases Corruption when defeated, causing your nearby units to continuously lose HP'),

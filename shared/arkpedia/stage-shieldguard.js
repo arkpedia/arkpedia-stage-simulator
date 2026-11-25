@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Shieldguard (trap_024_npcsld, PRTS 盾卫): an ally-side placed blocker (M8-6, PL-5, VI-1 and Integrated Strategies).
 // - Root: side 1 (ally), category 1, one mode, not withdrawable, block radius² 0.5, melee build tile.
-// - Default mode: an ordinary attack (`_attackType` 1 melee, `_damageType` 1 Physical, ATK x1, no cooldown of its own,
+// - Default mode: an ordinary attack (`_attackType` 1, a normal attack; `_damageType` 1 Physical, ATK x1, no cooldown of its own,
 //   so the record's 4 s base attack time paces it) on one target (`_maxNum` 1) selected by an enemy-side, ground-only
 //   selector (`_targetMotion` 1) that skips DISABLE_COMBAT (flag 20) and SHELTERING (combo 1) targets, in range 0-1:
 //   its own tile, so it hits what it blocks (block 3).

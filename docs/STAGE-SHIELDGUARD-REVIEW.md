@@ -18,7 +18,7 @@ This batch publishes M8-6, M8-6 Challenge, VI-1 and VI-1 Challenge, which had th
 - Block radius² 0.5 (PRTS: 0.7071); melee build tile.
 
 **Default mode: an ordinary attack**
-- Melee (`_attackType` 1), Physical (`_damageType` 1), ATK ×1.
+- A normal attack (`_attackType` 1), Physical (`_damageType` 1), ATK ×1.
 - No cooldown of its own, so the record's 4 s base attack time paces it.
 - **Selector:** enemy side, ground only (`_targetMotion` 1), one target. It skips DISABLE_COMBAT (flag 20) and SHELTERING (combo 1).
 - **Range:** `0-1`, its own tile.
