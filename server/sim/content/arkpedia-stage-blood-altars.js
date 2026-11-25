@@ -1,13 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Bloodcalling Altar (trap_125_bonore). Reviewed in shared/arkpedia/stage-blood-altar.js. An enemy-side trap that no
 // selector takes; every 20 s its pulse travels along its facing and, on its first contact with Blood Amber, turns
-// every Blood Amber in the pulse (up to 10) into a Bloodborn Spawn through the Altar's own branch.
+// every Blood Amber in the pulse (up to 10) into a Bloodborn Spawn through the Altar's own branch. A Blood Collector
+// in the pulse gives up the Amber it holds (its `enemy_bonore_mark` count, e.mem.bonoreMarks): one Spawn each, and it
+// survives empty.
 import { bloodAltarDefinition, stageDeviceSpec } from '../../../shared/arkpedia/device-runtime.js';
 import { BLOOD_AMBER, BLOOD_ALTAR_UNMODELLED } from '../../../shared/arkpedia/stage-blood-altar.js';
 import { dirVec } from '../dir.js';
 
+const MAX_STACK = 10; // trap_bonore_branch[dfello] maxStackCnt
 const live = u => u?.alive && u.deployed !== false && !u.hidden;
 const isAmber = e => e.defId === BLOOD_AMBER || e.def?.key === BLOOD_AMBER;
+/** The unit's `enemy_bonore_mark` count: Blood Amber carries one; a Collector one per held Amber. */
+const marks = e => isAmber(e) ? 1 : Math.max(0, e.mem?.bonoreMarks ?? 0);
 
 export class StageBloodAltars {
   constructor(b, devices, geometry, stage = null) {
@@ -49,7 +54,7 @@ export class StageBloodAltars {
     while (p.nextCheck <= end + 1e-9) {
       const along = s.speed * p.nextCheck, cx = a.col + p.dc * along, cy = a.row + p.dr * along;
       if (cx < -2 || cy < -2 || cx > b.regularMapSize.cols + 1 || cy > b.regularMapSize.rows + 1) { a.pulse = null; return; }
-      const hits = b.enemies.filter(e => live(e) && isAmber(e) && inBox(e, cx, cy, p, s))
+      const hits = b.enemies.filter(e => live(e) && marks(e) > 0 && inBox(e, cx, cy, p, s))
         .sort((x, y) => (x.x - a.col) ** 2 + (x.y - a.row) ** 2 - ((y.x - a.col) ** 2 + (y.y - a.row) ** 2) || String(x.id).localeCompare(String(y.id)))
         .slice(0, s.maxTargets);
       if (hits.length) { this.convert(a, hits); a.pulse = null; return; }
@@ -69,10 +74,14 @@ export class StageBloodAltars {
   convert(a, hits) {
     const b = this.battle;
     for (const e of hits) {
-      // trap_bonore_s: one mark stack on Blood Amber → one branch phase; the mark's end kills it.
-      b.kill(e, null);
-      b.stageBranches.startRandomPhase(a.spec.branchId, { blockGameFinish: false });
-      a.conversions++;
+      // trap_bonore_s: its mark count → that many branch phases (CreateBuffStacked, at most 10); the marks finish.
+      // Amber's mark end kills it (enemy_dseed_bonore[action]); a Collector's only empties it.
+      const n = Math.min(MAX_STACK, marks(e));
+      if (isAmber(e)) b.kill(e, null); else e.mem.bonoreMarks = 0;
+      for (let i = 0; i < n; i++) {
+        b.stageBranches.startRandomPhase(a.spec.branchId, { blockGameFinish: false });
+        a.conversions++;
+      }
     }
   }
 }

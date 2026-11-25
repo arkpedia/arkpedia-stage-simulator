@@ -82,6 +82,8 @@ SCOPED_OBJECTS = {
     'enemy_1107_uoffcr': ['enemy_1107_uoffcr','Default','Attack','Combat','Trigger'],
     'enemy_1363_spnshd': ['enemy_1363_spnshd','BmbcarBuff'],
     'enemy_1363_spnshd_2': ['enemy_1363_spnshd_2','BmbcarBuff'],
+    'enemy_1366_dcolle': ['enemy_1366_dcolle','Default','Attack','Collect','Passive'],
+    'enemy_1366_dcolle_2': ['enemy_1366_dcolle_2','Default','Attack','Collect','Passive'],
     'enemy_1369_bmbcar1': ['enemy_1369_bmbcar1','Default','Attack','Selector','Explosion','Summon','SpCtrl','MoveBackwards','Passive'],
     'enemy_1370_bmbcar2': ['enemy_1370_bmbcar2','Default','Attack','Passive'],
     'enemy_1109_uabone': ['enemy_1109_uabone','Default','Attack','Combat','Trigger'],
@@ -671,6 +673,8 @@ for bundle in sorted(wanted):
             'enemy_1107_uoffcr': {'Attack','Combat','Trigger'},
             'enemy_1363_spnshd': {'BmbcarBuff'},
             'enemy_1363_spnshd_2': {'BmbcarBuff'},
+            'enemy_1366_dcolle': {'Attack','Collect','Passive'},
+            'enemy_1366_dcolle_2': {'Attack','Collect','Passive'},
             'enemy_1369_bmbcar1': {'Attack','Selector','Explosion','Summon','SpCtrl','MoveBackwards','Passive'},
             'enemy_1370_bmbcar2': {'Attack','Passive'},
             'enemy_1109_uabone': {'Attack','Combat','Trigger'},
@@ -1018,6 +1022,8 @@ for bundle in sorted(wanted):
             'enemy_10053_cjman_2': {'Selector'},
             'enemy_1263_durbus': {'Selector'},
             'enemy_1263_durbus_2': {'Selector'},
+            'enemy_1366_dcolle': {'Collect'},
+            'enemy_1366_dcolle_2': {'Collect'},
         }.get(path.rsplit('/', 1)[-1].removesuffix('.prefab'), set())
         for r in list(rows):
             if r['objectName'] not in geometry_names: continue

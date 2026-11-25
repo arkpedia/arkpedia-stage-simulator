@@ -78,6 +78,6 @@ test('a pulse converts at most 10, and a stage with unmodelled pulse reactions i
   while (b.time < 20.6) b.step();
   assert.equal(pile.filter(e => !e.alive).length, 10);
   assert.equal(b.stageBloodAltars.entries[0].conversions, 10);
-  const refused = { ...stage, enemies: { ...stage.enemies, enemy_1366_dcolle: stage.enemies[BLOOD_AMBER] } };
-  assert.throws(() => new StageBloodAltars(battle(stage), stage.devices, stage.geometry, refused), /not modelled: enemy_1366_dcolle/);
+  const refused = { ...stage, enemies: { ...stage.enemies, enemy_1368_spilot: stage.enemies[BLOOD_AMBER] } };
+  assert.throws(() => new StageBloodAltars(battle(stage), stage.devices, stage.geometry, refused), /not modelled: enemy_1368_spilot/);
 });

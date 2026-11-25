@@ -4,7 +4,7 @@
 
 This batch publishes 13-12 and 13-12 adverse (1,141 available). Their only blockers were this device and its branches.
 
-The pulse also reacts to other units: Bone Drifters (`enemy_1365_spnwiz`), Blood Collectors (`enemy_1366_dcolle`), the bomb carts (`enemy_1369_bmbcar1`) and Sarkaz pilots (`enemy_1368_spilot`). Those reactions are not built. The runtime refuses a stage with an Altar and any of those records, so no stage silently runs without them. The other chapter-13 stages also need the Bomb Loading Point and those enemies.
+The pulse also reacts to other units: Bone Drifters (`enemy_1365_spnwiz`), Blood Collectors (`enemy_1366_dcolle`), the bomb carts (`enemy_1369_bmbcar1`) and Sarkaz pilots (`enemy_1368_spilot`). The bomb (`docs/STAGE-BOMB-REVIEW.md`) and the Blood Collectors (`docs/ENEMY-BLOOD-COLLECTOR-REVIEW.md`: the pulse turns each Amber a Collector holds into a Bloodborn Spawn and leaves it empty) are now built. The Bone Drifter and pilot reactions are not: the runtime refuses a stage with an Altar and either of those records, so no stage silently runs without them. The other chapter-13 stages also need the Bomb Loading Point and those enemies.
 
 ## Native evidence
 
@@ -65,7 +65,7 @@ Instances compile through `bloodAltarDefinition`, whose device-runtime family bi
 - **13-12 setup:** two Altars, at (6,4) facing DOWN and (4,9) facing LEFT, each on its own branch; enemy side, untargetable.
 - **First pulse:** before 20 s nothing happens. At about 20.3 s the first pulse hits the two Amber sharing (4,4), and two Bloodborn Spawn appear on the branch. The Amber a tile further on survives, because the pulse has stopped, and the 40 s pulse takes it. An Amber off both lanes is untouched.
 - **Cap:** a pile of 12 Amber loses exactly 10.
-- **Refusal:** an Altar stage containing a Blood Collector is refused.
+- **Refusal:** an Altar stage containing a Sarkaz pilot is refused.
 - **Headless run:** 13-12 clears with both Altars pulsing every 20 s.
 
 ## Not checked

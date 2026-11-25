@@ -8,8 +8,9 @@
 // Each hit unit gets trap_bonore_s: its mark stacks are counted into `buff_cnt`, the mark is finished (Blood Amber:
 // enemy_dseed_bonore[action] kills it), and trap_bonore_branch[dfello] is stacked that many times; each stack runs
 // PickRandomBranchPhase on the Altar's branch (`talent@branch_id`, set per instance), which never blocks the end.
-// A Bone Drifter in its drifting form (enemy_spnwiz_ghost_mark), Blood Collectors and Sarkaz pilots react differently;
-// stages with them are refused until those reactions are built (server runtime). The bomb's KillBmbcar trigger (radius
+// Blood Collectors carry one mark per held Amber (enemy-blood-collector-features.js): the pulse turns those into Spawn
+// and the Collector survives. A Bone Drifter in its drifting form (enemy_spnwiz_ghost_mark) and Sarkaz pilots react
+// differently; stages with them are refused until those reactions are built (server runtime). The bomb's KillBmbcar trigger (radius
 // 1) is checked by the bomb (arkpedia-enemy-bombs.js), which then destroys the Altar (destroy()).
 import native from '../../data/arkpedia-device-native-source.json' with { type: 'json' };
 import tables from '../../data/arkpedia-device-source.json' with { type: 'json' };
@@ -21,8 +22,7 @@ export const BLOOD_AMBER = 'enemy_1367_dseed';
 /** KillBmbcar: a radius-1 trigger circle around the Altar that forces a bomb carrying enemy_bmbcar1_passive to explode. */
 export const BLOOD_ALTAR_BOMB_RADIUS = 1;
 /** Records the pulse reacts to in ways this runtime does not model yet. */
-export const BLOOD_ALTAR_UNMODELLED = Object.freeze(['enemy_1365_spnwiz', 'enemy_1365_spnwiz_2', 'enemy_1366_dcolle', 'enemy_1366_dcolle_2',
-  'enemy_1368_spilot']);
+export const BLOOD_ALTAR_UNMODELLED = Object.freeze(['enemy_1365_spnwiz', 'enemy_1365_spnwiz_2', 'enemy_1368_spilot']);
 
 export function bloodAltarNativeReviewed(e = native, t = tables) {
   const P = k => e.prefabs?.[k]?.components ?? [], rows = k => P(k).map(c => c.data);

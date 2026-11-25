@@ -22,6 +22,7 @@ import {PATRIOT_FEATURES,isPatriot,patriotNative} from './enemy-patriot-features
 import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 import { TALULAH_FIGHTER_FEATURES, isTalulahFighter, talulahFighterNative } from './enemy-talulah-fighter-features.js';
 import { BOMB_FEATURES, isBombCart, bombCartNative } from './enemy-bomb-features.js';
+import { BLOOD_COLLECTOR_FEATURES } from './enemy-blood-collector-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
@@ -543,6 +544,7 @@ export const ENEMY_FEATURES = Object.freeze({
     ...(f.ability ? { ability: r => isTalulahFighter(r) ? null : f.ability } : {}) }])),
   ...TALULAH_FIGHTER_FEATURES,
   ...BOMB_FEATURES,
+  ...BLOOD_COLLECTOR_FEATURES,
   ...FROSTNOVA_FEATURES,
   ...PHANTOM_MIDBOSS_FEATURES,
   ...BASOROBEAST_FEATURES,
