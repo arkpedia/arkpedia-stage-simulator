@@ -49,8 +49,7 @@ test('the published chapter-12 stages are available with the sight environment a
   const b = battle(await load('tr-22'));
   assert.equal(typeof b.stageSight?.inSight, 'function');
   assert.deepEqual([b.flags.dpMax, b.flags.dpMaxCeil], [20, 99]);
-  // 12-20 waits for its own boss (enemy_1542_wdslm) and stage programs.
-  assert.notEqual(manifest.stages.find(s => s.id === '12-20')?.availability, 'available');
+  // 12-20, its adverse variant and H12-1 adverse (the 'Damazti Cluster'): test/arkpedia-damazti.test.js.
 });
 
 test('12-16: Eblana makes disguised units switch, and she and the Damazti Clusters walk out before wave 1', async () => {

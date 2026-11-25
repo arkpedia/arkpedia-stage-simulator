@@ -11,3 +11,13 @@ execFileSync(process.execPath,[fileURLToPath(new URL('tools/arkpedia/enemy-anima
  '--enemies','enemy_1540_wdncr=-3403674809732964750,enemy_1541_wdslms=5148163328909144379','--bundle','refs/arts/enm_art_17.ab',
  '--out',fileURLToPath(new URL('data/arkpedia-norport-boss-animations.json',root)),
  ...(process.argv.includes('--write')?[]:['--check'])],{stdio:'inherit'});
+// 12-20's 'Damazti Cluster' family (enemy_1542_wdslm; _2/_3/_4 share its skeleton) in enm_art_17, and the
+// Deconstructed Distortion (enemy_1323_wdbshd) in enm_art_13.
+execFileSync(process.execPath,[fileURLToPath(new URL('tools/arkpedia/enemy-animation.mjs',root)),
+ '--enemies','enemy_1542_wdslm=2662557862687024661','--bundle','refs/arts/enm_art_17.ab',
+ '--out',fileURLToPath(new URL('data/arkpedia-damazti-animations.json',root)),
+ ...(process.argv.includes('--write')?[]:['--check'])],{stdio:'inherit'});
+execFileSync(process.execPath,[fileURLToPath(new URL('tools/arkpedia/enemy-animation.mjs',root)),
+ '--enemies','enemy_1323_wdbshd=4111035149395673847','--bundle','refs/arts/enm_art_13.ab',
+ '--out',fileURLToPath(new URL('data/arkpedia-distortion-animations.json',root)),
+ ...(process.argv.includes('--write')?[]:['--check'])],{stdio:'inherit'});

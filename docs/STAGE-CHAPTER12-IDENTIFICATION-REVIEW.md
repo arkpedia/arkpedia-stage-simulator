@@ -32,9 +32,41 @@ With these, every identity record of the regular spies and civilians is reviewed
   - **Attack** (`Attack_b`, 1.5 s, OnAttack 0.5 s): one target in her radius-2 selector. Her database `attackSpeed` is a defined 0. The engine's ASPD floor is 20, so she attacks every 2.5 × 100 / 20 = 12.5 s. The generic enemy loader reads a defined 0 as 100 (also for nine other records: `crzjdg_2`, `ymgpck(_2)`, `achunt(_2)`, `acduml(_2)`, `acdumm`, and the Cluster, which never attacks); Eblana's runtime takes `aspd` from her record instead.
   - **detectAll** (initCooldown 92 s, cooldown 999, not silence-proof): `Skill_b_3` (11.67 s, OnAttack 9.2 s) with the global-range selector (script `6275044311115013764`, as in `enemy-marked-target-contract.js`): every such unit on the map switches at once.
 - Both clocks come from `enm_art_17.ab` (`data/arkpedia-norport-boss-animations.json`). In 12-16 she spawns at 3 s and reveals Pathfinder Spies at 3.5, 16.0 and 28.5 s. detectAll then reveals the remaining spies and all three Clusters at 104.2 s. She and the Clusters reach the exit before wave 1 spawns.
-- **Still unreviewed:** the H12/12-20 boss family `enemy_1542_wdslm` (and `_2` to `_4`) carries `ability:Spy` but runs its own program. `PENDING_IDENTITY_PREFABS` refuses it in the generic spy keys.
+- The H12/12-20 boss family `enemy_1542_wdslm` (and `_2` to `_4`) carries `ability:Spy` but runs its own program: see the fifth slice. `PENDING_IDENTITY_PREFABS` still refuses it in the generic spy keys.
 
 12-16 became available: 1,126 stages, 404 of 572 main-story. No published bundle changed. Headless with the probe squad it clears at 1,270 s with no errors.
+
+## Fifth slice: 12-20 and the 'Damazti Cluster' boss (2026-11-25)
+
+Contract: `shared/arkpedia/enemy-damazti-features.js` (every record at both levels, the native closure, every template, four projectiles and the clips of `enm_art_17.ab`/`enm_art_13.ab` pinned). Runtime: `server/sim/content/arkpedia-enemy-damazti.js`. PRTS (“变形者集群”, 同构碎片1–3, 解构畸变体) settled three ambiguous readings; they are marked below.
+
+- **The group** (`standRegisterList`). The fragments `_2` and `_3` register to the live host and take its HP ratio.
+  - After any damage to a member, every other member is set to that member's HP ratio (`splitDamage`), so each hit on any body drains one pool.
+  - Physical and Arts damage taken is ×(1 − 0.2 × live fragments) (`reduceDamage`, additive).
+  - While any member is still disguised, every member is INVINCIBLE (`invincibleStack`).
+  - A member reaching 0 HP knocks the others out with it (`syncReborn`). A member that finishes for good, or leaks, finishes the rest without revives (`killAll`, skipReborn).
+- **Disguise.** The host and `_2` use the spies' identification (`civilianModeTalent`, `pretending`), then a 2 s `Die` switch. The identity runtime gained a hand-off variant for this.
+- **First form.**
+  - Melee `2_Attack`.
+  - `syncAttackP1` (icd 10, cd 20; `2_Skill`, OnAttack 1.83 s): ATK ×1 Physical on one ally anywhere, highest taunt then latest deployed. Every fragment is forced to cast its own. PRTS: the fragment's is 100%; its talent `syncAttackP1.atk_scale` 1.5 does not reach the skill.
+  - Below 50% HP (once), `branch_2`'s fragment arrives on its preset route at (4,1), and the group gets 2 s of INVINCIBLE.
+- **Revive** (host and `_2`, once). 30 s at full HP afterwards. Every second (first at 0.9 s) it deals 100 sourceless Arts (level 1: 150) to each selectable ally within 1.75. When the host's revive ends, the wave is released (PRTS: 重生结束时). Then the second form, with 5 s of INVINCIBLE.
+- **Second form.**
+  - `syncAttackP2` (icd 10, cd 20).
+  - **Lifeline Burst** `syncAttackWithSummon` (icd 0, cd 50; `2_Skill_2`, 9.1 s):
+    - At the cast start, the tile of every ally on the field is locked; camouflaged allies are skipped.
+    - At OnAttack (7.97 s), each lock deals 375 Arts to every ally on its tile and the 4 adjacent ones (`x-5`), and summons a Deconstructed Distortion there. The Distortion follows the host's route, flying.
+    - Fragments only play the clip.
+  - **The half-HP mark** `halfHPSummon` (once, below 50%):
+    - It marks one operator (no tokens or traps). It prefers an operator with no other operator in its 3×3 square (`standAloneFlag`, `x-4`), then the latest deployed. The group is INVINCIBLE for 20 s.
+    - After 15 s (PRTS; the buff's own lifeTime is 5, the skill's `duration` is 15), or as soon as the operator leaves the field: its card can no longer deploy for the battle, the decoy `_4` appears on its tile, and the operator is removed.
+    - 2 s later, `branch_1`'s fragment `_3` arrives on its preset route at (3,1).
+- **Deconstructed Distortion** `enemy_1323_wdbshd`: loses 250 HP per second (PURE). Its Corrosion, like the family's, comes from the stage rune.
+- **The rune** `env_gbuff_new_with_verify apply_elemental_damage` (`ep_damage_ratio` 0.25): the listed enemies add Corrosion of 25% of each damage they deal (`apply_elemental_damage[enemy]`, ON_OUTPUT_DAMAGE). A stage with this family must carry the rune for all of it (inventory guard). The base is the damage as dealt: an inference.
+- **Stage branches.** `stage-branches.mjs` binds `branch_2` to the host and `branch_1` to the decoy (`damaztiBranchBindings`). A hard level (`hlevel_mark` ≠ 0) also names `branch_3`, which no runtime drives.
+- **Level 1** (H12) lists only what differs (`reborn.dotDamageValue` 150, the Distortion's 300 HP/s). It is read over level 0, as the Steam Knight's is. H12-1 adverse sets `hlevel_mark` 0 and opens. H12-3 and H12-4 adverse set it to 1 (a third summon on `branch_3`) and stay refused.
+
+12-20, 12-20 adverse and H12-1 adverse became available: 1,129 stages. No published bundle changed. `test/arkpedia-damazti.test.js` forces each threshold in turn: reveal, 50%, fragment identified, knock-out, revive, second form, Lifeline Burst, the mark and the last fragment, and the final knock-out. It also tests a leaking fragment.
 
 ## Legacy chapter-12 stage files retired
 
@@ -76,4 +108,5 @@ This also changes already published stages that place such objects. A headless c
 - **Sight is range tiles only.** Devices and tokens contribute when they are own-side units with a range; a NeverTrigger unit's empty range and an AlwaysTrigger unit's whole-map sight are not special-cased yet.
 - **The identity markers** (the phase colours over each unit) are not drawn.
 - **Eblana's targeting and timing.** Her selector's `_postFilter` 4 and `_abnormalFlag` 29 are not decoded, so nearest-first is an inference. Her projectile's flight is not modelled: the switch starts at the OnAttack. She only targets units still identifying, never one already switching. The 12.5 s interval rests on the engine's ASPD floor. Each cast holds her in place.
-- **Left in chapter 12:** 12-20 and the hard H12-1/3/4 adverse stages (`enemy_1542_wdslm` and stage programs). The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.
+- **The 'Damazti Cluster'.** Lifeline Burst detonates at the clip's OnAttack (7.97 s); PRTS says "about 6 s" (open, worth an in-game check). Projectile flight is not modelled. The Corrosion base, and the Distortion's route (the host's own, flown straight), are inferences. Its "disappear" invincibility (`disappearInvinStack`) is not modelled: 12-20's routes have no DISAPPEAR checkpoint.
+- **Left in chapter 12:** H12-3 and H12-4 adverse (the hard-level summon on `branch_3`). The Instigator `wdfmpm(_2)` is admitted through its identity lock; its interplay with identification is not re-reviewed.

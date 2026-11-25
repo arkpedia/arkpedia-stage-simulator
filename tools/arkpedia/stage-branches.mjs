@@ -4,6 +4,7 @@ import { originalRoute } from './stage-waves.mjs';
 import { readOriginalLevel } from './original-level.mjs';
 import { validateStaticDeviceInstances } from './stage-device-instances.mjs';
 import { STAGE_DEVICES } from '../../shared/arkpedia/stage-devices.js';
+import { damaztiBranchBindings } from '../../shared/arkpedia/enemy-damazti-features.js';
 
 const near = (a, b) => Number.isFinite(a) && Number.isFinite(b) && Math.abs(a - b) <= .00101;
 const delay = n => Number.isFinite(n) && n >= 0;
@@ -95,7 +96,9 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     tokenInsts: inactive.map(p => ({ ...p, hidden: false })) } }, inactiveInstances);
   const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
     .map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId)
-    .concat(Object.values(inactiveInstances).map(i => i.branchId));
+    .concat(Object.values(inactiveInstances).map(i => i.branchId))
+    // 12-20: the 'Damazti Cluster' and its decoy summon their fragments through the level's branches.
+    .concat(damaztiBranchBindings(level));
   // A level can keep the Twigs payload branches (one Corrupted Seed each) without placing any Twigs (11-20 and its
   // adverse variant): nothing can advance them, and the stage's target count excludes them. Accept exactly that case:
   // validate and consume the viewer's branch entries, then compile each as a no-op (no spawns), like the unreferenced

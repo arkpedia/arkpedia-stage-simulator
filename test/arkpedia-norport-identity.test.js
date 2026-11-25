@@ -39,7 +39,8 @@ test('every chapter-12 identity record is pinned and reviewed; changed kits are 
   assert.equal(norportIdentityNative({ ...c2, talents: { ...c2.talents, bb: { 'civilianTalent.max_cost': 2 } } },
     nativeComponents(native, 'enemy_1313_wdfmr_2')), false, 'a changed elite reward');
   assert.equal(sightNativeReviewed(), true);
-  // The H12/12-20 boss family carries `ability:Spy` but is not reviewed: every level is refused.
+  // The 12-20/H12 boss family carries `ability:Spy` but runs its own contract (enemy-damazti-features.js, tested in
+  // arkpedia-damazti.test.js): the generic spy keys refuse every level of it.
   for (const id of PENDING_IDENTITY_PREFABS) for (const r of Object.values(ENEMY_RECORDS.enemies[id].levels))
     assert.equal(isUnreviewedIdentity(r), true, `${id}@${r.level}`);
   assert.equal(norportIdentityNative(rec(CLUSTER), nativeComponents(native, SPY)), false, 'the Cluster tree is its own');

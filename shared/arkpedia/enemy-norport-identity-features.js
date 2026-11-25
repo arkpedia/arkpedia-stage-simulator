@@ -81,7 +81,7 @@ const SPIES=new Set(["enemy_1314_wdnjd","enemy_1314_wdnjd_2"]),SENTRIES=new Set(
 // only native difference is the civilian_mainline12[civilianElite] marker, which picks the l3 instead of the l2
 // phase-2 effect art (detect_p2_fxController_Elite) and nothing else.
 const clockOf=k=>k==="enemy_1541_wdslms"||k==="enemy_1540_wdncr"?bossClocks.enemies[k]:clocks.enemies[k==="enemy_1313_wdfmr_2"?"enemy_1313_wdfmr":k];
-const DETECT={interval:.1,threshold:300,cap:301,gain:[2,3],loss:1};
+export const DETECT=Object.freeze({interval:.1,threshold:300,cap:301,gain:Object.freeze([2,3]),loss:1});
 export function norportIdentityParams(r){
  if(SPIES.has(r.prefabKey)||SENTRIES.has(r.prefabKey)||ARMED_SPIES.has(r.prefabKey)){
   // Pathfinder Spy: EnhancedAttack, the next attack x atk_scale. Sentry Spy: enemyModeTalent, the toggled

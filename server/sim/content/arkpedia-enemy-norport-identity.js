@@ -8,7 +8,7 @@ import { ASPD_MIN, ASPD_MAX } from '../constants.js';
 const DISGUISE = 'enemy_mainline12[civilianMode]', CIVILIAN = 'unit_mainline12[civilianMode]',
   SWITCH = 'enemy_mainline12[switchModeAbnormals]', MOVE = 'enemy_wdnjd[moveSpeed]', SENTRY_MOVE = 'enemy_wdyjd[moveSpeed]', CONFIRMED = 'civilian_mainline12[detectComplete]';
 
-export function norportIdentity(p) {
+export function norportIdentity(p, hooks = {}) {
   validate(p);
   const spy = p.kind === 'spy';
   // Clip names: a suffix pair (`A`/`B`: Move_A, Idle_A, Die_A) or explicit names per form.
@@ -40,6 +40,11 @@ export function norportIdentity(p) {
     // `restore` s after release (BattleCore._stealthSwitch).
     a.state = 'revealed'; a.bonus = p.atkScale != null;
     b.removeBuff(e, DISGUISE);
+    if (p.handoff) {
+      // 12-20's 'Damazti Cluster' and its first fragment: the boss runtime (arkpedia-enemy-damazti.js) takes over.
+      hooks.onReveal?.(b, e, a);
+      return;
+    }
     if (p.guarded) {
       // 'Damazti Cluster': INVINCIBLE and BLOCK_FREE for good, and an empty attack.
       b.addBuff(e, { key: p.guarded.key, persist: true, visible: true, flags: { invulnerable: true, unblockable: true } });
@@ -163,8 +168,8 @@ function validate(p) {
   const ok = ['spy', 'civilian'].includes(p?.kind) && pos(d?.interval) && pos(d.threshold) && d.cap >= d.threshold
     && Array.isArray(d.gain) && d.gain.length === 2 && d.gain.every(pos) && pos(d.loss)
     && (p.kind === 'spy' ? pos(p.switchDur) && (p.move === null || Number.isFinite(p.move))
-      && (p.guarded
-        ? typeof p.guarded.key === 'string' && p.attackAnim == null && p.move == null && p.atkScale == null && p.invisible == null
+      && (p.guarded || p.handoff
+        ? (p.handoff ? p.handoff === true && p.guarded == null : typeof p.guarded.key === 'string') && p.attackAnim == null && p.move == null && p.atkScale == null && p.invisible == null
           && clipSet(p.clips?.disguised) && clipSet(p.clips.revealed) && typeof p.clips.switch === 'string'
         : pos(p.attackAnim?.dur) && Number.isFinite(p.attackAnim.hit)
           && ((pos(p.atkScale) && p.invisible == null) || (p.atkScale == null && p.invisible == null)

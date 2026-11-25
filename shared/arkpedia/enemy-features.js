@@ -23,9 +23,9 @@ import {TALULAH_FEATURES} from './enemy-talulah-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative],[isSteamKnightS,steamKnightSNative]];
+const FORM_BOSSES=[[isDamaztiCluster,damaztiNative],[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative],[isSteamKnightS,steamKnightSNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt'];
+const FORM_BOSS_ROOTS=['enemy_1542_wdslm','enemy_1542_wdslm_2','enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -114,6 +114,7 @@ import { WINTERS_SCAR_FEATURES, isWintersScar, wintersScarNative } from './enemy
 import { BLACK_SNAKE_FEATURES, isBlackSnake, blackSnakeNative } from './enemy-black-snake-features.js';
 import { isReviewedIdentity, isUnreviewedIdentity, norportIdentityNative, norportIdentityParams, isEblana, eblanaNative, eblanaParams } from './enemy-norport-identity-features.js';
 import { STEAM_KNIGHT_FEATURES, isSteamKnight, steamKnightNative, isSteamKnightS, steamKnightSNative } from './enemy-steam-knight-features.js';
+import { DAMAZTI_FEATURES, isDamaztiCluster, damaztiNative } from './enemy-damazti-features.js';
 import { isChargeDrone, isArtificer, artilleryChargerNative, droneChargeParams, artificerChargeParams } from './enemy-artillery-charge-features.js';
 import { HERALD_FEATURES } from './enemy-herald-features.js';
 import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
@@ -550,6 +551,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...WINTERS_SCAR_FEATURES,
   ...BLACK_SNAKE_FEATURES,
   ...STEAM_KNIGHT_FEATURES,
+  ...DAMAZTI_FEATURES,
   ...HERALD_FEATURES,
   // Andoain's and Theresa's second-form passives share this key; each defers to its own contract.
   'talent:PassiveP2': { matchesRecord: r => isAndoain(r) || isTheresa(r), covers: (r, n) => isTheresa(r) ? theresaNative(r, n) : andoainNative(r, n),
@@ -1162,9 +1164,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:EnhancedAttack': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && sig(r, 'EnhancedAttack', ['atk_scale']),
     note: 'the reveal ability consumes EnhancedAttack.atk_scale' },
   // Spies: profile marker plus the two reviewed reveal consequences.
-  'ability:Spy': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'Spy'),
-    ability: r => isReviewedIdentity(r) ? { kind: 'norportIdentity', params: norportIdentityParams } : { kind: 'spyProfile', params: () => ({}) }, note: 'spy profile; reveal via Battle.revealIdentity',
-    nativeClaim: () => ({ active: 1 }), explains: /^Spy$/ },
+  // 12-20's 'Damazti Cluster' and its first fragment run their identification inside skill:syncAttackWithSummon.
+  'ability:Spy': { covers: (r, n) => isDamaztiCluster(r) ? damaztiNative(r, n) : isReviewedIdentity(r) ? norportIdentityNative(r, n) : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'Spy'),
+    ability: r => isDamaztiCluster(r) ? null : isReviewedIdentity(r) ? { kind: 'norportIdentity', params: norportIdentityParams } : { kind: 'spyProfile', params: () => ({}) }, note: 'spy profile; reveal via Battle.revealIdentity',
+    nativeClaim: (p, n) => Object.keys(n).some(k => k.startsWith('enemy_1542_wdslm')) ? null : { active: 1 }, explains: /^Spy$/ },
   'ability:When their identity is revealed, becomes <$ba.invisible>Invisible</>': { covers: (r, n) => isReviewedIdentity(r) ? norportIdentityNative(r, n)
       : !isUnreviewedIdentity(r) && r.abilities.some(a => a.text === 'When their identity is revealed, becomes <$ba.invisible>Invisible</>'),
     ability: r => isReviewedIdentity(r) ? null : { kind: 'revealedStealth', params: () => ({}) }, note: 'revealed Sentry Spy becomes Invisible (identity contract)',

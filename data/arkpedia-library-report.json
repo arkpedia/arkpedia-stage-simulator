@@ -1,19 +1,17 @@
 {
   "combatStages": 3892,
-  "available": 1126,
-  "blocked": 2766,
-  "componentObjects": 7668,
-  "componentBytes": 17904789,
-  "manifestBytes": 1347113,
-  "inlineStageBytes": 24324281,
-  "referencedComponentBytes": 26730971,
+  "available": 1129,
+  "blocked": 2763,
+  "componentObjects": 7703,
+  "componentBytes": 17993524,
+  "manifestBytes": 1344082,
+  "inlineStageBytes": 24425275,
+  "referencedComponentBytes": 26852600,
   "priorities": [
     {
       "kind": "branch-program",
       "reason": "Missing or unsupported stage branch binding",
       "stages": [
-        "12-20",
-        "12-20_adverse_environment",
         "13-10",
         "13-10_adverse_environment",
         "13-11",
@@ -163,9 +161,6 @@
         "fm-7",
         "fm-7_challenge_mode",
         "fm-s-1",
-        "h12-1_adverse_environment",
-        "h12-3_adverse_environment",
-        "h12-4_adverse_environment",
         "h13-1_adverse_environment",
         "h13-2_adverse_environment",
         "h13-3_adverse_environment",
@@ -16374,51 +16369,6 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "enemy",
-      "id": "enemy_1542_wdslm",
-      "stages": [
-        "12-20",
-        "12-20_adverse_environment",
-        "h12-1_adverse_environment",
-        "h12-3_adverse_environment",
-        "h12-4_adverse_environment",
-        "tn-2_act3bossrush_02",
-        "tn-2_orientation_trial_act3bossrush_tm02",
-        "tn-2_spectacular_trial_act3bossrush_ex02"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "enemy",
-      "id": "enemy_1542_wdslm_3",
-      "stages": [
-        "12-20",
-        "12-20_adverse_environment",
-        "h12-1_adverse_environment",
-        "h12-3_adverse_environment",
-        "h12-4_adverse_environment",
-        "tn-2_act3bossrush_02",
-        "tn-2_orientation_trial_act3bossrush_tm02",
-        "tn-2_spectacular_trial_act3bossrush_ex02"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "enemy",
-      "id": "enemy_1542_wdslm_2",
-      "stages": [
-        "12-20",
-        "12-20_adverse_environment",
-        "h12-1_adverse_environment",
-        "h12-3_adverse_environment",
-        "h12-4_adverse_environment",
-        "tn-2_act3bossrush_02",
-        "tn-2_orientation_trial_act3bossrush_tm02",
-        "tn-2_spectacular_trial_act3bossrush_ex02"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
       "kind": "device",
       "id": "Weakening Node",
       "stages": [
@@ -21738,16 +21688,6 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "enemy-parameters",
-      "reason": "Unsupported original enemy parameter: enemy_1542_wdslm.P1SummonHLevel.hlevel_mark",
-      "stages": [
-        "h12-1_adverse_environment",
-        "h12-3_adverse_environment",
-        "h12-4_adverse_environment"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
       "kind": "enemy",
       "id": "enemy_10206_muveg_2",
       "stages": [
@@ -23536,6 +23476,18 @@
         "go-ex-3_challenge_mode"
       ],
       "soleReportedBlockerStages": []
+    },
+    {
+      "kind": "enemy-parameters",
+      "reason": "Unsupported original enemy parameter: enemy_1542_wdslm.P1SummonHLevel.hlevel_mark",
+      "stages": [
+        "h12-3_adverse_environment",
+        "h12-4_adverse_environment"
+      ],
+      "soleReportedBlockerStages": [
+        "h12-3_adverse_environment",
+        "h12-4_adverse_environment"
+      ]
     },
     {
       "kind": "enemy-parameters",
@@ -25339,6 +25291,15 @@
       "soleReportedBlockerStages": []
     },
     {
+      "kind": "stage-rules",
+      "reason": "Missing the 'Damazti Cluster' Corrosion rune",
+      "stages": [
+        "tn-2_orientation_trial_act3bossrush_tm02",
+        "tn-2_spectacular_trial_act3bossrush_ex02"
+      ],
+      "soleReportedBlockerStages": []
+    },
+    {
       "kind": "enemy",
       "id": "enemy_5014_dmanfd",
       "stages": [
@@ -25542,22 +25503,6 @@
       "stages": [
         "zt-s-5",
         "zt-s-5_challenge_mode"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "12-20",
-      "stages": [
-        "12-20"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "12-20_adverse_environment",
-      "stages": [
-        "12-20_adverse_environment"
       ],
       "soleReportedBlockerStages": []
     },
@@ -27710,30 +27655,6 @@
       "id": "enemy_10023_vtsnky_2_wand",
       "stages": [
         "go-ex-6_challenge_mode"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "h12-1_adverse_environment",
-      "stages": [
-        "h12-1_adverse_environment"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "h12-3_adverse_environment",
-      "stages": [
-        "h12-3_adverse_environment"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "conditional",
-      "id": "h12-4_adverse_environment",
-      "stages": [
-        "h12-4_adverse_environment"
       ],
       "soleReportedBlockerStages": []
     },

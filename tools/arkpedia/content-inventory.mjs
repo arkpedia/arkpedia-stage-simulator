@@ -29,6 +29,7 @@ import { groupStageBlockers } from './content-priorities.mjs';
 import { writeJSONAtomic } from './write-json.mjs';
 import { writeFile } from 'node:fs/promises';
 import { checkDeviceRuntime } from './device-runtime.mjs';
+import { damaztiStageRuleOk, DAMAZTI_RUNE_TARGETS } from '../../shared/arkpedia/enemy-damazti-features.js';
 
 export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 export const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -204,6 +205,9 @@ export async function planStage(context, id, { compile = true, waves = false } =
     // Even unresolved branches expose their enemy dependencies.
     if (working.hasConditionalSpawns || branches) for (const spawn of conditional) addEnemy(spawnEnemy(spawn.enemy_id));
   }
+  // The Deconstructed Distortion's and the family's Corrosion is a stage rune, not an enemy ability (PRTS).
+  if ([...enemyIds].some(id => DAMAZTI_RUNE_TARGETS.includes(id)) && !damaztiStageRuleOk(compiledRules))
+    blockers.push({ kind: 'stage-rules', id: 'damazti-corrosion', message: "Missing the 'Damazti Cluster' Corrosion rune" });
   if ([...enemyIds].some(id => /^enemy_(?:121[78]|1105)_/.test(id))) {
     for (const path of ['data/arkpedia-enemy-records.json', 'data/arkpedia-enemy-support.json', 'data/arkpedia-enemy-native-abilities.json', 'data/arkpedia-snack-animations.json'])
       localSources.push({ path, sha256: digest(await readFile(join(context.root, path))) });
