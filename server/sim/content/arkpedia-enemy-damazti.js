@@ -275,6 +275,13 @@ export function damaztiCluster(p) {
         for (const u of g ? groupMembers(g) : [e]) b.addBuff(u, { key: SUMMON_INV, duration: p.summon.invincible, visible: true, flags: { invulnerable: true } });
         if (s && g) refreshGroup(b, g);
       }
+      // p1SummonHLevel (hard levels only): a second fragment on its own branch, with the same 2 s of INVINCIBLE.
+      if (host && p.hard && a.form === 'p1' && !a.hardSummoned && e.hp / e.s.maxHp < p.hard.ratio - 1e-12) {
+        a.hardSummoned = true;
+        const s = b.stageBranches?.branches?.[p.hard.branch] ? b.stageBranches.summon(p.hard.branch, p.hard.action) : null;
+        for (const u of g ? groupMembers(g) : [e]) b.addBuff(u, { key: SUMMON_INV, duration: p.summon.invincible, visible: true, flags: { invulnerable: true } });
+        if (s && g) refreshGroup(b, g);
+      }
     },
     killed(c, b, e, a) {
       // An HP loss (it bypasses INVINCIBLE) during the revive cannot cut it short; a group finish still can.
@@ -355,7 +362,8 @@ function validate(p) {
     && (!p.reborn.available || (pos(p.reborn.duration) && pos(p.reborn.dot) && pos(p.reborn.radius) && pos(p.reborn.interval)
       && nn(p.reborn.first) && pos(p.reborn.invincible) && p.reborn.hpRatio > 0 && p.reborn.hpRatio <= 1))
     && (p.role !== 'host' || (pos(p.summon?.ratio) && p.summon.ratio < 1 && typeof p.summon.branch === 'string' && Number.isInteger(p.summon.action)
-      && pos(p.summon.invincible) && pos(p.half?.ratio) && p.half.ratio < 1 && pos(p.half.mark) && pos(p.half.invincible) && typeof p.half.decoy === 'string'))
+      && pos(p.summon.invincible) && (p.hard == null || (pos(p.hard.ratio) && p.hard.ratio < p.summon.ratio && typeof p.hard.branch === 'string' && Number.isInteger(p.hard.action)))
+      && pos(p.half?.ratio) && p.half.ratio < 1 && pos(p.half.mark) && pos(p.half.invincible) && typeof p.half.decoy === 'string'))
     && (p.identity == null || (pos(p.identity.switchDur) && !!p.identity.detect && !!p.identity.clips))
     && pos(p.clips?.rebornBegin) && pos(p.clips.rebornEnd) && typeof p.clips.sync === 'string' && typeof p.clips.burst === 'string';
   if (!ok) throw Error('Invalid Damazti Cluster parameters');

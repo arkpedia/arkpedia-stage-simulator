@@ -210,3 +210,31 @@ test('12-20 and H12-1 adverse: wave 1 follows with the boss alive in its second 
     assert.deepEqual(b.errors, []);
   }
 });
+
+test('H12-3/H12-4 adverse: hlevel_mark 1 adds a second first-form fragment on branch_3 at 25% HP; H12-4 bursts every 35 s', async () => {
+  for (const id of ['h12-3_adverse_environment', 'h12-4_adverse_environment']) {
+    const stage = await load(id);
+    assert.equal(stage.enemies[HOST].level, 1);
+    const b = new StandardBattle({ ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } }, { operators: [defaultBuild(mvp.operators.char_151_myrtle)] }, { seed: 1 });
+    b.setViewport('fullscreen-workspace'); b.life = 999;
+    const spawns = []; b.on('enemySpawn', ({ enemy: e }) => { if (e.defId === FRAGMENT) spawns.push({ t: b.time, e }); });
+    const until = t => { while (!b.finished && b.time < t) b.step(); };
+    until(1); let host; while (!(host = b.enemies.find(u => u.alive && u.defId === HOST))) until(b.time + .1);
+    b.addBuff(host, { key: 'test:hold', persist: true, flags: { noMove: true } });
+    host.mem.norportIdentity.forceReveal(); until(b.time + 2.1);
+    b.dealDamage(null, host, { amount: host.s.maxHp * .52, type: 'true' }); until(b.time + .2);
+    assert.equal(spawns.length, 1, id);
+    spawns[0].e.mem.norportIdentity.forceReveal(); until(b.time + 2.2);
+    assert.equal(!!host.s.flags.invulnerable, false);
+    b.dealDamage(null, host, { amount: host.s.maxHp * .27, type: 'true' }); until(b.time + .2);
+    assert.equal(spawns.length, 2, `${id}: the hard-level fragment`);
+    const second = spawns[1].e;
+    assert.equal(second.mem.damazti.form, 'disguised');
+    assert.ok(near(second.hp / second.s.maxHp, host.hp / host.s.maxHp, 1e-9));
+    assert.equal(host.s.flags.invulnerable, true, 'invincible again until it is identified');
+    assert.ok(near(host.s.physTakenMul, .6, 1e-9), 'two fragments');
+    const params = stage.enemies[HOST].runtimeFeatures.entries.find(x => x.ability?.kind === 'damaztiCluster').ability.params;
+    assert.equal(params.burst.cooldown, id === 'h12-4_adverse_environment' ? 35 : 50);
+    assert.deepEqual(b.errors, []);
+  }
+});

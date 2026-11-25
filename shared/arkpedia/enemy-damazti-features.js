@@ -2,8 +2,9 @@
 // 12-20's 'Damazti Cluster' (enemy_1542_wdslm, PRTS “变形者集群”), its Isomorphic Fragments (_2 and _3; PRTS 同构碎片1
 // and 同构碎片2), the decoy fragment (_4; PRTS 同构碎片3) and the Deconstructed Distortion (enemy_1323_wdbshd, 解构畸变体).
 // Runtime: server/sim/content/arkpedia-enemy-damazti.js. Each record, native closure, template and projectile is pinned
-// below; the boss clips come from data/arkpedia-damazti-animations.json. Level 0 only: the H12 adverse stages give the
-// host P1SummonHLevel.hlevel_mark (a third, hard-level summon on branch_3), which stays refused.
+// below; the boss clips come from data/arkpedia-damazti-animations.json. Both levels are pinned (level 1 is read over
+// level 0). A stage may set the host's P1SummonHLevel.hlevel_mark to 1 (H12-3/H12-4 adverse): a second first-form
+// fragment then arrives on branch_3 at 25% HP.
 //
 // Native program (enemy_wdslm[...] / enemy_wdslmSTD[...] templates, standRegisterList):
 // - Disguise: the host and _2 are spies (civilianModeTalent + pretending: the chapter-12 identification). While any
@@ -131,6 +132,8 @@ export function damaztiParams(r){
   reborn:Number.isFinite(t["reborn.duration"])?{available:true,duration:t["reborn.duration"],dot:t["reborn.dotDamageValue"],radius:t["reborn.range_radius"],
    interval:1,first:F(.9),invincible:t["P2Passive.rebornInvincible_time"],hpRatio:1}:{available:false},
   ...(host?{summon:{ratio:t["P1SummonStand.hp_ratio"],branch:ts["P1SummonStand.branch_id"],action:t["P1SummonStand.action_index"],invincible:2},
+   // p1SummonHLevel: the same summon, armed only when the stage sets hlevel_mark (IsBlackboardZero, IfNot).
+   hard:t["P1SummonHLevel.hlevel_mark"]!==0?{ratio:t["P1SummonHLevel.hp_ratio"],branch:ts["P1SummonHLevel.branch_id"],action:t["P1SummonHLevel.action_index"]}:null,
    half:{ratio:t["P2HalfHPFlag.hp_ratio"],mark:half.bb["enemy_wdslm[dieAndSummon].duration"],invincible:half.bb["enemy_wdslm[P2halfHpInvincible].duration"],decoy:DECOY_ID}}:{}),
   clips:{sync:"2_Skill",burst:"2_Skill_2",rebornBegin:d["2_Die_Begin"],rebornEnd:d["2_Die_End"]}};
 }
@@ -154,10 +157,16 @@ export const DAMAZTI_FEATURES={
   nativeClaim:(p,n)=>ROLE_CLAIMS[Object.keys(ROLE_CLAIMS).find(k=>Object.hasOwn(n,k))]??null,
   dependsOn:r=>r.prefabKey===HOST_ID?["enemy_1542_wdslm_2","enemy_1542_wdslm_3",DECOY_ID,DISTORTION_ID]:[],
   stageSparseTalents:r=>r.level===1?overlayTalents(r):null,stageSparseSkills:r=>overlaySkills(r),
+  // H12-3/H12-4 adverse arm the hard-level summon; any other value is refused.
+  stageOverrides:{"P1SummonHLevel.hlevel_mark":v=>v===0||v===1},
+  // A stage list naming some of the skills changes those in place (sparse overlay) and keeps the others.
+  stageSkillSetOverride:(r,keys)=>keys.every(k=>PINS[r.prefabKey].levels[0].skills.some(x=>x.prefabKey===k)),
+  // H12-4 adverse: Lifeline Burst every 35 s instead of 50. Values only; the skill is the reviewed one.
+  stageSkillTimingOverrides:{syncAttackWithSummon:{cooldown:v=>Number.isFinite(v)&&v>=10&&v<=50}},
   note:"'Damazti Cluster' group: shared HP, damage reduction per fragment, group invincibility while disguised, two forms, revive, Lifeline Burst, the half-HP mark"},
  "talent:reduceDamage":{...cluster,note:"damage reduction per fragment (skill:syncAttackWithSummon)"},
  "talent:P1SummonStand":{...cluster,note:"first-form fragment summon (skill:syncAttackWithSummon)"},
- "talent:P1SummonHLevel":{...cluster,note:"hard-level summon; level 0 keeps hlevel_mark 0 (skill:syncAttackWithSummon)"},
+ "talent:P1SummonHLevel":{...cluster,note:"hard-level summon on branch_3 when a stage sets hlevel_mark 1 (skill:syncAttackWithSummon)"},
  "talent:P2Passive":{...cluster,note:"5 s INVINCIBLE entering the second form (skill:syncAttackWithSummon)"},
  "talent:reborn":{...cluster,note:"the 30 s revive and its Arts aura (skill:syncAttackWithSummon)"},
  "talent:P2HalfHPFlag":{...cluster,note:"second-form half-HP trigger (skill:syncAttackWithSummon)"},
