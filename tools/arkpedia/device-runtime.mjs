@@ -43,6 +43,7 @@ export const DEVICE_FAMILIES = {
   magicCircuitDefinition: { module: 'stage-magic-circuit', keyLast: true, variants: {
     ...keySet(['trap_062_magicstart', 'trap_063_magicturn'], { ...standard, direction }), ...keySet(['trap_064_magiccircle']) } },
   predefinedMineDefinition: { module: 'stage-mines', variants: keySet(['']) },
+  shieldguardDefinition: { module: 'stage-shieldguard', variants: keySet([''], { ...standard, direction }) },
 };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 

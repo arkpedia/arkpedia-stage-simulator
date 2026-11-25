@@ -8,9 +8,9 @@ all blocked stage IDs are in `data/arkpedia-content-inventory.json`.
 | Operator forms | 431 | 431 |
 | Source skills registered | 949 | 949 |
 | Enemies supported | 867 | 2163 |
-| Capability-checked combat stages | 1131 | 3892 |
+| Capability-checked combat stages | 1135 | 3892 |
 
-The generated library can load 1131 stages; 2761
+The generated library can load 1135 stages; 2757
 have missing capabilities. The legacy catalogue contains 905
 entries (564 public, 341 developer-only, 1 embedded).
 316 story/non-combat source entries are excluded from the combat target.
@@ -31,9 +31,9 @@ source checks or determine admission to the generated library.
 
 | Mode | Loadable | Missing capabilities | Total |
 |---|---:|---:|---:|
-| main | 409 | 155 | 564 |
+| main | 411 | 153 | 564 |
 | sub | 68 | 18 | 86 |
-| activity | 590 | 1535 | 2125 |
+| activity | 592 | 1533 | 2125 |
 | event | 0 | 171 | 171 |
 | daily | 35 | 0 | 35 |
 | campaign | 11 | 24 | 35 |
@@ -65,7 +65,6 @@ not imply that every listed stage becomes playable.
 | device | Iron Gourd | 86 |
 | device | Icebreaker Games Control | 79 |
 | device | Entitative Program Controller | 78 |
-| device | Shieldguard | 77 |
 | device | Spiked Treasure Chest | 77 |
 | device | Roadblocks | 74 |
 | device | Treasure Chest | 74 |
@@ -75,6 +74,7 @@ not imply that every listed stage becomes playable.
 | device | City Neon | 63 |
 | device | Vengeful Mafioso | 60 |
 | environment | Unsupported stage environment: act27sisde_enemy_global_buff | 60 |
+| device | Entitative Program | 60 |
 
 ## Workflow
 

@@ -78,7 +78,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       && (!stageDeviceSpec(d)?.guard || p.alias === d.alias));
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -105,7 +105,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
       ...(spec.mimic || spec.powerArmor ? { branchId } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
-      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit ? { direction: originalDeviceDirection(p.direction) } : {}),
+      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };
   }
   for (const p of all) if (reviewed.some(d => d.key === p.inst?.characterKey)

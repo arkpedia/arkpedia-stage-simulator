@@ -16,6 +16,7 @@ import { electricCoilNativeReviewed } from './stage-electric-coils.js';
 import DEVICE_SOURCE from '../../data/arkpedia-device-source.json' with { type: 'json' };
 import { manualDeviceNativeReviewed } from './stage-manual-devices.js';
 import { capturableDeviceNativeReviewed } from './stage-capturable-devices.js';
+import { shieldguardNativeReviewed } from './stage-shieldguard.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
@@ -117,6 +118,11 @@ export const STAGE_DEVICES = Object.freeze({
     activatable: true,
     artillery: Object.freeze({ damage: 3000, spCost: 120, spPerSecond: 1, area: 'artillery' }),
   }),
+  'Shieldguard': Object.freeze({
+    // PRTS 盾卫: an ally-side placed blocker (stage-shieldguard.js; runtime arkpedia-stage-shieldguards.js). A hidden
+    // instance appears when a wave action names its alias (Integrated Strategies).
+    keys: Object.freeze(['trap_024_npcsld']), staticLevelReview: true, shieldguard: true, activatable: true, maxLevel: 30,
+  }),
   'Originium Altar': Object.freeze({
     // PRTS 源石祭坛: auto-recovery/auto-trigger skill, initial 0, SP cost 7,
     // 500 True damage to allied and enemy characters in the 13-tile x-1 diamond, including
@@ -150,6 +156,7 @@ export function stageDeviceSpec(device) {
     || spec.flowGenerator && !flowGeneratorNativeReviewed()
     || spec.turret && !turretNativeReviewed()
     || spec.guard && !alladyNativeReviewed()
+    || spec.shieldguard && !shieldguardNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;
 }
