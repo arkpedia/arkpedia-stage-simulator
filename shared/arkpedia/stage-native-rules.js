@@ -65,6 +65,27 @@ export function nativeStageRuleReviewed(key, source = evidence) {
       && damage._ignoreForSp === false && damage._isUndeadable === false && damage._attackType === 'NORMAL'
       && damage._skipModifierEvent === false && damage._multiplyByKey === false && damage._noSourceDamage === false;
   }
+  if (key === 'apply_elemental_damage') {
+    // env_gbuff_new_with_verify (12-20): every listed enemy carries apply_elemental_damage[enemy]. On each damage it
+    // outputs (ON_OUTPUT_DAMAGE) it adds WATER (Corrosion) element damage of ep_damage_ratio x that damage, not of ATK.
+    const [p] = rows, [buff] = p?._buffs ?? [], tkey = 'apply_elemental_damage[enemy]';
+    const events = source.templates[tkey]?.eventToActions, [apply] = events?.ON_OUTPUT_DAMAGE ?? [];
+    const [isChar, finish] = events?.ON_BUFF_START ?? [];
+    return rows.length === 1 && p.m_Script.m_PathID === '-6296718861144211397' && p._key === ''
+      && p._deckBuffs.length === 0 && p._sourceType === 0 && p._overrideCameraEffect === ''
+      && p._options?.targetSide === 2 && p._options.targetMotion === 3 && p._options.targetCategory === 1
+      && p._options.enableAdvancedOptions === 0 && p._buffs.length === 1
+      && buff.buffKey === tkey && buff.templateKey === tkey && buff.lifeTimeType === 2 && buff.disableOverride === 1
+      && buff.loadFromDB === 0 && emptyAttributes(buff.attributes) && buff.blackboard.length === 0
+      && Object.keys(events ?? {}).sort().join() === 'ON_BUFF_START,ON_OUTPUT_DAMAGE'
+      && events.ON_OUTPUT_DAMAGE.length === 1 && apply.$type?.includes('+ApplyElementDamage,')
+      && apply._elementDamageType === 'WATER' && apply._sourceType === 'BUFF_OWNER' && apply._targetType === 'MODIFIER_TARGET'
+      && apply._isFixedEpDamage === false && apply._baseOnHostAtk === false && apply._baseOnEnemyHostAtk === false
+      && apply._noSource === false && apply._multiplyWithBuffValidStackCnt === false && apply._isEnvElementDamage === false
+      && apply._loadElementTypeFromBb === false && apply._epDamageScale === 'ep_damage_ratio' && apply._fixedEpDamageScale === ''
+      && events.ON_BUFF_START.length === 2 && isChar?.$type?.includes('+IsCharacterOrTokenOrTrap,')
+      && isChar._targetType === 'BUFF_OWNER' && finish?.$type?.includes('+FinishBuff,');
+  }
   return false;
 }
 

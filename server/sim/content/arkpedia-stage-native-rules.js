@@ -24,6 +24,14 @@ export function installNativeStageRules(b, rules) {
         isAttack: true, canDodge: false, noSp: false, tags: ['stage:deploy_damage'] });
     }
   }, { priority: -100 });
+  // apply_elemental_damage[enemy] (12-20): a listed enemy's every damage output adds Corrosion of ratio x that damage.
+  // [INFERRED] the base is the damage as dealt (after DEF/RES), as the client's modifier carries it at
+  // ON_OUTPUT_DAMAGE; element hits themselves never feed it again.
+  if (Object.keys(rules?.enemyElementalDamage ?? {}).length) b.on('damaged', ({ source, target, amount, type }) => {
+    const rule = source && rules.enemyElementalDamage[source.defId];
+    if (!rule || type === 'element' || source.side !== 'enemy' || target.side === source.side || !target.alive || !(amount > 0)) return;
+    b.dealDamage(source, target, { type: 'element', element: rule.element, amount: amount * rule.ratio, tags: ['stage:apply_elemental_damage'] });
+  });
   if (Object.values(rules?.enemyDynamicAbilities ?? {}).some(keys => keys.includes('invisible')))
     b.on('enemySpawn', ({ enemy: e }) => {
       if (rules.enemyDynamicAbilities[e.defId]?.includes('invisible'))

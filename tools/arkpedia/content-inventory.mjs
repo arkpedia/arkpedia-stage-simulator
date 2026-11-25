@@ -80,7 +80,7 @@ export async function planStage(context, id, { compile = true, waves = false } =
       // Absence of a variant label is not evidence that the original has no rules.
       if (source.battle && !rules) throw Error('Missing original level rule receipt');
       compiledRules = compileStageRules(source, rules);
-      if (compiledRules?.enemyDynamicAbilities || compiledRules?.environmentBuffs || compiledRules?.deploymentDamage) {
+      if (compiledRules?.enemyDynamicAbilities || compiledRules?.environmentBuffs || compiledRules?.deploymentDamage || compiledRules?.enemyElementalDamage) {
         const path = 'data/arkpedia-native-stage-rules.json';
         localSources.push({ path, sha256: digest(await readFile(join(context.root, path))) });
       }

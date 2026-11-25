@@ -32,7 +32,7 @@ def sha(value):
 
 prefabs, bundles = {}, []
 for group, keys in [('dynamicabilities', ['silenceimmue', 'invisible']),
-                    ('globalbuffs', ['common_char_melee_built', 'deploy_damage'])]:
+                    ('globalbuffs', ['common_char_melee_built', 'deploy_damage', 'apply_elemental_damage'])]:
     path = f'battle/prefabs/[uc]{group}.ab'
     raw, row = (CACHE / 'bundles' / path).read_bytes(), members[path]
     assert len(raw) == row['abSize'] and hashlib.md5(raw).hexdigest() == row['md5']
@@ -64,7 +64,7 @@ out = {'schemaVersion': 1, 'source': {k: PIN[k] for k in ['repository', 'commit'
        'bundles': bundles, 'prefabs': prefabs,
        'templateSource': {'repository': PIN['repository'], 'commit': PIN['commit'],
                           'path': 'zh_CN/gamedata/battle/buff_template_data.json', 'gitBlob': blob, 'sha256': hashlib.sha256(raw).hexdigest()},
-       'templates': {key: table[key] for key in ['common_char_melee_built', 'deploy_damage']}}
+       'templates': {key: table[key] for key in ['common_char_melee_built', 'deploy_damage', 'apply_elemental_damage[enemy]']}}
 target = ROOT / 'data/arkpedia-native-stage-rules.json'
 encoded = json.dumps(out, ensure_ascii=False, indent=1) + '\n'
 if '--check' in sys.argv:

@@ -16,13 +16,14 @@ test('original stage-rule components retain their canonical hashes and narrow co
     ? Object.fromEntries(Object.keys(v).sort().map(k => [k, canonical(v[k])])) : v;
   for (const row of Object.values(evidence.prefabs).flatMap(p => p.components))
     assert.equal(createHash('sha256').update(JSON.stringify(canonical(row.data))).digest('hex'), row.sha256);
-  for (const key of ['silenceimmue', 'invisible', 'common_char_melee_built', 'deploy_damage']) assert.equal(nativeStageRuleReviewed(key), true, key);
+  for (const key of ['silenceimmue', 'invisible', 'common_char_melee_built', 'deploy_damage', 'apply_elemental_damage']) assert.equal(nativeStageRuleReviewed(key), true, key);
   const changed = structuredClone(evidence);
   changed.prefabs.silenceimmue.components[0].data._buffs[0].attributes.abnormalImmunes = [8];
   changed.prefabs.invisible.components.find(c => '_restoreDelay' in c.data).data._restoreDelay = 0;
   changed.templates.common_char_melee_built.eventToActions.ON_BUFF_START[0]._conditionNode._heightType = 'HIGHLAND';
   changed.templates.deploy_damage.eventToActions.ON_OWNER_POST_BORN[0]._skipModifierEvent = true;
-  for (const key of ['silenceimmue', 'invisible', 'common_char_melee_built', 'deploy_damage', 'unknown']) assert.equal(nativeStageRuleReviewed(key, changed), false, key);
+  changed.templates['apply_elemental_damage[enemy]'].eventToActions.ON_OUTPUT_DAMAGE[0]._baseOnHostAtk = true;
+  for (const key of ['silenceimmue', 'invisible', 'common_char_melee_built', 'deploy_damage', 'apply_elemental_damage', 'unknown']) assert.equal(nativeStageRuleReviewed(key, changed), false, key);
 });
 test('BW-7 Silence immunity is stage-local and rejects Silence while leaving unrelated statuses valid', async () => {
   const id = 'enemy_1067_snslime', plan = await planStage(context, 'bw-7_challenge_mode');
@@ -116,4 +117,31 @@ test('deployment penalty respects source masks and applies shields/damage modifi
   h.b.start();
   for (const u of h.b.allyUnits) assert.equal(u.hp, u.def.profession === 'TRAP' ? 2000 : 1600);
   assert.deepEqual(h.b.errors, []);
+});
+
+test('12-20 elemental rune: the listed enemies add Corrosion of 25% of each damage they deal, nothing else does', () => {
+  const receipt = { schemaVersion: 1, stageId: 'fixture', source: { commit: 'a'.repeat(40), sha256: 'b'.repeat(64) } };
+  const rune = (blackboard, extra = {}) => ({ key: 'env_gbuff_new_with_verify', difficultyMask: 'ALL', professionMask: 1023, buildableMask: 'ALL', blackboard, ...extra });
+  const bb = (ids, ratio = .25) => [{ key: 'ep_damage_ratio', value: ratio, valueStr: null }, { key: 'key', value: 0, valueStr: 'apply_elemental_damage' },
+    { key: 'enemy', value: 0, valueStr: ids }];
+  const compiled = compileStageRules({ id: 'fixture' }, { ...receipt, runes: [rune(bb('enemy_a|enemy_b'))] });
+  assert.deepEqual(compiled.enemyElementalDamage, { enemy_a: { element: 'erosion', ratio: .25 }, enemy_b: { element: 'erosion', ratio: .25 } });
+  for (const bad of [bb('enemy_a|enemy_a'), bb('enemy_a', 0), bb('enemy_a', 1.5), [...bb('enemy_a'), { key: 'atk', value: 1, valueStr: null }],
+    bb('enemy_a').map(x => x.key === 'key' ? { ...x, valueStr: 'apply_elemental_damage[enemy]' } : x)])
+    assert.throws(() => compileStageRules({ id: 'fixture' }, { ...receipt, runes: [rune(bad)] }), /Unsupported|Duplicate|Invalid/);
+  assert.throws(() => compileStageRules({ id: 'fixture' }, { ...receipt, runes: [rune(bb('enemy_a'), { professionMask: 1 })] }), /Unsupported/);
+  const rec = chessRec({ id: 'corroded', stats: { maxHp: 5000, def: 0 } });
+  const enemies = { enemy_a: { ...structuredClone(context.records.enemies.enemy_1071_dftman_2.levels[0]), key: 'enemy_a' } };
+  const h = makeBattle({ content: 'none', autoFinish: false, defs: { chess: { [rec.chessId]: rec } },
+    units: [{ chessId: rec.chessId, row: 9, col: 6 }], setup: b => installNativeStageRules(b, compiled) });
+  const b = h.b; b.start(); const u = b.allyUnits[0];
+  const listed = b.spawnEnemy('enemy_a', { pos: [9, 8] }), other = b.spawnEnemy('enemy_a', { pos: [9, 9] });
+  other.defId = 'enemy_unlisted';
+  b.dealDamage(listed, u, { amount: 400, type: 'phys' });
+  assert.equal(u.elem.erosion, 100);
+  b.dealDamage(other, u, { amount: 400, type: 'phys' });
+  assert.equal(u.elem.erosion, 100, 'an unlisted enemy adds nothing');
+  b.dealDamage(listed, u, { amount: 40, type: 'element', element: 'erosion' });
+  assert.equal(u.elem.erosion, 140, 'an element hit does not feed itself');
+  assert.deepEqual(b.errors, []);
 });

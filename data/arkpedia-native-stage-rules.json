@@ -430,6 +430,105 @@
      "sha256": "d16557f3be8dbca18caa8e3944dc5def689b357d4359ebc18969daa775433966"
     }
    ]
+  },
+  "apply_elemental_damage": {
+   "bundle": "battle/prefabs/[uc]globalbuffs.ab",
+   "asset": "dyn/battle/prefabs/[uc]globalbuffs/apply_elemental_damage.prefab",
+   "components": [
+    {
+     "pathId": "-2086890878260437024",
+     "object": "apply_elemental_damage",
+     "data": {
+      "m_GameObject": {
+       "m_FileID": 0,
+       "m_PathID": "-3515231321621356576"
+      },
+      "m_Enabled": 1,
+      "m_Script": {
+       "m_FileID": 1,
+       "m_PathID": "-6296718861144211397"
+      },
+      "m_Name": "",
+      "_key": "",
+      "_options": {
+       "targetSide": 2,
+       "targetMotion": 3,
+       "targetCategory": 1,
+       "enableAdvancedOptions": 0,
+       "ignoreTargetFree": 0,
+       "ignoreAllyTargetFree": 0,
+       "ignoreHealFree": 0,
+       "ignoreMotionMode": 0,
+       "ignoreTargetSide": 0,
+       "excludeSomeAbnormalFlags": 0,
+       "containSomeAbnormalFlags": 0,
+       "excludeAbnormalFlag": 0,
+       "containAbnormalFlag": 0,
+       "purposeMask": 0,
+       "professionMask": 0,
+       "checkUnitType": 0,
+       "unitTypeMask": 0,
+       "onlyIgnoreSomeOfTargetFreeCase": 0,
+       "abnormalFlag": 0,
+       "abnormalCombo": 0
+      },
+      "_buffs": [
+       {
+        "attributes": {
+         "abnormalFlags": [],
+         "abnormalImmunes": [],
+         "abnormalAntis": [],
+         "abnormalCombos": [],
+         "abnormalComboImmunes": [],
+         "attributeModifiers": []
+        },
+        "buffKey": "apply_elemental_damage[enemy]",
+        "loadFromDB": 0,
+        "isDurableBuff": 0,
+        "isDamageMissable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "isFreezable": 0,
+        "isLevitatable": 0,
+        "isGroundBoundable": 0,
+        "statusResistable": 2,
+        "templateKey": "apply_elemental_damage[enemy]",
+        "disableOverride": 1,
+        "overrideKey": "",
+        "overrideType": 0,
+        "maxStackCnt": 1,
+        "refreshRemainingTimeWhenStackMax": 0,
+        "clearAllStackCntWhenTimeUp": 0,
+        "maxValidStackCnt": -1,
+        "independentCharacterSource": 0,
+        "overrideEffectKey": "",
+        "overrideOnEventPriority": 0,
+        "onEventPriority": 0,
+        "audioSignal": "",
+        "lifeTimeType": 2,
+        "takeSnapshotWhenExtend": 0,
+        "durationKey": "",
+        "remainingTimeKey": "",
+        "lifeTime": 0,
+        "triggerLifeType": 2,
+        "triggerCnt": 0,
+        "triggerInterval": 0,
+        "waitFirstTriggerInterval": 0,
+        "firstTriggerInterval": -1,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": [],
+        "enableInitDirectionFromSource": 0
+       }
+      ],
+      "_overrideCameraEffect": "",
+      "_deckBuffs": [],
+      "_sourceType": 0
+     },
+     "sha256": "98e00deb309931a461ae5ead891e403a6206f8b52fa22befdcd92eb8dc4748de"
+    }
+   ]
   }
  },
  "templateSource": {
@@ -518,6 +617,46 @@
       "_multiplyByKey": false,
       "_multiplierKey": "cnt",
       "_noSourceDamage": false
+     }
+    ]
+   }
+  },
+  "apply_elemental_damage[enemy]": {
+   "templateKey": "apply_elemental_damage[enemy]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_OUTPUT_DAMAGE": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+ApplyElementDamage, Assembly-CSharp",
+      "_elementDamageType": "WATER",
+      "_sourceType": "BUFF_OWNER",
+      "_isFixedEpDamage": false,
+      "_baseOnHostAtk": false,
+      "_baseOnEnemyHostAtk": false,
+      "_fixedEpDamageKey": null,
+      "_fixedEpDamage": 0.0,
+      "_noSource": false,
+      "_forceUseProjectileCachedAtk": false,
+      "_multiplyWithBuffValidStackCnt": false,
+      "_buffKey": null,
+      "_buffSourceType": "BUFF_OWNER",
+      "_targetType": "MODIFIER_TARGET",
+      "_isEnvElementDamage": false,
+      "_loadElementTypeFromBb": false,
+      "_fixedEpDamageScale": "",
+      "_epDamageScale": "ep_damage_ratio"
+     }
+    ],
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IsCharacterOrTokenOrTrap, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true
      }
     ]
    }

@@ -42,7 +42,7 @@ export function compileStageRules(source, receipt) {
   let sightSystem = false;
   const enemyDynamicAbilities = {}, environmentBuffs = [], enemyScopedAdd = {};
   const deploymentDamage = [], predefinedDevices = {}, predefinedOperators = {}, environmentOverrides = {};
-  const enemyTalentGlobal = {}, enemyTalentAddScoped = {};
+  const enemyTalentGlobal = {}, enemyTalentAddScoped = {}, enemyElementalDamage = {};
   const characterAttributes = [], enemySkillScoped = {};
   const reedTileParameters = {}, reedIgnitions = [];
   let enemySkillCooldownScale = 1;
@@ -250,6 +250,21 @@ export function compileStageRules(source, receipt) {
       environmentBuffs.push(entry.valueStr);
       continue;
     }
+    // 12-20: env_gbuff_new_with_verify apply_elemental_damage gives exactly the listed enemies Corrosion of
+    // ep_damage_ratio x each damage they deal (stage-native-rules.js). No other with_verify buff is accepted.
+    if (rune.key === 'env_gbuff_new_with_verify' && rune.blackboard?.some(x => x.key === 'key' && x.valueStr === 'apply_elemental_damage')) {
+      const entries = rune.blackboard, key = entries.find(x => x.key === 'key'), ratio = entries.find(x => x.key === 'ep_damage_ratio'),
+        target = entries.find(x => x.key === 'enemy');
+      if (entries.length !== 3 || key.value !== 0 || !Number.isFinite(ratio?.value) || ratio.value <= 0 || ratio.value > 1 || ratio.valueStr
+        || target?.value !== 0 || !/^enemy_[a-z0-9_]+(?:\|enemy_[a-z0-9_]+)*$/.test(target.valueStr ?? '')
+        || !['ALL', 1023].includes(rune.professionMask) || !['ALL', 3].includes(rune.buildableMask)
+        || !nativeStageRuleReviewed('apply_elemental_damage')) throw Error('Unsupported stage elemental damage rule');
+      const ids = target.valueStr.split('|');
+      if (new Set(ids).size !== ids.length || ids.some(id => Object.hasOwn(enemyElementalDamage, id)))
+        throw Error('Duplicate stage elemental damage target');
+      for (const id of ids) enemyElementalDamage[id] = { element: 'erosion', ratio: ratio.value };
+      continue;
+    }
     if (rune.key === 'level_enemy_replace') {
       const entries = rune.blackboard ?? [], from = entries.find(x => x.key === 'key'), to = entries.find(x => x.key === 'value');
       if (entries.length !== 2 || [from, to].some(x => x?.value !== 0 || !/^enemy_[a-z0-9_]+$/.test(x.valueStr ?? ''))
@@ -454,5 +469,6 @@ export function compileStageRules(source, receipt) {
     ...(Object.keys(enemyTalentGlobal).length ? { enemyTalentGlobal } : {}),
     ...(characterAttributes.length ? { characterAttributes } : {}),
     ...(Object.keys(enemySkillScoped).length ? { enemySkillScoped } : {}),
-    ...(Object.keys(enemySkillRadiusScoped).length ? { enemySkillRadiusScoped } : {}) };
+    ...(Object.keys(enemySkillRadiusScoped).length ? { enemySkillRadiusScoped } : {}),
+    ...(Object.keys(enemyElementalDamage).length ? { enemyElementalDamage } : {}) };
 }
