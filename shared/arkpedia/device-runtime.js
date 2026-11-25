@@ -47,6 +47,7 @@ export const flameDefinition = single('flameDefinition');
 export const alladyDefinition = single('alladyDefinition');
 export const predefinedMineDefinition = single('predefinedMineDefinition');
 export const shieldguardDefinition = single('shieldguardDefinition');
+export const bloodAltarDefinition = single('bloodAltarDefinition');
 export const magicCircuitDefinition = (instance, id = 'trap_062_magicstart') => compiledDeviceDefinition('magicCircuitDefinition', id, instance);
 export const electricCoilDefinition = instance => compiledDeviceDefinition('electricCoilDefinition', '', instance && {
   ...instance, elite: instance.elite ?? 0, potential: instance.potential ?? 0, skill_index: instance.skill_index ?? 0,

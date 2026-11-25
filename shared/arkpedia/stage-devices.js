@@ -17,6 +17,7 @@ import DEVICE_SOURCE from '../../data/arkpedia-device-source.json' with { type: 
 import { manualDeviceNativeReviewed } from './stage-manual-devices.js';
 import { capturableDeviceNativeReviewed } from './stage-capturable-devices.js';
 import { shieldguardNativeReviewed } from './stage-shieldguard.js';
+import { bloodAltarNativeReviewed } from './stage-blood-altar.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
@@ -123,6 +124,11 @@ export const STAGE_DEVICES = Object.freeze({
     // instance appears when a wave action names its alias (Integrated Strategies).
     keys: Object.freeze(['trap_024_npcsld']), staticLevelReview: true, shieldguard: true, activatable: true, maxLevel: 30,
   }),
+  'Bloodcalling Altar': Object.freeze({
+    // PRTS 唤血祭坛 (chapter 13): an enemy-side trap whose pulse turns Blood Amber into Bloodborn Spawn on its own branch
+    // (stage-blood-altar.js; runtime arkpedia-stage-blood-altars.js).
+    keys: Object.freeze(['trap_125_bonore']), staticLevelReview: true, bloodAltar: true, maxLevel: 30,
+  }),
   'Originium Altar': Object.freeze({
     // PRTS 源石祭坛: auto-recovery/auto-trigger skill, initial 0, SP cost 7,
     // 500 True damage to allied and enemy characters in the 13-tile x-1 diamond, including
@@ -157,6 +163,7 @@ export function stageDeviceSpec(device) {
     || spec.turret && !turretNativeReviewed()
     || spec.guard && !alladyNativeReviewed()
     || spec.shieldguard && !shieldguardNativeReviewed()
+    || spec.bloodAltar && !bloodAltarNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;
 }

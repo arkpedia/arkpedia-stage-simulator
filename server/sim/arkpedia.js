@@ -326,6 +326,7 @@ export class StandardBattle extends Battle {
     this.stageCarapaces = deviceRuntime.create('carapaces', this, data.stage);
     this.stageScenery = deviceRuntime.create('scenery', this, data.stage);
     this.stageBranches = new StageBranchScheduler(this, data.stage.waveProgram?.branches, data.stage.rules);
+    this.stageBloodAltars = deviceRuntime.create('bloodAltars', this, data.stage);
     this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
     this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
     this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);

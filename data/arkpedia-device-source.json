@@ -5356,6 +5356,159 @@
    "favorKeyFrames": null,
    "allSkillLvlup": []
   },
+  "trap_125_bonore": {
+   "name": "唤血祭坛",
+   "description": null,
+   "sortIndex": 402,
+   "spTargetType": "NONE",
+   "spTargetId": null,
+   "canUseGeneralPotentialItem": true,
+   "canUseActivityPotentialItem": false,
+   "potentialItemId": null,
+   "activityPotentialItemId": null,
+   "classicPotentialItemId": null,
+   "nationId": null,
+   "groupId": null,
+   "teamId": null,
+   "mainPower": {
+    "nationId": null,
+    "groupId": null,
+    "teamId": null
+   },
+   "subPower": null,
+   "displayNumber": null,
+   "appellation": "Bloodconvoker Altar",
+   "position": "NONE",
+   "tagList": null,
+   "itemUsage": null,
+   "itemDesc": null,
+   "itemObtainApproach": null,
+   "isNotObtainable": false,
+   "isSpChar": false,
+   "maxPotentialLevel": 0,
+   "rarity": "TIER_1",
+   "profession": "TRAP",
+   "subProfessionId": "notchar2",
+   "trait": null,
+   "phases": [
+    {
+     "characterPrefabKey": "trap_125_bonore",
+     "rangeId": null,
+     "maxLevel": 30,
+     "attributesKeyFrames": [
+      {
+       "level": 1,
+       "data": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 2000,
+        "magicResistance": 20,
+        "cost": 5,
+        "blockCnt": 0,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 5,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      },
+      {
+       "level": 30,
+       "data": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 2000,
+        "magicResistance": 20,
+        "cost": 5,
+        "blockCnt": 0,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 5,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      }
+     ],
+     "evolveCost": null
+    }
+   ],
+   "skills": [
+    {
+     "skillId": "sktok_bonore",
+     "overridePrefabKey": null,
+     "overrideTokenKey": null,
+     "levelUpCostCond": [],
+     "unlockCond": {
+      "phase": "PHASE_0",
+      "level": 1
+     }
+    }
+   ],
+   "displayTokenDict": null,
+   "talents": [
+    {
+     "candidates": [
+      {
+       "unlockCondition": {
+        "phase": "PHASE_0",
+        "level": 1
+       },
+       "requiredPotentialRank": 0,
+       "prefabKey": "1",
+       "name": null,
+       "description": null,
+       "rangeId": null,
+       "blackboard": [
+        {
+         "key": "interval",
+         "value": 10,
+         "valueStr": null
+        }
+       ],
+       "tokenKey": null,
+       "isHideTalent": true
+      }
+     ]
+    }
+   ],
+   "potentialRanks": [],
+   "favorKeyFrames": null,
+   "allSkillLvlup": []
+  },
   "trap_757_skzbox": {
    "name": "宝箱",
    "description": null,
@@ -7351,6 +7504,47 @@
       {
        "key": "taunt_level",
        "value": 1,
+       "valueStr": null
+      }
+     ]
+    }
+   ]
+  },
+  "sktok_bonore": {
+   "skillId": "sktok_bonore",
+   "iconId": null,
+   "hidden": false,
+   "levels": [
+    {
+     "name": "唤血祭坛",
+     "rangeId": null,
+     "description": "释放脉冲波吸收范围内的所有<@ba.vup>血珀</>，并转化成<@ba.vup>新生血裔</>",
+     "skillType": "AUTO",
+     "durationType": "NONE",
+     "spData": {
+      "spType": "INCREASE_WITH_TIME",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 20,
+      "initSp": 0,
+      "increment": 1
+     },
+     "prefabId": "sktok_bonore",
+     "duration": 0,
+     "blackboard": [
+      {
+       "key": "talent@branch_id",
+       "value": 0,
+       "valueStr": "bonore_dfello"
+      },
+      {
+       "key": "talent@enemy_key",
+       "value": 0,
+       "valueStr": "enemy_1367_dseed"
+      },
+      {
+       "key": "max_target",
+       "value": 10,
        "valueStr": null
       }
      ]

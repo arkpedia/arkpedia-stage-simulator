@@ -8,9 +8,9 @@ all blocked stage IDs are in `data/arkpedia-content-inventory.json`.
 | Operator forms | 431 | 431 |
 | Source skills registered | 949 | 949 |
 | Enemies supported | 868 | 2163 |
-| Capability-checked combat stages | 1139 | 3892 |
+| Capability-checked combat stages | 1141 | 3892 |
 
-The generated library can load 1139 stages; 2753
+The generated library can load 1141 stages; 2751
 have missing capabilities. The legacy catalogue contains 905
 entries (564 public, 341 developer-only, 1 embedded).
 316 story/non-combat source entries are excluded from the combat target.
@@ -31,7 +31,7 @@ source checks or determine admission to the generated library.
 
 | Mode | Loadable | Missing capabilities | Total |
 |---|---:|---:|---:|
-| main | 415 | 149 | 564 |
+| main | 417 | 147 | 564 |
 | sub | 68 | 18 | 86 |
 | activity | 592 | 1533 | 2125 |
 | event | 0 | 171 | 171 |
@@ -50,7 +50,7 @@ not imply that every listed stage becomes playable.
 
 | Kind | Dependency | Affected stages |
 |---|---|---:|
-| branch-program | Missing or unsupported stage branch binding | 889 |
+| branch-program | Missing or unsupported stage branch binding | 887 |
 | mode | climb_tower | 227 |
 | device | Artifact Center | 179 |
 | stage-rules | Invalid or incompatible variant rule receipt | 154 |

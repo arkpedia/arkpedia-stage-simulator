@@ -94,7 +94,7 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   const inactiveInstances = {};
   validateStaticDeviceInstances(inactiveDevices, { ...level, predefines: { ...level.predefines,
     tokenInsts: inactive.map(p => ({ ...p, hidden: false })) } }, inactiveInstances);
-  const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
+  const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||d.key==='trap_125_bonore'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
     .map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId)
     .concat(Object.values(inactiveInstances).map(i => i.branchId))
     // 12-20: the 'Damazti Cluster' and its decoy summon their fragments through the level's branches.
