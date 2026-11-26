@@ -187,8 +187,9 @@ test('a first form without the Throne dies 0.5 s in; a bomb at the Throne calls 
 test('the first form reaching the exit frees the battle: a bomb then destroys the Throne without a second form', async () => {
   const b = await quiet(), T = b.stageBloodThrone;
   const e = place(b, BLOOD_LORD, 4, 6);
-  b._remove(e, 'exit', null, true);
+  b._remove(e, 'leak');
   assert.equal(T.hold, null);
+  assert.equal(T.entry.returns.length, 0, 'a leak is no defeat: no return');
   const twos = [];
   b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === BLOOD_LORD_TWO) twos.push(enemy); });
   T.bombed();
@@ -290,6 +291,32 @@ test('Blood Affliction: his hits start a 10 s ramping Arts DoT (first tick after
   until(b, () => !op.findBuff('bloodAffliction'), t0 + 12);
   b.step();
   assert.equal(op.findBuff('bloodMist:redeploy'), null);
+});
+
+test('both forms keep attacking after their casts: form 1 after Blood Mist, form 2 (Arts, Blood Affliction) after Crimson Edict', async () => {
+  const b = await quiet();
+  const op = deploy(b); assert.ok(op);
+  b.addBuff(op, { key: 'test:undying', persist: true, flags: { undeadable: true } });
+  const hits = [];
+  b.on('damaged', c => { if (c.target === op && c.dmg?.isAttack && c.source && /blord/.test(c.source.defId)) hits.push([c.source.defId, b.time, c.type]); });
+  // Form 1 within range (2.2) of the operator: BloodFog runs 10 -> 16 s; he shoots before and after.
+  const one = place(b, BLOOD_LORD, op.tileR, op.tileC + 2 < b.regularMapSize.cols ? op.tileC + 2 : op.tileC - 2);
+  until(b, () => b.time >= 25, 26);
+  const shots = hits.filter(h => h[0] === BLOOD_LORD).map(h => h[1]);
+  assert.ok(shots.some(t => t < 10) && shots.some(t => t > 17), JSON.stringify(shots));
+  assert.ok(hits.filter(h => h[0] === BLOOD_LORD).every(h => h[2] === 'arts'));
+  b._remove(one, 'withdraw', null, true);
+  // Form 2 blocked by the operator: Crimson Edict 10 -> 27 s after he appears; Arts hits apply Blood Affliction.
+  b.stageBloodThrone.bombed();
+  until(b, () => b.enemies.some(e => e.alive && e.defId === BLOOD_LORD_TWO), b.time + 1);
+  const two = b.enemies.find(u => u.alive && u.defId === BLOOD_LORD_TWO), t0 = b.time;
+  two.x = op.x + 0.4; two.y = op.y; two.tileR = op.tileR; two.tileC = op.tileC;
+  b.addBuff(two, { key: 'test:hold', persist: true, flags: { noMove: true } });
+  until(b, () => b.time >= t0 + 40, t0 + 41);
+  const blows = hits.filter(h => h[0] === BLOOD_LORD_TWO);
+  assert.ok(blows.some(h => h[1] < t0 + 10) && blows.some(h => h[1] > t0 + 27.5), JSON.stringify(blows.map(h => +(h[1] - t0).toFixed(1))));
+  assert.ok(blows.every(h => h[2] === 'arts'));
+  assert.ok(op.findBuff('bloodAffliction'), 'Blood Affliction from a real hit');
 });
 
 for (const id of ['13-21', '13-21_adverse_environment']) {

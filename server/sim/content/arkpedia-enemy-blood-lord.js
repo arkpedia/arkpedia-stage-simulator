@@ -27,14 +27,16 @@ const afflicted = b => {
 };
 const live = u => u?.alive && u.deployed !== false && !u.hidden;
 const pick = (b, list) => list.length ? list[list.length === 1 ? 0 : b.rng.int(list.length)] : null;
+// The attack switch is saved once per cast (its default may be undefined) and restored when the cast ends.
 const root = (b, e, a, clip, length) => {
-  a.prevNoAttack ??= e.profile.noAttack; e.profile.noAttack = true; e.attackControlEpoch = (e.attackControlEpoch ?? 0) + 1;
+  if (!a.rooted) a.rooted = { noAttack: e.profile.noAttack };
+  e.profile.noAttack = true; e.attackControlEpoch = (e.attackControlEpoch ?? 0) + 1;
   if (!e.findBuff(CAST)) b.addBuff(e, { key: CAST, flags: { noMove: true } });
   e.mem.regularFormVisual = { clip, loop: false, speed: 1, playId: `bloodLord:${++a.seq}` };
   e.skillAnimUntil = b.time + length;
 };
 const unroot = (b, e, a) => {
-  if (a.prevNoAttack !== undefined) { e.profile.noAttack = a.prevNoAttack; a.prevNoAttack = undefined; }
+  if (a.rooted) { e.profile.noAttack = a.rooted.noAttack; a.rooted = null; }
   b.removeBuff(e, CAST); e.mem.regularFormVisual = null; e.skillAnimUntil = b.time;
 };
 
@@ -91,8 +93,10 @@ export function bloodLord(p) {
       a.cast = null; a.fountain = null;
       const throne = b.stageBloodThrone;
       if (!throne) return;
-      if (c.reason === 'exit') throne.lordExited(e);
-      else throne.lordKilled(e);
+      // Reaching the protection point (the engine's 'leak') is ON_OWNER_REACH_EXIT; only a kill starts the return.
+      if (c.reason === 'leak' || c.reason === 'exit') throne.lordExited(e);
+      else if (c.reason === 'killed') throne.lordKilled(e);
+      else throne.lords.delete(e);
     },
   };
 }
@@ -157,13 +161,13 @@ export function bloodLordTwo(p) {
       }
       setAura(b, e, a);
       a.rounds = a.rounds.filter(r => r.tick(dt));
+      a.edict -= dt; // the cooldown also runs through Sunken Death and the cast itself
       if (a.sunken) {
         const s = a.sunken; s.t += dt;
         if (!s.destroyed && s.t + 1e-9 >= p.sunken.destroyAt) { s.destroyed = true; b.stageBombLoaders?.destroyMarked(); }
         if (s.t + 1e-9 >= p.sunken.cast) { a.sunken = null; unroot(b, e, a); }
         return;
       }
-      a.edict -= dt;
       if (a.cast) {
         const c = a.cast; c.t += dt;
         // enemy_blord2_fog[summon]: from the cast's start, one Blood Amber every `every` s, each `delay` s later.

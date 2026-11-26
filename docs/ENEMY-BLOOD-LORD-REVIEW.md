@@ -101,13 +101,15 @@ This batch publishes 13-21 and 13-21 adverse (1,173 available; main story 442 of
 
 **The boss** (`arkpedia-enemy-blood-lord.js`; kinds `bloodLord` and `bloodLordTwo`, dispatched from `skill:BloodFog` / `skill:BloodFog2`; the first form is a `FORM_BOSSES` entry)
 - **First form:**
-  - The cast roots him.
+  - The cast roots him; his attack switch is saved per cast and restored after it.
+  - Reaching the protection point (the engine's `leak`) frees the Throne's hold with no return; only a kill starts one.
   - On an HP-zero attempt (`hpZeroAttempt`, with UNDEADABLE holding him at 1 HP) he casts BloodFountain.
   - A first form the Throne has not adopted dies 0.5 s in.
 - **Second form:**
   - His attacks deal Arts (`ab.atkType`). The `dealt` hook applies Blood Affliction.
   - The aura: Sanctuary `physTakenMul`/`artsTakenMul` 0.1 on himself; `hpRegen` +300 on the others through `OwnedStageAura`.
   - The 0.5 s explosion check reads damage tagged `bombExplosion`.
+  - Crimson Edict's cooldown runs from the cast's start, also through Sunken Death.
   - Crimson Edict and Sunken Death are as reviewed.
   - `e.mem.bloodLordTwo` is the handle the bomb and the Loading Points use.
 
@@ -159,7 +161,8 @@ This batch publishes 13-21 and 13-21 adverse (1,173 available; main story 442 of
   - The first form dies with no return.
   - A later first form dies 0.5 s in.
   - Amber decays 10%/s.
-- **Exit:** the first form reaching the exit releases the battle, and a bomb then calls no second form.
+- **Exit:** the first form leaking releases the battle with no return, and a bomb then calls no second form.
+- **Attacks after casts:** form 1 shoots before and after BloodFog; form 2, blocked, hits in Arts before and after Crimson Edict, and a real hit applies Blood Affliction.
 - **Second form's aura:**
   - Arts taken ×0.1; True damage unchanged; +300 HP/s to a neighbour.
   - An explosion during Crimson Edict ends it, and the aura is off for 15 s.
@@ -182,5 +185,9 @@ This batch publishes 13-21 and 13-21 adverse (1,173 available; main story 442 of
   - **Blood Surge target:** a random un-hit operator; once all have been hit, any operator. The selector requires the mark; PRTS says "prioritizing".
   - **Crimson Edict's timeline:** 15 s of summons (0, 5, 10, 15) and then `B_Skill_1_End` with the mist at its OnAttack. The `Skill_1_Begin` clip's own length (3 s) is read as part of the 15 s.
   - **The bomb's explosion end:** read as the moment `enemy_blord2_kill[bmbcar]` and `trap_bldore_kill[bmbcar]` finish with the bomb still alive, as for the Altar.
+  - **Crimson Edict's cooldown** runs through Sunken Death (nothing reviewed pauses it).
   - **Amber decay** after the Throne falls is modelled only on Throne stages. On Altar stages Amber still never decays after every Altar is destroyed; that is an earlier gap.
+- **Client:** checked in the browser (13-21: Throne, Loading Points, both forms, mists, no console errors). Both forms draw as
+  markers: their models are not imported into arkpedia-sd-assets yet, like the other chapter-13 enemies (pilot,
+  Fluxcasters, Collectors, bomb). The mist shows only as a one-shot telegraph, not a lasting area.
 - **Not modelled:** `enemy_blord2_listener` (death below 0% HP) only matters against effects that keep an operator alive below 0 HP.
