@@ -725,6 +725,8 @@ export const ENEMY_FEATURES = Object.freeze({
     covers: r => sig(r, 'Boom', ['atk_scale']) && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'),
     ability: { kind: 'causticSlug', params: r => ({ scale: r.talents.bb['Boom.atk_scale'] }) },
     note: 'death blast plus pollution', explains: /^Upon death, deals Physical damage in an area and causes Originium pollution\.$/,
+    // 14-12 adverse names a stronger blast (5): the blast's scale is the only number its kit reads.
+    stageOverrides: { 'Boom.atk_scale': v => Number.isFinite(v) && v > 0 && v <= 10 },
   },
   'ability:Death deals Physical damage and <$ba.dt.erosion>Corrosion damage</> to surrounding units': {
     covers: r => sig(r, 'Boom', ['atk_scale', 'ep_damage_ratio']) && sig(r, 'Bleed', ['hp_ratio']),

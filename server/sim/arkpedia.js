@@ -330,6 +330,7 @@ export class StandardBattle extends Battle {
     this.stageBombLoaders = deviceRuntime.create('bombLoaders', this, data.stage);
     this.stageBloodAltars = deviceRuntime.create('bloodAltars', this, data.stage);
     this.stageBloodThrone = deviceRuntime.create('bloodThrone', this, data.stage);
+    this.stageLightOfGlory = deviceRuntime.create('lightOfGlory', this, data.stage);
     this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
     this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
     this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);
@@ -394,6 +395,7 @@ export class StandardBattle extends Battle {
       return;
     }
     if (this.stageRewardDevices?.activate(key)) return;
+    if (this.stageLightOfGlory?.activate(key)) return;
     // A hidden supply card: its stock arrives once, when the wave action reveals it (TR-8's crates).
     const supply = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === key && t.hiddenCount > 0);
     if (supply) { if (!this.revealedStageCards?.has(key)) { (this.revealedStageCards ??= new Set()).add(key); this.grantStageToken(key, supply.hiddenCount); } return; }

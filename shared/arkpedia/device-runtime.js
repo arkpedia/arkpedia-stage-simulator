@@ -52,6 +52,7 @@ export const shieldguardDefinition = single('shieldguardDefinition');
 export const bloodAltarDefinition = single('bloodAltarDefinition');
 export const bombLoaderDefinition = single('bombLoaderDefinition');
 export const bloodThroneDefinition = single('bloodThroneDefinition');
+export const lightOfGloryDefinition = single('lightOfGloryDefinition');
 export const magicCircuitDefinition = (instance, id = 'trap_062_magicstart') => compiledDeviceDefinition('magicCircuitDefinition', id, instance);
 export const electricCoilDefinition = instance => compiledDeviceDefinition('electricCoilDefinition', '', instance && {
   ...instance, elite: instance.elite ?? 0, potential: instance.potential ?? 0, skill_index: instance.skill_index ?? 0,

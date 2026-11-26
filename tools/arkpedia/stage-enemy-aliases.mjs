@@ -39,7 +39,7 @@ export function compileStageEnemyAlias(ref, records, support) {
   const featureAlias = !!contract && support.enemies[base]?.policy === 'stats-attacks-and-features';
   if (!original || !featureAlias && support.enemies[base]?.policy !== 'basic-stats-and-attacks')
     throw Error(`Stage-local enemy requires a reviewed prefab alias contract: ${base || ref.id}`);
-  if (data.skills?.length || !featureAlias && data.talentBlackboard?.length || data.spData?.maxSp > 0 || data.spData?.initSp > 0)
+  if (data.skills?.length || (!featureAlias || contract.inheritTalents) && data.talentBlackboard?.length || data.spData?.maxSp > 0 || data.spData?.initSp > 0)
     throw Error('Stage-local enemy has unimplemented skills or talents');
   if (data.numOfExtraDrops?.m_defined && data.numOfExtraDrops.m_value !== 0
     || data.viewRadius?.m_defined && ![-1, 0].includes(data.viewRadius.m_value))
@@ -49,7 +49,9 @@ export function compileStageEnemyAlias(ref, records, support) {
   if (featureAlias) {
     const bb = data.talentBlackboard ?? [];
     const expected = Object.keys(contract.numbers).length + Object.keys(contract.strings).length;
-    if (bb.length !== expected || new Set(bb.map(p => p.key)).size !== expected) throw Error('Missing or duplicate feature alias parameters');
+    // An undefined talent blackboard keeps the prefab's own (contracts that allow it).
+    if (contract.inheritTalents) record.talents = structuredClone(original.talents);
+    else if (bb.length !== expected || new Set(bb.map(p => p.key)).size !== expected) throw Error('Missing or duplicate feature alias parameters');
     // Motion lives on the native prefab when a full stage-local definition
     // omits it. HP/DEF/RES and reward parameters still come from that definition.
     if (!data.motion?.m_defined) record.stats.motion = original.stats.motion;

@@ -26,13 +26,19 @@ export const FEATURE_ALIAS_CONTRACTS = Object.freeze({
   enemy_1106_byokai: { abilities: [...prefix, CHEERING_DESCRIPTION], native: cheeringDrone,
     numbers: { 'buff.duration': n => [20, 60].includes(n), 'buff.attack_speed': n => n === 100, 'buff.def': n => n === .5 },
     strings: {}, groups: { buff: 'attack_speed,def,duration' }, inactiveSpRecovery: 1, validate: r => r.stats.immunities?.silence === true },
+  // Caustic Originium Slug (14-12's 600-HP variant): a stage definition that leaves its talent blackboard undefined keeps
+  // the prefab's own (PRTS lists the variant as the same enemy with only its HP changed). Walking, melee, block 1.
+  enemy_1424_lrboom: { abilities: ['Upon death, deals Physical damage in an area and causes Originium pollution.',
+    'Increases the strength of an Active Originium Storm when consumed by it.'], native: () => true, inheritTalents: true,
+    numbers: { 'Boom.atk_scale': n => n === 3.5, 'DetectStorm.range_radius': n => n === .3 }, strings: {},
+    groups: { Boom: 'atk_scale', DetectStorm: 'range_radius' }, shape: { applyWay: 'MELEE', motion: 'WALK' } },
 });
 const keysMatch = (actual, expected) => actual && Object.keys(actual).sort().join() === Object.keys(expected).sort().join();
 export function isFeatureEnemyAlias(r, base, policy) {
   const contract = FEATURE_ALIAS_CONTRACTS[base];
   return !!contract && policy === 'stats-attacks-and-features' && identity(r, base)
     && (!contract.validate || contract.validate(r))
-    && r.applyWay === 'NONE' && r.stats.motion === 'FLY' && r.stats.blockCnt === 1
+    && r.applyWay === (contract.shape?.applyWay ?? 'NONE') && r.stats.motion === (contract.shape?.motion ?? 'FLY') && r.stats.blockCnt === 1
     && Array.isArray(r.abilities) && r.abilities.map(a => a.text).join('|') === contract.abilities.join('|')
     && keysMatch(r.talents?.bb, contract.numbers) && Object.entries(contract.numbers).every(([key, valid]) => valid(r.talents.bb[key]))
     && keysMatch(r.talents?.bbStr, contract.strings) && Object.entries(contract.strings).every(([key, valid]) => valid(r.talents.bbStr[key]))

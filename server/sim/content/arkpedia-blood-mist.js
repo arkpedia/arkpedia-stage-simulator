@@ -51,7 +51,7 @@ export class BloodMists {
     if (!validMist(p)) throw Error('Invalid Blood Mist parameters');
     const b = this.battle, m = { source, x, y, p, end: b.time + p.lifetime, hit: new Set(), affected: new Set() };
     this.mists.push(m); this.released++;
-    b.fx('telegraph', { x, y, r: p.radius, kind: 'bloodMist' });
+    b.fx('zone', { x, y, r: p.radius, dur: p.lifetime, kind: 'bloodMist' }); // drawn for its whole life
     this.sweep(m);
     return m;
   }

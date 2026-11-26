@@ -19,6 +19,7 @@ import { capturableDeviceNativeReviewed } from './stage-capturable-devices.js';
 import { shieldguardNativeReviewed } from './stage-shieldguard.js';
 import { bloodAltarNativeReviewed } from './stage-blood-altar.js';
 import { bloodThroneNativeReviewed } from './stage-blood-throne.js';
+import { lightOfGloryNativeReviewed } from './stage-light-of-glory.js';
 import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
@@ -137,6 +138,11 @@ export const STAGE_DEVICES = Object.freeze({
     // arkpedia-stage-blood-throne.js).
     keys: Object.freeze(['trap_127_bldore']), staticLevelReview: true, bloodThrone: true, maxLevel: 30,
   }),
+  'Light of Glory': Object.freeze({
+    // PRTS 振奋荣光 (14-10, 14-12): an ally-side trap a wave action switches on; a circle spreading from it buffs operators,
+    // slows enemies and clears Originium pollution (stage-light-of-glory.js; runtime arkpedia-stage-light-of-glory.js).
+    keys: Object.freeze(['trap_164_lrsiege']), staticLevelReview: true, activatable: true, lightOfGlory: true, maxLevel: 30,
+  }),
   'Bomb Loading Point': Object.freeze({
     // PRTS 炸弹载荷点 (chapter 13): spend 10 DP to send an Anti-Witchcraft bomb along its own branch route, one at a time
     // (stage-bomb-loader.js; runtime arkpedia-stage-bomb-loaders.js).
@@ -180,6 +186,7 @@ export function stageDeviceSpec(device) {
     || spec.shieldguard && !shieldguardNativeReviewed()
     || spec.bloodAltar && !bloodAltarNativeReviewed()
     || spec.bloodThrone && !bloodThroneNativeReviewed()
+    || spec.lightOfGlory && !lightOfGloryNativeReviewed()
     || spec.bombLoader && !bombLoaderNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;
