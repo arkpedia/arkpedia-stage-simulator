@@ -21,6 +21,7 @@ export const DEVICE_RUNTIME_INDEX=Object.freeze([
     create:(m,b,stage)=>new m.StageBloodThrone(b,devices(stage),stage.geometry,stage)},
   {...ordinary('lightOfGlory','lightOfGlory','StageLightOfGlory',()=>import('./arkpedia-stage-light-of-glory.js')),
     create:(m,b,stage)=>new m.StageLightOfGlory(b,devices(stage),stage.geometry,stage)},
+  ordinary('charlesLynch','charlesLynch','StageCharlesLynch',()=>import('./arkpedia-stage-charles-lynch.js')),
   ordinary('magicCircuit','magicCircuit','StageMagicCircuit',()=>import('./arkpedia-stage-magic-circuit.js')),
   ordinary('flow','flowGenerator','StageFlowGenerators',()=>import('./arkpedia-stage-flow-generators.js')),
   ordinary('gramophones','gramophone','StageGramophones',()=>import('./arkpedia-stage-gramophones.js')),

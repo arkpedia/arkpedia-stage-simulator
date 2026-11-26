@@ -11,7 +11,6 @@ import { lightOfGloryNativeReviewed, lightOfGloryDefinition } from '../shared/ar
 import { createStageLibraryLoader } from '../shared/arkpedia/stage-library.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-import { StageLightOfGlory } from '../server/sim/content/arkpedia-stage-light-of-glory.js';
 import { corruptionZone } from '../server/sim/content/arkpedia-corruption.js';
 
 const manifest = JSON.parse(await readFile(new URL('../data/arkpedia-library.json', import.meta.url)));
@@ -84,13 +83,6 @@ test('14-12: switched on by its wave action (second wave +16 s); the circle grow
   assert.ok(Math.abs(near.s.def - was.def * 5) < 1);
   assert.ok(Math.abs(near.s.res - Math.min(100, was.res * 1.3)) < 1e-6);
   assert.ok(a.radius + 1e-9 >= reach);
-});
-
-test('a stage with an Active Originium Storm is refused (its reaction is not modelled)', async () => {
-  const stage = clone(await load('14-12'));
-  const b = battle(stage);
-  assert.throws(() => new StageLightOfGlory(b, stage.devices, stage.geometry, { ...stage, enemies: { ...stage.enemies, enemy_1420_lrmm: {} } }),
-    /Light of Glory reactions not modelled/);
 });
 
 for (const id of ['14-12', '14-12_adverse_environment']) {

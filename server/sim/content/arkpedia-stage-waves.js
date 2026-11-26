@@ -40,7 +40,7 @@ export class StageWaveScheduler {
       }
       for (const action of fragment.activations ?? []) for (let i = 0; i < action.count; i++) {
         const pending = { time: Infinity, seq: ++battle._spawnSeq, stageOrder: action.order,
-          execute: () => battle.activateStagePredefined(action.key) };
+          execute: () => action.withdraw ? battle.withdrawStagePredefined(action.key) : battle.activateStagePredefined(action.key) };
         battle._pending.push(pending); group.push({ pending, offset: action.offset + i * action.interval });
       }
       this.groups.set(`${wi}:${fi}`, group);

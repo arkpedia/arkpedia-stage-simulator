@@ -204,7 +204,10 @@ export class StandardBattle extends Battle {
       ...(squad.support ? [squad.support] : []),
     ];
     if (chosenBuilds.length > stageSquadLimit(data.stage)) throw Error(`This stage allows at most ${stageSquadLimit(data.stage)} operators, including support.`);
-    const builds = [...chosenBuilds, ...(predefined ?? []).filter(e => e.kind === 'actor').map(e => e.build)];
+    // A successor actor (14-10's `#2` entries) shares its predecessor's bench entry; its build is swapped in on activation.
+    const builds = [...chosenBuilds, ...(predefined ?? []).filter(e => e.kind === 'actor' && !e.successorOf).map(e => e.build)];
+    const successorBuilds = (predefined ?? []).filter(e => e.successorOf).map(e => e.build);
+    if (successorBuilds.some(b => !builds.some(x => x.id === b.id))) throw Error('Predefined successor without its operator');
     operatorRuntime?.assertPrepared(builds.map(build => build.id));
     const services = operatorServicesFor(builds.map(build => build.id), operatorRuntime);
     const excluded = excludedStageOperators(data.stage, data.operators);
@@ -217,18 +220,23 @@ export class StandardBattle extends Battle {
       builds.map((b) => [b.id, recordFor(b, data)]),
     );
     // Compile and validate before the battle starts or any DP/SP is spent.
-    const behaviors = new Map();
-    for (const build of builds) {
+    const behaviorFor = (build, record) => {
       const support = REGULAR_OPERATORS[build.id];
-      if (!support.templateKey) continue;
+      if (!support.templateKey) return null;
       const level = data.operators[build.id].skills.find(skill => skill.id === build.skillId)?.levels[build.skillRank - 1];
       if (level.prefabId !== support.prefabId)
         throw Error(`Unsupported regular-stage skill prefab: ${level.prefabId}`);
       const program = compileBuffTemplate(data.behaviors?.templates?.[support.templateKey]);
       if (program.key !== support.templateKey) throw Error('Behaviour template key mismatch');
-      program.validateBlackboard(chess[build.id].skill.bb);
-      behaviors.set(build.id, program);
-    }
+      program.validateBlackboard(record.skill.bb);
+      return program;
+    };
+    const behaviors = new Map();
+    for (const build of builds) { const program = behaviorFor(build, chess[build.id]); if (program) behaviors.set(build.id, program); }
+    const successors = new Map((predefined ?? []).filter(e => e.successorOf).map(e => {
+      const record = recordFor(e.build, data);
+      return [e.key, { record, behavior: behaviorFor(e.build, record) }];
+    }));
     const stageInitialCosts = new Map(Object.entries(chess).map(([id, record]) => [id, record.baseCardStats?.cost ?? record.stats.cost]));
     const startingVanguardDp = services.prepareFiveStarVanguardSquad(chess);
     services.prepareFiveStarSniperSquad(chess);
@@ -268,6 +276,7 @@ export class StandardBattle extends Battle {
     this.stageCardRules = data.stage.rules;
     this.stageGroundRoutes = data.stage.geometry.routes;
     this.stageInitialCosts = stageInitialCosts;
+    this.stageChessRecords = chess; // squad services read these records
     this.regularReviewCandidates = Object.freeze([...(data.reviewCandidates ?? [])]);
     this.life = config.max_life;
     this.regularModels = data.sd?.models ?? {};
@@ -331,6 +340,7 @@ export class StandardBattle extends Battle {
     this.stageBloodAltars = deviceRuntime.create('bloodAltars', this, data.stage);
     this.stageBloodThrone = deviceRuntime.create('bloodThrone', this, data.stage);
     this.stageLightOfGlory = deviceRuntime.create('lightOfGlory', this, data.stage);
+    this.stageCharlesLynch = deviceRuntime.create('charlesLynch', this, data.stage);
     this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
     this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
     this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);
@@ -356,9 +366,10 @@ export class StandardBattle extends Battle {
     services.installShuRoster({ battle: this, records: chess });
     services.installMarcilSquad(this);
     services.installPublicMuelsyseSquad(this);
-    this.stagePredefined = new Map((predefined ?? []).map(e => [e.key, { ...e, activated: false }]));
-    for (const entry of this.stagePredefined.values()) Object.assign(this.bench[entry.build.id], {
-      hidden: entry.kind === 'actor' || entry.hidden, noCard: entry.kind === 'actor', disableSkill: !!entry.disableSkill,
+    this.stagePredefined = new Map((predefined ?? []).map(e => [e.key, { ...e, activated: false, ...(e.successorOf ? successors.get(e.key) : {}) }]));
+    // A deck-card actor (14-10's rune) keeps an ordinary card: once it leaves the field it can be redeployed for DP.
+    for (const entry of this.stagePredefined.values()) if (!entry.successorOf) Object.assign(this.bench[entry.build.id], {
+      hidden: entry.kind === 'actor' || entry.hidden, noCard: entry.kind === 'actor' && !entry.deckCard, disableSkill: !!entry.disableSkill,
     });
     for (const entry of this.stagePredefined.values()) if (entry.kind === 'actor' && !entry.hidden) this.activateStagePredefined(entry.key);
     if (data.stage.waveProgram) this.stageWaveScheduler = new StageWaveScheduler(this, data.stage.waveProgram);
@@ -396,6 +407,7 @@ export class StandardBattle extends Battle {
     }
     if (this.stageRewardDevices?.activate(key)) return;
     if (this.stageLightOfGlory?.activate(key)) return;
+    if (this.stageCharlesLynch?.activate(key)) return;
     // A hidden supply card: its stock arrives once, when the wave action reveals it (TR-8's crates).
     const supply = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === key && t.hiddenCount > 0);
     if (supply) { if (!this.revealedStageCards?.has(key)) { (this.revealedStageCards ??= new Set()).add(key); this.grantStageToken(key, supply.hiddenCount); } return; }
@@ -417,9 +429,34 @@ export class StandardBattle extends Battle {
     const entry = this.stagePredefined.get(key);
     if (!entry) throw Error(`Unknown predefined operator: ${key}`);
     if (entry.activated) return;
+    if (entry.successorOf) return this._succeedStagePredefined(entry);
     const card = this.bench[entry.build.id];
     if (entry.kind === 'actor') this._deployOperator(entry.build.id, entry.row, entry.col, entry.direction, { fromSkill: true, predefined: true });
     card.hidden = false; entry.activated = true;
+  }
+  /** A successor actor: its predecessor leaves the field (no refund) and the operator is redeployed with the
+   * successor's build on its own tile. If that tile is held by another unit, the build is still swapped and the card
+   * is left ready, for the player to place [simulator choice]. */
+  _succeedStagePredefined(entry) {
+    const id = entry.build.id, card = this.bench[id];
+    entry.activated = true;
+    if (card.unit?.alive) this.retreat(card.unit, { reason: 'withdraw', permanent: true });
+    this.data.raw.chess[id] = entry.record; this.stageChessRecords[id] = entry.record;
+    this.data._chess.clear();
+    if (entry.behavior) this.behaviors.set(id, entry.behavior);
+    this.stageInitialCosts.set(id, entry.record.baseCardStats?.cost ?? entry.record.stats.cost);
+    Object.assign(card, { build: entry.build, hidden: false, disableSkill: !!entry.disableSkill, readyAt: this.time });
+    const predecessor = this.stagePredefined.get(entry.successorOf);
+    if (predecessor) predecessor.superseded = true;
+    if (this._placementError(id, entry.row, entry.col, { fromSkill: true, predefined: true })) return;
+    this._deployOperator(id, entry.row, entry.col, entry.direction, { fromSkill: true, predefined: true });
+  }
+  /** WITHDRAW_PREDEFINED (14-10): the script retreats a preset operator; no DP is refunded. */
+  withdrawStagePredefined(key) {
+    const entry = this.stagePredefined.get(key);
+    if (!entry || entry.kind !== 'actor') throw Error(`Unknown predefined operator: ${key}`);
+    const unit = this.bench[entry.build.id]?.unit;
+    if (entry.activated && !entry.superseded && unit?.alive) this.retreat(unit, { reason: 'withdraw', permanent: true });
   }
   get dp() {
     return this.getPlayer("arkpedia").dp;

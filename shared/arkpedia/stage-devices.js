@@ -20,6 +20,7 @@ import { shieldguardNativeReviewed } from './stage-shieldguard.js';
 import { bloodAltarNativeReviewed } from './stage-blood-altar.js';
 import { bloodThroneNativeReviewed } from './stage-blood-throne.js';
 import { lightOfGloryNativeReviewed } from './stage-light-of-glory.js';
+import { charlesLynchNativeReviewed } from './stage-charles-lynch.js';
 import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
@@ -143,6 +144,11 @@ export const STAGE_DEVICES = Object.freeze({
     // slows enemies and clears Originium pollution (stage-light-of-glory.js; runtime arkpedia-stage-light-of-glory.js).
     keys: Object.freeze(['trap_164_lrsiege']), staticLevelReview: true, activatable: true, lightOfGlory: true, maxLevel: 30,
   }),
+  'Charles Lynch': Object.freeze({
+    // PRTS 查尔斯·林奇 (14-10): an ally-side blocker a wave action deploys; it bombards the 3x3 area two tiles ahead
+    // (stage-charles-lynch.js; runtime arkpedia-stage-charles-lynch.js).
+    keys: Object.freeze(['trap_158_lrsteam']), staticLevelReview: true, activatable: true, charlesLynch: true, maxLevel: 30,
+  }),
   'Bomb Loading Point': Object.freeze({
     // PRTS 炸弹载荷点 (chapter 13): spend 10 DP to send an Anti-Witchcraft bomb along its own branch route, one at a time
     // (stage-bomb-loader.js; runtime arkpedia-stage-bomb-loaders.js).
@@ -187,6 +193,7 @@ export function stageDeviceSpec(device) {
     || spec.bloodAltar && !bloodAltarNativeReviewed()
     || spec.bloodThrone && !bloodThroneNativeReviewed()
     || spec.lightOfGlory && !lightOfGloryNativeReviewed()
+    || spec.charlesLynch && !charlesLynchNativeReviewed()
     || spec.bombLoader && !bombLoaderNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;

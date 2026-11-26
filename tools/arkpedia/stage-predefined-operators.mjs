@@ -43,11 +43,15 @@ export function compilePredefinedOperators(level, geometry, operators, rules = {
   if (!operators) throw Error('Missing predefined operator records');
   if (!cards.length && typeof level.options?.isTrainingLevel !== 'boolean') throw Error('Unknown predefined squad mode');
   const squadMode = cards.length || level.options?.isTrainingLevel ? 'fixed' : 'player';
-  const catalogue = catalogueFor({ operators }), ids = new Set(), keys = new Set();
+  const catalogue = catalogueFor({ operators }), ids = new Map(), keys = new Set();
   const entries = [...cards.map(p => ({ kind: 'card', p })), ...actors.map(p => ({ kind: 'actor', p }))].map(({ kind, p }) => {
     const raw = p.inst, id = raw?.characterKey, key = p.alias || id, op = operators[id];
-    if (!op || ids.has(id) || keys.has(key)) throw Error(`Unknown or duplicate predefined operator: ${id}`);
-    ids.add(id); keys.add(key);
+    // A later hidden actor of an operator already preset (14-10's `#2` entries) is that operator redeployed with its
+    // own build: it replaces its predecessor when its wave action activates it (one bench entry per operator).
+    const prior = ids.get(id);
+    const successor = prior && kind === 'actor' && prior.kind === 'actor' && p.hidden === true && activated.has(key);
+    if (!op || (prior && !successor) || keys.has(key)) throw Error(`Unknown or duplicate predefined operator: ${id}`);
+    ids.set(id, { kind, key }); keys.add(key);
     if (typeof p.hidden !== 'boolean' || p.uniEquipIds?.length || p.masterInfos?.length || p.tmplId
       || p.overrideSkillBlackboard != null || p.overrideTalents != null)
       throw Error(`Unsupported predefined operator override: ${id}`);
@@ -64,7 +68,8 @@ export function compilePredefinedOperators(level, geometry, operators, rules = {
       || p.position.row < 0 || p.position.row >= geometry.rows || p.position.col < 0 || p.position.col >= geometry.cols))
       throw Error(`Invalid predefined operator position: ${id}`);
     return { key, kind, hidden: p.hidden, build, ...(disableSkill ? { disableSkill: true } : {}), ...(kind === 'actor' ? { row: p.position.row, col: p.position.col,
-      direction: originalDeviceDirection(p.direction) } : {}) };
+      direction: originalDeviceDirection(p.direction) } : {}), ...(successor ? { successorOf: prior.key } : {}),
+      ...(kind === 'actor' && rules?.predefinedDeckCards ? { deckCard: true } : {}) };
   });
   const exported = geometry.suppliedUnits?.fixed_squad ?? [];
   if (exported.length !== cards.length || entries.filter(e => e.kind === 'card').some(e => {

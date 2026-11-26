@@ -50,6 +50,7 @@ export const DEVICE_FAMILIES = {
   bombLoaderDefinition: { module: 'stage-bomb-loader', variants: keySet([''], { ...standard, direction }, ['branchId']) },
   bloodThroneDefinition: { module: 'stage-blood-throne', variants: keySet([''], { ...standard, direction }, ['branchId']) },
   lightOfGloryDefinition: { module: 'stage-light-of-glory', variants: keySet([''], { ...standard, direction }) },
+  charlesLynchDefinition: { module: 'stage-charles-lynch', variants: keySet([''], { level: [1], skillLevel: [1], direction }) },
 };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 

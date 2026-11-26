@@ -9,7 +9,7 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 
 const actionNames = { 0: 'SPAWN', 1: 'PREVIEW_CURSOR', 2: 'STORY', 4: 'PLAY_BGM', 5: 'DISPLAY_ENEMY_INFO', 6: 'ACTIVATE_PREDEFINED', 8: 'TRIGGER_PREDEFINED' };
-const presentation = new Set(['PREVIEW_CURSOR', 'STORY', 'PLAY_BGM', 'DISPLAY_ENEMY_INFO', 'PLAY_OPERA']);
+const presentation = new Set(['PREVIEW_CURSOR', 'STORY', 'PLAY_BGM', 'DISPLAY_ENEMY_INFO', 'PLAY_OPERA', 'DIALOG']);
 const near = (a, b) => Math.abs(a - b) <= 0.00101;
 const delay = value => {
   if (!Number.isFinite(value) || value < 0) throw Error('Invalid original wave delay');
@@ -128,6 +128,11 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
             throw Error(`Unsupported scheduled predefined target: ${action.key}`);
           (empty ? emptyChoices : activations).push({ key: action.key, offset, interval, count: action.count, order,
             ...(random ? { random: { group: random, weight: action.weight } } : {}) });
+        } else if (type === 'WITHDRAW_PREDEFINED') {
+          // 14-10: a preset operator is retreated by the script (no refund; the successor that follows redeploys it).
+          if (random || action.count !== 1 || !predefined?.entries.some(e => e.key === action.key && e.kind === 'actor'))
+            throw Error(`Unsupported scheduled withdrawal: ${action.key}`);
+          activations.push({ key: action.key, offset, interval, count: 1, order, withdraw: true });
         } else if (type !== 'SPAWN' && !presentation.has(type)) throw Error(`Unsupported scheduled action: ${type}`);
         actionCount += action.count;
         duration = Math.max(duration, span);

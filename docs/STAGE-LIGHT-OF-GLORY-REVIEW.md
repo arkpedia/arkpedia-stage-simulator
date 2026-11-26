@@ -4,9 +4,7 @@ Light of Glory `trap_164_lrsiege` (PRTS 振奋荣光) is an ally-side trap that 
 
 This batch publishes 14-12 and 14-12 adverse (1,175 available; main story 444 of 564).
 
-**Still blocked**
-- **14-10:** the `level_deck_cards_enable` rune and the Charles Lynch device.
-- **Stages with an Active Originium Storm and Light of Glory:** refused, because the device's storm talent is not modelled.
+14-10 (and the storm talent below) followed in the next batch; see `docs/STAGE-14-10-REVIEW.md`.
 
 ## Native evidence
 
@@ -34,7 +32,11 @@ This batch publishes 14-12 and 14-12 adverse (1,175 available; main story 444 of
 - **Radius:** `range_radius` (0.5) plus the summed steps, at most `max_radius` (20).
 - **Rate:** about 0.67 tiles per second once the step is at its cap. The radius reaches 20 about 31 s after activation.
 
-**Talent `1`** acts on an Active Originium Storm (`enemy_bigstorm[passive]`). It is not modelled (`LIGHT_OF_GLORY_UNMODELLED`).
+**Talent `1`** (`trap_lrsiege[eliminate_storm]`; added with 14-10)
+- **Who:** any enemy carrying `enemy_bigstorm[passive]` (an Active Originium Storm). The ability has no range collider, so it reaches the storm anywhere; it checks every 0.1 s.
+- **Delay:** the buff lasts `predelay` (7) s; when it ends, the storm gets `trap_lrsiege[eliminate_storm][core]` for life.
+- **Core** (every 0.03 s): the storm's growth stops. Its step starts at `radius_decrease_per_tick` (−0.0082) and gains `radius_decrease_addon_per_tick` (−0.002) each tick, down to `max_radius_decrease_per_tick` (−0.012); the steps add to the storm's radius. When the radius before the tick plus −0.0082 is below `radius_floor` (0.5), the storm is killed outright (`InstantKill`), invulnerable or not.
+- **Rate:** 0.4 tiles per second once the step is at its cap.
 
 **The slug alias** (`shared/arkpedia/enemy-aliases.js`)
 - 14-12's `enemy_1424_lrboom_3` is a stage definition with 600 HP and no talent blackboard.
@@ -47,6 +49,7 @@ This batch publishes 14-12 and 14-12 adverse (1,175 available; main story 444 of
 `server/sim/content/arkpedia-stage-light-of-glory.js` (family `lightOfGlory`, device-runtime index; `activateStagePredefined` calls `activate(alias)`):
 - **Activation:** hidden until its scheduled action. On activation it places its body (invulnerable, untargetable) and starts the step.
 - **Every tick:** the circle grows as reviewed. Operators inside share one aura buff (`atkPct` 3, `defPct` 4, `resPct` 0.3, `hpRegen` 300); enemies inside get `moveFlat` −0.1.
+- **Storms:** every storm it finds gets the core 7 s later; the shrink runs on its own 0.03 s clock (several ticks can fall in one battle step).
 - **Every 1 s:** the stage's pollution tiles inside are cleared, and so are transient pollution zones whose centre is inside. The simulator draws a slug's death pollution as a zone, not as tiles. The circle is drawn as a zone effect.
 
 ## Checked
@@ -64,7 +67,7 @@ This batch publishes 14-12 and 14-12 adverse (1,175 available; main story 444 of
   - The radius follows the reviewed growth.
   - An enemy inside is slowed, and a pollution zone inside is cleared.
   - The nearest story operator gets ATK ×4, DEF ×5 and RES ×1.3 once inside.
-- **Refused:** a stage with an Active Originium Storm.
+- **The storm:** see `test/arkpedia-charles-lynch.test.js` (14-10).
 - **Headless clears:** 14-12 and 14-12 adverse.
 
 ## Not checked
@@ -75,4 +78,6 @@ This batch publishes 14-12 and 14-12 adverse (1,175 available; main story 444 of
   - **Profession mask 767** is read as every profession but TRAP.
   - **Clearing pollution zones:** the slug's pollution is a zone in this simulator, so clearing removes zones whose centre lies inside.
   - **The alias:** an undefined talent blackboard keeps the prefab's, per PRTS's listing.
-- **Not modelled:** PRTS's stage note also lists "damage taken −30%". No reviewed modifier gives it, so it is not applied.
+- **Not modelled:**
+  - PRTS's stage notes also list "damage taken" −30% (14-12) and −90% (14-10). No reviewed modifier gives it, so it is not applied.
+  - PRTS says the storm's intensity falls by 1 per second. The data shrinks only its radius (0.4 tiles/s, about one 0.35-tile intensity step per second); its damage is left as it was.

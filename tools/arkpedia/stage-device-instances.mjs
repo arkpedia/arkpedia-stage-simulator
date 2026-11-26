@@ -113,7 +113,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       && (!stageDeviceSpec(d)?.guard || p.alias === d.alias));
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory || spec.charlesLynch;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -150,7 +150,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       ...(altar?.branchMissing ? { branchMissing: true } : {}),
       ...(altar?.shadowedBranchIds.length ? { shadowedBranchIds: altar.shadowedBranchIds } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
-      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory ? { direction: originalDeviceDirection(p.direction) } : {}),
+      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory || spec.charlesLynch ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };
   }
   for (const p of all) if (reviewed.some(d => d.key === p.inst?.characterKey)

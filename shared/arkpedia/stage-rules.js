@@ -47,7 +47,7 @@ export function compileStageRules(source, receipt) {
   const reedTileParameters = {}, reedIgnitions = [];
   let enemySkillCooldownScale = 1;
   let deploymentExcludedProfessionMask = 0;
-  let excludePredefinedTraps = false;
+  let excludePredefinedTraps = false, predefinedDeckCards = false;
   const battle = {}, enemies = {}, enemyAdd = {}, hiddenGroups = {}, enemyScoped = {}, tokenCountAdd = {}, enemyTalentScoped = {}, enemySkillRadiusScoped = {};
   if (receipt.options != null) {
     if (Object.keys(receipt.options).join() !== 'maxPlayTime' || !Number.isFinite(receipt.options.maxPlayTime)
@@ -77,6 +77,13 @@ export function compileStageRules(source, receipt) {
       const values = compileReedTileRule(rune);
       if (Object.keys(values).some(id => Object.hasOwn(reedTileParameters, id))) throw Error('Overlapping Reeds tile rules');
       Object.assign(reedTileParameters, values); continue;
+    }
+    // 14-10 (a training level): the deck is shown, so its preset operators keep deployment cards
+    // (stage-predefined-operators.mjs). Read from the key alone [inference]: no other stage uses it.
+    if (rune.key === 'level_deck_cards_enable') {
+      if (rune.blackboard?.length || cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) !== 1023 || !['ALL', 3].includes(rune.buildableMask))
+        throw Error('Unsupported deck-card rune targeting');
+      predefinedDeckCards = true; continue;
     }
     if (rune.key === 'env_system_new') {
       const keys = (rune.blackboard ?? []).filter(entry => entry.key === 'key');
@@ -449,6 +456,7 @@ export function compileStageRules(source, receipt) {
     ...(reedIgnitions.length ? { reedIgnitions } : {}),
     ...(deploymentExcludedProfessionMask ? { deploymentExcludedProfessionMask } : {}),
     ...(excludePredefinedTraps ? { excludePredefinedTraps } : {}),
+    ...(predefinedDeckCards ? { predefinedDeckCards } : {}),
     ...(enemySkillCooldownScale !== 1 ? { enemySkillCooldownScale } : {}),
     ...(Object.keys(predefinedDevices).length ? { predefinedDevices } : {}),
     ...(Object.keys(predefinedOperators).length ? { predefinedOperators } : {}),
