@@ -44,8 +44,9 @@ export const DEVICE_FAMILIES = {
     ...keySet(['trap_062_magicstart', 'trap_063_magicturn'], { ...standard, direction }), ...keySet(['trap_064_magiccircle']) } },
   predefinedMineDefinition: { module: 'stage-mines', variants: keySet(['']) },
   shieldguardDefinition: { module: 'stage-shieldguard', variants: keySet([''], { ...standard, direction }) },
-  // `pilotBranchId?`: an optional binding (only Altars on Commander Ulšulah stages name one).
-  bloodAltarDefinition: { module: 'stage-blood-altar', variants: keySet([''], { ...standard, direction }, ['branchId', 'pilotBranchId?']) },
+  // Optional bindings: `pilotBranchId?` (Altars on Commander Ulšulah stages) and `outsetAlias?` (an Altar whose
+  // destruction reveals a hidden Loading Point).
+  bloodAltarDefinition: { module: 'stage-blood-altar', variants: keySet([''], { ...standard, direction }, ['branchId', 'pilotBranchId?', 'outsetAlias?']) },
   bombLoaderDefinition: { module: 'stage-bomb-loader', variants: keySet([''], { ...standard, direction }, ['branchId']) },
 };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -65,7 +66,7 @@ export async function buildDeviceRuntime() {
       const build = (depth, instance) => {
         if (depth === fields.length) {
           const names = bindings.map(key => key.replace(/\?$/, ''));
-          const bound = { ...instance, ...Object.fromEntries(names.map(key => [key, /[bB]ranchId$/.test(key) ? 'runtime-binding' : 0])) };
+          const bound = { ...instance, ...Object.fromEntries(names.map(key => [key, /(?:[bB]ranchId|Alias)$/.test(key) ? 'runtime-binding' : 0])) };
           const result = family.keyed ? factory(id, bound) : family.keyLast ? factory(bound, id) : factory(bound);
           for (const key of names) {
             if (result[key] !== bound[key]) throw Error(`Device compiler lost ${name}.${key}`);

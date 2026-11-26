@@ -10,7 +10,7 @@
 // another random Altar for a fresh 20 s. A marked Altar takes no second mark (one stack, no refresh). Neither the
 // pending return nor the Amber clock holds the battle; the bodies they summon do.
 import { bloodAltarDefinition, stageDeviceSpec } from '../../../shared/arkpedia/device-runtime.js';
-import { BLOOD_AMBER, BLOOD_ALTAR_PILOT, BLOOD_ALTAR_UNMODELLED } from '../../../shared/arkpedia/stage-blood-altar.js';
+import { BLOOD_AMBER, BLOOD_ALTAR_BRANCH_USERS, BLOOD_ALTAR_PILOT, BLOOD_ALTAR_UNMODELLED } from '../../../shared/arkpedia/stage-blood-altar.js';
 import { dirVec } from '../dir.js';
 
 const MAX_STACK = 10; // trap_bonore_branch[dfello] maxStackCnt
@@ -25,10 +25,14 @@ export class StageBloodAltars {
     const unmodelled = Object.keys(stage?.enemies ?? {}).filter(k => BLOOD_ALTAR_UNMODELLED.includes(k));
     if (altars.length && unmodelled.length) throw Error(`Bloodcalling Altar reactions not modelled: ${unmodelled.join(', ')}`);
     const piloted = Object.hasOwn(stage?.enemies ?? {}, BLOOD_ALTAR_PILOT);
+    const carriers = Object.keys(stage?.enemies ?? {}).filter(k => BLOOD_ALTAR_BRANCH_USERS.includes(k));
     for (const d of altars) {
       if (d.hidden) throw Error('Hidden Bloodcalling Altar requires an activation controller');
       const spec = bloodAltarDefinition(d.instance);
-      if (!b.stageBranches?.branches[spec.branchId]) throw Error(`Missing Bloodcalling Altar branch program: ${spec.branchId}`);
+      // 13-19's Altars name branches the level lacks: accepted only where nothing can carry a mark that runs one.
+      if (!b.stageBranches?.branches[spec.branchId] && (!b.stageBranches || carriers.length))
+        throw Error(`Missing Bloodcalling Altar branch program: ${spec.branchId}`);
+      if (spec.outsetAlias && !b.stageBombLoaders?.hidden?.has(spec.outsetAlias)) throw Error(`Missing hidden Loading Point: ${spec.outsetAlias}`);
       if (piloted && !b.stageBranches.branches[spec.pilotBranchId]) throw Error(`Missing Bloodcalling Altar pilot branch: ${spec.pilotBranchId}`);
       const unit = b.spawnDevice(d.key, d.row, d.col, { name: d.name, hp: spec.hp, def: spec.def, res: spec.res, blockCnt: 0, dir: spec.direction });
       if (!unit) throw Error(`Occupied Bloodcalling Altar tile: ${d.row},${d.col}`);
@@ -121,7 +125,8 @@ export class StageBloodAltars {
     if (p.age + 1e-9 >= s.lifetime) a.pulse = null;
   }
   /** The bomb's Explosion (trap_bonore_kill[bmbcar] -> ActiveOutset): the Altar dies and pulses no more. Its
-   * ActivePredifinedInst names no alias on any reviewed stage, so it activates nothing. */
+   * ActivePredifinedInst activates the instance its `ActiveOutset.alias` names: a hidden Loading Point (13-11, 13-15,
+   * 13-16); without one it activates nothing. */
   destroy(a) {
     if (!a?.unit.alive) return;
     a.pulse = null; a.destroyed = true;
@@ -130,6 +135,9 @@ export class StageBloodAltars {
     if (pending) this.markPilotReturn(pending.delay, a);
     this.battle.removeBuff(a.unit, 'stage:bloodAltar');
     this.battle.kill(a.unit, null);
+    // trap_bonore_active_outset: ActivePredifinedInst (its `ActiveOutset.alias`), then InstantKill. The Loading Point
+    // stands on the Altar's own tile, so it is placed once the Altar is gone, in the same instant.
+    if (a.spec.outsetAlias) a.outset = this.battle.stageBombLoaders.reveal(a.spec.outsetAlias);
   }
   convert(a, hits) {
     const b = this.battle;
@@ -139,6 +147,7 @@ export class StageBloodAltars {
       // A drifting Boneguard (enemy_spnwiz_ghost_mark) takes the other branch: trap_bonore_spnwiz_revive[trigger]
       // finishes its ghost mark, which revives it (enemy-boneguard runtime), and its mark finishes; no phase runs.
       if (isGhost(e)) { e.mem.boneguardRevive = true; continue; }
+      if (!b.stageBranches.branches[a.spec.branchId]) throw Error(`Bloodcalling Altar pulse needs a missing branch: ${a.spec.branchId}`);
       const n = Math.min(MAX_STACK, this.marks(e));
       if (isAmber(e)) b.kill(e, null); else e.mem.bonoreMarks = 0;
       for (let i = 0; i < n; i++) {

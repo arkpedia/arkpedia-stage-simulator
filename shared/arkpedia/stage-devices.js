@@ -152,7 +152,9 @@ export function stageDeviceSpec(device) {
   // A hidden Turret or Ice Crystal is accepted only when an activation branch switches it on (Faust's ballistae).
   if (!spec || spec.keys && !spec.keys.includes(device.key) || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
     && !((spec.turret || spec.statusPulse || spec.flame || spec.guard) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
-      || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string')
+      || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string'
+      // A Loading Point a Bloodcalling Altar's ActiveOutset reveals on the Altar's tile.
+      || spec.bombLoader && device.hidden === true && device.altarActivated === true && typeof device.alias === 'string')
     || spec.carapace && !carapaceNativeReviewed()
     || spec.twigs && !twigsNativeReviewed()
     || spec.powerArmor && !powerArmorDeviceNativeReviewed(device.key)

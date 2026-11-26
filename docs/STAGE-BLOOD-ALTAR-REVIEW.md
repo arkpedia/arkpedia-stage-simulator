@@ -44,7 +44,7 @@ Not modelled, because none of these appear in 13-12:
 - the bomb-cart kill within radius 1;
 - the Boneguard Fluxcaster switches (built since; `docs/ENEMY-BONEGUARD-REVIEW.md`);
 - the pilot summon (built since; `docs/ENEMY-PILOT-REVIEW.md`);
-- `ActiveOutset` (its forced exit when a bomb is detonated on it).
+- `ActiveOutset` (its forced exit when a bomb is detonated on it; built since, see Instance shapes below).
 
 ## Runtime
 
@@ -60,6 +60,29 @@ Not modelled, because none of these appear in 13-12:
 **Expiry:** a pulse that leaves the map or reaches 10 s ends with nothing.
 
 Instances compile through `bloodAltarDefinition`, whose device-runtime family binds each instance's `branchId`. `stage-branches.mjs` now binds each Altar's branch the way it does for the Stagnant Contraption's.
+
+## Instance shapes (2026-11-26)
+
+`compileAltarBlackboard` (`tools/arkpedia/stage-device-instances.mjs`) accepts only these keys in an Altar's instance blackboard:
+- **`branch_id`:** required, and at most twice.
+  - **13-8 names two** (`bonore_dfello1`, then `bonore_dfello2`), both starting in front of the Altar and ending at different exits. Nothing reviewed says how the game resolves a repeated key; the last one is read as winning [inference]. The other branch is still bound and never runs.
+- **`SummonSpilot.branch_id` and `talent@branch_id`:** Commander Ulšulah's keys (`docs/ENEMY-PILOT-REVIEW.md`).
+- **`ActiveOutset.alias`:** names exactly one hidden Bomb Loading Point on the Altar's own tile (13-11, 13-15 and 13-16).
+  - **The native chain (pinned):** the bomb's `trap_bonore_kill[bmbcar]` ends by triggering `ActiveOutset`; its `trap_bonore_active_outset` runs `ActivePredifinedInst` with an empty `_instAlias` (read from that blackboard key), then `InstantKill` on the Altar.
+  - **PRTS:** a Loading Point may appear in a set place when the Altar is forced out by a bomb.
+  - **Runtime:** `destroy()` kills the Altar, then `StageBombLoaders.reveal(alias)` places that Loading Point at 0 SP. The device runtime binds it as `outsetAlias?`, and Loading Points are built before Altars.
+
+**A branch the level lacks** (13-19's `bonore_dfello1` and `bonore_dfello2`) is accepted with no binding, only where no pulse can need it. Two checks refuse it otherwise:
+- **the inventory** refuses it on a stage with any record in `BLOOD_ALTAR_BRANCH_USERS` (Blood Amber, Bloodborn Spawn, Blood Collectors, the pilot);
+- **the runtime** refuses it in the same case, and a pulse that would need the missing branch throws.
+13-19 has only Fluxcasters, whose pulse reaction runs no branch.
+
+These shapes open 13-8, 13-11, 13-15, 13-16, 13-19, their adverse variants and H13-1 adverse (1,171 available; main story 440 of 564). They are tested in `test/arkpedia-blood-altar-instances.test.js`:
+- the pins refuse a fixed alias and an Altar that survives;
+- on 13-11 the Loading Point is revealed and sends a bomb;
+- on 13-8 the pulse runs the last branch's route;
+- on 13-19 the stage is refused once Amber is added;
+- six headless clears (the Altars are destroyed at 600 s, standing in for the bombs).
 
 ## Checked
 

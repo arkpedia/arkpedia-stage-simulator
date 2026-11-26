@@ -10,17 +10,33 @@ export class StageBombLoaders {
   constructor(b, devices, geometry, stage = null) {
     this.battle = b; this.entries = new Map();
     const loaders = devices.filter(d => stageDeviceSpec(d)?.bombLoader);
+    // A hidden one waits for the Bloodcalling Altar on its tile (ActiveOutset, reveal()).
+    this.hidden = new Map();
     for (const d of loaders) {
-      if (d.hidden) throw Error('Hidden Explosives Loading Point requires an activation controller');
-      const spec = bombLoaderDefinition(d.instance), id = `stage-device:${d.key}:${d.row}:${d.col}`;
+      if (d.hidden && !(d.altarActivated && typeof d.alias === 'string')) throw Error('Hidden Explosives Loading Point requires an activation controller');
+      const spec = bombLoaderDefinition(d.instance);
       if (!b.stageBranches?.branches[spec.branchId]) throw Error(`Missing Loading Point branch program: ${spec.branchId}`);
-      const unit = b.spawnDevice(d.key, d.row, d.col, { name: d.name, hp: 5000, blockCnt: 0, dir: spec.direction });
-      if (!unit) throw Error(`Occupied Explosives Loading Point tile: ${id}`);
-      unit.def.profession = 'TRAP'; unit.deploymentSlotCost = 0; unit.mem.stageDeviceId = id;
-      b.addBuff(unit, { key: 'stage:bombLoader', persist: true, flags: { invulnerable: true, untargetable: true, disarm: true, noMove: true } });
-      this.entries.set(id, { id, name: d.name, key: d.key, row: d.row, col: d.col, unit, spec, sp: spec.initSp, state: 'charging', bomb: null, sent: 0 });
+      if (d.hidden) { if (this.hidden.has(d.alias)) throw Error(`Duplicate hidden Loading Point: ${d.alias}`); this.hidden.set(d.alias, { d, spec }); continue; }
+      this.place(d, spec);
     }
-    if (this.entries.size) b.on('tick', ({ dt }) => this.tick(dt));
+    if (loaders.length) b.on('tick', ({ dt }) => this.tick(dt));
+  }
+  place(d, spec) {
+    const b = this.battle, id = `stage-device:${d.key}:${d.row}:${d.col}`;
+    const unit = b.spawnDevice(d.key, d.row, d.col, { name: d.name, hp: 5000, blockCnt: 0, dir: spec.direction });
+    if (!unit) throw Error(`Occupied Explosives Loading Point tile: ${id}`);
+    unit.def.profession = 'TRAP'; unit.deploymentSlotCost = 0; unit.mem.stageDeviceId = id;
+    b.addBuff(unit, { key: 'stage:bombLoader', persist: true, flags: { invulnerable: true, untargetable: true, disarm: true, noMove: true } });
+    const entry = { id, name: d.name, key: d.key, row: d.row, col: d.col, unit, spec, sp: spec.initSp, state: 'charging', bomb: null, sent: 0 };
+    this.entries.set(id, entry);
+    return entry;
+  }
+  /** ActivePredifinedInst from a destroyed Altar: the hidden Loading Point `alias` appears, charging from 0 SP. */
+  reveal(alias) {
+    const hidden = this.hidden.get(alias);
+    if (!hidden) throw Error(`Unknown hidden Loading Point: ${alias}`);
+    this.hidden.delete(alias);
+    return this.place(hidden.d, hidden.spec);
   }
   error(id) {
     const d = this.entries.get(id), b = this.battle;

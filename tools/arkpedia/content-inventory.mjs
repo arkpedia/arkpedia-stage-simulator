@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { BLOOD_ALTAR_UNMODELLED } from '../../shared/arkpedia/stage-blood-altar.js';
+import { BLOOD_ALTAR_BRANCH_USERS, BLOOD_ALTAR_UNMODELLED } from '../../shared/arkpedia/stage-blood-altar.js';
 import { readFile, readdir, access } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -213,6 +213,10 @@ export async function planStage(context, id, { compile = true, waves = false } =
   const altarStage = devices.some(d => d.key === 'trap_125_bonore');
   const unbuiltAltar = altarStage ? [...enemyIds].filter(id => BLOOD_ALTAR_UNMODELLED.includes(id)) : [];
   if (unbuiltAltar.length) blockers.push({ kind: 'device', id: 'Bloodcalling Altar', message: `Pulse reactions not built: ${unbuiltAltar.sort().join(', ')}` });
+  // An Altar whose branch the level lacks (13-19) is admitted only where no pulse can ever need that branch.
+  const branchless = Object.entries(deviceInstances).some(([key, i]) => key.startsWith('trap_125_bonore:') && i.branchMissing);
+  const branchUsers = branchless ? [...enemyIds].filter(id => BLOOD_ALTAR_BRANCH_USERS.includes(id)) : [];
+  if (branchUsers.length) blockers.push({ kind: 'device', id: 'Bloodcalling Altar', message: `Missing Altar branch with Amber users: ${branchUsers.sort().join(', ')}` });
   if ([...enemyIds].some(id => /^enemy_(?:121[78]|1105)_/.test(id))) {
     for (const path of ['data/arkpedia-enemy-records.json', 'data/arkpedia-enemy-support.json', 'data/arkpedia-enemy-native-abilities.json', 'data/arkpedia-snack-animations.json'])
       localSources.push({ path, sha256: digest(await readFile(join(context.root, path))) });

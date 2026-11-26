@@ -24,7 +24,7 @@ export function compiledDeviceDefinition(name, id, instance) {
     // A trailing '?' marks an optional binding: absent, it stays absent.
     const field = binding.replace(/\?$/, ''), value = instance[field];
     if (binding.endsWith('?') && value === undefined) continue;
-    if (/[bB]ranchId$/.test(field) ? typeof value !== 'string' || !value : !Number.isSafeInteger(value) || value < 0)
+    if (/(?:[bB]ranchId|Alias)$/.test(field) ? typeof value !== 'string' || !value : !Number.isSafeInteger(value) || value < 0)
       throw Error(`Unsupported device binding: ${name}/${id}.${field}`);
     bindings[field] = value;
   }
@@ -66,5 +66,6 @@ export function stageDeviceSpec(device) {
     || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
       // A hidden Turret or Ice Crystal is accepted only when an activation branch switches it on (as in stage-devices.js).
       && !((spec.turret || spec.statusPulse || spec.flame || spec.guard) && device.hidden === true && device.branchActivated === true && typeof device.alias === 'string'
-      || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string') ? null : spec;
+      || spec.activatable && device.hidden === true && device.scheduledActivation === true && typeof device.alias === 'string'
+      || spec.bombLoader && device.hidden === true && device.altarActivated === true && typeof device.alias === 'string') ? null : spec;
 }

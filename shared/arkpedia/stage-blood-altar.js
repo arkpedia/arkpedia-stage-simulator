@@ -39,6 +39,9 @@ export const BLOOD_ALTAR_BOMB_RADIUS = 1;
 /** Records the pulse reacts to in ways this runtime does not model yet. */
 export const BLOOD_ALTAR_UNMODELLED = Object.freeze([]);
 export const BLOOD_ALTAR_PILOT = 'enemy_1368_spilot';
+/** Records whose presence means a pulse may run the Altar's branch: Blood Amber, anything that leaves it (the Bloodborn
+ * Spawn), the Collectors that hold it, and the pilot (whose Altar makes it). */
+export const BLOOD_ALTAR_BRANCH_USERS = Object.freeze([BLOOD_AMBER, 'enemy_1360_dfello', 'enemy_1366_dcolle', 'enemy_1366_dcolle_2', BLOOD_ALTAR_PILOT]);
 
 export function bloodAltarNativeReviewed(e = native, t = tables) {
   const P = k => e.prefabs?.[k]?.components ?? [], rows = k => P(k).map(c => c.data);
@@ -66,6 +69,11 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
   const pilotSelect = P('sktok_bonore').find(c => c.pathId === String(summon?._selector?.m_PathID))?.data;
   let pilotRun = null; try { pilotRun = JSON.parse(summon._actions.SerializedState); } catch {}
   const talent = t.devices?.trap_125_bonore?.talents?.[0]?.candidates;
+  // ActiveOutset: the bomb's trap_bonore_kill[bmbcar] ends by triggering it; it activates the predefined instance its
+  // blackboard names (`ActiveOutset.alias`, read by ActivePredifinedInst's empty `_instAlias`), then kills the Altar.
+  const outsetAbility = P('sktok_bonore').find(c => c.object === 'ActiveOutset' && c.data._buffs)?.data._buffs;
+  const outset = T.trap_bonore_active_outset?.eventToActions?.ON_BUFF_START;
+  const killEnd = T['trap_bonore_kill[bmbcar]']?.eventToActions?.ON_BUFF_FINISH;
   const record = t.devices?.trap_125_bonore, frames = record?.phases?.[0]?.attributesKeyFrames ?? [];
   const skill = t.skills?.sktok_bonore?.levels, bb = Object.fromEntries((skill?.[0]?.blackboard ?? []).map(x => [x.key, x.valueStr ?? x.value]));
   return root?._sideType === 2 && root._category === 2 && root._withdrawable === 0 && root._modes?.length === 1
@@ -104,7 +112,11 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
     && pilotRun[0]._unharmful === false && pilotRun[0]._overrideEnemyKey === '' && pilotRun[0]._summonAllRoute === false
     && summon._allowNoTarget === 1 && summon._cooldown === 0
     && pilotSelect?._buffKey === 'trap_bonore_spilot[mark]' && pilotSelect._postFilter === 14 && pilotSelect._targetCategory === 2
-    && pilotSelect._targetSide === 1 && pilotSelect._maxNum === 1;
+    && pilotSelect._targetSide === 1 && pilotSelect._maxNum === 1
+    && outsetAbility?.length === 1 && outsetAbility[0].templateKey === 'trap_bonore_active_outset'
+    && outset?.map(n => n.$type.split('+')[1].split(',')[0]).join() === 'ActivePredifinedInst,AlwaysNext,InstantKill'
+    && outset[0]._instAlias === '' && outset[2]._targetType === 'BUFF_OWNER'
+    && killEnd?.length === 2 && killEnd[0].$type.includes('CheckUnitAlive') && killEnd[1]._abilityName === 'ActiveOutset';
 }
 
 /** One instance: its facing and its own branch (instance `branch_id` override). Level and skill level change nothing. */
@@ -112,7 +124,8 @@ export function bloodAltarDefinition(instance) {
   if (!bloodAltarNativeReviewed() || !instance || !Number.isSafeInteger(instance.level) || instance.level < 1 || instance.level > 30
     || instance.skillLevel !== 1 || !['UP', 'RIGHT', 'DOWN', 'LEFT'].includes(instance.direction)
     || typeof instance.branchId !== 'string' || !instance.branchId
-    || instance.pilotBranchId !== undefined && (typeof instance.pilotBranchId !== 'string' || !instance.pilotBranchId))
+    || instance.pilotBranchId !== undefined && (typeof instance.pilotBranchId !== 'string' || !instance.pilotBranchId)
+    || instance.outsetAlias !== undefined && (typeof instance.outsetAlias !== 'string' || !instance.outsetAlias))
     throw Error('Unsupported original Bloodcalling Altar instance');
   const d = tables.devices.trap_125_bonore.phases[0].attributesKeyFrames[0].data;
   return { kind: 'bloodAltar', hp: d.maxHp, def: d.def, res: d.magicResistance, direction: instance.direction, branchId: instance.branchId,
@@ -121,5 +134,7 @@ export function bloodAltarDefinition(instance) {
     // Commander Ulšulah: an upgraded Altar summons one Blood Amber every 10 s on its own branch (`talent@branch_id`,
     // the instance's `branch_id`); a returning pilot comes back on `SummonSpilot.branch_id`.
     ...(instance.pilotBranchId ? { pilotBranchId: instance.pilotBranchId } : {}), amberInterval: 10, amberEnemy: BLOOD_AMBER,
+    // ActiveOutset (trap_bonore_active_outset): destroyed by a bomb, it reveals this hidden Loading Point on its tile.
+    ...(instance.outsetAlias ? { outsetAlias: instance.outsetAlias } : {}),
     description: 'Every 20 s sends a pulse along its facing; the first Blood Amber it reaches (and any others in the pulse, up to 10) become Bloodborn Spawn on the Altar\'s route.' };
 }

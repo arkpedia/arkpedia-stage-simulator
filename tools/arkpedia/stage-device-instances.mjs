@@ -62,11 +62,46 @@ export function selectStaticDeviceInstances(devices, level, rules = {}) {
       throw Error(`Scheduled device activation requires a controller: ${d.key}`);
     if (active || scheduled) { selected.push({ ...d, hidden: !active, alias: p.alias }); retained.push({ ...p, hidden: !active }); }
     else if (switchedOn) { selected.push({ ...d, hidden: true, alias: p.alias, scheduledActivation: true }); retained.push({ ...p, hidden: true, scheduledActivation: true }); }
+    else if (base?.bombLoader && p.hidden === true && !activations.length && altarRevealsLoader(p, source)) {
+      selected.push({ ...d, hidden: true, alias: p.alias, altarActivated: true }); retained.push(p);
+    }
   }
   if (matched.size !== original.length) throw Error('Original device omitted from viewer geometry');
   const selectedLevel = { ...level, predefines: { ...level.predefines,
     tokenInsts: [...source.filter(p => !reviewedKeys.has(p.inst?.characterKey)), ...retained] } };
   return { devices: selected, level: selectedLevel };
+}
+
+const strRow = row => row?.value === 0 && typeof row.valueStr === 'string' && row.valueStr ? row.valueStr : null;
+/** A Bloodcalling Altar's instance blackboard. Accepted keys: `branch_id` (required; 13-8 gives it twice, read as the
+ * last one winning [inference], and the shadowed branch is still bound), `SummonSpilot.branch_id` (its pilot branch;
+ * then the Amber talent's branch, `talent@branch_id` or the skill's `bonore_dfello`, must be `branch_id`), and
+ * `ActiveOutset.alias` (a hidden Loading Point on the Altar's own tile, revealed when a bomb destroys it). A branch the
+ * level lacks (13-19) is marked `branchMissing`; the stage checks then refuse any Amber, Collector or pilot. */
+function compileAltarBlackboard(bb, p, level, all) {
+  if (!Array.isArray(bb) || !bb.length || bb.some(row => !['branch_id', 'SummonSpilot.branch_id', 'talent@branch_id', 'ActiveOutset.alias'].includes(row?.key)))
+    return null;
+  const rows = key => bb.filter(row => row.key === key), one = key => rows(key).length <= 1;
+  const branches = rows('branch_id').map(strRow);
+  if (!branches.length || branches.length > 2 || branches.some(v => !v) || !one('SummonSpilot.branch_id') || !one('talent@branch_id') || !one('ActiveOutset.alias'))
+    return null;
+  const branchId = branches.at(-1), shadowedBranchIds = branches.slice(0, -1).filter(v => v !== branchId);
+  if (shadowedBranchIds.some(v => !level.branches?.[v])) return null;
+  const pilotRow = rows('SummonSpilot.branch_id')[0], amberRow = rows('talent@branch_id')[0], outsetRow = rows('ActiveOutset.alias')[0];
+  const pilotBranchId = pilotRow ? strRow(pilotRow) : null, outsetAlias = outsetRow ? strRow(outsetRow) : null;
+  if (pilotRow && (!pilotBranchId || !level.branches?.[pilotBranchId] || (amberRow ? strRow(amberRow) : 'bonore_dfello') !== branchId)) return null;
+  if (amberRow && !pilotRow) return null;
+  if (outsetRow) {
+    const loader = all.filter(e => e.alias === outsetAlias);
+    if (!outsetAlias || loader.length !== 1 || loader[0].inst?.characterKey !== 'trap_126_outset' || loader[0].hidden !== true
+      || loader[0].position?.row !== p.position?.row || loader[0].position?.col !== p.position?.col) return null;
+  }
+  return { branchId, pilotBranchId, outsetAlias, shadowedBranchIds, branchMissing: !level.branches?.[branchId] };
+}
+/** The Loading Point `p` is named by exactly one Altar's `ActiveOutset.alias` on its own tile. */
+function altarRevealsLoader(p, all) {
+  return all.filter(e => e.inst?.characterKey === 'trap_125_bonore' && e.position?.row === p.position?.row && e.position?.col === p.position?.col
+    && (e.overrideSkillBlackboard ?? []).some(row => row.key === 'ActiveOutset.alias' && strRow(row) === p.alias)).length === 1;
 }
 
 /** Static devices need original instances: viewer names omit skill overrides and activation. */
@@ -85,26 +120,21 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     }
     const bb = p.overrideSkillBlackboard;
     const branchRow=Array.isArray(bb)?bb.find(row=>row.key==='branch_id'):null;
-    // A Bloodcalling Altar may also name its pilot branch (`SummonSpilot.branch_id`) and repeat its own branch for its
-    // Amber talent (`talent@branch_id`); without that key the talent reads the skill's `bonore_dfello`. Only these shapes.
-    const altarKeys=spec.bloodAltar&&Array.isArray(bb)?bb.map(row=>row.key).sort().join():null;
-    const altarShape=!spec.bloodAltar||['branch_id','SummonSpilot.branch_id,branch_id','SummonSpilot.branch_id,branch_id,talent@branch_id'].includes(altarKeys);
-    const altarRow=key=>spec.bloodAltar&&Array.isArray(bb)?bb.find(row=>row.key===key):null;
-    const pilotRow=altarRow('SummonSpilot.branch_id'),amberRow=altarRow('talent@branch_id');
-    const pilotBranchId=pilotRow&&pilotRow.value===0&&typeof pilotRow.valueStr==='string'&&pilotRow.valueStr||null;
-    const branchId=(spec.mimic||spec.powerArmor||spec.bloodAltar||spec.bombLoader)&&Array.isArray(bb)&&altarShape
-      &&bb.length===(spec.powerArmor?2:spec.bloodAltar?bb.length:1)
+    const altar=spec.bloodAltar?compileAltarBlackboard(bb,p,level,all):null;
+    const branchId=spec.bloodAltar?altar?.branchId:(spec.mimic||spec.powerArmor||spec.bombLoader)&&Array.isArray(bb)
+      &&bb.length===(spec.powerArmor?2:1)
       &&new Set(bb.map(row=>row.key)).size===bb.length&&branchRow?.value===0&&typeof branchRow.valueStr==='string'&&branchRow.valueStr;
+    const pilotBranchId=altar?.pilotBranchId??null;
     const actionRow=spec.powerArmor&&Array.isArray(bb)?bb.find(row=>row.key==='action_index'):null;
     const actionIndex=actionRow&&(actionRow.valueStr==null||actionRow.valueStr==='')?actionRow.value:null;
     if (spec.powerArmor && (!Number.isSafeInteger(actionIndex)||actionIndex<0)) throw Error('Unsupported Power Armor action index');
     const switched = spec.activatable && p.scheduledActivation === true && p.hidden === true;
-    if ((spec.scheduled || switched ? typeof p.hidden !== 'boolean' || !p.alias || all.filter(e => e.alias === p.alias).length !== 1 : p.hidden !== false)
+    // A hidden Loading Point an Altar's ActiveOutset reveals where that Altar stood (13-11, 13-15, 13-16).
+    const revealed = spec.bombLoader && p.hidden === true && d.altarActivated === true && altarRevealsLoader(p, all);
+    if ((spec.scheduled || switched || revealed ? typeof p.hidden !== 'boolean' || !p.alias || all.filter(e => e.alias === p.alias).length !== 1 : p.hidden !== false)
       || !(spec.skillIndices ?? [0]).includes(p.skillIndex) || !(spec.skillLevels ?? [1]).includes(p.mainSkillLvl) || ![0, 'PHASE_0'].includes(p.inst.phase)
       || (instanced ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > (spec.maxLevel ?? 90) : p.inst.level !== 1)
-      || (spec.mimic || spec.powerArmor || spec.bloodAltar || spec.bombLoader ? !branchId || !level.branches?.[branchId] : !spec.mire && p.overrideSkillBlackboard != null) || p.overrideTalents != null
-      || pilotRow && (!pilotBranchId || !level.branches?.[pilotBranchId]
-        || (amberRow ? amberRow.value !== 0 || amberRow.valueStr : 'bonore_dfello') !== branchId)
+      || (spec.mimic || spec.powerArmor || spec.bombLoader ? !branchId || !level.branches?.[branchId] : spec.bloodAltar ? !altar : !spec.mire && p.overrideSkillBlackboard != null) || p.overrideTalents != null
       || (spec.mine || spec.reward || spec.powerArmor) && (p.inst.potentialRank !== 0 || p.inst.favorPoint !== 0)
       || p.uniEquipIds?.length || p.masterInfos?.length)
       throw Error(`Unimplemented device instance override: ${d.key}`);
@@ -115,6 +145,10 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
       ...(spec.mimic || spec.powerArmor || spec.bloodAltar || spec.bombLoader ? { branchId } : {}),
       ...(pilotBranchId ? { pilotBranchId } : {}),
+      ...(altar?.outsetAlias ? { outsetAlias: altar.outsetAlias } : {}),
+      // Compile-time facts for the stage checks only (no runtime binding): branches the level lacks or never runs.
+      ...(altar?.branchMissing ? { branchMissing: true } : {}),
+      ...(altar?.shadowedBranchIds.length ? { shadowedBranchIds: altar.shadowedBranchIds } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
       ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };

@@ -104,7 +104,8 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   validateStaticDeviceInstances(inactiveDevices, { ...level, predefines: { ...level.predefines,
     tokenInsts: inactive.map(p => ({ ...p, hidden: false })) } }, inactiveInstances);
   const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||d.key==='trap_125_bonore'||d.key==='trap_126_outset'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
-    .map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId)
+    // An Altar whose branch the level lacks (13-19) binds nothing; one naming two (13-8) binds both.
+    .flatMap(d => { const i = instances[`${d.key}:${d.row}:${d.col}`]; return i?.branchMissing ? [] : [i?.branchId, ...(i?.shadowedBranchIds ?? [])]; })
     .concat(Object.values(inactiveInstances).map(i => i.branchId))
     // A Bloodcalling Altar's pilot branch (SummonSpilot): the returning Commander Ulšulah.
     .concat(devices.filter(d => d.key === 'trap_125_bonore').map(d => instances[`${d.key}:${d.row}:${d.col}`]?.pilotBranchId).filter(Boolean))
@@ -123,7 +124,8 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     return { geometry: inert, branches: Object.fromEntries(Object.keys(level.branches).map(key => [key, { spawns: [] }])), sources: [source] };
   }
   // Bloodcalling Altars run a random phase of their branch for each Blood Amber (PickRandomBranchPhase).
-  const randomKeys=new Set(devices.filter(d=>d.key==='trap_125_bonore').map(d=>instances[`${d.key}:${d.row}:${d.col}`]?.branchId).filter(Boolean));
+  const randomKeys=new Set(devices.filter(d=>d.key==='trap_125_bonore').flatMap(d=>{const i=instances[`${d.key}:${d.row}:${d.col}`];
+    return i?.branchMissing?[]:[i?.branchId,...(i?.shadowedBranchIds??[])];}).filter(Boolean));
   const compiled=compileStageBranches(level, geometry, conditional, bindings, randomKeys);
   for(const d of [...devices.filter(d=>POWER_ARMOR_DEVICE_KEYS.includes(d.key)), ...inactiveDevices]){
     const key=`${d.key}:${d.row}:${d.col}`,instance=instances[key]??inactiveInstances[key],branch=compiled.branches[instance.branchId];
