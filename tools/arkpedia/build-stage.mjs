@@ -44,6 +44,7 @@ import { flowGeneratorDefinition } from '../../shared/arkpedia/stage-flow-genera
 import { turretDefinition } from '../../shared/arkpedia/stage-turrets.js';
 import { shieldguardDefinition } from '../../shared/arkpedia/stage-shieldguard.js';
 import { bloodAltarDefinition } from '../../shared/arkpedia/stage-blood-altar.js';
+import { bloodThroneDefinition } from '../../shared/arkpedia/stage-blood-throne.js';
 import { bombLoaderDefinition } from '../../shared/arkpedia/stage-bomb-loader.js';
 import { electricCoilDefinition } from '../../shared/arkpedia/stage-electric-coils.js';
 import { stunTokenDefinition } from '../../shared/arkpedia/stage-supply-tokens.js';
@@ -184,7 +185,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     devices: devices.map(d => {
       const spec = stageDeviceSpec(d);
       // Excrescent Carapaces carry their original instance too (StageCarapaces reads d.instance).
-      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader) return d;
+      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader && !spec?.bloodThrone) return d;
       const instance = deviceInstances[spec.guard ? `${d.key}:${d.alias}` : `${d.key}:${d.row}:${d.col}`];
       if (spec.carapace) carapaceDefinition(instance);
       else if (spec.twigs) twigsDefinition(instance);
@@ -200,6 +201,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
       else if (spec.shieldguard) shieldguardDefinition(instance);
       else if (spec.bloodAltar) bloodAltarDefinition(instance);
       else if (spec.bombLoader) bombLoaderDefinition(instance);
+      else if (spec.bloodThrone) bloodThroneDefinition(instance);
       else if (spec.gramophone) gramophoneDefinition(instance);
       else if (spec.flowGenerator) flowGeneratorDefinition(instance);
       else if (spec.turret) turretDefinition(instance);

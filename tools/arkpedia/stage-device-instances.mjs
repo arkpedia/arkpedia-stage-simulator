@@ -113,7 +113,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       && (!stageDeviceSpec(d)?.guard || p.alias === d.alias));
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard || spec.bloodAltar || spec.bombLoader;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -121,7 +121,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     const bb = p.overrideSkillBlackboard;
     const branchRow=Array.isArray(bb)?bb.find(row=>row.key==='branch_id'):null;
     const altar=spec.bloodAltar?compileAltarBlackboard(bb,p,level,all):null;
-    const branchId=spec.bloodAltar?altar?.branchId:(spec.mimic||spec.powerArmor||spec.bombLoader)&&Array.isArray(bb)
+    const branchId=spec.bloodAltar?altar?.branchId:(spec.mimic||spec.powerArmor||spec.bombLoader||spec.bloodThrone)&&Array.isArray(bb)
       &&bb.length===(spec.powerArmor?2:1)
       &&new Set(bb.map(row=>row.key)).size===bb.length&&branchRow?.value===0&&typeof branchRow.valueStr==='string'&&branchRow.valueStr;
     const pilotBranchId=altar?.pilotBranchId??null;
@@ -134,7 +134,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if ((spec.scheduled || switched || revealed ? typeof p.hidden !== 'boolean' || !p.alias || all.filter(e => e.alias === p.alias).length !== 1 : p.hidden !== false)
       || !(spec.skillIndices ?? [0]).includes(p.skillIndex) || !(spec.skillLevels ?? [1]).includes(p.mainSkillLvl) || ![0, 'PHASE_0'].includes(p.inst.phase)
       || (instanced ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > (spec.maxLevel ?? 90) : p.inst.level !== 1)
-      || (spec.mimic || spec.powerArmor || spec.bombLoader ? !branchId || !level.branches?.[branchId] : spec.bloodAltar ? !altar : !spec.mire && p.overrideSkillBlackboard != null) || p.overrideTalents != null
+      || (spec.mimic || spec.powerArmor || spec.bombLoader || spec.bloodThrone ? !branchId || !level.branches?.[branchId] : spec.bloodAltar ? !altar : !spec.mire && p.overrideSkillBlackboard != null) || p.overrideTalents != null
       || (spec.mine || spec.reward || spec.powerArmor) && (p.inst.potentialRank !== 0 || p.inst.favorPoint !== 0)
       || p.uniEquipIds?.length || p.masterInfos?.length)
       throw Error(`Unimplemented device instance override: ${d.key}`);
@@ -143,14 +143,14 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if (spec.guard) { instances[`${d.key}:${d.alias}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl, skillIndex: p.skillIndex,
       direction: originalDeviceDirection(p.direction) }; continue; }
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
-      ...(spec.mimic || spec.powerArmor || spec.bloodAltar || spec.bombLoader ? { branchId } : {}),
+      ...(spec.mimic || spec.powerArmor || spec.bloodAltar || spec.bombLoader || spec.bloodThrone ? { branchId } : {}),
       ...(pilotBranchId ? { pilotBranchId } : {}),
       ...(altar?.outsetAlias ? { outsetAlias: altar.outsetAlias } : {}),
       // Compile-time facts for the stage checks only (no runtime binding): branches the level lacks or never runs.
       ...(altar?.branchMissing ? { branchMissing: true } : {}),
       ...(altar?.shadowedBranchIds.length ? { shadowedBranchIds: altar.shadowedBranchIds } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
-      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader ? { direction: originalDeviceDirection(p.direction) } : {}),
+      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };
   }
   for (const p of all) if (reviewed.some(d => d.key === p.inst?.characterKey)

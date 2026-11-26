@@ -329,6 +329,7 @@ export class StandardBattle extends Battle {
     // Loading Points first: an Altar checks the hidden one its ActiveOutset reveals.
     this.stageBombLoaders = deviceRuntime.create('bombLoaders', this, data.stage);
     this.stageBloodAltars = deviceRuntime.create('bloodAltars', this, data.stage);
+    this.stageBloodThrone = deviceRuntime.create('bloodThrone', this, data.stage);
     this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
     this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
     this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);

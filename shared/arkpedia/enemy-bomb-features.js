@@ -10,6 +10,8 @@
 // - Within 1.0 of a Bloodcalling Altar (the Altar's KillBmbcar) it casts Explosion: INVINCIBLE through the 2 s
 //   `Explode` clip; at its OnAttack (1.13 s) ATK x10 True damage to every hostile enemy in its 1.7 attack radius; at
 //   the cast end the Altar dies (`trap_bonore_kill[bmbcar]` -> ActiveOutset) and the bomb leaves (InstantKill).
+// - The same contact and Explosion against the Throne of Blood (radius 1) and Duq'arael's second form (radius 0.5);
+//   their outcomes are reviewed in stage-blood-throne.js and enemy-blood-lord-features.js (`explosion.collider`).
 // Every component reachable from the retained abilities and the templates are pinned below (as in
 // enemy-talulah-features.js).
 import clocks from "../../data/arkpedia-bomb-cart-animations.json" with{type:"json"};
@@ -59,7 +61,7 @@ export function bombCartParams(r){
   decay:{interval:1,after1:t["SpCtrl.reduce_duration1"],step1:t["SpCtrl.enemy_bmbcar1_sp[reduce1].sp"],after2:t["SpCtrl.reduce_duration2"],step2:t["SpCtrl.enemy_bmbcar1_sp[reduce2].sp"]},
   // Contact with the Altar's KillBmbcar circle (radius 1): the circles overlap once the centres are within 1 + the
   // bomb's own collider radius (0.1, the prefab's root CircleCollider2D).
-  explosion:{scale:r.skills[0].bb.atk_scale,radius:r.stats.rangeRadius,trigger:BLOOD_ALTAR_BOMB_RADIUS+BOMB_COLLIDER,anim:{dur:CLOCK.durations.Explode,hit:CLOCK.events.Explode}}};
+  explosion:{scale:r.skills[0].bb.atk_scale,radius:r.stats.rangeRadius,trigger:BLOOD_ALTAR_BOMB_RADIUS+BOMB_COLLIDER,collider:BOMB_COLLIDER,anim:{dur:CLOCK.durations.Explode,hit:CLOCK.events.Explode}}};
 }
 /** Sarkaz Boneguards (enemy_1363_spnshd, _2), talent BmbcarBuff: a trigger circle of radius `BmbcarBuff.range_radius`
  * (1) whose validator admits units carrying enemy_bmbcar1_passive (the bombs) puts enemy_spnshd_bmbcar_buff on them:

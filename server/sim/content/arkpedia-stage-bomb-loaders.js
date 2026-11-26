@@ -3,7 +3,11 @@
 // player activates (10 DP, 40 SP): it sends one Anti-Witchcraft bomb along its own branch route, and cannot send
 // another while that bomb lives (trap_outset_hascar). Same command API as the manual devices (error/activate).
 import { bombLoaderDefinition, stageDeviceSpec } from '../../../shared/arkpedia/device-runtime.js';
+import { BOMB_LOADER_LORD_RADIUS } from '../../../shared/arkpedia/stage-bomb-loader.js';
 import { canSpendDp, spendDp } from './arkpedia-dp-budget.js';
+
+// Blord2Trigger's circle (stage-bomb-loader.js) plus Duq'arael's own collider (0.1, the prefab's root CircleCollider2D).
+const LORD_REACH = BOMB_LOADER_LORD_RADIUS + Math.fround(.1);
 
 
 export class StageBombLoaders {
@@ -27,7 +31,8 @@ export class StageBombLoaders {
     if (!unit) throw Error(`Occupied Explosives Loading Point tile: ${id}`);
     unit.def.profession = 'TRAP'; unit.deploymentSlotCost = 0; unit.mem.stageDeviceId = id;
     b.addBuff(unit, { key: 'stage:bombLoader', persist: true, flags: { invulnerable: true, untargetable: true, disarm: true, noMove: true } });
-    const entry = { id, name: d.name, key: d.key, row: d.row, col: d.col, unit, spec, sp: spec.initSp, state: 'charging', bomb: null, sent: 0 };
+    const entry = { id, name: d.name, key: d.key, row: d.row, col: d.col, unit, spec, sp: spec.initSp, state: 'charging', bomb: null, sent: 0,
+      marked: false, lordsInside: new Set() };
     this.entries.set(id, entry);
     return entry;
   }
@@ -57,7 +62,32 @@ export class StageBombLoaders {
     b.fx('pulse', { x: d.col, y: d.row, id: d.unit.id, kind: 'loader' });
     return bomb;
   }
+  /** The Loading Point whose bomb this is (the bomb's host). */
+  senderOf(bomb) { return [...this.entries.values()].find(d => d.bomb === bomb && d.unit.alive) ?? null; }
+  /** enemy_blord2_fountain[outset] ON_BUFF_FINISH: every Loading Point marked enemy_blord2_kill[mark] dies. */
+  destroyMarked() {
+    const b = this.battle, out = [];
+    for (const d of this.entries.values()) if (d.marked && d.unit.alive) {
+      d.marked = false; d.state = 'spent';
+      b.removeBuff(d.unit, 'stage:bombLoader'); b.kill(d.unit, null); out.push(d);
+    }
+    return out;
+  }
   tick(dt) {
+    const b = this.battle;
+    // Blord2Trigger (radius 2, enemy_blord2_mark): Duq'arael's second form coming within reach (circles touching) gets
+    // trap_outset_blord2[trigger] once per entry: the Loading Point is marked and Sunken Death forced, unless he is
+    // casting it.
+    const lords = b.enemies.filter(u => u.alive && u.deployed && !u.hidden && u.mem.bloodLordTwo);
+    for (const d of this.entries.values()) {
+      if (!d.unit.alive) { d.lordsInside.clear(); continue; }
+      for (const u of [...d.lordsInside]) if (!lords.includes(u)) d.lordsInside.delete(u);
+      for (const u of lords) {
+        const inside = (u.x - d.col) ** 2 + (u.y - d.row) ** 2 <= LORD_REACH ** 2 + 1e-9;
+        if (inside && !d.lordsInside.has(u)) { d.lordsInside.add(u); u.mem.bloodLordTwo.reached(d); }
+        else if (!inside) d.lordsInside.delete(u);
+      }
+    }
     for (const d of this.entries.values()) {
       if (!d.unit.alive) { d.state = 'spent'; continue; }
       if (d.bomb && !d.bomb.alive) d.bomb = null;

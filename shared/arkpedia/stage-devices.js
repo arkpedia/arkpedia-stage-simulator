@@ -18,6 +18,7 @@ import { manualDeviceNativeReviewed } from './stage-manual-devices.js';
 import { capturableDeviceNativeReviewed } from './stage-capturable-devices.js';
 import { shieldguardNativeReviewed } from './stage-shieldguard.js';
 import { bloodAltarNativeReviewed } from './stage-blood-altar.js';
+import { bloodThroneNativeReviewed } from './stage-blood-throne.js';
 import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
@@ -130,6 +131,12 @@ export const STAGE_DEVICES = Object.freeze({
     // (stage-blood-altar.js; runtime arkpedia-stage-blood-altars.js).
     keys: Object.freeze(['trap_125_bonore']), staticLevelReview: true, bloodAltar: true, maxLevel: 30,
   }),
+  'Throne of Blood': Object.freeze({
+    // PRTS 沥血王座 (13-21): an enemy-side trap bound to Duq'arael, 'Regent's Crimson': Blood Amber, Blood Mist, his
+    // revival and Blood Surge; a bomb destroys it and calls his second form (stage-blood-throne.js; runtime
+    // arkpedia-stage-blood-throne.js).
+    keys: Object.freeze(['trap_127_bldore']), staticLevelReview: true, bloodThrone: true, maxLevel: 30,
+  }),
   'Bomb Loading Point': Object.freeze({
     // PRTS 炸弹载荷点 (chapter 13): spend 10 DP to send an Anti-Witchcraft bomb along its own branch route, one at a time
     // (stage-bomb-loader.js; runtime arkpedia-stage-bomb-loaders.js).
@@ -172,6 +179,7 @@ export function stageDeviceSpec(device) {
     || spec.guard && !alladyNativeReviewed()
     || spec.shieldguard && !shieldguardNativeReviewed()
     || spec.bloodAltar && !bloodAltarNativeReviewed()
+    || spec.bloodThrone && !bloodThroneNativeReviewed()
     || spec.bombLoader && !bombLoaderNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;

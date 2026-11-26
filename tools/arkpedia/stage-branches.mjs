@@ -5,6 +5,9 @@ import { readOriginalLevel } from './original-level.mjs';
 import { validateStaticDeviceInstances } from './stage-device-instances.mjs';
 import { STAGE_DEVICES } from '../../shared/arkpedia/stage-devices.js';
 import { damaztiBranchBindings } from '../../shared/arkpedia/enemy-damazti-features.js';
+import { BLOOD_THRONE, BLOOD_LORD, BLOOD_LORD_TWO, bloodThroneDefinition } from '../../shared/arkpedia/stage-blood-throne.js';
+// The Throne's branch ids are fixed by sktok_bldore, not by the instance.
+const THRONE = bloodThroneDefinition({ level: 1, skillLevel: 1, direction: 'UP', branchId: 'bldore' });
 
 const near = (a, b) => Number.isFinite(a) && Number.isFinite(b) && Math.abs(a - b) <= .00101;
 const delay = n => Number.isFinite(n) && n >= 0;
@@ -103,12 +106,14 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   const inactiveInstances = {};
   validateStaticDeviceInstances(inactiveDevices, { ...level, predefines: { ...level.predefines,
     tokenInsts: inactive.map(p => ({ ...p, hidden: false })) } }, inactiveInstances);
-  const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||d.key==='trap_125_bonore'||d.key==='trap_126_outset'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
+  const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||d.key==='trap_125_bonore'||d.key==='trap_126_outset'||d.key===BLOOD_THRONE||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
     // An Altar whose branch the level lacks (13-19) binds nothing; one naming two (13-8) binds both.
     .flatMap(d => { const i = instances[`${d.key}:${d.row}:${d.col}`]; return i?.branchMissing ? [] : [i?.branchId, ...(i?.shadowedBranchIds ?? [])]; })
     .concat(Object.values(inactiveInstances).map(i => i.branchId))
     // A Bloodcalling Altar's pilot branch (SummonSpilot): the returning Commander Ulšulah.
     .concat(devices.filter(d => d.key === 'trap_125_bonore').map(d => instances[`${d.key}:${d.row}:${d.col}`]?.pilotBranchId).filter(Boolean))
+    // The Throne of Blood's own branches (sktok_bldore: blordreborn.branch_id, killbmbcar.branch_id): Duq'arael's two forms.
+    .concat(devices.some(d => d.key === BLOOD_THRONE) ? [THRONE.rebornBranchId, THRONE.formTwoBranchId] : [])
     // 12-20: the 'Damazti Cluster' and its decoy summon their fragments through the level's branches.
     .concat(damaztiBranchBindings(level));
   // A level can keep the Twigs payload branches (one Corrupted Seed each) without placing any Twigs (11-20 and its
@@ -126,6 +131,8 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   // Bloodcalling Altars run a random phase of their branch for each Blood Amber (PickRandomBranchPhase).
   const randomKeys=new Set(devices.filter(d=>d.key==='trap_125_bonore').flatMap(d=>{const i=instances[`${d.key}:${d.row}:${d.col}`];
     return i?.branchMissing?[]:[i?.branchId,...(i?.shadowedBranchIds??[])];}).filter(Boolean));
+  // The Throne's Blood Amber branch (SummonEnemiesFollowBranchRoute; a random phase where it has several).
+  for (const d of devices.filter(d => d.key === BLOOD_THRONE)) randomKeys.add(instances[`${d.key}:${d.row}:${d.col}`]?.branchId);
   const compiled=compileStageBranches(level, geometry, conditional, bindings, randomKeys);
   for(const d of [...devices.filter(d=>POWER_ARMOR_DEVICE_KEYS.includes(d.key)), ...inactiveDevices]){
     const key=`${d.key}:${d.row}:${d.col}`,instance=instances[key]??inactiveInstances[key],branch=compiled.branches[instance.branchId];
@@ -137,6 +144,11 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     const id=instances[`${d.key}:${d.row}:${d.col}`]?.pilotBranchId, spawns=id&&compiled.branches[id]?.spawns;
     if (id && !(spawns?.length===1&&spawns[0].enemyKey==='enemy_1368_spilot'&&spawns[0].count===1&&spawns[0].offset===0))
       throw Error('Unsupported Bloodcalling Altar pilot branch');
+  }
+  if (devices.some(d => d.key === BLOOD_THRONE)) for (const [id, enemy] of [[THRONE.rebornBranchId, BLOOD_LORD], [THRONE.formTwoBranchId, BLOOD_LORD_TWO]]) {
+    const spawns = compiled.branches[id]?.spawns;
+    if (!(spawns?.length === 1 && spawns[0].enemyKey === enemy && spawns[0].count === 1 && spawns[0].offset === 0))
+      throw Error('Unsupported Throne of Blood branch');
   }
   for (const d of devices.filter(d=>d.key==='trap_086_larva')) {
     const instance=instances[`${d.key}:${d.row}:${d.col}`], branch=compiled.branches[instance.branchId];

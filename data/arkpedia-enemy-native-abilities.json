@@ -520,6 +520,35 @@
    "Aura",
    "Reborn"
   ],
+  "enemy_1547_blord": [
+   "enemy_1547_blord",
+   "Default",
+   "Attack",
+   "Selector",
+   "BloodFog",
+   "BloodFountain",
+   "BldoreMark"
+  ],
+  "enemy_1547_blord_2": [
+   "enemy_1547_blord_2",
+   "Default",
+   "Combat",
+   "Attack",
+   "BloodFog2",
+   "BloodFountain1",
+   "BloodFountain2",
+   "BloodFountain3",
+   "FountainDamage",
+   "FountainAlarm",
+   "FountainMark",
+   "FountainHint",
+   "FountainKillSelector",
+   "HpAuraCtrl",
+   "HpAura",
+   "Resistance",
+   "HpRecover",
+   "KillBmbcar"
+  ],
   "enemy_1369_bmbcar1": [
    "enemy_1369_bmbcar1",
    "Default",
@@ -49063,6 +49092,620 @@
     "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1311591496988275933\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}"
    }
   ],
+  "dyn/battle/prefabs/enemies/enemy_1547_blord.prefab": [
+   {
+    "pathId": "-8988463805846652213",
+    "objectName": "TargetSelector",
+    "referenced": true,
+    "sha256": "6e75dc7e47751522a180ed14c110e2f5a2de17184de6a4a3ff7451bbc4127697",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":29,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4105513501997529803\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "-7235117173863089461",
+    "objectName": "Spine",
+    "referenced": true,
+    "sha256": "9fad540324dc76b36a568d3ba120ebcfb1e86c2339f77f55314aaf06e67c9595",
+    "originalJson": "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8359182186991584565\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":5,\"m_PathID\":\"4992136132217334712\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}"
+   },
+   {
+    "pathId": "-6648491081170093365",
+    "objectName": "Attack",
+    "referenced": true,
+    "sha256": "fa03afb632764a7f549f7d1b2ed43beb75b7760d95b41419ba016923d73cc7ec",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L1_attack_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8668980182279652661\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-5015709759382422837",
+    "objectName": "BloodFountain",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[trigger]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain[trigger]\",\"triggerCnt\":0,\"triggerInterval\":5.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":0,\"_animKey\":\"Skill_2\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"Idle\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-4105623532562285877\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5532984034876914379\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2702927552840241462\"}}"
+   },
+   {
+    "pathId": "-4344825763482174773",
+    "objectName": "BloodFountain",
+    "originalJson": "{\"_addEnemyIdToSignalId\":1,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"9036092249287621323\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5532984034876914379\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "-4105623532562285877",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "50a58312e49ce13db7b41f557a3f1544e287167af6e34b829d3f801c63b74728",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":30,\"_buffKey\":\"trap_bldore_fountain_mark\",\"_buffKeyExcluded\":0,\"_buffs\":[],\"_checkOrInsteadOfAnd\":0,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_filterBuffSource\":0,\"_filterTag\":\"\",\"_filterTagList\":[],\"_filterTokenHost\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_tagExcluded\":0,\"_targetCategory\":2,\"_targetMotion\":3,\"_targetSide\":1,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6648697088923859659\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6959540303033999559\"}}"
+   },
+   {
+    "pathId": "-3683741365385495861",
+    "objectName": "BloodFountain",
+    "referenced": true,
+    "sha256": "00ae8e96775f918b46cf703f3ea7d8e069dba8e254cb775e35c74de318a5bb26",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L1_skill_02_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5532984034876914379\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-2403596971236984117",
+    "objectName": "Default",
+    "originalJson": "{\"_addIndexToSignalId\":0,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"3117356093766957771\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"2475929693457873611\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-3221570941909009717\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"3117356093766957771\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":0,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8992025400948688181\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}"
+   },
+   {
+    "pathId": "-2326995316498826549",
+    "objectName": "BloodFog",
+    "originalJson": "{\"_addEnemyIdToSignalId\":1,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"-1307693572893508917\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5322656998443449035\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "-1307693572893508917",
+    "objectName": "TargetSelector",
+    "referenced": true,
+    "sha256": "74ba88c10b842b1b5836f0754cb614ef4217f60dc23e3638e41d6c1a1abc78f1",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4105513501997529803\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "-696623319197287733",
+    "objectName": "BloodFog",
+    "referenced": true,
+    "sha256": "55fa9c5fec5dede7ed27bc43ad848749f125bbeaf871de853b182aa642357810",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L1_skill_01_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5322656998443449035\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "1165586414842739403",
+    "objectName": "Graphic",
+    "referenced": true,
+    "sha256": "c763f52a40826683a7d54afbe3371ba40cd042cb504625f154d3df2514ed4cba",
+    "originalJson": "{\"_animations\":[{\"animKey\":\"Default\",\"animName\":\"A_Defalut\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"A_Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"A_Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"A_Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Attack\",\"animName\":\"A_Attack\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Born\",\"animName\":\"A_Revive\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_1\",\"animName\":\"A_Skill_1\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_2\",\"animName\":\"A_Skill_2\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"4605968311592680139\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"-515057796873258293\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"-6568485697306953013\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"-3469583292758558005\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"-7235117173863089461\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"3518279529502669515\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5688000087237657909\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}"
+   },
+   {
+    "pathId": "1188954137421150923",
+    "objectName": "BloodFog",
+    "originalJson": "{\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fog_buffs\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fog_buffs\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeInputTargetRootTile\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Skill_1\",\"_atkScale\":0.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraStartEffects\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_faceToTile\":0,\"_finishProjectileWhenCastStart\":0,\"_finishStartEffectsOnCastOnTile\":0,\"_finishStartEffectsOnDetached\":0,\"_finishTileStartEffectWhenCast\":0,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountPointType\":2,\"_notClearProjectileOnCastStart\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileKey\":\"projectile_enemy_blord_s[fog]\",\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"9169507858191219403\"},\"_startEffect\":\"\",\"_tileEffect\":\"\",\"_tileHoldEffect\":0,\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useOwnerRootTileAsTargetSource\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5322656998443449035\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8222068601188727010\"}}"
+   },
+   {
+    "pathId": "1590881619620133579",
+    "objectName": "BldoreMark",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_mark\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_mark\",\"triggerCnt\":1,\"triggerInterval\":0.5,\"triggerLifeType\":1,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[6],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_undeadable\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain_trigger\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain_trigger\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"BldoreMark\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1276292547586032949\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "2110805377943009995",
+    "objectName": "BloodFountain",
+    "referenced": true,
+    "sha256": "f8abb0658fd1fcfd2a6595e17868d1e816c34781466bbe11ce52624ab561f229",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[5],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain_invincible\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain_invincible\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_endEvent\":3,\"_forceFinishBuffOnCastEnd\":0,\"_startEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5532984034876914379\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7755558598337543512\"}}"
+   },
+   {
+    "pathId": "2371473211108293323",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "09853650d24cbecc252e42136504d43dd63c61205c7498c8be9c93cd34327331",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6700388461033618123\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "2475929693457873611",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "b96a162417f27d8516a0de001f835abccaf50f35a00b264f3817c420e7b4fd0f",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8617252275658491189\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "3053578841614580427",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "4266492095b6b5c71f12148ab620429b4113098b8398a64c07ea22d7fbf2a91d",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6648697088923859659\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "3117356093766957771",
+    "objectName": "Attack",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_blord\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8668980182279652661\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+   },
+   {
+    "pathId": "4605968311592680139",
+    "objectName": "FaceSwitcher",
+    "referenced": true,
+    "sha256": "89afa069de491ada42cd2a29a0e0cbf822c41187be4de93996af05daab9fc4f3",
+    "originalJson": "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-3753612207089452341\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}"
+   },
+   {
+    "pathId": "5758230110260689611",
+    "objectName": "Shadow",
+    "referenced": true,
+    "sha256": "f0176e555645e5dc4012545af8d42833caeb96ed8f4d08495b1f2b6a149fcdfb",
+    "originalJson": "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2085189000612149963\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}"
+   },
+   {
+    "pathId": "7310115583232572107",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "3816b7db40b0f8939722c3a163bc9884f4eabb82262dc3b90320b9a419c1b019",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":1,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8617252275658491189\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "7759081494197304011",
+    "objectName": "enemy_1547_blord",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"1165586414842739403\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"1590881619620133579\"}],\"_deadEffect\":\"enemy_blord_die_01\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":2.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"-6741518500068459829\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"-2403596971236984117\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"5758230110260689611\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"enemy_blord_L1_revive_01\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8456708477666002229\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}"
+   },
+   {
+    "pathId": "8342204107274517195",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "a572863fee43ca61ffa179c3d1daa7932d6ed655e247c729d8e527edbe9f6305",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":29,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":1,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8617252275658491189\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "9036092249287621323",
+    "objectName": "BloodFountain",
+    "referenced": true,
+    "sha256": "98a70c17674be381d38b122feec7aabffacab7f82bce4322ed8f0e5a243bcf77",
+    "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5532984034876914379\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"248012603862317511\"}}"
+   },
+   {
+    "pathId": "9169507858191219403",
+    "objectName": "Selector",
+    "originalJson": "{\"_allowDuplicatedRootTile\":1,\"_allowOutRangeTile\":1,\"_alwaysRandomInTheEnd\":1,\"_alwaysSort\":0,\"_blackboardKey\":\"\",\"_blackboardKeys\":[],\"_checkUnitType\":0,\"_chrBuffKey\":\"\",\"_distCompareType\":0,\"_distValue\":0,\"_enemyBuffKey\":\"\",\"_enemyKeys\":[],\"_excludeAllCharacter\":0,\"_excludeCamouflagCharacter\":0,\"_excludeOwnerRootTile\":0,\"_extraFilterTypeList\":[],\"_filterBlackboardKey\":\"\",\"_filterType\":0,\"_fixedDistance\":0,\"_ignoreBlackList\":0,\"_ignoreHitRange\":0,\"_limitTargetNum\":0,\"_maxNum\":1,\"_needProfessionMask\":0,\"_options\":{\"advancedBuildableMask\":1,\"advancedBuildableMaskExcept\":0,\"allowAllAdvancedBuildableMask\":0,\"allowNoneBuildableType\":1,\"allowNonePassableMask\":1,\"allowedTileBlackboardKey\":\"\",\"buildableType\":0,\"checkBuildableOrPassable\":0,\"checkExtraBuildableCheckers\":0,\"checkHeightType\":0,\"checkTileHidden\":0,\"checkTileMode\":0,\"checkTileMoveCost\":0,\"checkTileTypes\":0,\"exceptTileTypes\":0,\"excludeTileBlackboardKey\":\"\",\"heightType\":0,\"modeIndex\":0,\"moveCostCompareType\":0,\"moveCostThreshold\":0,\"passableMask\":0,\"tileTypesMask\":1},\"_ownerRespawnSelfBuildCheckParams\":{\"ignoreBuildableType\":0},\"_ownerRespawnSelfIgnoreAdvancedBuildableMask\":1,\"_randomBeforeShrink\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-8988463805846652213\"},\"_selectorIsTile\":0,\"_targetCategory\":1,\"_targetMotion\":1,\"_targetSide\":2,\"_tileOrTokenIdListPreferred\":[],\"_tileSortType\":0,\"_unitTypeMask\":0,\"_useValidate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6700388461033618123\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"1764074841665083612\"}}"
+   }
+  ],
+  "dyn/battle/prefabs/enemies/enemy_1547_blord_2.prefab": [
+   {
+    "pathId": "-9011652141583337793",
+    "objectName": "HpRecover",
+    "referenced": true,
+    "sha256": "8d61918706eec8776a80b27c1b02c203eb3a95342af2e675c2740c00ee340bce",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"2627795562754045631\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5275896149603551553\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "-8682065944461871425",
+    "objectName": "HpRecover",
+    "referenced": true,
+    "sha256": "26083058a81976a87fe404a7c15388418094910694b0a57d59f0f7a8424f4823",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5275896149603551553\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":1.7000000476837158,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "-8605169764902668609",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "7d32a52f18c844140fa75148418c8b81b41853aee716f5675828c823815ac0c2",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":29,\"_buffKey\":\"enemy_blord_fountain[mark]\",\"_buffKeyPairs\":[],\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeEnemyInRootTileAtFirst\":\"\",\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_filterBuffSource\":0,\"_filterTag\":\"\",\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_secondaryFilter\":3,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"_withoutThisBuff\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5382770097450809023\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8052272509195254976\"}}"
+   },
+   {
+    "pathId": "-8508468755403147585",
+    "objectName": "BloodFountain1",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":0,\"_animKey\":\"Skill_2_1\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"Idle\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-6359974918941411649\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7750067712453347649\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2702927552840241462\"}}"
+   },
+   {
+    "pathId": "-8502091370884598081",
+    "objectName": "Attack",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5425861571850832193\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4865767822664548221\"}}"
+   },
+   {
+    "pathId": "-8330270697172076865",
+    "objectName": "BloodFog2",
+    "originalJson": "{\"_addEnemyIdToSignalId\":1,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"4824766031273555647\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8097557913039959743\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "-8137858858069100865",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "0dc8ab0613aa50fb87131a0e6f7b30dfc19f43505c951d126d3597b33fbbf98a",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":30,\"_buffKey\":\"enemy_blord2_kill[mark]\",\"_buffKeyExcluded\":0,\"_buffs\":[],\"_checkOrInsteadOfAnd\":0,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_filterBuffSource\":0,\"_filterTag\":\"\",\"_filterTagList\":[],\"_filterTokenHost\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":0,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_tagExcluded\":0,\"_targetCategory\":2,\"_targetMotion\":1,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-9141511971256633665\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6959540303033999559\"}}"
+   },
+   {
+    "pathId": "-7885795847265749313",
+    "objectName": "BloodFountain2",
+    "originalJson": "{\"_addEnemyIdToSignalId\":1,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"5659447659691210431\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4613905834814305983\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}"
+   },
+   {
+    "pathId": "-7668272948355565889",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "eaea9468dcda2aabc83a0466acd6148727fdeef38d8fcd78b37a3694b717d331",
+    "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-36820397286000961\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8735719249224227112\"}}"
+   },
+   {
+    "pathId": "-7569109820300036417",
+    "objectName": "BloodFountain1",
+    "referenced": true,
+    "sha256": "b58ed2c0fc79e8fa6ea6d925fbeaca4a38ec58da57d86ccdf514fa5fdc642811",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_02\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_03\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_04\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7750067712453347649\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-7332239746543356225",
+    "objectName": "HpAura",
+    "originalJson": "{\"_abilities\":[{\"m_FileID\":0,\"m_PathID\":\"-4525737847880321345\"},{\"m_FileID\":0,\"m_PathID\":\"3355292157372823231\"}],\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[],\"_buffsWhenToggleOff\":[],\"_checker\":{\"m_FileID\":0,\"m_PathID\":\"8071602873760642751\"},\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_isInverseToggle\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_setToggleFalseOnDetached\":0,\"_unmanagedBuffsWhenToggleOn\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104281787432208705\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7211443127693163451\"}}"
+   },
+   {
+    "pathId": "-7244511158389934401",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "90cd63ed57f66022e0f73241233676ff6993bf70bc9f006cbd2bcfce2ae2f114",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3497468005090948799\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "-7025848081160309057",
+    "objectName": "BloodFountain1",
+    "referenced": true,
+    "sha256": "bc02236c8d0c8a6a3bc1abe42d6c1014f2e93a2a86792d9ff5a09874d6d6a148",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_fountain[outset]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_fountain[outset]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_endEvent\":4,\"_forceFinishBuffOnCastEnd\":0,\"_startEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7750067712453347649\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7755558598337543512\"}}"
+   },
+   {
+    "pathId": "-6885817202993629505",
+    "objectName": "enemy_1547_blord_2",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"-2060868605991291201\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"8621376369538594495\"},{\"m_FileID\":0,\"m_PathID\":\"-3166930953899772225\"},{\"m_FileID\":0,\"m_PathID\":\"1959860777303897791\"}],\"_deadEffect\":\"enemy_blord_die_01\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":4.699999809265137,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"6241220462522169023\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"3624496473456604863\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"6742270268229711551\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"enemy_blord_L2_revive_03\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":1,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1142122090816960191\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}"
+   },
+   {
+    "pathId": "-6359974918941411649",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "5ab98d6e274717ef71c6b890a37f37950df0fb2c1b813471c1fed5ccb3fbd514",
+    "originalJson": "{\"_buffKeys\":[\"enemy_blord2_s2_bmbcar_trigger1\"],\"_buffStackCount\":0,\"_buffStackCountBBKey\":\"value\",\"_buffStackCountCompareType\":2,\"_buffStackCountFromBB\":0,\"_checkBuffStackCount\":0,\"_checkContainBuffs\":1,\"_checkDistToExit\":0,\"_checkHpRatioCondition\":0,\"_checkNotContainBuffs\":0,\"_distToExitBBKey\":\"dist\",\"_distToExitCompareType\":2,\"_maxRatio\":0.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3497468005090948799\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-928041209999387916\"}}"
+   },
+   {
+    "pathId": "-4782415612343519553",
+    "objectName": "KillBmbcar",
+    "referenced": true,
+    "sha256": "1ef633ab87cffd7607951bc601a1adaf203510cebfdad0bdff76ae5169f3b21d",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2061038559597332801\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":0.5,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "-4525737847880321345",
+    "objectName": "Resistance",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"damage_resistance[inf]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":1,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_t[effect]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"enemy_blord_L2_buff_01\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1056838525810084161\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "-4213596805541824833",
+    "objectName": "KillBmbcar",
+    "referenced": true,
+    "sha256": "c7cf842c608812d6d0e052493172b06ffb2aa9f53f4242b0d4278d9326ab764a",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2061038559597332801\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-1398656344548769790\"}}"
+   },
+   {
+    "pathId": "-3872176909472729409",
+    "objectName": "BloodFog2",
+    "referenced": true,
+    "sha256": "c4816dc1a227823104010d2324dc2f483f03ccaab8ef26e657e6e37b12a24ec7",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_fog[summon]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":1,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_fog[summon]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":0}],\"_endEvent\":3,\"_forceFinishBuffOnCastEnd\":0,\"_startEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8097557913039959743\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7755558598337543512\"}}"
+   },
+   {
+    "pathId": "-3196555748462659905",
+    "objectName": "BloodFountain2",
+    "referenced": true,
+    "sha256": "3494eba2de026b52f98ba6059083f58fa28e664aedb79a2dc29dd879d5d8e673",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[trigger]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain[trigger]\",\"triggerCnt\":0,\"triggerInterval\":5.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_extraCondition\":0,\"_extraConditionTiming\":4,\"_loadMaxTargetFromBlackboard\":1,\"_maxTarget\":1,\"_onlyRunOnce\":0,\"_runActionOnEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-115613966094272833\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8109327635834973011\"}}"
+   },
+   {
+    "pathId": "-3166930953899772225",
+    "objectName": "FountainKillSelector",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"FountainKillSelector\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-8137858858069100865\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3068886043192882879\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4865767822664548221\"}}"
+   },
+   {
+    "pathId": "-2853485713593895233",
+    "objectName": "BloodFountain2",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":0,\"_animKey\":\"Skill_2_2\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"Idle\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"6958578400223721151\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-115613966094272833\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2702927552840241462\"}}"
+   },
+   {
+    "pathId": "-2750204572583496001",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "2696b600a1a2571ed2e2fd0ea7b2bbc9eb5f268f85030500dd981733edbac713",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7902156686187202881\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "-2688937077829896513",
+    "objectName": "FountainMark",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[mark]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_clearBuffsWhenDisappear\":0,\"_effects\":[],\"_excludeReborningEntity\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceRemoveAllBuffsByKey\":0,\"_forceTick\":1,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_interval\":0.10000000149011612,\"_listenUnitRebornEvent\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyDetactTargetWhenStarted\":0,\"_onlyDetectCurrentMapLayer\":0,\"_passiveBuffs\":[],\"_removeBuffIncludeReborning\":0,\"_removeBuffWhenAbilityDetached\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_selfOption\":0,\"_targetValidator\":{\"m_FileID\":0,\"m_PathID\":\"1147604289907291839\"},\"_tryRemoveBuffFirstWhenReborn\":0,\"_useDurableRallyPointLikeSwitch\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6939051572695168703\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5793748974791823428\"}}"
+   },
+   {
+    "pathId": "-2060868605991291201",
+    "objectName": "Graphic",
+    "referenced": true,
+    "sha256": "78836ce1bad309f2a00c42f1b8f57b6abd114eb3eca6dded1a5a0f9e546acc4d",
+    "originalJson": "{\"_animations\":[{\"animKey\":\"Attack\",\"animName\":\"B_Attack\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Default\",\"animName\":\"B_Defalut\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"B_Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"B_Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"B_Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Born\",\"animName\":\"B_Revive\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_1_Begin\",\"animName\":\"B_Skill_1_Begin\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_1_End\",\"animName\":\"B_Skill_1_End\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_1_Loop\",\"animName\":\"B_Skill_1_Loop\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Skill_2_1\",\"animName\":\"B_Skill_2_1\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_2_2\",\"animName\":\"B_Skill_2_2\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_2_3\",\"animName\":\"B_Skill_2_3\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"309306407087011519\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"-6070721545012218177\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"-4107612912573253953\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"-8336684652874139969\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"6563430572909885119\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"6037768803215636159\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"84724132079367871\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8047508407302846143\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}"
+   },
+   {
+    "pathId": "-2012697324454250817",
+    "objectName": "Combat",
+    "originalJson": "{\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_extra_damage[timer]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"enemy_blord_L2_skill_03_debuff_01\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_extra_damage[timer]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"533259697722062527\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+   },
+   {
+    "pathId": "-1759340045175982401",
+    "objectName": "HpAuraCtrl",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_hp_aura[trigger]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_hp_aura[trigger]\",\"triggerCnt\":0,\"triggerInterval\":0.5,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_mark\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"enemy_blord_L2_skill_03_buff\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3619475288826541759\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "-1544764479160355137",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "46d5955790893abe1083facf6222f6c8b6affb309627bcd274362c2eb8f6c15f",
+    "originalJson": "{\"_buffKeys\":[\"enemy_blord2_s2_outset_trigger\"],\"_buffStackCount\":0,\"_buffStackCountBBKey\":\"value\",\"_buffStackCountCompareType\":2,\"_buffStackCountFromBB\":0,\"_checkBuffStackCount\":0,\"_checkContainBuffs\":1,\"_checkDistToExit\":0,\"_checkHpRatioCondition\":0,\"_checkNotContainBuffs\":0,\"_distToExitBBKey\":\"dist\",\"_distToExitCompareType\":2,\"_maxRatio\":0.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7902156686187202881\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-928041209999387916\"}}"
+   },
+   {
+    "pathId": "-1448688088321919297",
+    "objectName": "BloodFountain2",
+    "originalJson": "{\"_abilities\":[{\"m_FileID\":0,\"m_PathID\":\"4518905047886624447\"}],\"_useExtraAbilitySignal\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4613905834814305983\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5605707488871161295\"}}"
+   },
+   {
+    "pathId": "-964464937523841345",
+    "objectName": "BloodFountain2",
+    "referenced": true,
+    "sha256": "4933799e0c3cf683856153fbbb3ffde7f4e84c35315053e3013e1755cc12369c",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_02\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_03\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_04\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-115613966094272833\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "-831772866719680833",
+    "objectName": "BloodFountain2",
+    "originalJson": "{\"_abilityConfigs\":[{\"_ability\":{\"m_FileID\":0,\"m_PathID\":\"-8508468755403147585\"},\"_alwaysUseTrigger\":0,\"_checkInputTargetInTrigger\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"-7244511158389934401\"},\"_useInputTarget\":0},{\"_ability\":{\"m_FileID\":0,\"m_PathID\":\"-2853485713593895233\"},\"_alwaysUseTrigger\":0,\"_checkInputTargetInTrigger\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"-176668727638460737\"},\"_useInputTarget\":0},{\"_ability\":{\"m_FileID\":0,\"m_PathID\":\"-114385460717848897\"},\"_alwaysUseTrigger\":0,\"_checkInputTargetInTrigger\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"-2750204572583496001\"},\"_useInputTarget\":0}],\"_attachPassiveBuffsOnDummy\":1,\"_category\":4,\"_checkIAlwaysTriggerBySubAbility\":0,\"_clearInternalCooldownWhenFinish\":1,\"_coolDownAbilityIndex\":0,\"_escapeTimeAbilityIndex\":0,\"_finishByCbOnlyFromSubAbility\":0,\"_firstAttackIfAbilityChanged\":0,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_resetSubAbilities\":0,\"_resetSubAbilityCooldown\":0,\"_selectAbilitySequentially\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":1,\"_updateCooldownAfterSubAbilitiesAttached\":0,\"_updateCooldownBySubAbilityCooldownDuringCasting\":0,\"_updateSubAbilitiesWhenExtendUpdated\":0,\"_useCurAbCheckAtPreCastPhase\":0,\"_useSubAbilityEscapeTime\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4613905834814305983\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5752393290759919736\"}}"
+   },
+   {
+    "pathId": "-721693241737120065",
+    "objectName": "HpAura",
+    "referenced": true,
+    "sha256": "09107439a00fc87ec9bed1053e412f96f471e3adc6ca777e90ff2c43269cb7b0",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104281787432208705\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-1398656344548769790\"}}"
+   },
+   {
+    "pathId": "-176668727638460737",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "803df383f9246f6c0d9f4f6f7f89274af4311b39247e54e12120c6bb331388d6",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7315695335599802689\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "-114385460717848897",
+    "objectName": "BloodFountain3",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":0,\"_animKey\":\"Skill_2_3\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"Idle\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-1544764479160355137\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-120365600458901825\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2702927552840241462\"}}"
+   },
+   {
+    "pathId": "155754655004260031",
+    "objectName": "BloodFountain3",
+    "referenced": true,
+    "sha256": "37f340da517d0564a89d2ae21102da6e8712f47340161c7739608abec0efd5e1",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[trigger]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain[trigger]\",\"triggerCnt\":0,\"triggerInterval\":5.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_extraCondition\":0,\"_extraConditionTiming\":4,\"_loadMaxTargetFromBlackboard\":1,\"_maxTarget\":1,\"_onlyRunOnce\":0,\"_runActionOnEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-120365600458901825\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8109327635834973011\"}}"
+   },
+   {
+    "pathId": "309306407087011519",
+    "objectName": "FaceSwitcher",
+    "referenced": true,
+    "sha256": "eee10b6977f56ad847d5c4c22696ea3ce011d79c2ffaf4303d60967e468953ba",
+    "originalJson": "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-9200382815947295041\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}"
+   },
+   {
+    "pathId": "692250575140452031",
+    "objectName": "BloodFog2",
+    "referenced": true,
+    "sha256": "21e3e043f197a792022a052896951f11d0e362abb769e6e7ef19268ecc4d0e4b",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_01_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_01_start_02\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":4,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8097557913039959743\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "1125150138117748415",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "1e918c0aab88c3272dab7b8a68f7ecd8ba70d6fe21f80fbfb21f3deeb9452140",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":29,\"_buffKey\":\"enemy_blord_fountain[mark]\",\"_buffKeyPairs\":[],\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeEnemyInRootTileAtFirst\":\"\",\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_filterBuffSource\":0,\"_filterTag\":\"\",\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_secondaryFilter\":3,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":2,\"_unitTypeMask\":0,\"_withoutThisBuff\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4257324478548637375\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8052272509195254976\"}}"
+   },
+   {
+    "pathId": "1147604289907291839",
+    "objectName": "FountainMark",
+    "referenced": true,
+    "sha256": "32599cb6c1436685be8b8530c390b0dff3067c1a692d4d8468258d195d5fb8bf",
+    "originalJson": "{\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":2,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6939051572695168703\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3637692038217913187\"}}"
+   },
+   {
+    "pathId": "1318688402981353151",
+    "objectName": "KillBmbcar",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_kill[bmbcar]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_kill[bmbcar]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_createEffectOnDummy\":1,\"_effects\":[],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_ignoreOwnerFakeDeath\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyAddBuffOnceForEachTarget\":0,\"_passiveBuffs\":[],\"_removeBuffWhenAbilityDetached\":1,\"_removeBuffWhenTargetLeave\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_selfOption\":0,\"_targetValidator\":{\"m_FileID\":0,\"m_PathID\":\"3748692103588378303\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2061038559597332801\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"9073738633337710967\"}}"
+   },
+   {
+    "pathId": "1938675381125478079",
+    "objectName": "BloodFountain2",
+    "referenced": true,
+    "sha256": "d4202e039ade390e11e74a38256081eb596d1a467fe291ac970038571be3667e",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_fountain[outset]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_fountain[outset]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_endEvent\":4,\"_forceFinishBuffOnCastEnd\":0,\"_startEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-115613966094272833\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7755558598337543512\"}}"
+   },
+   {
+    "pathId": "1959860777303897791",
+    "objectName": "FountainAlarm",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":0,\"_animKey\":\"\",\"_attachPassiveBuffsOnDummy\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interruptible\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_removeBuffsIfNoValidTarget\":0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"1125150138117748415\"},\"_timeMode\":0,\"_uniqueBuff\":{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[effect]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"enemy_blord_L1_skill_02_locked_01\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useTileSelectorForSearchCharacter\":0,\"_waitForAttackEvent\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6395391809995508033\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"1234981161564995557\"}}"
+   },
+   {
+    "pathId": "2407476002629777087",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "4e02955f28540b6eecb5cb49263523ddd6d2c9a2f927d035b445c4dec0f238b5",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-9141511971256633665\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "2513389977175226047",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "51b4ee1b56c3a7f2ab53261ba46ef8522aa005455cbb1ff00a50e77fab4db627",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5382770097450809023\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "2930662546690373311",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "1a3961250445b59764f2ac1c7b58ddb5cf3414d125523c72f126ceac283bd8ab",
+    "originalJson": "{\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4257324478548637375\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6275044311115013764\"}}"
+   },
+   {
+    "pathId": "2954840544982562495",
+    "objectName": "BloodFountain2",
+    "referenced": true,
+    "sha256": "9276d7ce7eaf2932262c21d94a0ef01bc71330d17b7fc8723d489e4e89a98125",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_buffKey\\\":\\\"enemy_blord2_s2_bmbcar_trigger2\\\",\\\"_loadFromBlackboard\\\":false,\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"_targetType\\\":\\\"SOURCE\\\",\\\"_checkBuffSource\\\":false,\\\"_sourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_alsoClearNullSource\\\":false,\\\"_finishHostBuff\\\":false,\\\"_decCntKey\\\":null,\\\"_decCnt\\\":1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuffsById\\\"}]\"},\"_onlyRunOnce\":0,\"_runActionOnEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-115613966094272833\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-215856016818471014\"}}"
+   },
+   {
+    "pathId": "3355292157372823231",
+    "objectName": "HpRecover",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[{\"attributeType\":13,\"fetchBaseValueFromSourceEntity\":0,\"formulaItem\":0,\"loadFromBlackboard\":1,\"value\":0.0}]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_hp_recover\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_createEffectOnDummy\":1,\"_effects\":[],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_ignoreOwnerFakeDeath\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyAddBuffOnceForEachTarget\":0,\"_passiveBuffs\":[],\"_removeBuffWhenAbilityDetached\":1,\"_removeBuffWhenTargetLeave\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_selfOption\":2,\"_targetValidator\":{\"m_FileID\":0,\"m_PathID\":\"4608452006823425727\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5275896149603551553\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"9073738633337710967\"}}"
+   },
+   {
+    "pathId": "3551953278742132415",
+    "objectName": "BloodFountain1",
+    "referenced": true,
+    "sha256": "a5a9c1054140b04efd4f264310683dd755f8fa5211b8a3fb81cf25a171042d09",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_buffKey\\\":\\\"enemy_blord2_s2_bmbcar_trigger1\\\",\\\"_loadFromBlackboard\\\":false,\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"_targetType\\\":\\\"SOURCE\\\",\\\"_checkBuffSource\\\":false,\\\"_sourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_alsoClearNullSource\\\":false,\\\"_finishHostBuff\\\":false,\\\"_decCntKey\\\":null,\\\"_decCnt\\\":1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuffsById\\\"}]\"},\"_onlyRunOnce\":0,\"_runActionOnEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7750067712453347649\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-215856016818471014\"}}"
+   },
+   {
+    "pathId": "3567777801586177727",
+    "objectName": "HpAuraCtrl",
+    "referenced": true,
+    "sha256": "80785b72935d6bfa8308e9752d024666386ede5580024ad5231f26334fe16344",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3619475288826541759\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}"
+   },
+   {
+    "pathId": "3624496473456604863",
+    "objectName": "Default",
+    "originalJson": "{\"_addIndexToSignalId\":0,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-2012697324454250817\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"8982375512144246463\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"6538888854293214911\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-2012697324454250817\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":0,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2469645781652638017\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}"
+   },
+   {
+    "pathId": "3748692103588378303",
+    "objectName": "KillBmbcar",
+    "referenced": true,
+    "sha256": "a9c4576f798235cba48ba4932938eac1326514cf8cbee61d7afc0fa38377a2c4",
+    "originalJson": "{\"_buffs\":[\"enemy_bmbcar1_passive\"],\"_excludeKey\":0,\"_filterBuffSource\":0,\"_hostAsTarget\":0,\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":2,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2061038559597332801\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5482140055134904783\"}}"
+   },
+   {
+    "pathId": "4352422139021260479",
+    "objectName": "BloodFog2",
+    "referenced": true,
+    "sha256": "bab44bb5957f4ea306e165e6329c469de6d006636bbcc4a61025cbbd6c690b55",
+    "originalJson": "{\"_default\":{\"beginAnim\":\"Skill_1_Begin\",\"endAnim\":\"Skill_1_End\",\"loopAnim\":\"Skill_1_Loop\"},\"_delaySecond\":0.0,\"_delayToAnimateEndAnimation\":0,\"_delayToAnimateEndAnimationTime\":0.0,\"_delayToFireAttackSkillEvent\":0,\"_dontPlayBeginAnimFromInterrupted\":0,\"_down\":{\"beginAnim\":\"\",\"endAnim\":\"\",\"loopAnim\":\"\"},\"_earlyFinishEndIdleAnimation\":0,\"_faceToDefault\":0,\"_faceToFront\":0,\"_fireAnimEndEvent\":0,\"_fireAttackFinishEvent\":0,\"_onlyPlayBeginAnimWhenFirstAttack\":0,\"_overrideDownAnimation\":0,\"_overrideUpAnimation\":0,\"_playIdleAnimInTheEnd\":0,\"_up\":{\"beginAnim\":\"\",\"endAnim\":\"\",\"loopAnim\":\"\"},\"_waitForAttachFinishEvent\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8097557913039959743\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"680305599797508032\"}}"
+   },
+   {
+    "pathId": "4518905047886624447",
+    "objectName": "FountainDamage",
+    "originalJson": "{\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[damage]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":0,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain[damage]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"stun\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":1,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":0,\"_animKey\":\"\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":1,\"_endAnimKey\":\"\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":0,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_blord_s[stun]\",\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"-8605169764902668609\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":0,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"112082935054825151\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+   },
+   {
+    "pathId": "4608452006823425727",
+    "objectName": "HpRecover",
+    "referenced": true,
+    "sha256": "96c1eec050c71103ab5b7e043fd1bd3e2dc9465c89881ff3ffc1b3ba14be5b26",
+    "originalJson": "{\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":1,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5275896149603551553\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3637692038217913187\"}}"
+   },
+   {
+    "pathId": "4824766031273555647",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "6755aedf8474bb045ea5d3c918263fd2c1f9f6c64f9c6570153319f150813bd4",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-36820397286000961\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "4845487539431634623",
+    "objectName": "BloodFountain1",
+    "referenced": true,
+    "sha256": "44a42734c13c4740eb7eb42ce41eba166c5b840b4e26c7b636cb6103ba0d791f",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[trigger]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":1,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain[trigger]\",\"triggerCnt\":0,\"triggerInterval\":5.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_extraCondition\":0,\"_extraConditionTiming\":4,\"_loadMaxTargetFromBlackboard\":1,\"_maxTarget\":1,\"_onlyRunOnce\":0,\"_runActionOnEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7750067712453347649\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8109327635834973011\"}}"
+   },
+   {
+    "pathId": "5659447659691210431",
+    "objectName": "BloodFountain2",
+    "referenced": true,
+    "sha256": "8a52b5efddb734daf11beeb66bffd0c90f24ab8c0c6fd811f4d2a2a1aac2e720",
+    "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4613905834814305983\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"248012603862317511\"}}"
+   },
+   {
+    "pathId": "5690019568981276351",
+    "objectName": "Combat",
+    "referenced": true,
+    "sha256": "6654df2204e269d614951c81ab95a836be2f9d0bab5149aa670417f93c263048",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_attack_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_attack_hit_01\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"533259697722062527\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "5701744499815052991",
+    "objectName": "BloodFog2",
+    "originalJson": "{\"_activeBuffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fog_buffs\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fog_buffs\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_affectedBySlowDown\":0,\"_allowNoTarget\":0,\"_alwaysIncludeInputTargetRootTile\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"\",\"_atkScale\":0.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraStartEffects\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_faceToTile\":0,\"_finishProjectileWhenCastStart\":0,\"_finishStartEffectsOnCastOnTile\":0,\"_finishStartEffectsOnDetached\":0,\"_finishTileStartEffectWhenCast\":0,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountPointType\":2,\"_notClearProjectileOnCastStart\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileKey\":\"projectile_enemy_blord_s[fog]\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"5945653297496880831\"},\"_startEffect\":\"\",\"_tileEffect\":\"\",\"_tileHoldEffect\":0,\"_timeMode\":3,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useOwnerRootTileAsTargetSource\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8097557913039959743\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8222068601188727010\"}}"
+   },
+   {
+    "pathId": "5945653297496880831",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "e235474b3771c01afde2ec2a7569ea0d9d39f56586f4a62ed38ed84ba48759d8",
+    "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7153237093889050945\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"257106927554094637\"}}"
+   },
+   {
+    "pathId": "5984098808726845119",
+    "objectName": "KillBmbcar",
+    "referenced": true,
+    "sha256": "f6de3b8a2b28960f69986f080d86621cc2aa5d1b931a586c919215b2a499e2c2",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-2784177205292206401\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2061038559597332801\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}"
+   },
+   {
+    "pathId": "6563430572909885119",
+    "objectName": "Spine",
+    "referenced": true,
+    "sha256": "bfce28fdee7cfdd1d82d8dfc56361f849ac868e6bc2328fe3af96c380c3a359e",
+    "originalJson": "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8373861604877891263\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":5,\"m_PathID\":\"4992136132217334712\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}"
+   },
+   {
+    "pathId": "6742270268229711551",
+    "objectName": "Shadow",
+    "referenced": true,
+    "sha256": "722fbf8904d3a4c4496512cb40be0615a13e484e4824d0030c626ddc8505aae0",
+    "originalJson": "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7457984888414566079\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}"
+   },
+   {
+    "pathId": "6904739554561849023",
+    "objectName": "BloodFountain3",
+    "referenced": true,
+    "sha256": "fc193d7dd68f6daacb5565204454c82b059de7fae12530518274f1fb010e3f47",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_02\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_03\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0},{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_blord_L2_skill_02_start_04\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":0,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-120365600458901825\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "6958578400223721151",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "d255752189641c2540a10cb932056cefaca7ee090b4aec83796bd1bf0a56b413",
+    "originalJson": "{\"_buffKeys\":[\"enemy_blord2_s2_bmbcar_trigger2\"],\"_buffStackCount\":0,\"_buffStackCountBBKey\":\"value\",\"_buffStackCountCompareType\":2,\"_buffStackCountFromBB\":0,\"_checkBuffStackCount\":0,\"_checkContainBuffs\":1,\"_checkDistToExit\":0,\"_checkHpRatioCondition\":0,\"_checkNotContainBuffs\":0,\"_distToExitBBKey\":\"dist\",\"_distToExitCompareType\":2,\"_maxRatio\":0.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7315695335599802689\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-928041209999387916\"}}"
+   },
+   {
+    "pathId": "7244661911317477055",
+    "objectName": "BloodFountain3",
+    "referenced": true,
+    "sha256": "25928549d28b778e0cca76abc6f3e39b18a1f54b9b6019bf1b0ee1f91d5cb6d0",
+    "originalJson": "{\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord2_fountain[outset]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord2_fountain[outset]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_endEvent\":4,\"_forceFinishBuffOnCastEnd\":0,\"_startEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-120365600458901825\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7755558598337543512\"}}"
+   },
+   {
+    "pathId": "8071602873760642751",
+    "objectName": "HpAura",
+    "referenced": true,
+    "sha256": "1aad2bbb591eba306dc8950c22a49718c4456e34b0fa3210289b803b4766dc98",
+    "originalJson": "{\"_buffKey\":\"enemy_blord2_hp_aura[ctrl]\",\"_excludeBuff\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104281787432208705\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-1118732249725461329\"}}"
+   },
+   {
+    "pathId": "8621376369538594495",
+    "objectName": "FountainHint",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_durationKey\":\"duration\",\"_enableUpdateCooldown\":0,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_isInfinity\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"FountainHint\"},\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_waitForAttackEvent\":0,\"_wrappedAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"-2688937077829896513\"}],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6847498571101075135\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5588963537932396408\"}}"
+   },
+   {
+    "pathId": "8705105235567933119",
+    "objectName": "BloodFountain3",
+    "referenced": true,
+    "sha256": "06d8ee21ae0d4551681b83f01c977fa6ed04ec6a86ec5900169bd59d0093001f",
+    "originalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_buffKey\\\":\\\"enemy_blord2_s2_outset_trigger\\\",\\\"_loadFromBlackboard\\\":false,\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"_targetType\\\":\\\"SOURCE\\\",\\\"_checkBuffSource\\\":false,\\\"_sourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_alsoClearNullSource\\\":false,\\\"_finishHostBuff\\\":false,\\\"_decCntKey\\\":null,\\\"_decCnt\\\":1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuffsById\\\"}]\"},\"_onlyRunOnce\":0,\"_runActionOnEvent\":2,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-120365600458901825\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-215856016818471014\"}}"
+   },
+   {
+    "pathId": "8982375512144246463",
+    "objectName": "Trigger",
+    "referenced": true,
+    "sha256": "0f0c2ef061e92aac8890f692fadcc87d19af94fabd98333a1d2277ede4acb942",
+    "originalJson": "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4628225898765650241\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"248012603862317511\"}}"
+   }
+  ],
   "dyn/battle/prefabs/enemies/enemy_1554_lrtsia.prefab": [
    {
     "pathId": "-9136830028587244654",
@@ -59987,6 +60630,1393 @@
       "_sourceType": "BUFF_SOURCE",
       "_alsoClearNullSource": false,
       "_finishHostBuff": false
+     }
+    ]
+   }
+  },
+  "enemy_blord2_extra_damage[timer]": {
+   "templateKey": "enemy_blord2_extra_damage[timer]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_buffKeys": [
+       "enemy_blord2_extra_damage"
+      ],
+      "isAND": true,
+      "_loadFromBlackboard": false,
+      "_checkBuffSource": false,
+      "_buffSourceType": "BUFF_SOURCE",
+      "_checkSourceHost": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "enemy_blord2_extra_damage",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "enemy_blord_fog_damage",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "DEFAULT",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": null,
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": null,
+       "lifeTimeType": "INFINITY",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": null,
+       "lifeTime": 0.0,
+       "triggerLifeType": "INFINITY",
+       "triggerCnt": 0,
+       "triggerInterval": 1.0,
+       "waitFirstTriggerInterval": true,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": []
+      },
+      "_buffOwner": "BUFF_OWNER",
+      "_isDerivedBuff": false,
+      "_finishDerivedBuffIfParentFinish": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "enemy_blord2_listener",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "enemy_blord2_listener",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "DEFAULT",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": null,
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": null,
+       "lifeTimeType": "INFINITY",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": null,
+       "lifeTime": 0.0,
+       "triggerLifeType": "INFINITY",
+       "triggerCnt": 0,
+       "triggerInterval": 0.10000000149011612,
+       "waitFirstTriggerInterval": false,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": []
+      },
+      "_buffOwner": "BUFF_OWNER",
+      "_isDerivedBuff": false,
+      "_finishDerivedBuffIfParentFinish": false
+     }
+    ],
+    "ON_BUFF_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_buffKeys": [
+       "enemy_blord2_extra_damage[timer]"
+      ],
+      "isAND": true,
+      "_loadFromBlackboard": false,
+      "_checkBuffSource": false,
+      "_buffSourceType": "BUFF_SOURCE",
+      "_checkSourceHost": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+      "_buffKey": "enemy_blord2_extra_damage",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+      "_buffKey": "enemy_blord2_listener",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false
+     }
+    ]
+   }
+  },
+  "enemy_blord2_fog[summon]": {
+   "templateKey": "enemy_blord2_fog[summon]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+SummonEnemiesFollowMyRoute, Assembly-CSharp",
+      "_source": "BUFF_OWNER",
+      "_enemyKey": null,
+      "_summonCount": 1,
+      "_delayTime": 1.0,
+      "_managedByScheduler": true,
+      "_dontBlockWave": false,
+      "_trySummonOutsideWhenInObstacle": false,
+      "_randomOffsetBound": 0.20000000298023224,
+      "_passableMask": "NONE",
+      "_onlySummonOneInTheSamePlace": false,
+      "_useOffsetInBB": false,
+      "_offsetXKey": null,
+      "_offsetYKey": null,
+      "_offset": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "_useLocalUnharmfulFlag": false,
+      "_unharmful": false,
+      "_useMapPosition": false,
+      "_spawnOnHostRootTile": false,
+      "_useTargetPosition": false,
+      "_targetType": "TARGET",
+      "_useRandomDelay": false,
+      "_randomDelayRange": 0.5,
+      "_stopSummonIfHostDead": false,
+      "_useOffsetForEach": false,
+      "_addBuffToEnemy": false,
+      "_buffToEnemy": null,
+      "_checkMotionMode": "ALL",
+      "_skipCheckPoint": false
+     }
+    ]
+   }
+  },
+  "enemy_blord2_fountain[outset]": {
+   "templateKey": "enemy_blord2_fountain[outset]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuffUseAbilitySelector, Assembly-CSharp",
+      "_sourceType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_abilityName": "FountainKillSelector",
+      "_excludeTarget": false,
+      "_excludeTargetType": "SOURCE",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "instant_kill[effect]",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "empty",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "DEFAULT",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": "enemy_blord_L2_skill_02_locked_01",
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": "outset_locked",
+       "lifeTimeType": "INFINITY",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": null,
+       "lifeTime": 0.0,
+       "triggerLifeType": "IMMEDIATELY",
+       "triggerCnt": 0,
+       "triggerInterval": -1.0,
+       "waitFirstTriggerInterval": true,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": []
+      },
+      "_isDerivedBuff": true,
+      "_finishDerivedBuffIfParentFinish": true
+     }
+    ],
+    "ON_BUFF_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuffUseAbilitySelector, Assembly-CSharp",
+      "_sourceType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_abilityName": "FountainKillSelector",
+      "_excludeTarget": false,
+      "_excludeTargetType": "SOURCE",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "instant_kill",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "instant_kill",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "DEFAULT",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": null,
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": null,
+       "lifeTimeType": "IMMEDIATELY",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": null,
+       "lifeTime": 0.0,
+       "triggerLifeType": "IMMEDIATELY",
+       "triggerCnt": 0,
+       "triggerInterval": -1.0,
+       "waitFirstTriggerInterval": true,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": []
+      },
+      "_isDerivedBuff": false,
+      "_finishDerivedBuffIfParentFinish": false
+     }
+    ]
+   }
+  },
+  "enemy_blord2_hp_aura[trigger]": {
+   "templateKey": "enemy_blord2_hp_aura[trigger]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_buffKeys": [
+       "enemy_bmbcar_explosion_mark"
+      ],
+      "isAND": true,
+      "_loadFromBlackboard": false,
+      "_checkBuffSource": false,
+      "_buffSourceType": "BUFF_SOURCE",
+      "_checkSourceHost": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+      "_buffKey": "enemy_bmbcar_explosion_mark",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "enemy_blord2_hp_aura[ctrl]",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "empty",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "DEFAULT",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": null,
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": null,
+       "lifeTimeType": "LIMITED",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": "duration",
+       "lifeTime": 0.0,
+       "triggerLifeType": "IMMEDIATELY",
+       "triggerCnt": 0,
+       "triggerInterval": -1.0,
+       "waitFirstTriggerInterval": true,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": []
+      },
+      "_buffOwner": "BUFF_OWNER",
+      "_isDerivedBuff": true,
+      "_finishDerivedBuffIfParentFinish": true
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckEnemyAbilityName, Assembly-CSharp",
+      "_target": "BUFF_OWNER",
+      "_abilityName": "BloodFog2"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InterruptEnemyAbility, Assembly-CSharp",
+      "_enemyFrom": "BUFF_OWNER",
+      "_resetCooldown": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+      "_buffKey": "enemy_blord2_fog[summon]",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false
+     }
+    ]
+   }
+  },
+  "enemy_blord2_kill[bmbcar]": {
+   "templateKey": "enemy_blord2_kill[bmbcar]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerEnemySkill, Assembly-CSharp",
+      "_skillName": "Explosion",
+      "_checkSkillActive": true,
+      "_checkSkillReady": false,
+      "_ownerType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_interruptCurAbility": true,
+      "_interruptCurAbilityUnlessItIsExpectedAbility": false,
+      "_assignCombatAbility": false,
+      "_forceFindTargetBySkillSelector": false
+     }
+    ],
+    "ON_BUFF_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckUnitAlive, Assembly-CSharp",
+      "_ownerType": "BUFF_OWNER"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+      "_conditionNode": {
+       "$type": "Torappu.Battle.Action.Nodes+CheckUnitInAttackState, Assembly-CSharp",
+       "_ownerType": "BUFF_SOURCE",
+       "_isUnset": false
+      },
+      "_succeedNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CheckEnemyAbilityName, Assembly-CSharp",
+        "_target": "BUFF_SOURCE",
+        "_abilityName": "BloodFountain2"
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuffToHost, Assembly-CSharp",
+        "_sourceType": "BUFF_OWNER",
+        "_buffData": {
+         "attributes": {
+          "abnormalFlags": null,
+          "abnormalImmunes": null,
+          "abnormalAntis": null,
+          "abnormalCombos": null,
+          "abnormalComboImmunes": null,
+          "attributeModifiers": null
+         },
+         "buffKey": "enemy_blord2_kill[mark]",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "empty",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": null,
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "IMMEDIATELY",
+         "triggerCnt": 0,
+         "triggerInterval": -1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": []
+        },
+        "_isDerivedBuff": false,
+        "_finishDerivedBuffIfParentFinish": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+        "_conditionNode": {
+         "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+         "_targetType": "BUFF_SOURCE",
+         "_buffKeys": [
+          "enemy_blord2_fog[summon]"
+         ],
+         "isAND": true,
+         "_loadFromBlackboard": false,
+         "_checkBuffSource": false,
+         "_buffSourceType": "BUFF_SOURCE",
+         "_checkSourceHost": false
+        },
+        "_succeedNodes": [
+         {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+           "attributes": {
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "abnormalAntis": [],
+            "abnormalCombos": [],
+            "abnormalComboImmunes": [],
+            "attributeModifiers": []
+           },
+           "buffKey": "enemy_blord2_s2_bmbcar_trigger2",
+           "loadFromDB": false,
+           "isDurableBuff": false,
+           "isDamageMissable": false,
+           "isSilenceable": false,
+           "isStunnable": false,
+           "isFreezable": false,
+           "isLevitatable": false,
+           "statusResistable": "AUTOMATIC",
+           "templateKey": "empty",
+           "disableOverride": false,
+           "overrideKey": null,
+           "overrideType": "DEFAULT",
+           "maxStackCnt": 1,
+           "refreshRemainingTimeWhenStackMax": false,
+           "clearAllStackCntWhenTimeUp": false,
+           "maxValidStackCnt": -1,
+           "independentCharacterSource": false,
+           "overrideEffectKey": null,
+           "overrideOnEventPriority": false,
+           "onEventPriority": "DEFAULT",
+           "audioSignal": null,
+           "lifeTimeType": "INFINITY",
+           "takeSnapshotWhenExtend": false,
+           "durationKey": null,
+           "lifeTime": 0.0,
+           "triggerLifeType": "IMMEDIATELY",
+           "triggerCnt": 0,
+           "triggerInterval": -1.0,
+           "waitFirstTriggerInterval": true,
+           "firstTriggerInterval": -1.0,
+           "priority": -1,
+           "priorityBBKeys": [],
+           "stripBlackboardParamsWithBuffKey": false,
+           "blackboard": []
+          },
+          "_buffOwner": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false
+         }
+        ],
+        "_failNodes": [
+         {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+           "attributes": {
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "abnormalAntis": [],
+            "abnormalCombos": [],
+            "abnormalComboImmunes": [],
+            "attributeModifiers": []
+           },
+           "buffKey": "enemy_blord2_s2_bmbcar_trigger1",
+           "loadFromDB": false,
+           "isDurableBuff": false,
+           "isDamageMissable": false,
+           "isSilenceable": false,
+           "isStunnable": false,
+           "isFreezable": false,
+           "isLevitatable": false,
+           "statusResistable": "AUTOMATIC",
+           "templateKey": "empty",
+           "disableOverride": false,
+           "overrideKey": null,
+           "overrideType": "DEFAULT",
+           "maxStackCnt": 1,
+           "refreshRemainingTimeWhenStackMax": false,
+           "clearAllStackCntWhenTimeUp": false,
+           "maxValidStackCnt": -1,
+           "independentCharacterSource": false,
+           "overrideEffectKey": null,
+           "overrideOnEventPriority": false,
+           "onEventPriority": "DEFAULT",
+           "audioSignal": null,
+           "lifeTimeType": "INFINITY",
+           "takeSnapshotWhenExtend": false,
+           "durationKey": null,
+           "lifeTime": 0.0,
+           "triggerLifeType": "IMMEDIATELY",
+           "triggerCnt": 0,
+           "triggerInterval": -1.0,
+           "waitFirstTriggerInterval": true,
+           "firstTriggerInterval": -1.0,
+           "priority": -1,
+           "priorityBBKeys": [],
+           "stripBlackboardParamsWithBuffKey": false,
+           "blackboard": []
+          },
+          "_buffOwner": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false
+         }
+        ]
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+TriggerEnemySkill, Assembly-CSharp",
+        "_skillName": "BloodFountain2",
+        "_checkSkillActive": false,
+        "_checkSkillReady": false,
+        "_ownerType": "BUFF_SOURCE",
+        "_targetType": "BUFF_SOURCE",
+        "_interruptCurAbility": true,
+        "_interruptCurAbilityUnlessItIsExpectedAbility": false,
+        "_assignCombatAbility": false,
+        "_forceFindTargetBySkillSelector": false
+       }
+      ],
+      "_failNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuffToHost, Assembly-CSharp",
+        "_sourceType": "BUFF_OWNER",
+        "_buffData": {
+         "attributes": {
+          "abnormalFlags": null,
+          "abnormalImmunes": null,
+          "abnormalAntis": null,
+          "abnormalCombos": null,
+          "abnormalComboImmunes": null,
+          "attributeModifiers": null
+         },
+         "buffKey": "enemy_blord2_kill[mark]",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "empty",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": null,
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "IMMEDIATELY",
+         "triggerCnt": 0,
+         "triggerInterval": -1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": []
+        },
+        "_isDerivedBuff": false,
+        "_finishDerivedBuffIfParentFinish": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+         },
+         "buffKey": "enemy_blord2_s2_bmbcar_trigger1",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "empty",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": null,
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "IMMEDIATELY",
+         "triggerCnt": 0,
+         "triggerInterval": -1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": []
+        },
+        "_buffOwner": "BUFF_SOURCE",
+        "_isDerivedBuff": false,
+        "_finishDerivedBuffIfParentFinish": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+TriggerEnemySkill, Assembly-CSharp",
+        "_skillName": "BloodFountain2",
+        "_checkSkillActive": false,
+        "_checkSkillReady": false,
+        "_ownerType": "BUFF_SOURCE",
+        "_targetType": "BUFF_SOURCE",
+        "_interruptCurAbility": true,
+        "_interruptCurAbilityUnlessItIsExpectedAbility": false,
+        "_assignCombatAbility": false,
+        "_forceFindTargetBySkillSelector": false
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "enemy_blord2_listener": {
+   "templateKey": "enemy_blord2_listener",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FilterByTargetHpRatio, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_condType": "LT",
+      "_value": 0.0,
+      "_useSourceHpRatio": false,
+      "_sourceType": "SOURCE",
+      "_blackboardPrefix": null
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_sourceType": "BUFF_SOURCE",
+      "_effectKey": "enemy_blord_L2_skill_03_goaway_01",
+      "_useSourceFaceVactor": false,
+      "_useSourceToTargetDirection": false,
+      "_useAttackPlaybackSpeed": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false
+     }
+    ]
+   }
+  },
+  "enemy_blord_fog_buffs": {
+   "templateKey": "enemy_blord_fog_buffs",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+      "_conditionNode": {
+       "$type": "Torappu.Battle.Action.Nodes+IfTargetSide, Assembly-CSharp",
+       "_sideMask": "ENEMY",
+       "_targetType": "BUFF_OWNER"
+      },
+      "_succeedNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+        "_targetType": "BUFF_OWNER",
+        "_buffKeys": [
+         "enemy_bldore_mark"
+        ],
+        "isAND": true,
+        "_loadFromBlackboard": false,
+        "_checkBuffSource": false,
+        "_buffSourceType": "BUFF_SOURCE",
+        "_checkSourceHost": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+         },
+         "buffKey": "enemy_blord_fog_spawn",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "enemy_blord_fog_spawn",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": null,
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "IMMEDIATELY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "IMMEDIATELY",
+         "triggerCnt": 0,
+         "triggerInterval": -1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": []
+        },
+        "_buffOwner": "BUFF_OWNER",
+        "_isDerivedBuff": true,
+        "_finishDerivedBuffIfParentFinish": true
+       }
+      ],
+      "_failNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+           {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 0.0,
+            "loadFromBlackboard": true,
+            "fetchBaseValueFromSourceEntity": false
+           }
+          ]
+         },
+         "buffKey": "enemy_blord_fog_damage",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "enemy_blord_fog_damage",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": "enemy_blord_L1_debuff_01",
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "INFINITY",
+         "triggerCnt": 0,
+         "triggerInterval": 1.0,
+         "waitFirstTriggerInterval": false,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": []
+        },
+        "_buffOwner": "BUFF_OWNER",
+        "_isDerivedBuff": true,
+        "_finishDerivedBuffIfParentFinish": true
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+         },
+         "buffKey": "enemy_blord2_listener",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "enemy_blord2_listener",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": null,
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "INFINITY",
+         "triggerCnt": 0,
+         "triggerInterval": 0.10000000149011612,
+         "waitFirstTriggerInterval": false,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": []
+        },
+        "_buffOwner": "BUFF_OWNER",
+        "_isDerivedBuff": true,
+        "_finishDerivedBuffIfParentFinish": true
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "enemy_blord_fog_damage": {
+   "templateKey": "enemy_blord_fog_damage",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+BleedingDamageIncreasingReset, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_buffKeys": [
+       "enemy_blord_fog_respawn"
+      ],
+      "isAND": true,
+      "_loadFromBlackboard": false,
+      "_checkBuffSource": false,
+      "_buffSourceType": "BUFF_SOURCE",
+      "_checkSourceHost": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "enemy_blord_fog_respawn",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "enemy_blord_fog_respawn",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "DEFAULT",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": null,
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": null,
+       "lifeTimeType": "INFINITY",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": null,
+       "lifeTime": 0.0,
+       "triggerLifeType": "IMMEDIATELY",
+       "triggerCnt": 0,
+       "triggerInterval": -1.0,
+       "waitFirstTriggerInterval": true,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": []
+      },
+      "_buffOwner": "BUFF_OWNER",
+      "_isDerivedBuff": false,
+      "_finishDerivedBuffIfParentFinish": false
+     }
+    ],
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+BleedingDamagePerSec, Assembly-CSharp",
+      "_damageType": "MAGICAL",
+      "_damageKey": "addOnDamage",
+      "_baseDamageKey": "baseDamage",
+      "_durationToIncreaseKey": "addOnDuration",
+      "_ignoreForSp": true,
+      "_attackType": "BUFF",
+      "_isEnvDamage": false,
+      "_isRatioToMaxHp": false,
+      "_isIncreasingToCap": true,
+      "_skipModifierEvent": false,
+      "_elementDamageType": "NONE"
+     }
+    ],
+    "ON_BUFF_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_buffKeys": [
+       "enemy_blord_fog_damage"
+      ],
+      "isAND": true,
+      "_loadFromBlackboard": false,
+      "_checkBuffSource": false,
+      "_buffSourceType": "BUFF_SOURCE",
+      "_checkSourceHost": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+      "_buffKey": "enemy_blord_fog_respawn",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false
+     }
+    ]
+   }
+  },
+  "enemy_blord_fog_respawn": {
+   "templateKey": "enemy_blord_fog_respawn",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_OWNER_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateCardBuff, Assembly-CSharp",
+      "_target": "BUFF_OWNER",
+      "_lifeType": "UNTIL_NEXT_SPAWN",
+      "_isRatio": true,
+      "_enableMaxStackCount": false,
+      "_filterIsInHand": false,
+      "_useCardBuffKey": false,
+      "_cardBuffKey": null
+     }
+    ]
+   }
+  },
+  "enemy_blord_fog_spawn": {
+   "templateKey": "enemy_blord_fog_spawn",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+SummonEnemiesFollowMyRoute, Assembly-CSharp",
+      "_source": "BUFF_OWNER",
+      "_enemyKey": null,
+      "_summonCount": 1,
+      "_delayTime": 1.0,
+      "_managedByScheduler": true,
+      "_dontBlockWave": false,
+      "_trySummonOutsideWhenInObstacle": false,
+      "_randomOffsetBound": 0.0,
+      "_passableMask": "NONE",
+      "_onlySummonOneInTheSamePlace": false,
+      "_useOffsetInBB": false,
+      "_offsetXKey": null,
+      "_offsetYKey": null,
+      "_offset": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "_useLocalUnharmfulFlag": false,
+      "_unharmful": false,
+      "_useMapPosition": true,
+      "_spawnOnHostRootTile": false,
+      "_useTargetPosition": false,
+      "_targetType": "TARGET",
+      "_useRandomDelay": false,
+      "_randomDelayRange": 0.5,
+      "_stopSummonIfHostDead": false,
+      "_useOffsetForEach": false,
+      "_addBuffToEnemy": false,
+      "_buffToEnemy": null,
+      "_checkMotionMode": "ALL",
+      "_skipCheckPoint": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false
+     }
+    ]
+   }
+  },
+  "enemy_blord_fountain[damage]": {
+   "templateKey": "enemy_blord_fountain[damage]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FixedValueDamage, Assembly-CSharp",
+      "_damageType": "MAGICAL",
+      "_damageKey": "value",
+      "_ignoreForSp": false,
+      "_attackType": "NORMAL",
+      "_skipModifierEvent": false,
+      "_considerUnhurtable": false,
+      "_noSourceDamage": true,
+      "_targetType": "BUFF_OWNER",
+      "_assignRealDamageToBB": false,
+      "_multiplierByKey": false,
+      "_multiplierKey": "cnt",
+      "_damageTargetType": "TARGET",
+      "_triggerOnCalculateDamage": false,
+      "_isEnvDamage": false,
+      "_ignoreCancelReasonMask": "NONE",
+      "_forceDisplayDamageNum": false
+     }
+    ]
+   }
+  },
+  "enemy_blord_fountain[trigger]": {
+   "templateKey": "enemy_blord_fountain[trigger]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerAbility, Assembly-CSharp",
+      "_ownerType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_abilityName": "FountainHint",
+      "_checkCanUseAblityFlag": false,
+      "_castDirectly": true,
+      "_useFirstActiveAbility": false,
+      "_useCastResult": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerAbility, Assembly-CSharp",
+      "_ownerType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_abilityName": "FountainAlarm",
+      "_checkCanUseAblityFlag": false,
+      "_castDirectly": true,
+      "_useFirstActiveAbility": false,
+      "_useCastResult": false
+     }
+    ],
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerAbility, Assembly-CSharp",
+      "_ownerType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_abilityName": "FountainDamage",
+      "_checkCanUseAblityFlag": false,
+      "_castDirectly": true,
+      "_useFirstActiveAbility": false,
+      "_useCastResult": false
+     }
+    ],
+    "ON_BUFF_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InterruptAbility, Assembly-CSharp",
+      "_ownerType": "BUFF_OWNER",
+      "_abilityName": "FountainHint",
+      "_loadFromBlackboard": false,
+      "_stopAffect": false,
+      "_emitAttackFinishOnly": false,
+      "_useCurrentAbility": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InterruptAbility, Assembly-CSharp",
+      "_ownerType": "BUFF_OWNER",
+      "_abilityName": "FountainAlarm",
+      "_loadFromBlackboard": false,
+      "_stopAffect": false,
+      "_emitAttackFinishOnly": false,
+      "_useCurrentAbility": false
+     }
+    ]
+   }
+  },
+  "enemy_blord_fountain_invincible": {
+   "templateKey": "enemy_blord_fountain_invincible",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_FINISH": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false
+     }
+    ]
+   }
+  },
+  "enemy_blord_fountain_trigger": {
+   "templateKey": "enemy_blord_fountain_trigger",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BEFORE_TRY_SET_HP_ZERO": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+TriggerEnemySkill, Assembly-CSharp",
+      "_skillName": "BloodFountain",
+      "_checkSkillActive": true,
+      "_checkSkillReady": false,
+      "_ownerType": "BUFF_OWNER",
+      "_targetType": "BUFF_OWNER",
+      "_interruptCurAbility": true,
+      "_interruptCurAbilityUnlessItIsExpectedAbility": false,
+      "_assignCombatAbility": false,
+      "_forceFindTargetBySkillSelector": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true
+     }
+    ]
+   }
+  },
+  "enemy_blord_mark": {
+   "templateKey": "enemy_blord_mark",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_buffKeys": [
+       "trap_bldore_summon[blord1]"
+      ],
+      "isAND": true,
+      "_loadFromBlackboard": false,
+      "_checkBuffSource": false,
+      "_buffSourceType": "BUFF_SOURCE",
+      "_checkSourceHost": false
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false
      }
     ]
    }
@@ -91586,6 +93616,27 @@
     ]
    }
   },
+  "instant_kill": {
+   "templateKey": "instant_kill",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill, Assembly-CSharp",
+      "_targetType": "TARGET",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": true,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false
+     }
+    ]
+   }
+  },
   "jakill_reborn": {
    "templateKey": "jakill_reborn",
    "effectKey": "",
@@ -95819,6 +97870,87 @@
     "pathId": "6635003586885476131",
     "sha256": "e9314ea7065ce109f5438c6c6757c7780ca8ce3e44632ea1691f1a4eee003e37",
     "originalJson": "{\"_alwaysPlayStartEffects\":0,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":0,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[\"enemy_bldbat_hit_01\"],\"_effectsWhenReached\":[],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6228654691120423133\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}"
+   }
+  ],
+  "projectile_enemy_blord": [
+   {
+    "pathId": "-2415032312318642232",
+    "sha256": "89058d5ed6ced76615bd3ff7a5f2ad6da91ed72614d264a1c696d606cc9d3541",
+    "originalJson": "{\"_actionController\":{\"_addExtraBuffsWhenReached\":0,\"_detachAllBuffsWhenStopped\":0,\"_detachAllExtraBuffsWhenStopped\":0,\"_detachBuffsWhenTargetLeave\":0,\"_dontAddBuffs\":0,\"_excludeAttachments\":0,\"_extraBuffsInTheEnd\":[],\"_onlyAddBuffsToTargetOnce\":0,\"_onlyAddBuffsToTraceTarget\":0,\"_useExtraBuffsWhenStopHit\":0,\"_useSelfBlackboard\":0},\"_allowZeroBlockCntLimit\":0,\"_alwaysHitTraceTargetInTheEnd\":1,\"_alwaysHitTraceTargetWhenReached\":0,\"_alwaysReachInTheEnd\":0,\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-8607474340918183992\"},\"_canHitSameTargetMultipleTimes\":0,\"_clearMainEffectWhenReached\":1,\"_containsChildrenBehaviours\":0,\"_eliminatableStatus\":0,\"_fireProjectileReachedEvent\":0,\"_fixDealHitTargetLeft\":1,\"_getLifeTimeFromBB\":0,\"_getMaxHitNumFromBB\":0,\"_hitNumType\":1,\"_keepAlreadyHitTime\":-1.0,\"_lifeTime\":10.0,\"_lifeTimeType\":1,\"_limitedMaxHitNumToSourceBlockedCnt\":0,\"_mainEffect\":\"enemy_blord_L1_attack_trail_01\",\"_managedBySource\":0,\"_maxHitNum\":1,\"_maxHitNumBBKey\":\"\",\"_movementAdjustableStatus\":0,\"_overrideAudioSignal\":\"\",\"_projectileType\":0,\"_randomDelayToBorn\":0.0,\"_stopAfterFirstHit\":0,\"_stopAfterMaxHit\":1,\"_stopGraphicProjectileWhenClearMainEffect\":0,\"_stopWhenSourceInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5077889109377075256\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8797129986015012478\"}}"
+   },
+   {
+    "pathId": "651668507635759048",
+    "sha256": "649740cc761d6e7e12b42136d639d1035b2216bc616979f51c6b17a7322b572d",
+    "originalJson": "{\"_alwaysPlayStartEffects\":0,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":0,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[\"enemy_blord_L1_attack_hit_01\"],\"_effectsWhenReached\":[],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5077889109377075256\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}"
+   },
+   {
+    "pathId": "8954550867128104904",
+    "sha256": "287448c911b5f2440d4e030d856f9d0862f2ea639584a0612106986023df385b",
+    "originalJson": "{\"_addInertia\":0,\"_adjustSourceToTargetArcAngleBySourceFace\":0,\"_awayFromSourceAsDirection\":0,\"_clearTraceTargetWhenReached\":1,\"_comeBack\":0,\"_comeBackSpeedScale\":0.25,\"_delayAfterReached\":0.0,\"_delayToReachAfterHit\":0.0,\"_delayToStart\":0.0,\"_deltaSpeedPerSec\":0.0,\"_distance\":0.0,\"_drawFuncTurnAndWaveDebugLine\":0,\"_exactMatchCameraForward\":0,\"_finalSpeed\":0.0,\"_fixOnProjectileReached\":0,\"_fixProjectileHasReached\":0,\"_fixProjectileZWhenReached\":0,\"_flyToPredefinedLocation\":0,\"_flyToTargetLocationOnly\":0,\"_forceReachedWhenTimeup\":1,\"_forceResetToTargetPosWhenReached\":0,\"_forceUseTargetMountPoint\":0,\"_freezeRotationXY\":0,\"_freezeRotationZ\":0,\"_handleWithIBuildableTarget\":0,\"_moveType\":1,\"_moveTypeData\":{\"data\":[]},\"_onlyReachedInTime\":0.0,\"_predefinedLocation\":0,\"_randomOffset\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"_resetToTargetPosWhenReached\":0,\"_resetToTracetargetMapPosV3\":0,\"_rotateToTarget\":1,\"_rotateToTargetOnDelayToStart\":0,\"_skipSmoothLerpDirection\":0,\"_sourceDirectionArcAngleRatio\":0.0,\"_sourceToTargetArcAngle\":0.0,\"_speed\":10.0,\"_turnSpeed\":0.0,\"_updateDelayTimeOnlyOnce\":0,\"_useDynamicSpeed\":0,\"_useSourceDirection\":0,\"_useSourceDirectionArcAngleWithRatio\":0,\"_useSourceDirectionRandomArcAngleStart\":0,\"_useSourceToTargetArcAngleWithRatio\":0,\"_useSourceToTargetRandomArcAngleStart\":0,\"_useStartToTarget\":0,\"_useTargetDirection\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5077889109377075256\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-1429203677512073985\"}}"
+   }
+  ],
+  "projectile_enemy_blord_s[fog]": [
+   {
+    "pathId": "-9060766424995629896",
+    "sha256": "de0a2063d6c5666b2f16308708cf73e89bb0e76e62ae91f8c9153d7e3507b194",
+    "originalJson": "{\"_buffs\":[],\"_checkVerifyTargetOnTick\":0,\"_hitTargetNoDamage\":0,\"_manuallyTickInterval\":0,\"_onlyCheckHitWhenReachTarget\":0,\"_rangeToLoad\":{\"m_FileID\":0,\"m_PathID\":\"4737694512925209784\"},\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":3,\"unitTypeMask\":0},\"_targetValidator\":{\"m_FileID\":0,\"m_PathID\":\"2912014726949336248\"},\"_tickInterval\":10,\"_trackSourceByCardUid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3471364953417697737\"}}"
+   },
+   {
+    "pathId": "-8514294727430015816",
+    "sha256": "f90a6495cee56e415047fc7e1890583137cb4bf9b40d490263375c5f028668ff",
+    "originalJson": "{\"_actionController\":{\"_addExtraBuffsWhenReached\":0,\"_detachAllBuffsWhenStopped\":1,\"_detachAllExtraBuffsWhenStopped\":0,\"_detachBuffsWhenTargetLeave\":0,\"_dontAddBuffs\":0,\"_excludeAttachments\":0,\"_extraBuffsInTheEnd\":[],\"_onlyAddBuffsToTargetOnce\":0,\"_onlyAddBuffsToTraceTarget\":0,\"_useExtraBuffsWhenStopHit\":0,\"_useSelfBlackboard\":0},\"_allowZeroBlockCntLimit\":0,\"_alwaysHitTraceTargetInTheEnd\":1,\"_alwaysHitTraceTargetWhenReached\":0,\"_alwaysReachInTheEnd\":0,\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-3584583273073052488\"},\"_canHitSameTargetMultipleTimes\":0,\"_clearMainEffectWhenReached\":1,\"_containsChildrenBehaviours\":0,\"_eliminatableStatus\":0,\"_fireProjectileReachedEvent\":0,\"_fixDealHitTargetLeft\":1,\"_getLifeTimeFromBB\":1,\"_getMaxHitNumFromBB\":0,\"_hitNumType\":2,\"_keepAlreadyHitTime\":-1.0,\"_lifeTime\":10.0,\"_lifeTimeType\":1,\"_limitedMaxHitNumToSourceBlockedCnt\":0,\"_mainEffect\":\"\",\"_managedBySource\":0,\"_maxHitNum\":1,\"_maxHitNumBBKey\":\"\",\"_movementAdjustableStatus\":0,\"_overrideAudioSignal\":\"\",\"_projectileType\":0,\"_randomDelayToBorn\":0.0,\"_stopAfterFirstHit\":0,\"_stopAfterMaxHit\":1,\"_stopGraphicProjectileWhenClearMainEffect\":0,\"_stopWhenSourceInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8797129986015012478\"}}"
+   },
+   {
+    "pathId": "-6136052074655484744",
+    "sha256": "5db50100ffa2d6a9e1d8e192b7845f1fd808ec04da508e2979cfe5fe0977b833",
+    "originalJson": "{\"_alwaysPlayStartEffects\":0,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":1,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[],\"_effectsWhenReached\":[\"enemy_blord_L1_skill_blood_01\"],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}"
+   },
+   {
+    "pathId": "2912014726949336248",
+    "sha256": "ac5dc9d4b90b7307605c4ee4297e47f0ad9fc9c0e1935352f89583b3c57f6cad",
+    "originalJson": "{\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":3,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3637692038217913187\"}}"
+   },
+   {
+    "pathId": "4737694512925209784",
+    "sha256": "9334fdd50466c745a2e748ac83f6eb70816f5747a440672ea2735c31066a68f1",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":1,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "5921366460249371832",
+    "sha256": "008211803657403c8f66310096a6134ab819def511b78ab884788096f4415daa",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":1.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}"
+   },
+   {
+    "pathId": "8869011400205825208",
+    "sha256": "f0421050b82a9db3deb796bb86ba4a39587d042ddbf4d4b56cb219669011a376",
+    "originalJson": "{\"_adjustSourceToTargetArcAngleBySourceFace\":0,\"_attachToMountPoint\":1,\"_awayFromSourceAsDirection\":0,\"_checkReached\":1,\"_delayAfterReached\":0,\"_delayTime\":0.0,\"_delayToStart\":0.0,\"_exactMatchCameraForward\":0,\"_extraDelayTime\":0.0,\"_fixOnProjectileReached\":0,\"_fixProjectileZWhenReached\":0,\"_flyToPredefinedLocation\":0,\"_flyToTargetLocationOnly\":0,\"_followTarget\":0,\"_forceReachedWhenTimeup\":1,\"_forceResetToTargetPosWhenReached\":0,\"_freezeRotationXY\":0,\"_freezeRotationZ\":0,\"_handleWithIBuildableTarget\":0,\"_ignoreMountPointHeight\":0,\"_immediatelyReach\":1,\"_keepUpdate\":0,\"_mountPointType\":7,\"_onlyReachedInTime\":0.0,\"_predefinedLocation\":0,\"_resetToTargetPosWhenReached\":0,\"_resetToTracetargetMapPosV3\":0,\"_rotateToTarget\":1,\"_sourceDirectionArcAngleRatio\":0.0,\"_sourceToTargetArcAngle\":0.0,\"_stopIfTargetDead\":0,\"_stopIfTargetDisappeared\":0,\"_updateDelayTimeOnlyOnce\":0,\"_useSourceDirection\":0,\"_useSourceDirectionArcAngleWithRatio\":0,\"_useSourceDirectionRandomArcAngleStart\":0,\"_useSourceToTargetArcAngleWithRatio\":0,\"_useSourceToTargetRandomArcAngleStart\":0,\"_useStartToTarget\":0,\"_useTargetDirection\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1318547317026223288\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"740622368551806873\"}}"
+   }
+  ],
+  "projectile_enemy_blord_s[stun]": [
+   {
+    "pathId": "-5354161345117988051",
+    "sha256": "5b6363bf27e43cfb7329e88410c503f74f8a0edd872b78b0d3af1f7f325a3a2e",
+    "originalJson": "{\"_adjustSourceToTargetArcAngleBySourceFace\":0,\"_attachToMountPoint\":1,\"_awayFromSourceAsDirection\":0,\"_checkReached\":1,\"_delayAfterReached\":0,\"_delayTime\":0.0,\"_delayToStart\":0.0,\"_exactMatchCameraForward\":0,\"_extraDelayTime\":0.0,\"_fixOnProjectileReached\":0,\"_fixProjectileZWhenReached\":0,\"_flyToPredefinedLocation\":0,\"_flyToTargetLocationOnly\":0,\"_followTarget\":0,\"_forceReachedWhenTimeup\":1,\"_forceResetToTargetPosWhenReached\":0,\"_freezeRotationXY\":0,\"_freezeRotationZ\":0,\"_handleWithIBuildableTarget\":0,\"_ignoreMountPointHeight\":0,\"_immediatelyReach\":1,\"_keepUpdate\":0,\"_mountPointType\":7,\"_onlyReachedInTime\":0.0,\"_predefinedLocation\":0,\"_resetToTargetPosWhenReached\":0,\"_resetToTracetargetMapPosV3\":0,\"_rotateToTarget\":0,\"_sourceDirectionArcAngleRatio\":0.0,\"_sourceToTargetArcAngle\":0.0,\"_stopIfTargetDead\":0,\"_stopIfTargetDisappeared\":0,\"_updateDelayTimeOnlyOnce\":0,\"_useSourceDirection\":0,\"_useSourceDirectionArcAngleWithRatio\":0,\"_useSourceDirectionRandomArcAngleStart\":0,\"_useSourceToTargetArcAngleWithRatio\":0,\"_useSourceToTargetRandomArcAngleStart\":0,\"_useStartToTarget\":0,\"_useTargetDirection\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2991368345655747795\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"740622368551806873\"}}"
+   },
+   {
+    "pathId": "-5170459042774492371",
+    "sha256": "a3831e1051c43a6bf24863360c9a3b03a7825b2d2e34a80b7c6c431ecfef7ebe",
+    "originalJson": "{\"_extendable\":0,\"_rangeId\":\"x-5\",\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2991368345655747795\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-4310568981281620583\"}}"
+   },
+   {
+    "pathId": "-197568594929034451",
+    "sha256": "ca608ea91f002b89d95636445b76125e80c2d81c939022b964e33a0db10260e3",
+    "originalJson": "{\"_alwaysPlayStartEffects\":0,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":0,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[\"enemy_blord_L1_skill_02_hit_02\"],\"_effectsWhenReached\":[\"enemy_blord_L1_skill_02_hit_01\"],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2991368345655747795\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}"
+   },
+   {
+    "pathId": "2506047473845623597",
+    "sha256": "e557a55975ca4f2095b9ca33a82b7fdb14115393c7a079d9407a5203376b0d14",
+    "originalJson": "{\"_canFlyThroughTheDeathArea\":0,\"_exceptFlyCharacter\":0,\"_exceptSource\":0,\"_exceptTraceTarget\":0,\"_goThroughWall\":1,\"_ignoreCamouflage\":1,\"_ignoreRangeScale\":0,\"_markReachedOnlyWhenTargetEnter\":0,\"_mergeTraceTargetMotion\":0,\"_onlyCheckHitWhenReachTarget\":1,\"_onlyCheckHitWhenStop\":0,\"_onlyTraceTarget\":0,\"_overridePurposeMaskWithTargetOptions\":0,\"_rangeToLoad\":{\"m_FileID\":0,\"m_PathID\":\"-5170459042774492371\"},\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":2,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2991368345655747795\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3494225671239136090\"}}"
+   },
+   {
+    "pathId": "3630582427975703341",
+    "sha256": "04eba56e1cd7998dc261c8697a51b3b2e270a232f53ca682e56a8e18f8a58829",
+    "originalJson": "{\"_actionController\":{\"_addExtraBuffsWhenReached\":0,\"_detachAllBuffsWhenStopped\":0,\"_detachAllExtraBuffsWhenStopped\":0,\"_detachBuffsWhenTargetLeave\":0,\"_dontAddBuffs\":0,\"_excludeAttachments\":0,\"_extraBuffsInTheEnd\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_blord_fountain[hit_mark]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":0,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_blord_fountain[hit_mark]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_onlyAddBuffsToTargetOnce\":0,\"_onlyAddBuffsToTraceTarget\":0,\"_useExtraBuffsWhenStopHit\":0,\"_useSelfBlackboard\":0},\"_allowZeroBlockCntLimit\":0,\"_alwaysHitTraceTargetInTheEnd\":1,\"_alwaysHitTraceTargetWhenReached\":0,\"_alwaysReachInTheEnd\":0,\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_canHitSameTargetMultipleTimes\":0,\"_clearMainEffectWhenReached\":0,\"_containsChildrenBehaviours\":0,\"_eliminatableStatus\":0,\"_fireProjectileReachedEvent\":0,\"_fixDealHitTargetLeft\":1,\"_getLifeTimeFromBB\":0,\"_getMaxHitNumFromBB\":0,\"_hitNumType\":2,\"_keepAlreadyHitTime\":-1.0,\"_lifeTime\":10.0,\"_lifeTimeType\":0,\"_limitedMaxHitNumToSourceBlockedCnt\":0,\"_mainEffect\":\"\",\"_managedBySource\":0,\"_maxHitNum\":1,\"_maxHitNumBBKey\":\"\",\"_movementAdjustableStatus\":0,\"_overrideAudioSignal\":\"\",\"_projectileType\":0,\"_randomDelayToBorn\":0.0,\"_stopAfterFirstHit\":0,\"_stopAfterMaxHit\":1,\"_stopGraphicProjectileWhenClearMainEffect\":0,\"_stopWhenSourceInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2991368345655747795\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8797129986015012478\"}}"
    }
   ],
   "projectile_enemy_bsnake": [

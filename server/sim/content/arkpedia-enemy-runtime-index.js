@@ -12,6 +12,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-blood-collector',load:()=>import('./arkpedia-enemy-blood-collector.js'),exports:{bloodCollector:'bloodCollector'}},
   {key:'arkpedia-enemy-boneguard',load:()=>import('./arkpedia-enemy-boneguard.js'),exports:{boneguard:'boneguard'}},
   {key:'arkpedia-enemy-spilot',load:()=>import('./arkpedia-enemy-spilot.js'),exports:{spilot:'spilot'}},
+  {key:'arkpedia-enemy-blood-lord',load:()=>import('./arkpedia-enemy-blood-lord.js'),exports:{bloodLord:'bloodLord',bloodLordTwo:'bloodLordTwo'}},
   {key:'arkpedia-enemy-talulah-fighter',load:()=>import('./arkpedia-enemy-talulah-fighter.js'),exports:{talulahFighter:'talulahFighter',neutralShot:'neutralShot',neutralPreference:'neutralPreference'}},
   {key:'arkpedia-enemy-frostnova',load:()=>import('./arkpedia-enemy-frostnova.js'),exports:{frostNova:'frostNova'}},
   {key:'arkpedia-enemy-herald',load:()=>import('./arkpedia-enemy-herald.js'),exports:{heraldDevour:'heraldDevour'}},

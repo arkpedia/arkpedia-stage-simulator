@@ -48,6 +48,7 @@ export const DEVICE_FAMILIES = {
   // destruction reveals a hidden Loading Point).
   bloodAltarDefinition: { module: 'stage-blood-altar', variants: keySet([''], { ...standard, direction }, ['branchId', 'pilotBranchId?', 'outsetAlias?']) },
   bombLoaderDefinition: { module: 'stage-bomb-loader', variants: keySet([''], { ...standard, direction }, ['branchId']) },
+  bloodThroneDefinition: { module: 'stage-blood-throne', variants: keySet([''], { ...standard, direction }, ['branchId']) },
 };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 

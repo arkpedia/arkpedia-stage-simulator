@@ -31,6 +31,23 @@ export function bombLoaderNativeReviewed(e = native, t = tables) {
     && bb.cost === 10 && typeof bb.branch_id === 'string' && frames.length === 2 && frames[0].data.maxHp === frames[1].data.maxHp;
 }
 
+/** Blord2Trigger (13-21): a circle of radius 2 around the Point that gives Duq'arael's second form (enemy_blord2_mark)
+ * trap_outset_blord2[trigger] (reviewed with the Throne of Blood, stage-blood-throne.js). */
+export const BOMB_LOADER_LORD_RADIUS = 2;
+export function bombLoaderLordTriggerReviewed(e = native) {
+  const P = (e.prefabs?.trap_126_outset?.components ?? []).filter(c => c.object === 'Blord2Trigger').map(c => c.data);
+  const aura = P.find(c => c._buffs?.[0]?.buffKey), circle = P.find(c => c.m_Radius !== undefined), validator = P.find(c => c._targetOptions);
+  const run = e.templates?.['trap_outset_blord2[trigger]']?.eventToActions?.ON_BUFF_START?.[0];
+  const names = list => (list ?? []).map(n => n.$type.split('+')[1].split(',')[0]).join();
+  return aura?._buffs.length === 1 && aura._buffs[0].templateKey === 'trap_outset_blord2[trigger]' && aura._removeBuffWhenTargetLeave === 1
+    && circle?.m_Radius === BOMB_LOADER_LORD_RADIUS && validator?._targetOptions?.targetSide === 2
+    && JSON.stringify(validator._buffs) === '["enemy_blord2_mark"]'
+    && run?.$type.includes('IfElse') && names(run._succeedNodes) === 'CheckEnemyAbilityName,IfNot,CreateBuff,CreateBuff,TriggerEnemySkill'
+    && run._succeedNodes[0]._abilityName === 'BloodFountain2' && names(run._failNodes) === 'CreateBuff,CreateBuff,TriggerEnemySkill'
+    && run._failNodes[0]._buff.buffKey === 'enemy_blord2_kill[mark]' && run._failNodes[0]._buffOwner === 'BUFF_SOURCE'
+    && run._failNodes[2]._skillName === 'BloodFountain2';
+}
+
 /** One instance: its own branch (instance `branch_id` override). Level, skill level and facing change nothing. */
 export function bombLoaderDefinition(instance) {
   if (!bombLoaderNativeReviewed() || !instance || !Number.isSafeInteger(instance.level) || instance.level < 1 || instance.level > 30

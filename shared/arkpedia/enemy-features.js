@@ -25,12 +25,13 @@ import { BOMB_FEATURES, isBombCart, bombCartNative } from './enemy-bomb-features
 import { BLOOD_COLLECTOR_FEATURES } from './enemy-blood-collector-features.js';
 import { BONEGUARD_FEATURES, isBoneguard, boneguardNative, boneguardParams } from './enemy-boneguard-features.js';
 import { PILOT_CHARGE, PILOT_REBORN, isPilot } from './enemy-pilot-features.js';
+import { BLOOD_LORD_FEATURES, isBloodLord, bloodLordNative, isBloodLordTwo, bloodLordTwoNative } from './enemy-blood-lord-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isDamaztiCluster,damaztiNative],[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative],[isSteamKnightS,steamKnightSNative]];
+const FORM_BOSSES=[[isDamaztiCluster,damaztiNative],[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative],[isSteamKnightS,steamKnightSNative],[isBloodLord,bloodLordNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1542_wdslm','enemy_1542_wdslm_2','enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt'];
+const FORM_BOSS_ROOTS=['enemy_1542_wdslm','enemy_1542_wdslm_2','enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt','enemy_1547_blord'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -607,6 +608,8 @@ export const ENEMY_FEATURES = Object.freeze({
   ...HEAVY_POWER_ARMOR_FEATURES,
   ...DOROTHY_ENEMY_FEATURES,
   ...POWER_ARMOR_ENGINEER_FEATURES,
+  // Duq'arael, 'Regent's Crimson' (13-21): both forms; his talent:Attack (Blood Affliction) is under talent:Attack.
+  ...BLOOD_LORD_FEATURES,
   // Two records share the skill key: the R-Series engineers and Commander Ulšulah (whose runtime is talent:Reborn's).
   'skill:Charge': ((eng, pilot) => ({ ...eng, matchesRecord: r => isPilot(r) || eng.matchesRecord(r),
     covers: (r, n) => isPilot(r) ? pilot.covers(r, n) : eng.covers(r, n),
@@ -773,14 +776,14 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'Punisher: every third attack stuns the target area; Lost Colossus: a stunning rock every 13 s', nativeClaim: () => ({ wrappers: 1 }),
     explains: (text, r) => isLostColossus(r) ? LOST_COLOSSUS_EXPLAINS(text) : /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/.test(text) },
   // The Nethersea Spewers' Attack (max_target) is covered by their contract (enemy-nethersea-features.js).
-  'talent:Attack': { covers: (r, n) => isSpewer(r)?netherseaNative(r,n):isFlayer(r)?flayerNative(r,n):r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
+  'talent:Attack': { covers: (r, n) => isBloodLordTwo(r)?bloodLordTwoNative(r,n):isSpewer(r)?netherseaNative(r,n):isFlayer(r)?flayerNative(r,n):r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
       ((sig(r, 'Attack', ['enemy_key'])
         || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
         && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
       || (sig(r, 'Attack', ['atk', 'attack@ranged_atk_scale', 'hp_ratio', 'max_stack_cnt', 'range_radius']) && r.abilities.some(a => a.text.startsWith('Recovers a portion of HP')))),
     // Attack is also a descriptive group on unrelated families. Only its
     // reviewed enemy-key form owns a child-spawning component.
-    ability: r => isFlayer(r)?FLAYER_DEPARTURE_ABILITY:r.talents.bbStr['Attack.enemy_key'] ? { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) } : null,
+    ability: r => isBloodLordTwo(r)?null:isFlayer(r)?FLAYER_DEPARTURE_ABILITY:r.talents.bbStr['Attack.enemy_key'] ? { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) } : null,
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
     explains: (text, r) => isSpewer(r) ? NETHERSEA_EXPLAINS(text, r) : /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(text) },
   // Technical Scout: reveals camouflaged/stealthed allies within range to its own targeting.
