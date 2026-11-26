@@ -2,6 +2,7 @@
 import { catalogueFor } from '../../shared/arkpedia/loadout.js';
 import { validateLoadout } from '../../shared/arkpedia/squad.js';
 import { originalDeviceDirection } from './stage-device-instances.mjs';
+import { predefinedModuleDefinition } from '../../shared/arkpedia/predefined-modules.js';
 import { createHash } from 'node:crypto';
 import favor from '../../data/arkpedia-favor-source.json' with { type: 'json' };
 
@@ -52,7 +53,7 @@ export function compilePredefinedOperators(level, geometry, operators, rules = {
     const successor = prior && kind === 'actor' && prior.kind === 'actor' && p.hidden === true && activated.has(key);
     if (!op || (prior && !successor) || keys.has(key)) throw Error(`Unknown or duplicate predefined operator: ${id}`);
     ids.set(id, { kind, key }); keys.add(key);
-    if (typeof p.hidden !== 'boolean' || p.uniEquipIds?.length || p.masterInfos?.length || p.tmplId
+    if (typeof p.hidden !== 'boolean' || (p.uniEquipIds?.length ?? 0) > 1 || p.masterInfos?.length || p.tmplId
       || p.overrideSkillBlackboard != null || p.overrideTalents != null)
       throw Error(`Unsupported predefined operator override: ${id}`);
     const elite = typeof raw.phase === 'number' ? raw.phase : Number(String(raw.phase).replace('PHASE_', ''));
@@ -64,12 +65,19 @@ export function compilePredefinedOperators(level, geometry, operators, rules = {
     const build = { id, elite, level: raw.level, potential: raw.potentialRank + 1, trust: predefinedTrust(raw.favorPoint),
       skillId: skill?.id ?? null, skillRank: skill ? disableSkill ? 1 : p.mainSkillLvl : null };
     validateLoadout(build, catalogue);
+    // A worn module is accepted only when shared/arkpedia/predefined-modules.js has reviewed it at this stage and build.
+    let module = null;
+    if (p.uniEquipIds?.length) {
+      const [worn] = p.uniEquipIds;
+      try { module = predefinedModuleDefinition({ id: worn.key, stage: worn.level }, build); }
+      catch { throw Error(`Unsupported predefined operator override: ${id}`); }
+    }
     if (kind === 'actor' && (!Number.isInteger(p.position?.row) || !Number.isInteger(p.position?.col)
       || p.position.row < 0 || p.position.row >= geometry.rows || p.position.col < 0 || p.position.col >= geometry.cols))
       throw Error(`Invalid predefined operator position: ${id}`);
     return { key, kind, hidden: p.hidden, build, ...(disableSkill ? { disableSkill: true } : {}), ...(kind === 'actor' ? { row: p.position.row, col: p.position.col,
       direction: originalDeviceDirection(p.direction) } : {}), ...(successor ? { successorOf: prior.key } : {}),
-      ...(kind === 'actor' && rules?.predefinedDeckCards ? { deckCard: true } : {}) };
+      ...(kind === 'actor' && rules?.predefinedDeckCards ? { deckCard: true } : {}), ...(module ? { module } : {}) };
   });
   const exported = geometry.suppliedUnits?.fixed_squad ?? [];
   if (exported.length !== cards.length || entries.filter(e => e.kind === 'card').some(e => {

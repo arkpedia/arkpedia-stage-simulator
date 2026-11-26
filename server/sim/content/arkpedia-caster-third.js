@@ -127,6 +127,9 @@ function logosTalentShot(b, u, info) {
   const target = b.rng.pick(b.enemiesInKeys(u.rangeKeys, u, { canHitFly: true }));
   if (!target) return;
   const amount = u.s.atk * u.s.atkScaleMul * t.atk_scale;
+  // CCR-Δ (shared/arkpedia/predefined-modules.js): Elemental damage after the Arts damage while the target's Necrosis
+  // burst runs. The shot caches ATK when it is emitted (`_cacheAtkToActions`).
+  const elemental = t.element_atk_scale > 0 ? u.s.atk * u.s.atkScaleMul * t.element_atk_scale : 0;
   const point = { x: u.x, y: u.y }, delay = b.rng() * .30000001192092896;
   // Native randomDelayToBorn is retained as a seeded [0, .3] birth delay.
   // Its exact Unity random distribution/dispatch is not recovered. The emitted
@@ -136,6 +139,9 @@ function logosTalentShot(b, u, info) {
       if (!e || !canTargetEnemy(u, e, { canHitFly: true })) return;
       if (t.sluggish > 0) b.applyStatus(e, 'sluggish', { source: u, duration: t.sluggish });
       logosDamage(b, u, e, amount, info, { projectile: true, applyWay: 'none', tags: ['logos:lexical'] });
+      if (elemental > 0 && e.alive && e.deployed && e.findBuff('apoptosisBurst'))
+        b.dealDamage(u, e, { amount: elemental, type: 'elemental', element: 'apoptosis', canDodge: false, isAttack: true,
+          isSkill: info.isSkill, isProjectile: true, attackId: info.attackId, applyWay: 'none', tags: ['logos:lexical-elemental'] });
     } }));
 }
 function logosLaunch(b, u, p, target, info) {
@@ -295,6 +301,13 @@ export function installCasterThird({ battle: b, unit: u, def }) {
     u.mem.logosTarget = null; u.mem.logosStacks = 0; u.mem.logosCooldown = 0;
     u.mem.logosControlEpoch = u.attackControlEpoch;
     b.on('tick', ({ dt }) => { syncLogosExecution(b, u); logosChannel(b, u, dt ?? b.dt); }, { owner: u });
+    // CCR-Δ trait: every Arts damage Logos outputs adds Necrosis injury of that damage x ep_damage_ratio.
+    const module = def.raw?.module;
+    if (module?.epDamageRatio > 0) b.on('damaged', ({ source, target, amount, type, dmg }) => {
+      if (source !== u || type !== 'arts' || target.side !== 'enemy' || !(amount > 0) || !target.alive || !target.deployed) return;
+      b.dealDamage(u, target, { amount: amount * module.epDamageRatio, type: 'element', element: module.element,
+        canDodge: false, isAttack: false, attackId: dmg?.attackId, tags: ['logos:module-trait'] });
+    }, { owner: u });
     b.on('death', ({ unit }) => { if (unit === u) {
       clearLogosLock(b, u); stopLogosAura(b, u); syncLogosExecution(b, u);
     } }, { owner: u });

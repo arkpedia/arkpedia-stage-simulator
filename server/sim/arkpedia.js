@@ -37,6 +37,7 @@ import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { selectedRegularSummon } from './content/arkpedia-summon-deck.js';
 import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-enemy-compatibility.js';
 import { catalogueFor, recordFor, fixedSquadBuilds } from '../../shared/arkpedia/loadout.js';
+import { withPredefinedModule } from '../../shared/arkpedia/predefined-module-record.js';
 import { REGULAR_OPERATORS } from '../../shared/arkpedia/operator-support.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 import { installEnemyFeatures,enemyRuntimeFor } from './content/arkpedia-enemy-runtime.js';
@@ -216,8 +217,14 @@ export class StandardBattle extends Battle {
     if (new Set(builds.map(b => b.id)).size !== builds.length) throw Error('Selected squad duplicates a preplaced operator');
     if (builds.some(b => b.id === 'char_4228_closur' && b.skillId === 'skchr_closur_3'))
       assertClosurEnemyCompatibility(data);
+    // A preset operator's compiled module (reviewed by shared/arkpedia/predefined-modules.js) is part of its record.
+    const worn = new Map((predefined ?? []).filter(e => e.module).map(e => [e.build, e.module]));
+    const recordOf = build => {
+      const record = recordFor(build, data), module = worn.get(build);
+      return module ? withPredefinedModule(record, module) : record;
+    };
     const chess = Object.fromEntries(
-      builds.map((b) => [b.id, recordFor(b, data)]),
+      builds.map((b) => [b.id, recordOf(b)]),
     );
     // Compile and validate before the battle starts or any DP/SP is spent.
     const behaviorFor = (build, record) => {
@@ -234,7 +241,7 @@ export class StandardBattle extends Battle {
     const behaviors = new Map();
     for (const build of builds) { const program = behaviorFor(build, chess[build.id]); if (program) behaviors.set(build.id, program); }
     const successors = new Map((predefined ?? []).filter(e => e.successorOf).map(e => {
-      const record = recordFor(e.build, data);
+      const record = recordOf(e.build);
       return [e.key, { record, behavior: behaviorFor(e.build, record) }];
     }));
     const stageInitialCosts = new Map(Object.entries(chess).map(([id, record]) => [id, record.baseCardStats?.cost ?? record.stats.cost]));

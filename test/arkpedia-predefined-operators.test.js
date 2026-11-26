@@ -156,7 +156,10 @@ test('inactive normal-variant actors do not create a phantom squad or block thei
     assert.equal(p.stage.waveProgram.predefined, undefined); assert.equal(stageUsesFixedSquad(p.stage), false);
   }
   const p = await planStage(context, '14-11', { waves: true });
-  assert.ok(p.blockers.some(b => JSON.stringify(b).includes('override')), 'an actor module must not be silently discarded');
+  // A worn module is never silently discarded: the one reviewed module (Logos's, predefined-modules.js) is carried on
+  // the entry; any other stays a blocker (test/arkpedia-predefined-modules.test.js).
+  assert.deepEqual(p.blockers, []);
+  assert.equal(p.stage.waveProgram.predefined.entries[0].module?.id, 'uniequip_002_logos');
 });
 
 test('source-defined intermediate favor points compile through ordinary operator builds', async () => {
