@@ -63,6 +63,8 @@ const TWO_SKILLS = [{ prefabKey: 'BloodFog2', priority: 0, cooldown: 30, initCoo
   bbStr: { enemy_key: 'enemy_1360_dfello', 'enemy_blord2_fog[summon].enemy_key': BLOOD_AMBER_KEY } },
 { prefabKey: 'BloodFountain2', priority: 1, cooldown: 0, initCooldown: 0, spCost: 0, bb: { stun: 5, duration: 10, interval: 5, atk_scale: 0.5 }, bbStr: {} }];
 // Level 1 lists only what differs (HpAuraCtrl.duration 10); it is read over level zero, as the game does.
+// The record's 0.9, or the 0.3 that 14-20 writes; no other value is placed by a stage.
+const sanctuaryValue = v => v === .9 || v === .3;
 const twoTalents = r => ({ ...TWO_TALENTS, ...r.talents.bb });
 const ordered = bb => JSON.stringify(Object.keys(bb).sort().map(k => [k, bb[k]]));
 const skillsAre = (got, want) => got?.length === want.length && want.every((s, i) => got[i]?.prefabKey === s.prefabKey
@@ -121,7 +123,9 @@ export function bloodLordNative(r, n) {
 export function bloodLordTwoNative(r, n) {
   if (!isBloodLordTwo(r) || r.rank !== 'BOSS' || r.applyWay !== 'MELEE' || !skillsAre(r.skills, TWO_SKILLS)) return false;
   const bb = twoTalents(r);
-  if (ordered({ ...bb, 'HpAuraCtrl.duration': 15 }) !== ordered(TWO_TALENTS) || ![10, 15].includes(bb['HpAuraCtrl.duration'])) return false;
+  // 14-20 places him with a weaker Sanctuary (`HpAura.damage_resistance` 0.3 for the record's 0.9).
+  if (ordered({ ...bb, 'HpAuraCtrl.duration': 15, 'HpAura.damage_resistance': .9 }) !== ordered(TWO_TALENTS)
+    || ![10, 15].includes(bb['HpAuraCtrl.duration']) || !sanctuaryValue(bb['HpAura.damage_resistance'])) return false;
   const T = k => n?.$template?.(k)?.eventToActions;
   const combat = (n?.Combat ?? [])[0], affliction = T('enemy_blord2_extra_damage[timer]');
   const fog = (n?.BloodFog2 ?? []).find(c => c._projectileKey), fogSel = n?.$ref?.(fog?._selector);
@@ -210,5 +214,6 @@ export const BLOOD_LORD_FEATURES = Object.freeze({
   'skill:BloodFountain2': { matchesRecord: isBloodLordTwo, covers: bloodLordTwoNative, ability: null,
     note: 'Sunken Death (implemented with skill:BloodFog2, kind bloodLordTwo)' },
   'talent:HpAuraCtrl': { matchesRecord: isBloodLordTwo, covers: bloodLordTwoNative, ability: null, note: 'aura switch (kind bloodLordTwo)' },
-  'talent:HpAura': { matchesRecord: isBloodLordTwo, covers: bloodLordTwoNative, ability: null, note: 'Sanctuary and heal aura (kind bloodLordTwo)' },
+  'talent:HpAura': { matchesRecord: isBloodLordTwo, covers: bloodLordTwoNative, ability: null, note: 'Sanctuary and heal aura (kind bloodLordTwo)',
+    stageOverrides: { 'HpAura.damage_resistance': sanctuaryValue } },
 });

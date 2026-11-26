@@ -9,6 +9,9 @@ export function installStageEnvironments(b, environments = []) {
   for (const [i, environment] of environments.entries()) {
     if (environment.kind === 'rogue_4_parasitic_buff') {
       installParasiticEnvironment(b, environment);
+    } else if (environment.kind === 'mainline14_enemy_sign_effect') {
+      // Presentation only (shared/arkpedia/stage-environments.js): a marker over the listed enemies; no combat effect.
+      if (environment.presentationOnly !== true) throw Error('Invalid enemy sign environment');
     } else if (environment.kind === 'legion_mode_enemy_boost') {
       installStageDanger(b, environment);
     } else if (environment.kind === 'strife_mode_feature') {

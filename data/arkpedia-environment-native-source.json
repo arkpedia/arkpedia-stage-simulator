@@ -992,6 +992,101 @@
     },
     "sha256": "4b59b32dd79d2056613fb73911a0d9b2c849826bc25b26bbfc41e45f723ea5bf"
    }
+  ],
+  "mainline14_enemy_sign_effect": [
+   {
+    "object": "mainline14_enemy_sign_effect",
+    "pathId": "-4008761025553116300",
+    "data": {
+     "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": "9145900812980114292"
+     },
+     "m_Enabled": 1,
+     "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": "-6296718861144211397"
+     },
+     "m_Name": "",
+     "_key": "",
+     "_options": {
+      "targetSide": 2,
+      "targetMotion": 3,
+      "targetCategory": 1,
+      "enableAdvancedOptions": 1,
+      "ignoreTargetFree": 1,
+      "ignoreAllyTargetFree": 0,
+      "ignoreHealFree": 0,
+      "ignoreMotionMode": 0,
+      "ignoreTargetSide": 0,
+      "excludeSomeAbnormalFlags": 0,
+      "containSomeAbnormalFlags": 0,
+      "excludeAbnormalFlag": 0,
+      "containAbnormalFlag": 0,
+      "purposeMask": 0,
+      "professionMask": 0,
+      "checkUnitType": 0,
+      "unitTypeMask": 0,
+      "onlyIgnoreSomeOfTargetFreeCase": 0,
+      "abnormalFlag": 0,
+      "abnormalCombo": 0
+     },
+     "_buffs": [
+      {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "[g]mainline14_enemy_sign_effect",
+       "loadFromDB": 0,
+       "isDurableBuff": 0,
+       "isDamageMissable": 0,
+       "isSilenceable": 0,
+       "isStunnable": 0,
+       "isFreezable": 0,
+       "isLevitatable": 0,
+       "isGroundBoundable": 0,
+       "statusResistable": 2,
+       "templateKey": "[g]mainline14_enemy_sign_effect",
+       "disableOverride": 1,
+       "overrideKey": "",
+       "overrideType": 0,
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": 0,
+       "clearAllStackCntWhenTimeUp": 0,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": 0,
+       "overrideEffectKey": "",
+       "overrideOnEventPriority": 0,
+       "onEventPriority": 0,
+       "audioSignal": "",
+       "lifeTimeType": 0,
+       "takeSnapshotWhenExtend": 0,
+       "durationKey": "",
+       "remainingTimeKey": "",
+       "lifeTime": 0.0,
+       "triggerLifeType": 0,
+       "triggerCnt": 0,
+       "triggerInterval": -1.0,
+       "waitFirstTriggerInterval": 1,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": 0,
+       "blackboard": [],
+       "enableInitDirectionFromSource": 0
+      }
+     ],
+     "_overrideCameraEffect": "",
+     "_deckBuffs": [],
+     "_sourceType": 0
+    },
+    "sha256": "03b15e0f08a90d73a57fd5a31553acd2713df8066aae2bc912e94d5d21b18e24"
+   }
   ]
  },
  "templates": {
@@ -1034,6 +1129,166 @@
       "_triggerWithBlackboard": false,
       "_readResultFromBlackboard": false,
       "_tryRuntimeLoad": false
+     }
+    ]
+   }
+  },
+  "[g]mainline14_enemy_sign_effect": {
+   "templateKey": "[g]mainline14_enemy_sign_effect",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_START": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+      "_conditionNode": {
+       "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue, Assembly-CSharp",
+       "_targetType": "BUFF_OWNER",
+       "_anotherBuff": false,
+       "_buffKey": null,
+       "_blackboardKey": "filter_id",
+       "_blackboardKeyFromBb": null,
+       "_valueToCompare": 0,
+       "_anotherKeyToCompare": null,
+       "_condType": "GT"
+      },
+      "_succeedNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CheckEnemyId, Assembly-CSharp",
+        "_targetType": "BUFF_OWNER",
+        "_filterIds": [
+         "enemy_1506_patrt",
+         "enemy_1542_wdslm",
+         "enemy_1542_wdslm_2",
+         "enemy_1542_wdslm_3",
+         "enemy_1542_wdslm_4",
+         "enemy_1547_blord",
+         "enemy_1547_blord_2",
+         "enemy_1501_demonk",
+         "enemy_1081_sotisd"
+        ],
+        "_isUnset": false,
+        "_loadIdFromBb": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+         },
+         "buffKey": "mainline14_enemy_sign_effect[core]",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "isGroundBoundable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "empty",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": "enemy_common_sign_01",
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "remainingTimeKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "IMMEDIATELY",
+         "triggerCnt": 0,
+         "triggerInterval": -1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": [],
+         "enableInitDirectionFromSource": false
+        },
+        "_buffOwner": "BUFF_OWNER",
+        "_useSpecialBuffSource": false,
+        "_specialBuffSource": "BUFF_SOURCE",
+        "_isDerivedBuff": false,
+        "_finishDerivedBuffIfParentFinish": false,
+        "_inherateSourceProjectileFromParentBuff": false,
+        "_hookEffectKeyFromSourceProjectile": false
+       }
+      ],
+      "_failNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+         },
+         "buffKey": "mainline14_enemy_sign_effect[core]",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "isGroundBoundable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "empty",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "DEFAULT",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": "enemy_common_sign_01",
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "remainingTimeKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "IMMEDIATELY",
+         "triggerCnt": 0,
+         "triggerInterval": -1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": -1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": [],
+         "enableInitDirectionFromSource": false
+        },
+        "_buffOwner": "BUFF_OWNER",
+        "_useSpecialBuffSource": false,
+        "_specialBuffSource": "BUFF_SOURCE",
+        "_isDerivedBuff": false,
+        "_finishDerivedBuffIfParentFinish": false,
+        "_inherateSourceProjectileFromParentBuff": false,
+        "_hookEffectKeyFromSourceProjectile": false
+       }
+      ]
      }
     ]
    }

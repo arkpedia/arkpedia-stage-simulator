@@ -24,7 +24,7 @@ def exact(v, key=''):
     return str(v) if key == 'm_PathID' else v
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 prefabs = {}
-for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_env', 'legion_mode_enemy_boost', 'strife_mode_feature', 'rogue_4_parasitic_buff', 'rogue_4_apoptosis[random_tile]', 'mainline12_sightManager']:
+for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_env', 'legion_mode_enemy_boost', 'strife_mode_feature', 'rogue_4_parasitic_buff', 'rogue_4_apoptosis[random_tile]', 'mainline12_sightManager', 'mainline14_enemy_sign_effect']:
     rows = []
     def walk(go):
         d = go.read_typetree()

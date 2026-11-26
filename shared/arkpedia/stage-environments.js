@@ -8,11 +8,44 @@ export function stageEnvironmentEnemyDependencies(environments) {
   return [...new Set(environments.filter(e => e.kind === PARASITIC_ENVIRONMENT && e.hosts?.length).map(e => e.enemy))];
 }
 
+// `mainline14_enemy_sign_effect` (14-20): presentation only. The generic global-buff holder gives every enemy the buff
+// `[g]mainline14_enemy_sign_effect` (no attributes, no trigger). On start it creates `mainline14_enemy_sign_effect[core]`
+// on its owner: template `empty`, no attributes, held for life, effect `enemy_common_sign_01` (a marker over the unit).
+// With `filter_id` > 0 only the nine listed enemies get it; otherwise every enemy does. Nothing reads the buff key.
+export const ENEMY_SIGN_ENVIRONMENT = 'mainline14_enemy_sign_effect';
+const ENEMY_SIGN_IDS = ['enemy_1506_patrt', 'enemy_1542_wdslm', 'enemy_1542_wdslm_2', 'enemy_1542_wdslm_3', 'enemy_1542_wdslm_4',
+  'enemy_1547_blord', 'enemy_1547_blord_2', 'enemy_1501_demonk', 'enemy_1081_sotisd'];
+const emptyAttributes = a => !!a && ['abnormalFlags', 'abnormalImmunes', 'abnormalAntis', 'abnormalCombos', 'abnormalComboImmunes', 'attributeModifiers']
+  .every(k => Array.isArray(a[k]) && a[k].length === 0) && Object.keys(a).length === 6;
+export function enemySignNativeReviewed(evidence = native) {
+  const rows = evidence.prefabs?.[ENEMY_SIGN_ENVIRONMENT], c = rows?.[0]?.data, buff = c?._buffs?.[0];
+  const holder = evidence.prefabs?.periodic_damage?.[0]?.data?.m_Script?.m_PathID;
+  const events = evidence.templates?.['[g]mainline14_enemy_sign_effect']?.eventToActions, start = events?.ON_BUFF_START, branch = start?.[0];
+  const type = n => String(n?.$type ?? '').replace('Torappu.Battle.Action.Nodes+', '').replace(', Assembly-CSharp', '');
+  const core = n => type(n) === 'CreateBuff' && n._buffOwner === 'BUFF_OWNER' && n._isDerivedBuff === false
+    && n._buff.buffKey === 'mainline14_enemy_sign_effect[core]' && n._buff.templateKey === 'empty' && emptyAttributes(n._buff.attributes)
+    && n._buff.lifeTimeType === 'INFINITY' && n._buff.overrideEffectKey === 'enemy_common_sign_01' && n._buff.blackboard.length === 0
+    && n._buff.triggerInterval === -1 && n._buff.loadFromDB === false;
+  return rows?.length === 1 && typeof holder === 'string' && c.m_Script?.m_PathID === holder && c.m_Enabled === 1
+    && c._key === '' && c._sourceType === 0 && c._overrideCameraEffect === '' && c._deckBuffs?.length === 0 && c._buffs?.length === 1
+    && c._options.targetSide === 2 && c._options.targetMotion === 3 && c._options.targetCategory === 1
+    && buff.buffKey === '[g]mainline14_enemy_sign_effect' && buff.templateKey === '[g]mainline14_enemy_sign_effect'
+    && emptyAttributes(buff.attributes) && buff.triggerInterval === -1 && buff.blackboard.length === 0 && buff.overrideEffectKey === ''
+    && JSON.stringify(Object.keys(events ?? {})) === '["ON_BUFF_START"]' && start.length === 1 && type(branch) === 'IfElse'
+    && type(branch._conditionNode) === 'FilterByBlackboardValue' && branch._conditionNode._blackboardKey === 'filter_id'
+    && branch._conditionNode._valueToCompare === 0 && branch._conditionNode._condType === 'GT' && branch._conditionNode._targetType === 'BUFF_OWNER'
+    && branch._succeedNodes.length === 2 && type(branch._succeedNodes[0]) === 'CheckEnemyId' && branch._succeedNodes[0]._isUnset === false
+    && branch._succeedNodes[0]._loadIdFromBb === false && JSON.stringify(branch._succeedNodes[0]._filterIds) === JSON.stringify(ENEMY_SIGN_IDS)
+    && core(branch._succeedNodes[1]) && branch._failNodes.length === 1 && core(branch._failNodes[0])
+    && JSON.stringify(evidence.templates.empty?.eventToActions) === '{}';
+}
+
 export function environmentNativeReviewed(key, evidence = native) {
   if (key === PARASITIC_ENVIRONMENT) return parasiticNativeReviewed(evidence);
   if (key === SIGHT_ENVIRONMENT) return sightNativeReviewed(evidence);
   if (key === 'legion_mode_enemy_boost') return dangerNativeReviewed(evidence);
   const rows = evidence.prefabs?.[key], c = rows?.[0]?.data, buff = c?._buffs?.[0];
+  if (key === ENEMY_SIGN_ENVIRONMENT) return enemySignNativeReviewed(evidence);
   // This is a specialized timed-wave controller, despite its empty buff list.
   if (key === 'strife_mode_feature') return rows?.length === 1
     && c?.m_Script?.m_PathID === '257254889598074357' && c.m_Enabled === 1
@@ -79,6 +112,12 @@ export function compileStageEnvironments(instances, evidence = native) {
       return { kind: SIGHT_ENVIRONMENT, interval: .5 };
     }
     if (key === PARASITIC_ENVIRONMENT) return compileParasiticEnvironment(instance.blackboard);
+    if (key === ENEMY_SIGN_ENVIRONMENT) {
+      const rows = instance.blackboard;
+      if (!Array.isArray(rows) || rows.length !== 1 || rows[0].key !== 'filter_id' || ![0, 1].includes(rows[0].value)
+        || rows[0].valueStr != null && rows[0].valueStr !== '') throw Error('Unsupported enemy sign parameters');
+      return { kind: key, presentationOnly: true, enemies: rows[0].value > 0 ? [...ENEMY_SIGN_IDS] : null };
+    }
     if (key === 'strife_mode_feature') {
       const rows = instance.blackboard;
       if (!Array.isArray(rows)) throw Error('Missing Strife wave parameters');
