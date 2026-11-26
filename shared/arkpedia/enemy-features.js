@@ -24,6 +24,7 @@ import { TALULAH_FIGHTER_FEATURES, isTalulahFighter, talulahFighterNative } from
 import { BOMB_FEATURES, isBombCart, bombCartNative } from './enemy-bomb-features.js';
 import { BLOOD_COLLECTOR_FEATURES } from './enemy-blood-collector-features.js';
 import { BONEGUARD_FEATURES, isBoneguard, boneguardNative, boneguardParams } from './enemy-boneguard-features.js';
+import { PILOT_CHARGE, PILOT_REBORN, isPilot } from './enemy-pilot-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
@@ -300,9 +301,9 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : isBoneguard(r) ? boneguardNative(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : isUproar(r) ? uproarNative(r, n) : r.key === 'enemy_1522_captan'
+    covers: (r, n) => formBoss(r) ? formBoss(r)(r, n) : isBoneguard(r) ? boneguardNative(r, n) : isPilot(r) ? PILOT_REBORN.covers(r, n) : isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : isUproar(r) ? uproarNative(r, n) : r.key === 'enemy_1522_captan'
       || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
-    ability: r => isBoneguard(r) ? { kind: 'boneguard', params: () => boneguardParams(r) } : formBoss(r) || isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+    ability: r => isBoneguard(r) ? { kind: 'boneguard', params: () => boneguardParams(r) } : isPilot(r) ? PILOT_REBORN.ability(r) : formBoss(r) || isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
 }
@@ -606,6 +607,12 @@ export const ENEMY_FEATURES = Object.freeze({
   ...HEAVY_POWER_ARMOR_FEATURES,
   ...DOROTHY_ENEMY_FEATURES,
   ...POWER_ARMOR_ENGINEER_FEATURES,
+  // Two records share the skill key: the R-Series engineers and Commander Ulšulah (whose runtime is talent:Reborn's).
+  'skill:Charge': ((eng, pilot) => ({ ...eng, matchesRecord: r => isPilot(r) || eng.matchesRecord(r),
+    covers: (r, n) => isPilot(r) ? pilot.covers(r, n) : eng.covers(r, n),
+    explains: (text, r) => isPilot(r) ? pilot.explains(text) : eng.explains.test(text),
+    ability: r => isPilot(r) ? null : eng.ability,
+    note: `${eng.note} / ${pilot.note}` }))(POWER_ARMOR_ENGINEER_FEATURES['skill:Charge'], PILOT_CHARGE),
   ...ICEFIELD_FEATURES,
   ...AMMO_ENEMY_FEATURES,
   ...SNACK_ENEMY_FEATURES,

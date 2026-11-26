@@ -4,7 +4,7 @@
 
 This batch publishes 13-12 and 13-12 adverse (1,141 available). Their only blockers were this device and its branches.
 
-The pulse also reacts to other units: Bone Drifters (`enemy_1365_spnwiz`), Blood Collectors (`enemy_1366_dcolle`), the bomb carts (`enemy_1369_bmbcar1`) and Sarkaz pilots (`enemy_1368_spilot`). The bomb (`docs/STAGE-BOMB-REVIEW.md`) and the Blood Collectors (`docs/ENEMY-BLOOD-COLLECTOR-REVIEW.md`: the pulse turns each Amber a Collector holds into a Bloodborn Spawn and leaves it empty) are now built. The Bone Drifter and pilot reactions are not: the runtime refuses a stage with an Altar and either of those records, so no stage silently runs without them. The other chapter-13 stages also need the Bomb Loading Point and those enemies.
+The pulse also reacts to other units: Bone Drifters (`enemy_1365_spnwiz`), Blood Collectors (`enemy_1366_dcolle`), the bomb carts (`enemy_1369_bmbcar1`) and Sarkaz pilots (`enemy_1368_spilot`). The bomb (`docs/STAGE-BOMB-REVIEW.md`) and the Blood Collectors (`docs/ENEMY-BLOOD-COLLECTOR-REVIEW.md`: the pulse turns each Amber a Collector holds into a Bloodborn Spawn and leaves it empty) are now built. The Boneguard Fluxcasters (`docs/ENEMY-BONEGUARD-REVIEW.md`) and Commander Ulšulah, the pilot (`docs/ENEMY-PILOT-REVIEW.md`: she upgrades an Altar so it makes Blood Amber, and returns through one when killed), are built too. `BLOOD_ALTAR_UNMODELLED` is empty.
 
 ## Native evidence
 
@@ -40,10 +40,10 @@ It also checks two CN buff templates and the CN tables.
 - Each stack runs `PickRandomBranchPhase` on the Altar's branch, with `_blockGameFinish` false. 13-12's branches each have one phase, which spawns one Bloodborn Spawn on its route.
 
 Not modelled, because none of these appear in 13-12:
-- the event upgrade (`trap_bonore_upgraded[summon]`);
+- the upgrade (`trap_bonore_upgraded[summon]`; built since, with the pilot);
 - the bomb-cart kill within radius 1;
 - the Boneguard Fluxcaster switches (built since; `docs/ENEMY-BONEGUARD-REVIEW.md`);
-- the pilot summon;
+- the pilot summon (built since; `docs/ENEMY-PILOT-REVIEW.md`);
 - `ActiveOutset` (its forced exit when a bomb is detonated on it).
 
 ## Runtime
@@ -68,7 +68,7 @@ Instances compile through `bloodAltarDefinition`, whose device-runtime family bi
 - **13-12 setup:** two Altars, at (6,4) facing DOWN and (4,9) facing LEFT, each on its own branch; enemy side, untargetable.
 - **First pulse:** before 20 s nothing happens. Just after 20 s the first pulse hits the two Amber sharing (4,4) and the one beside them in a side lane, (4,5), and three Bloodborn Spawn appear on the branch. The Amber two tiles further on survives, because the pulse has stopped, and the 40 s pulse takes it. An Amber off both Altars' three lanes is untouched.
 - **Cap:** a pile of 12 Amber loses exactly 10.
-- **Refusal:** an Altar stage containing a Sarkaz pilot is refused.
+- **Refusal:** an Altar stage containing Commander Ulšulah, whose Altars name no pilot branch, is refused.
 - **Headless run:** 13-12 clears with both Altars pulsing every 20 s.
 
 ## Not checked

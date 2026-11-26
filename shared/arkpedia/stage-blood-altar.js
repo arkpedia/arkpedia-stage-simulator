@@ -17,8 +17,16 @@
 // there is a rebirth; SpnwizInRange2 gives drifting ones (`enemy_spnwiz_ghost_invincible`) `trap_bonore_in_range[ghost]`
 // and `enemy_bonore_mark`. trap_bonore_s on a drifting one (`enemy_spnwiz_ghost_mark`) creates
 // trap_bonore_spnwiz_revive[trigger], which finishes the ghost mark (its revive), and finishes the mark: no phase.
-// Sarkaz pilots react differently; stages with them are refused until that reaction is built (server runtime). The bomb's KillBmbcar trigger (radius
-// 1) is checked by the bomb (arkpedia-enemy-bombs.js), which then destroys the Altar (destroy()).
+// Commander Ulšulah (enemy-pilot-features.js): the Altar's Passive also carries `trap_bonore_need_upgrade` (the pilot's
+// Charge targets an Altar holding it; the cast's end finishes it and gives `trap_bonore_upgraded`) and
+// `trap_bonore_spilot[mark]` (what the pilot's return selects). Its hidden talent `1` ticks trap_bonore_upgraded[summon]:
+// once upgraded, SummonEnemiesFollowBranchRoute on `talent@branch_id` with the enemy `talent@enemy_key` (Blood Amber).
+// The buff's serialized interval is 5 s; the talent's blackboard `interval` is 10 and PRTS says every 10 s: 10 is used.
+// A killed pilot gives one marked Altar enemy_spilot_reborn[bonore] (20 s, one stack): when it ends the Altar runs
+// SummonSpilot, SummonEnemiesFollowBranchRoute on the instance's `SummonSpilot.branch_id`; when the Altar dies first, the
+// buff moves to another marked Altar (SummonSpilot's selector, post-filter 14: PRTS, a random one) for a fresh 20 s.
+// The bomb's KillBmbcar trigger (radius 1) is checked by the bomb (arkpedia-enemy-bombs.js), which then destroys the
+// Altar (destroy()).
 import native from '../../data/arkpedia-device-native-source.json' with { type: 'json' };
 import tables from '../../data/arkpedia-device-source.json' with { type: 'json' };
 
@@ -29,7 +37,8 @@ export const BLOOD_AMBER = 'enemy_1367_dseed';
 /** KillBmbcar: a radius-1 trigger circle around the Altar that forces a bomb carrying enemy_bmbcar1_passive to explode. */
 export const BLOOD_ALTAR_BOMB_RADIUS = 1;
 /** Records the pulse reacts to in ways this runtime does not model yet. */
-export const BLOOD_ALTAR_UNMODELLED = Object.freeze(['enemy_1368_spilot']);
+export const BLOOD_ALTAR_UNMODELLED = Object.freeze([]);
+export const BLOOD_ALTAR_PILOT = 'enemy_1368_spilot';
 
 export function bloodAltarNativeReviewed(e = native, t = tables) {
   const P = k => e.prefabs?.[k]?.components ?? [], rows = k => P(k).map(c => c.data);
@@ -50,6 +59,13 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
   const keyed = P('trap_125_bonore').filter(c => c.object === 'Validators' && c.data._buffs).map(c => c.data._buffs.join());
   const inRange = k => P('trap_125_bonore').find(c => c.object === k && c.data._buffs)?.data._buffs.map(x => x.buffKey).join();
   const ok = s?._succeedNodes ?? [], revive = T['trap_bonore_spnwiz_revive[trigger]']?.eventToActions?.ON_BUFF_START;
+  const passives = (passive ? P('trap_125_bonore').find(c => c.object === 'Passive' && c.data._buffs).data._buffs : []).map(x => x.buffKey).join();
+  const amber = P('trap_125_bonore').find(c => c.object === '1' && c.data._buffs)?.data._buffs;
+  const amberRun = T['trap_bonore_upgraded[summon]']?.eventToActions?.ON_BUFF_TRIGGER;
+  const summon = P('sktok_bonore').find(c => c.object === 'SummonSpilot' && c.data._actions)?.data;
+  const pilotSelect = P('sktok_bonore').find(c => c.pathId === String(summon?._selector?.m_PathID))?.data;
+  let pilotRun = null; try { pilotRun = JSON.parse(summon._actions.SerializedState); } catch {}
+  const talent = t.devices?.trap_125_bonore?.talents?.[0]?.candidates;
   const record = t.devices?.trap_125_bonore, frames = record?.phases?.[0]?.attributesKeyFrames ?? [];
   const skill = t.skills?.sktok_bonore?.levels, bb = Object.fromEntries((skill?.[0]?.blackboard ?? []).map(x => [x.key, x.valueStr ?? x.value]));
   return root?._sideType === 2 && root._category === 2 && root._withdrawable === 0 && root._modes?.length === 1
@@ -76,17 +92,34 @@ export function bloodAltarNativeReviewed(e = native, t = tables) {
     && record?.profession === 'TRAP' && frames.length === 2 && ['maxHp', 'def', 'magicResistance'].every(k => frames[0].data[k] === frames[1].data[k])
     && skill?.length === 1 && skill[0].skillType === 'AUTO' && skill[0].spData.spType === 'INCREASE_WITH_TIME'
     && skill[0].spData.spCost === 20 && skill[0].spData.initSp === 0 && skill[0].spData.increment === 1
-    && bb['talent@enemy_key'] === BLOOD_AMBER && bb.max_target === 10 && typeof bb['talent@branch_id'] === 'string';
+    && bb['talent@enemy_key'] === BLOOD_AMBER && bb.max_target === 10 && bb['talent@branch_id'] === 'bonore_dfello'
+    && passives === 'trap_bonore_passive,trap_bonore_need_upgrade,trap_bonore_spilot[mark]'
+    && amber?.length === 1 && amber[0].templateKey === 'trap_bonore_upgraded[summon]' && amber[0].triggerLifeType === 2
+    && amber[0].triggerInterval === 5 && amber[0].waitFirstTriggerInterval === 1
+    && talent?.length === 1 && talent[0].prefabKey === '1' && same(talent[0].blackboard, [{ key: 'interval', value: 10, valueStr: null }])
+    && amberRun?.length === 2 && amberRun[0].$type.includes('CheckContainsBuff') && same(amberRun[0]._buffKeys, ['trap_bonore_upgraded'])
+    && amberRun[1].$type.includes('SummonEnemiesFollowBranchRoute') && amberRun[1]._managedByScheduler === true
+    && amberRun[1]._unharmful === false && amberRun[1]._overrideEnemyKey === '' && amberRun[1]._summonAllRoute === false
+    && pilotRun?.length === 1 && pilotRun[0].$type.includes('SummonEnemiesFollowBranchRoute') && pilotRun[0]._managedByScheduler === true
+    && pilotRun[0]._unharmful === false && pilotRun[0]._overrideEnemyKey === '' && pilotRun[0]._summonAllRoute === false
+    && summon._allowNoTarget === 1 && summon._cooldown === 0
+    && pilotSelect?._buffKey === 'trap_bonore_spilot[mark]' && pilotSelect._postFilter === 14 && pilotSelect._targetCategory === 2
+    && pilotSelect._targetSide === 1 && pilotSelect._maxNum === 1;
 }
 
 /** One instance: its facing and its own branch (instance `branch_id` override). Level and skill level change nothing. */
 export function bloodAltarDefinition(instance) {
   if (!bloodAltarNativeReviewed() || !instance || !Number.isSafeInteger(instance.level) || instance.level < 1 || instance.level > 30
     || instance.skillLevel !== 1 || !['UP', 'RIGHT', 'DOWN', 'LEFT'].includes(instance.direction)
-    || typeof instance.branchId !== 'string' || !instance.branchId) throw Error('Unsupported original Bloodcalling Altar instance');
+    || typeof instance.branchId !== 'string' || !instance.branchId
+    || instance.pilotBranchId !== undefined && (typeof instance.pilotBranchId !== 'string' || !instance.pilotBranchId))
+    throw Error('Unsupported original Bloodcalling Altar instance');
   const d = tables.devices.trap_125_bonore.phases[0].attributesKeyFrames[0].data;
   return { kind: 'bloodAltar', hp: d.maxHp, def: d.def, res: d.magicResistance, direction: instance.direction, branchId: instance.branchId,
     spCost: 20, initSp: 0, spPerSecond: 1, speed: 8, lifetime: 10, interval: f32(.03), length: 1, width: 3, rangeOffset: 1, maxTargets: 10,
     mark: BLOOD_ALTAR_MARK,
+    // Commander Ulšulah: an upgraded Altar summons one Blood Amber every 10 s on its own branch (`talent@branch_id`,
+    // the instance's `branch_id`); a returning pilot comes back on `SummonSpilot.branch_id`.
+    ...(instance.pilotBranchId ? { pilotBranchId: instance.pilotBranchId } : {}), amberInterval: 10, amberEnemy: BLOOD_AMBER,
     description: 'Every 20 s sends a pulse along its facing; the first Blood Amber it reaches (and any others in the pulse, up to 10) become Bloodborn Spawn on the Altar\'s route.' };
 }

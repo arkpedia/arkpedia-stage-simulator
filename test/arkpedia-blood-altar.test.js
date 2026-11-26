@@ -74,7 +74,7 @@ test('a pulse ends at its first contact, taking the Blood Amber in its box (3 la
   assert.equal(beside.alive, true);
 });
 
-test('a pulse converts at most 10, and a stage with unmodelled pulse reactions is refused', async () => {
+test('a pulse converts at most 10, and a pilot stage whose Altars name no pilot branch is refused', async () => {
   const stage = await load('13-12');
   const b = battle(stage);
   b.life = 999;
@@ -82,6 +82,7 @@ test('a pulse converts at most 10, and a stage with unmodelled pulse reactions i
   while (b.time < 20.6) b.step();
   assert.equal(pile.filter(e => !e.alive).length, 10);
   assert.equal(b.stageBloodAltars.entries[0].conversions, 10);
+  // 13-12's Altars have no SummonSpilot.branch_id: a Commander Ulšulah there would have nowhere to return.
   const refused = { ...stage, enemies: { ...stage.enemies, enemy_1368_spilot: stage.enemies[BLOOD_AMBER] } };
-  assert.throws(() => new StageBloodAltars(battle(stage), stage.devices, stage.geometry, refused), /not modelled: enemy_1368_spilot/);
+  assert.throws(() => new StageBloodAltars(battle(stage), stage.devices, stage.geometry, refused), /Missing Bloodcalling Altar pilot branch/);
 });

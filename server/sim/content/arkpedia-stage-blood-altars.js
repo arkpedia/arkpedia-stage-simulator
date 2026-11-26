@@ -4,9 +4,13 @@
 // every Blood Amber in the pulse (up to 10) into a Bloodborn Spawn through the Altar's own branch. A Blood Collector
 // in the pulse gives up the Amber it holds (its `enemy_bonore_mark` count, e.mem.bonoreMarks): one Spawn each, and it
 // survives empty. A drifting Boneguard Fluxcaster in the pulse revives (no Spawn). `covers` is the Altar's range,
-// read by the Fluxcaster's rebirth.
+// read by the Fluxcaster's rebirth. Commander Ulšulah upgrades an Altar (`upgrade`); from then on, on its talent clock
+// (every 10 s from the Altar's start), it summons one Blood Amber on its branch. A killed pilot marks a random Altar
+// (`markPilotReturn`): 20 s later that Altar summons the pilot on its pilot branch; destroyed first, the mark moves to
+// another random Altar for a fresh 20 s. A marked Altar takes no second mark (one stack, no refresh). Neither the
+// pending return nor the Amber clock holds the battle; the bodies they summon do.
 import { bloodAltarDefinition, stageDeviceSpec } from '../../../shared/arkpedia/device-runtime.js';
-import { BLOOD_AMBER, BLOOD_ALTAR_UNMODELLED } from '../../../shared/arkpedia/stage-blood-altar.js';
+import { BLOOD_AMBER, BLOOD_ALTAR_PILOT, BLOOD_ALTAR_UNMODELLED } from '../../../shared/arkpedia/stage-blood-altar.js';
 import { dirVec } from '../dir.js';
 
 const MAX_STACK = 10; // trap_bonore_branch[dfello] maxStackCnt
@@ -20,10 +24,12 @@ export class StageBloodAltars {
     const altars = devices.filter(d => stageDeviceSpec(d)?.bloodAltar);
     const unmodelled = Object.keys(stage?.enemies ?? {}).filter(k => BLOOD_ALTAR_UNMODELLED.includes(k));
     if (altars.length && unmodelled.length) throw Error(`Bloodcalling Altar reactions not modelled: ${unmodelled.join(', ')}`);
+    const piloted = Object.hasOwn(stage?.enemies ?? {}, BLOOD_ALTAR_PILOT);
     for (const d of altars) {
       if (d.hidden) throw Error('Hidden Bloodcalling Altar requires an activation controller');
       const spec = bloodAltarDefinition(d.instance);
       if (!b.stageBranches?.branches[spec.branchId]) throw Error(`Missing Bloodcalling Altar branch program: ${spec.branchId}`);
+      if (piloted && !b.stageBranches.branches[spec.pilotBranchId]) throw Error(`Missing Bloodcalling Altar pilot branch: ${spec.pilotBranchId}`);
       const unit = b.spawnDevice(d.key, d.row, d.col, { name: d.name, hp: spec.hp, def: spec.def, res: spec.res, blockCnt: 0, dir: spec.direction });
       if (!unit) throw Error(`Occupied Bloodcalling Altar tile: ${d.row},${d.col}`);
       unit.def.profession = 'TRAP'; unit.deploymentSlotCost = 0; unit.mem.stageDeviceId = `stage-device:${d.key}:${d.row}:${d.col}`;
@@ -31,7 +37,8 @@ export class StageBloodAltars {
       // Trap category: no character selector takes it, so nothing attacks it.
       b.addBuff(unit, { key: 'stage:bloodAltar', persist: true,
         flags: { invulnerable: true, untargetable: true, noMove: true, noDisplace: true, disarm: true, unblockable: true } });
-      this.entries.push({ unit, spec, row: d.row, col: d.col, sp: spec.initSp, pulse: null, pulses: 0, conversions: 0 });
+      this.entries.push({ unit, spec, row: d.row, col: d.col, sp: spec.initSp, pulse: null, pulses: 0, conversions: 0,
+        upgraded: false, amberClock: spec.amberInterval, ambers: 0, pilotReturn: null, pilotReturns: 0 });
     }
     if (this.entries.length) b.on('tick', ({ dt }) => this.tick(dt));
   }
@@ -52,9 +59,42 @@ export class StageBloodAltars {
       return along >= 0 && Math.abs(across) <= a.spec.rangeOffset;
     });
   }
+  /** Altars the pilot's Charge may take (`trap_bonore_need_upgrade`): live, not destroyed, not upgraded. */
+  upgradable() { return this.entries.filter(a => a.unit.alive && !a.destroyed && !a.upgraded); }
+  /** The Charge trigger's post-filter 11 (PRTS: the nearest); ties by placement order. */
+  nearestUpgradable(e) {
+    let best = null, d = Infinity;
+    for (const a of this.upgradable()) { const n = (a.col - e.x) ** 2 + (a.row - e.y) ** 2; if (n < d - 1e-9) { best = a; d = n; } }
+    return best;
+  }
+  /** trap_bonore_upgraded[trigger]: the need-upgrade mark finishes and the Altar is upgraded for good. */
+  upgrade(a) {
+    if (!a?.unit.alive || a.destroyed || a.upgraded) return false;
+    a.upgraded = true; return true;
+  }
+  /** enemy_spilot_reborn[trigger] / enemy_spilot_reborn[bonore]: one random live Altar (`exclude` aside) gets the
+   * pilot's return, unless it already holds one. */
+  markPilotReturn(delay, exclude = null) {
+    const live = this.entries.filter(a => a !== exclude && a.unit.alive && !a.destroyed);
+    if (!live.length || !(delay > 0)) return null;
+    const a = live[live.length === 1 ? 0 : this.battle.rng.int(live.length)];
+    if (a.pilotReturn) return null;
+    a.pilotReturn = { left: delay, delay };
+    return a;
+  }
   tick(dt) {
     for (const a of this.entries) {
       if (!a.unit.alive) { a.pulse = null; continue; }
+      // Talent `1` (trap_bonore_upgraded[summon]): every amberInterval s from the start, one Blood Amber once upgraded.
+      a.amberClock -= dt;
+      while (a.amberClock <= 1e-9) {
+        a.amberClock += a.spec.amberInterval;
+        if (a.upgraded && !a.destroyed) { this.battle.stageBranches.summonFollowRoute(a.spec.branchId, a.spec.amberEnemy); a.ambers++; }
+      }
+      if (a.pilotReturn && (a.pilotReturn.left -= dt) <= 1e-9) {
+        a.pilotReturn = null; a.pilotReturns++;
+        this.battle.stageBranches.start(a.spec.pilotBranchId, { blockGameFinish: false });
+      }
       if (a.pulse) this.advance(a, dt);
       a.sp = Math.min(a.spec.spCost, a.sp + a.spec.spPerSecond * dt);
       if (a.sp + 1e-9 >= a.spec.spCost && !a.pulse) {
@@ -85,6 +125,9 @@ export class StageBloodAltars {
   destroy(a) {
     if (!a?.unit.alive) return;
     a.pulse = null; a.destroyed = true;
+    // enemy_spilot_reborn[bonore], ON_OWNER_KILLED: the pending return moves to another Altar for a fresh duration.
+    const pending = a.pilotReturn; a.pilotReturn = null;
+    if (pending) this.markPilotReturn(pending.delay, a);
     this.battle.removeBuff(a.unit, 'stage:bloodAltar');
     this.battle.kill(a.unit, null);
   }

@@ -85,7 +85,15 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     }
     const bb = p.overrideSkillBlackboard;
     const branchRow=Array.isArray(bb)?bb.find(row=>row.key==='branch_id'):null;
-    const branchId=(spec.mimic||spec.powerArmor||spec.bloodAltar||spec.bombLoader)&&Array.isArray(bb)&&bb.length===(spec.powerArmor?2:1)
+    // A Bloodcalling Altar may also name its pilot branch (`SummonSpilot.branch_id`) and repeat its own branch for its
+    // Amber talent (`talent@branch_id`); without that key the talent reads the skill's `bonore_dfello`. Only these shapes.
+    const altarKeys=spec.bloodAltar&&Array.isArray(bb)?bb.map(row=>row.key).sort().join():null;
+    const altarShape=!spec.bloodAltar||['branch_id','SummonSpilot.branch_id,branch_id','SummonSpilot.branch_id,branch_id,talent@branch_id'].includes(altarKeys);
+    const altarRow=key=>spec.bloodAltar&&Array.isArray(bb)?bb.find(row=>row.key===key):null;
+    const pilotRow=altarRow('SummonSpilot.branch_id'),amberRow=altarRow('talent@branch_id');
+    const pilotBranchId=pilotRow&&pilotRow.value===0&&typeof pilotRow.valueStr==='string'&&pilotRow.valueStr||null;
+    const branchId=(spec.mimic||spec.powerArmor||spec.bloodAltar||spec.bombLoader)&&Array.isArray(bb)&&altarShape
+      &&bb.length===(spec.powerArmor?2:spec.bloodAltar?bb.length:1)
       &&new Set(bb.map(row=>row.key)).size===bb.length&&branchRow?.value===0&&typeof branchRow.valueStr==='string'&&branchRow.valueStr;
     const actionRow=spec.powerArmor&&Array.isArray(bb)?bb.find(row=>row.key==='action_index'):null;
     const actionIndex=actionRow&&(actionRow.valueStr==null||actionRow.valueStr==='')?actionRow.value:null;
@@ -95,6 +103,8 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       || !(spec.skillIndices ?? [0]).includes(p.skillIndex) || !(spec.skillLevels ?? [1]).includes(p.mainSkillLvl) || ![0, 'PHASE_0'].includes(p.inst.phase)
       || (instanced ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > (spec.maxLevel ?? 90) : p.inst.level !== 1)
       || (spec.mimic || spec.powerArmor || spec.bloodAltar || spec.bombLoader ? !branchId || !level.branches?.[branchId] : !spec.mire && p.overrideSkillBlackboard != null) || p.overrideTalents != null
+      || pilotRow && (!pilotBranchId || !level.branches?.[pilotBranchId]
+        || (amberRow ? amberRow.value !== 0 || amberRow.valueStr : 'bonore_dfello') !== branchId)
       || (spec.mine || spec.reward || spec.powerArmor) && (p.inst.potentialRank !== 0 || p.inst.favorPoint !== 0)
       || p.uniEquipIds?.length || p.masterInfos?.length)
       throw Error(`Unimplemented device instance override: ${d.key}`);
@@ -104,6 +114,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       direction: originalDeviceDirection(p.direction) }; continue; }
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
       ...(spec.mimic || spec.powerArmor || spec.bloodAltar || spec.bombLoader ? { branchId } : {}),
+      ...(pilotBranchId ? { pilotBranchId } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
       ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };

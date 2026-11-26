@@ -66,17 +66,27 @@ export class StageBranchScheduler {
     const left = this.randomLeft[key], index = left.splice(this.battle.rng.int(left.length), 1)[0];
     return this._startSpawns(branch.randomPhases[index], { blockGameFinish });
   }
+  /** SummonEnemiesFollowBranchRoute with a blackboard enemy (the upgraded Bloodcalling Altar's `talent@enemy_key`):
+   * one phase's actions, each body replaced by `enemyKey`. `_summonAllRoute` false; nothing reviewed names which phase
+   * of a several-phase branch it takes, so one is drawn (seeded battle RNG) [inference]. */
+  summonFollowRoute(key, enemyKey) {
+    const branch = this.branches[key];
+    if (!branch || typeof enemyKey !== 'string' || !enemyKey) throw Error(`Unknown stage branch: ${key}`);
+    const phases = Array.isArray(branch.randomPhases) ? branch.randomPhases : [branch.spawns];
+    const phase = phases.length === 1 ? phases[0] : phases[this.battle.rng.int(phases.length)];
+    return this._startSpawns(phase, { enemyKey });
+  }
   start(key, { blockGameFinish = false } = {}) {
     const phase = this.branches[key];
     if (!phase) throw Error(`Unknown stage branch: ${key}`);
     return this._startSpawns(phase.spawns, { blockGameFinish });
   }
-  _startSpawns(spawns, { blockGameFinish = false } = {}) {
+  _startSpawns(spawns, { blockGameFinish = false, enemyKey = null } = {}) {
     const b = this.battle, serial = ++this.serial;
     if (b.finished) return false;
     for (const action of spawns) for (let i = 0; i < action.count; i++) {
       const tag = `stage-branch:${serial}:${action.order}:${i}`; this.tags.add(tag);
-      const spawn = () => b.spawnEnemy(stageEnemyKey(this.rules, action.enemyKey), {
+      const spawn = () => b.spawnEnemy(stageEnemyKey(this.rules, enemyKey ?? action.enemyKey), {
         routeIndex: action.routeIndex, countInTotal: false, tag, ownerPlayerId: 'arkpedia',
       });
       const offset = action.offset + i * action.interval;

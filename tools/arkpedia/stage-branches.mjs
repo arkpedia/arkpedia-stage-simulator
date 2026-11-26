@@ -106,6 +106,8 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||d.key==='trap_125_bonore'||d.key==='trap_126_outset'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
     .map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId)
     .concat(Object.values(inactiveInstances).map(i => i.branchId))
+    // A Bloodcalling Altar's pilot branch (SummonSpilot): the returning Commander Ulšulah.
+    .concat(devices.filter(d => d.key === 'trap_125_bonore').map(d => instances[`${d.key}:${d.row}:${d.col}`]?.pilotBranchId).filter(Boolean))
     // 12-20: the 'Damazti Cluster' and its decoy summon their fragments through the level's branches.
     .concat(damaztiBranchBindings(level));
   // A level can keep the Twigs payload branches (one Corrupted Seed each) without placing any Twigs (11-20 and its
@@ -128,6 +130,11 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     const action=branch?.spawns.find(a=>a.order===instance.actionIndex),route=compiled.geometry.routes[action?.routeIndex];
     if(branch?.spawns.length!==1||!action||action.count!==1||action.offset!==0||route.start.row!==d.row||route.start.col!==d.col)
       throw Error('Unsupported Power Armor branch binding');
+  }
+  for (const d of devices.filter(d=>d.key==='trap_125_bonore')) {
+    const id=instances[`${d.key}:${d.row}:${d.col}`]?.pilotBranchId, spawns=id&&compiled.branches[id]?.spawns;
+    if (id && !(spawns?.length===1&&spawns[0].enemyKey==='enemy_1368_spilot'&&spawns[0].count===1&&spawns[0].offset===0))
+      throw Error('Unsupported Bloodcalling Altar pilot branch');
   }
   for (const d of devices.filter(d=>d.key==='trap_086_larva')) {
     const instance=instances[`${d.key}:${d.row}:${d.col}`], branch=compiled.branches[instance.branchId];

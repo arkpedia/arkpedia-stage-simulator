@@ -20,9 +20,11 @@ export function compiledDeviceDefinition(name, id, instance) {
   for (const [field, allowed] of Object.entries(variant.dimensions))
     if (!allowed.includes(instance[field])) throw Error(`Unsupported device configuration: ${name}/${id}.${field}`);
   const bindings = {};
-  for (const field of variant.bindings ?? []) {
-    const value = instance[field];
-    if (field === 'branchId' ? typeof value !== 'string' || !value : !Number.isSafeInteger(value) || value < 0)
+  for (const binding of variant.bindings ?? []) {
+    // A trailing '?' marks an optional binding: absent, it stays absent.
+    const field = binding.replace(/\?$/, ''), value = instance[field];
+    if (binding.endsWith('?') && value === undefined) continue;
+    if (/[bB]ranchId$/.test(field) ? typeof value !== 'string' || !value : !Number.isSafeInteger(value) || value < 0)
       throw Error(`Unsupported device binding: ${name}/${id}.${field}`);
     bindings[field] = value;
   }

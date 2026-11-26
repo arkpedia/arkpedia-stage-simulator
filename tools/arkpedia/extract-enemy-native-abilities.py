@@ -86,6 +86,7 @@ SCOPED_OBJECTS = {
     'enemy_1366_dcolle_2': ['enemy_1366_dcolle_2','Default','Attack','Collect','Passive'],
     'enemy_1365_spnwiz': ['enemy_1365_spnwiz','Default','Ghost','Attack','Reborn','Reborning','Passive','Revive'],
     'enemy_1365_spnwiz_2': ['enemy_1365_spnwiz_2','Default','Ghost','Attack','Reborn','Reborning','Passive','Revive'],
+    'enemy_1368_spilot': ['enemy_1368_spilot','Default','ChargeOre','DebuffAura','Attack','Charge','Aura','Reborn'],
     'enemy_1369_bmbcar1': ['enemy_1369_bmbcar1','Default','Attack','Selector','Explosion','Summon','SpCtrl','MoveBackwards','Passive'],
     'enemy_1370_bmbcar2': ['enemy_1370_bmbcar2','Default','Attack','Passive'],
     'enemy_1109_uabone': ['enemy_1109_uabone','Default','Attack','Combat','Trigger'],
@@ -679,6 +680,7 @@ for bundle in sorted(wanted):
             'enemy_1366_dcolle_2': {'Attack','Collect','Passive'},
             'enemy_1365_spnwiz': {'Attack','Reborn','Reborning','Passive','Revive'},
             'enemy_1365_spnwiz_2': {'Attack','Reborn','Reborning','Passive','Revive'},
+            'enemy_1368_spilot': {'ChargeOre','DebuffAura','Attack','Charge','Aura','Reborn','Selector'},
             'enemy_1369_bmbcar1': {'Attack','Selector','Explosion','Summon','SpCtrl','MoveBackwards','Passive'},
             'enemy_1370_bmbcar2': {'Attack','Passive'},
             'enemy_1109_uabone': {'Attack','Combat','Trigger'},
@@ -1028,6 +1030,7 @@ for bundle in sorted(wanted):
             'enemy_1263_durbus_2': {'Selector'},
             'enemy_1366_dcolle': {'Collect'},
             'enemy_1366_dcolle_2': {'Collect'},
+            'enemy_1368_spilot': {'Aura', 'Charge'},
         }.get(path.rsplit('/', 1)[-1].removesuffix('.prefab'), set())
         for r in list(rows):
             if r['objectName'] not in geometry_names: continue
