@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { PRTS_INTRUSIVE_CALL, prtsGrabTarget, prtsDragTile, prtsControlInert } from '../../shared/arkpedia/stage-prts-control.js';
 import { readOriginalLevel } from './original-level.mjs';
 import { compilePredefinedOperators } from './stage-predefined-operators.mjs';
 import { stageDeviceSpec, STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
@@ -75,6 +76,9 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
     throw Error('Ambiguous predefined device alias');
   if (!Array.isArray(level.waves) || level.waves.length !== geometry.waves.length)
     throw Error('Original/viewer wave count mismatch');
+  // Chapter 15 (stage-prts-control.js): the first Intrusive Call action is the hand; each later one is a grab order
+  // for the action right after it, which is carried from the drag tile to its route's start.
+  const prts = rules?.prtsControl && !prtsControlInert(level) ? { hand: false, drag: prtsDragTile(level) } : null;
   const waves = level.waves.map((wave, wi) => {
     const view = geometry.waves[wi], remaining = [...view.spawns];
     // The source uses -1 for no closing delay on a terminal wave. The viewer
@@ -92,6 +96,7 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
       const preDelay = delay(fragment.preDelay), start = clock + preDelay;
       let exportedSpan = 0, duration = 0, actionCount = 0, fixedDuration = 0, fixedActionCount = 0;
       const spawns = [], activations = [], emptyChoices = [];
+      let grabOrder = null; // the pending grab order: { order, group }
       for (const [order, action] of fragment.actions.entries()) {
         const type = actionNames[action.actionType] ?? action.actionType;
         const offset = delay(action.preDelay), interval = delay(action.interval);
@@ -153,11 +158,27 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
         const row = matches[0]; remaining.splice(remaining.indexOf(row), 1);
         if (!Number.isSafeInteger(row.route) || !geometry.routes[row.route] || geometry.routes[row.route].placeholder)
           throw Error('Missing original spawn route');
+        const group = action.hiddenGroup ?? null;
+        if (action.key === PRTS_INTRUSIVE_CALL) {
+          if (!prts || grabOrder || random || action.count !== 1) throw Error('Unsupported Intrusive Call action');
+          // A later hand action spawns nothing: it turns the next action into a grab.
+          if (prts.hand) { grabOrder = { order, group }; continue; }
+          prts.hand = true;
+        }
+        const grabbed = grabOrder && grabOrder.order === order - 1 && grabOrder.group === group;
+        if (grabOrder && !grabbed) throw Error('Intrusive Call grab without its enemy');
+        if (grabbed) {
+          if (random || action.count !== 1) throw Error('Unsupported Intrusive Call grab (a squad or a random spawn)');
+          prtsGrabTarget(level, action); // refuses the Weakening Node and the static forms until they are modelled
+          grabOrder = null;
+        }
         spawns.push({ enemyKey: action.key, routeIndex: row.route, count: action.count, offset, interval,
           ...(random ? { random: { group: random, weight: action.weight } } : {}),
           blockFragment: !!action.blockFragment, dontBlockWave: !!action.dontBlockWave, ...(predefined || random ? { order } : {}),
+          ...(action.key === PRTS_INTRUSIVE_CALL ? { prtsHand: true } : {}), ...(grabbed ? { prtsGrab: true } : {}),
           ...(action.isUnharmfulAndAlwaysCountAsKilled ? { unharmful: true } : {}) });
       }
+      if (grabOrder) throw Error('Intrusive Call grab without its enemy');
       clock = start + exportedSpan;
       const randomGroups = new Map();
       for (const s of [...spawns, ...activations, ...emptyChoices]) if (s.random)
@@ -170,7 +191,8 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
     if (remaining.length || !near(clock + wave.postDelay, view.duration)) throw Error('Original/viewer wave duration or spawn mismatch');
     return { preDelay, postDelay, maxWait, fragments };
   });
-  return { schemaVersion: 1, waves, ...(predefined ? { predefined } : {}) };
+  if (prts && !prts.hand) throw Error('PRTS control level without its Intrusive Call');
+  return { schemaVersion: 1, waves, ...(predefined ? { predefined } : {}), ...(prts ? { prts: { drag: prts.drag } } : {}) };
 }
 
 export async function prepareStageWaves({ root, rules, compiledRules, geometry, operators, devices = [], branches }) {

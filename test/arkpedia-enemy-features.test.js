@@ -684,10 +684,13 @@ test('Worry-Free Cargo Helper: explodes next to the guard', () => {
   e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(0.2);
   assert.ok(guard.hp < hp); assert.equal(e.alive, false);
 });
-test('PRTS props are inert: untargetable, immobile and non-leaking', () => {
+test('PRTS props placed alone: untargetable, immobile and non-leaking', () => {
+  // The Weakening Node enemy is still the inert placeholder; the Intrusive Call is reviewed (kind intrusiveCall) and
+  // only hovers without its control system.
   for (const key of ['enemy_10072_mpprhd', 'enemy_10082_mpweak']) {
     const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), x = e.x, y = e.y;
-    assert.equal(e.untargetable, true); assert.equal(e.lpr, 0); h.run(1); assert.equal(e.x, x); assert.equal(e.y, y);
+    assert.equal(key === 'enemy_10072_mpprhd' ? e.s.flags.untargetable : e.untargetable, true);
+    assert.equal(e.lpr, 0); h.run(1); assert.equal(e.x, x); assert.equal(e.y, y);
   }
 });
 test('DP-lock caster: DP regeneration is halted for the skill duration', () => {

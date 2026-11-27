@@ -28,6 +28,7 @@ import { PILOT_CHARGE, PILOT_REBORN, isPilot } from './enemy-pilot-features.js';
 import { BLOOD_LORD_FEATURES, isBloodLord, bloodLordNative, isBloodLordTwo, bloodLordTwoNative } from './enemy-blood-lord-features.js';
 import { REVENANT_FEATURES, REVENANT_SHARED_FEATURES, isRevenant, isRevenantSecond, revenantSecondNative } from './enemy-kindling-revenant-features.js';
 import { REVENANT_FIRST, REVENANT_SECOND } from './stage-kindling-revenant-beams.js';
+import { INTRUSIVE_CALL_FEATURE } from './enemy-intrusive-call-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
@@ -495,7 +496,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
   enemy_1112_emppnt: 'native:imperialShell', enemy_1112_emppnt_2: 'native:imperialShell',
   enemy_1421_lrchld: 'native:beacon', enemy_1421_lrchld_2: 'native:beacon',
-  enemy_10072_mpprhd: 'native:prtsProp', enemy_10072_mpprhd_2: 'native:prtsProp',
+  enemy_10072_mpprhd: 'native:intrusiveCall', enemy_10072_mpprhd_2: 'native:prtsProp',
   enemy_10082_mpweak: 'native:prtsProp', enemy_10082_mpweak_2: 'native:prtsProp',
 });
 
@@ -1132,8 +1133,9 @@ export const ENEMY_FEATURES = Object.freeze(withFamily({
       || text === 'Shortly after it enters the battle, throws a bomb to temporarily disable the Operator with the highest DP cost in your Deployment Waiting Zone' },
   // PRTS stage props: hidden, no-damage controller/node entities. Until the PRTS activation rules are reviewed they are inert,
   // untargetable and do not move or leak; stages that contain them stay testOnly.
+  'native:intrusiveCall': INTRUSIVE_CALL_FEATURE,
   'native:prtsProp': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:prtsProp',
-    ability: { kind: 'prtsProp', params: () => ({}) }, nativeClaim: p => String(p.rootName ?? '').includes('10072') ? { active: 1 } : {},
+    ability: { kind: 'prtsProp', params: () => ({}) }, nativeClaim: () => ({}),
     note: 'inert PRTS controller/node; activation not yet modeled' },
   'native:beacon': BEACON_FEATURE,
   // Ursus patrol: the Captains' neutral-mark shots (enemy-talulah-fighter-features.js).

@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { PARASITIC_ENVIRONMENT, parasiticHostParameters } from '../../shared/arkpedia/stage-parasitic.js';
-import { prtsControlInert } from '../../shared/arkpedia/stage-prts-control.js';
+import { prtsControlInert, prtsDragTile } from '../../shared/arkpedia/stage-prts-control.js';
 export async function prepareStageEnvironments({ root, rules, compiledRules }) {
   const { level, source } = await readOriginalLevel(root, rules);
   const environment = compileStageEnvironments(level.globalBuffs);
@@ -20,8 +20,9 @@ export async function prepareStageEnvironments({ root, rules, compiledRules }) {
   // The chapter-12 sight system and its global buff come as a pair.
   if (!!compiledRules?.sightSystem !== environment.some(e => e.kind === 'mainline12_sightManager'))
     throw Error('Unpaired chapter-12 sight system');
-  // Chapter 15: the PRTS control system is accepted only where the level gives it nothing to act with.
-  if (compiledRules?.prtsControl && !prtsControlInert(level)) throw Error('Unsupported PRTS control actions (the Intrusive Call)');
+  // Chapter 15: the PRTS control system needs its one drag tile, unless the level gives it nothing to act with. The
+  // Intrusive Call's orders are checked with the waves (stage-waves.mjs).
+  if (compiledRules?.prtsControl && !prtsControlInert(level)) prtsDragTile(level);
   const danger = environment.find(e => e.kind === 'legion_mode_enemy_boost');
   if (danger?.limits.length && danger.limits.length !== level.waves?.length)
     throw Error('Unsupported danger-limit wave mapping');

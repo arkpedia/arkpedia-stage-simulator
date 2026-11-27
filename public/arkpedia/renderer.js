@@ -331,6 +331,9 @@ export class StageRenderer {
       for (const gun of revenant.guns) if (gun.firing && this.currentBattle.time >= gun.firing.at)
         for (let col = 0; col < gun.col; col++) if (this.currentBattle.grid.inRect(gun.row, col)) polygon(gun.row, col, 0xe5433a, .2, 0, .2);
     }
+    // Chapter 15: the tile the Intrusive Call is carrying an enemy to (occupying it stops the deploy).
+    const prtsMarker = this.currentBattle?.stagePrts?.marker;
+    if (prtsMarker) polygon(prtsMarker[0], prtsMarker[1], 0xffffff, .28, 3, .12);
     for (const tile of this.currentBattle?.stageEpoch?.tiles.values() ?? [])
       polygon(tile.row, tile.col, 0x9877d5, .22, 1, .04);
     for (const e of this.currentBattle?.stageMagicCircuit?.entries.values() ?? []) {

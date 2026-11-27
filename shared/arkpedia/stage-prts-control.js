@@ -34,3 +34,26 @@ export function prtsControlInert(level) {
   const text = JSON.stringify([level.enemyDbRefs, level.enemies, level.waves, level.branches, level.routes, level.extraRoutes, level.predefines, level.hardPredefines]);
   return !text.includes(PRTS_INTRUSIVE_CALL) && !(level.mapData?.tiles ?? []).some(t => t.tileKey === PRTS_DRAG_TILE);
 }
+
+/** The level's one drag tile (`tile_mpprts_enemy_born`), in level coordinates (row 0 at the bottom). */
+export function prtsDragTile(level) {
+  const map = level.mapData?.map ?? [], tiles = level.mapData?.tiles ?? [], found = [];
+  for (const [ri, row] of map.entries()) for (const [col, index] of row.entries())
+    if (tiles[index]?.tileKey === PRTS_DRAG_TILE) found.push({ row: map.length - 1 - ri, col });
+  if (found.length !== 1) throw Error('PRTS control needs exactly one drag tile');
+  return found[0];
+}
+
+/** Enemies the Intrusive Call places as a device instead: the Weakening Node anywhere, the others on a highland tile. */
+export const PRTS_NODE_ENEMY = 'enemy_10082_mpweak';
+export const PRTS_STATIC_ENEMIES = Object.freeze(PAIRS.map(p => p[0]).filter(k => k !== PRTS_NODE_ENEMY));
+/** Where a grabbed enemy is deployed: the start of its own route. Device forms are not modelled yet and are refused. */
+export function prtsGrabTarget(level, action) {
+  const route = level.routes?.[action.routeIndex], p = route?.startPosition, map = level.mapData?.map ?? [];
+  const tile = level.mapData?.tiles?.[map[map.length - 1 - p?.row]?.[p?.col]];
+  if (!tile || !Number.isInteger(p.row) || !Number.isInteger(p.col)) throw Error('Intrusive Call grab without a target tile');
+  const highland = ['HIGHLAND', 1].includes(tile.heightType);
+  if (action.key === PRTS_NODE_ENEMY) throw Error('Unsupported Intrusive Call deploy: the Weakening Node device');
+  if (highland && PRTS_STATIC_ENEMIES.includes(action.key)) throw Error(`Unsupported Intrusive Call deploy: a static ${action.key}`);
+  return { row: p.row, col: p.col, highland };
+}

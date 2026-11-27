@@ -10,7 +10,7 @@ export function stageWaveSpawns(program, rules) {
   return program.waves.flatMap((wave, wi) => wave.fragments.flatMap((fragment, fi) => fragment.spawns.map((action, ai) => ({
     enemyKey: stageEnemyKey(rules, action.enemyKey), routeIndex: action.routeIndex,
     count: action.count, interval: action.interval, time: action.offset,
-    ...(action.unharmful ? { countInTotal: false } : {}),
+    ...(action.unharmful || action.prtsGrab ? { countInTotal: false } : {}),
     tag: tagFor(wi, fi, ai), ownerPlayerId: 'arkpedia',
   }))));
 }

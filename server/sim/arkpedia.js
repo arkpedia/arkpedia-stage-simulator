@@ -24,6 +24,7 @@ import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '..
 import { Battle } from './BattleCore.js';
 import { RegularDisplacement } from './regular-displacement.js';
 import { StageWaveScheduler, stageWaveSpawns } from './content/arkpedia-stage-waves.js';
+import { StagePrtsControl } from './content/arkpedia-stage-prts-control.js';
 import { StageBranchScheduler } from './content/arkpedia-stage-branches.js';
 import { resolveStageRandomWaves } from './content/arkpedia-stage-random.js';
 import { stageRouteClockWaits } from '../../shared/arkpedia/stage-path.js';
@@ -381,6 +382,8 @@ export class StandardBattle extends Battle {
     });
     for (const entry of this.stagePredefined.values()) if (entry.kind === 'actor' && !entry.hidden) this.activateStagePredefined(entry.key);
     if (data.stage.waveProgram) this.stageWaveScheduler = new StageWaveScheduler(this, data.stage.waveProgram);
+    // Chapter 15: the PRTS control system's hand carries the enemies its grab orders name.
+    if (data.stage.waveProgram?.prts) this.stagePrts = new StagePrtsControl(this, data.stage.waveProgram.prts);
     this.start();
   }
   _processSpawns() {
