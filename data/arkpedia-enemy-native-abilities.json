@@ -58,7 +58,12 @@
   "enemy_shkrbt_blink",
   "enemy_shrshep_blink",
   "enemy_shsdgo_pos",
-  "enemy_vcblva_t_tile"
+  "enemy_vcblva_t_tile",
+  "mcreep_a[reach_exit]",
+  "mcreep_t[fear_blood]",
+  "mcreep_t[fear_listener]",
+  "mcreep_t[get_heal]",
+  "mcreep_t[work_espace_shadow]"
  ],
  "objects": [
   "DefDown",
@@ -559,6 +564,16 @@
    "GrabEnd",
    "Click",
    "Angry"
+  ],
+  "enemy_3010_mcreep": [
+   "enemy_3010_mcreep",
+   "Default",
+   "Selector",
+   "Attack",
+   "TileEscapeShadowManager",
+   "GetHeal",
+   "FearLoseBlood",
+   "Passive"
   ],
   "enemy_1564_mpprts": [
    "enemy_1564_mpprts",
@@ -55417,6 +55432,127 @@
     "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":1,\"_alwaysIncludeTarget\":0,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Skill_02\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":0,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":1,\"_selectTargetTiming\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"4766641480614141221\"},\"_timeMode\":1,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4930398725455225563\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
    }
   ],
+  "dyn/battle/prefabs/enemies/enemy_3010_mcreep.prefab": [
+   {
+    "pathId": "-8324838178985411622",
+    "objectName": "GetHeal",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"mcreep_t[get_heal]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":1,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"mcreep_t[get_heal]\",\"triggerCnt\":0,\"triggerInterval\":1.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_clearBuffsWhenDisappear\":0,\"_effects\":[],\"_excludeReborningEntity\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceRemoveAllBuffsByKey\":0,\"_forceTick\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_interval\":0.0,\"_listenUnitRebornEvent\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyDetactTargetWhenStarted\":0,\"_onlyDetectCurrentMapLayer\":0,\"_passiveBuffs\":[],\"_removeBuffIncludeReborning\":0,\"_removeBuffWhenAbilityDetached\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_selfOption\":2,\"_targetValidator\":{\"m_FileID\":0,\"m_PathID\":\"6287575270780566490\"},\"_tryRemoveBuffFirstWhenReborn\":1,\"_useDurableRallyPointLikeSwitch\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8362943630665382874\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5793748974791823428\"}}"
+   },
+   {
+    "pathId": "-7287768507665220646",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "350fdb347cdbafdba30c4cfc60a2648eca7ccc462fe593f31272718fe78fba97",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":2,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":1,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":1,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":1,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-369003357231186982\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}"
+   },
+   {
+    "pathId": "-5207956525978551334",
+    "objectName": "FaceSwitcher",
+    "referenced": true,
+    "sha256": "293947c747897146245961bd1951a4cf8f84223c0645522c53854ced990963e0",
+    "originalJson": "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7840547073672414246\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}"
+   },
+   {
+    "pathId": "-1621640040742257702",
+    "objectName": "Passive",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[{\"attributeType\":20,\"fetchBaseValueFromSourceEntity\":0,\"formulaItem\":0,\"loadFromBlackboard\":0,\"value\":-1.0}]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mcreep_self_mark\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mcreep_able_to_be_blocked\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":2,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"mark_neutral[effect]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"mcreep_a[reach_exit]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"mcreep_a[reach_exit]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"Passive\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6377299584401671206\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "-1249263277033456678",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "ccac7f6d176799b7d6fb8e54d204502cdd765cbdb02904c629b2d08de93634b7",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":1,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-369003357231186982\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}"
+   },
+   {
+    "pathId": "-264060187045528614",
+    "objectName": "Shadow",
+    "referenced": true,
+    "sha256": "2da178b7f4f57d9354ed65391894cb7de0c6b83429b52bcfd2a9897060959c1b",
+    "originalJson": "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8151228081675041754\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}"
+   },
+   {
+    "pathId": "1998025546922851290",
+    "objectName": "Selector",
+    "referenced": true,
+    "sha256": "9352a16b097e4602c16638fb43b11c2cc16d39708f1a0d3986a3b84205f4eaaa",
+    "originalJson": "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-369003357231186982\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8607874384982393801\"}}"
+   },
+   {
+    "pathId": "3577167244923435994",
+    "objectName": "enemy_3010_mcreep",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"4414815001423707098\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":0.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"-357301702753387558\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"6500173912443190234\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"-264060187045528614\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":2,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5644796134861044698\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}"
+   },
+   {
+    "pathId": "4335210765492747226",
+    "objectName": "Attack",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":1,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4819875846512051238\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+   },
+   {
+    "pathId": "4414815001423707098",
+    "objectName": "Graphic",
+    "referenced": true,
+    "sha256": "24b2319b7520ffb55a319fd73db8c0a6d30e3a5527c2dba48f32277ac3a743af",
+    "originalJson": "{\"_animations\":[{\"animKey\":\"Default\",\"animName\":\"Default\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Attack\",\"animName\":\"Attack\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Born\",\"animName\":\"Start\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"-5207956525978551334\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"2895562608937991130\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"2701129025234074586\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"8243683865183386586\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3206822035890437082\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}"
+   },
+   {
+    "pathId": "6183750696490367962",
+    "objectName": "FearLoseBlood",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"mcreep_t[fear_listener]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"mcreep_t[fear_listener]\",\"triggerCnt\":0,\"triggerInterval\":0.30000001192092896,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4564739878063569882\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "6287575270780566490",
+    "objectName": "GetHeal",
+    "referenced": true,
+    "sha256": "a8f7998d1cf89b0132c216711ab832734d84f2f740296a040e342a6f8b109f3f",
+    "originalJson": "{\"_buildableType\":3,\"_checkBlock\":0,\"_checkDeployPosition\":0,\"_checkSkillAffecting\":0,\"_deployPositionFromData\":3,\"_rarityMask\":63,\"_skillAffecting\":0,\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":1,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":1,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":8,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":7,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8362943630665382874\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"1846211657456155157\"}}"
+   },
+   {
+    "pathId": "6500173912443190234",
+    "objectName": "Default",
+    "originalJson": "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"4335210765492747226\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"1998025546922851290\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"1268668559241116634\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"-1621640040742257702\"}],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6136942268624075738\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}"
+   },
+   {
+    "pathId": "6788834655205915610",
+    "objectName": "FearLoseBlood",
+    "referenced": true,
+    "sha256": "1e15167a3496583201379b498ea49641298f5695c2f15642d04f9494c0ca6977",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4564739878063569882\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}"
+   },
+   {
+    "pathId": "7523757030189431770",
+    "objectName": "GetHeal",
+    "referenced": true,
+    "sha256": "1bf38f67e4274201b24ed1890179a58752b9efb5ea422a4acbf3d5bc42aa1814",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8362943630665382874\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}"
+   },
+   {
+    "pathId": "7700180221514218458",
+    "objectName": "Attack",
+    "referenced": true,
+    "sha256": "8921f78e2d713bacaa5a98699c5023b3cfc7a0cf1fa26f21dfb95f04d9794365",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_mcreep_attack_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_mcreep_attack_hit_01\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4819875846512051238\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}"
+   },
+   {
+    "pathId": "8049663265092795354",
+    "objectName": "TileEscapeShadowManager",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"mcreep_t[work_espace_shadow]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"mcreep_t[work_espace_shadow]\",\"triggerCnt\":0,\"triggerInterval\":0.30000001192092896,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"9188808171166825434\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}"
+   },
+   {
+    "pathId": "8243683865183386586",
+    "objectName": "Spine",
+    "referenced": true,
+    "sha256": "8094aaf92a45fa28428280d5d02706d6ba8e5210b7111d10c43ca304d236a983",
+    "originalJson": "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1343246699918132262\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":5,\"m_PathID\":\"-16971180702045977\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}"
+   },
+   {
+    "pathId": "8323649833717595098",
+    "objectName": "TileEscapeShadowManager",
+    "referenced": true,
+    "sha256": "5d4ec8ce9a569f6d63885b2cd908582d5854849bcdb661a9580319805d2ac646",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"9188808171166825434\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}"
+   }
+  ],
   "dyn/battle/prefabs/enemies/enemy_4007_murino.prefab": [
    {
     "pathId": "-9077565624395313893",
@@ -100081,6 +100217,349 @@
       "_castDirectly": false,
       "_useFirstActiveAbility": false,
       "_useCastResult": false
+     }
+    ]
+   }
+  },
+  "mcreep_a[reach_exit]": {
+   "templateKey": "mcreep_a[reach_exit]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_OWNER_REACH_EXIT": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+LogExtraBattleInfo, Assembly-CSharp",
+      "_logType": "SIMPLE",
+      "_key": "reach_exit",
+      "_loadKeyFromBlackBoard": true,
+      "_countInHostIfToken": false,
+      "_additionValue": 1,
+      "_additionValueKey": "",
+      "_attributeType": "NONE",
+      "_target": "BUFF_OWNER"
+     }
+    ]
+   }
+  },
+  "mcreep_t[fear_blood]": {
+   "templateKey": "mcreep_t[fear_blood]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FilterByTargetHpRatio, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_condType": "EQUALS",
+      "_value": 1.0,
+      "_useSourceHpRatio": false,
+      "_sourceType": "SOURCE",
+      "_blackboardPrefix": null
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FixedValueDamage, Assembly-CSharp",
+      "_damageType": "PURE",
+      "_damageKey": "value",
+      "_atkScaleKey": "atk_scale",
+      "_ignoreForSp": false,
+      "_attackType": "NORMAL",
+      "_skipModifierEvent": false,
+      "_considerUnhurtable": false,
+      "_noSourceDamage": false,
+      "_targetType": "TARGET",
+      "_assignRealDamageToBB": false,
+      "_assignFinalDamageToBB": false,
+      "_multiplierByKey": false,
+      "_multiplierKey": "cnt",
+      "_damageSourceType": "SOURCE",
+      "_damageTargetType": "TARGET",
+      "_triggerOnCalculateDamage": false,
+      "_isEnvDamage": false,
+      "_ignoreCancelReasonMask": "NONE",
+      "_forceDisplayDamageNum": false,
+      "_undeadable": false,
+      "_modifierKey": "",
+      "_devideDamageFromAbilityCnt": false
+     }
+    ]
+   }
+  },
+  "mcreep_t[fear_listener]": {
+   "templateKey": "mcreep_t[fear_listener]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+      "_conditionNode": {
+       "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+       "_targetType": "BUFF_OWNER",
+       "_buffKeys": [
+        "fear"
+       ],
+       "isAND": true,
+       "_loadFromBlackboard": false,
+       "_checkBuffSource": false,
+       "_buffSourceType": "BUFF_SOURCE",
+       "_checkSourceHost": false
+      },
+      "_succeedNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+        "_targetType": "BUFF_OWNER",
+        "_buffKeys": [
+         "mcreep_t[fear_blood]"
+        ],
+        "isAND": true,
+        "_loadFromBlackboard": false,
+        "_checkBuffSource": false,
+        "_buffSourceType": "BUFF_SOURCE",
+        "_checkSourceHost": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+        "_buff": {
+         "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+         },
+         "buffKey": "mcreep_t[fear_blood]",
+         "loadFromDB": false,
+         "isDurableBuff": false,
+         "isDamageMissable": false,
+         "isSilenceable": false,
+         "isStunnable": false,
+         "isFreezable": false,
+         "isLevitatable": false,
+         "isGroundBoundable": false,
+         "statusResistable": "AUTOMATIC",
+         "templateKey": "mcreep_t[fear_blood]",
+         "disableOverride": false,
+         "overrideKey": null,
+         "overrideType": "UNIQUE",
+         "maxStackCnt": 1,
+         "refreshRemainingTimeWhenStackMax": false,
+         "clearAllStackCntWhenTimeUp": false,
+         "maxValidStackCnt": -1,
+         "independentCharacterSource": false,
+         "overrideEffectKey": null,
+         "overrideOnEventPriority": false,
+         "onEventPriority": "DEFAULT",
+         "audioSignal": null,
+         "lifeTimeType": "INFINITY",
+         "takeSnapshotWhenExtend": false,
+         "durationKey": null,
+         "remainingTimeKey": null,
+         "lifeTime": 0.0,
+         "triggerLifeType": "INFINITY",
+         "triggerCnt": 0,
+         "triggerInterval": 1.0,
+         "waitFirstTriggerInterval": true,
+         "firstTriggerInterval": 1.0,
+         "priority": -1,
+         "priorityBBKeys": [],
+         "stripBlackboardParamsWithBuffKey": false,
+         "blackboard": [],
+         "enableInitDirectionFromSource": false
+        },
+        "_buffOwner": "BUFF_OWNER",
+        "_useSpecialBuffSource": false,
+        "_specialBuffSource": "BUFF_SOURCE",
+        "_isDerivedBuff": false,
+        "_finishDerivedBuffIfParentFinish": false,
+        "_inherateSourceProjectileFromParentBuff": false,
+        "_hookEffectKeyFromSourceProjectile": false
+       }
+      ],
+      "_failNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+        "_buffKey": "mcreep_t[fear_blood]",
+        "_loadFromBlackboard": false,
+        "_decCntIfStack": false,
+        "_updateOverrideMap": true,
+        "_targetType": "BUFF_OWNER",
+        "_checkBuffSource": false,
+        "_sourceType": "BUFF_SOURCE",
+        "_alsoClearNullSource": false,
+        "_finishHostBuff": false,
+        "_decCntKey": null,
+        "_decCnt": 1
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "mcreep_t[get_heal]": {
+   "templateKey": "mcreep_t[get_heal]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FilterByTargetHpRatio, Assembly-CSharp",
+      "_targetType": "BUFF_SOURCE",
+      "_condType": "LT",
+      "_value": 1.0,
+      "_useSourceHpRatio": false,
+      "_sourceType": "SOURCE",
+      "_blackboardPrefix": null
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CheckUnitRootTileInTargetAttackRange, Assembly-CSharp",
+      "_ownerType": "BUFF_SOURCE",
+      "_targetType": "BUFF_OWNER"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+AssignAttributeToBB, Assembly-CSharp",
+      "_targetType": "BUFF_OWNER",
+      "_attributeType": "ATK",
+      "_scaleVar": "",
+      "_blackboardKey": "value"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+FixedValueHeal, Assembly-CSharp",
+      "_targetType": "BUFF_SOURCE",
+      "_sourceType": "SOURCE",
+      "_ignoreHealFree": false,
+      "_healValueKey": "value"
+     },
+     {
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+      "_buff": {
+       "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+       },
+       "buffKey": "mcreep_t[heal_effect]",
+       "loadFromDB": false,
+       "isDurableBuff": false,
+       "isDamageMissable": false,
+       "isSilenceable": false,
+       "isStunnable": false,
+       "isFreezable": false,
+       "isLevitatable": false,
+       "isGroundBoundable": false,
+       "statusResistable": "AUTOMATIC",
+       "templateKey": "empty",
+       "disableOverride": false,
+       "overrideKey": null,
+       "overrideType": "EXTEND",
+       "maxStackCnt": 1,
+       "refreshRemainingTimeWhenStackMax": false,
+       "clearAllStackCntWhenTimeUp": false,
+       "maxValidStackCnt": -1,
+       "independentCharacterSource": false,
+       "overrideEffectKey": "enemy_mcreep_buff_01",
+       "overrideOnEventPriority": false,
+       "onEventPriority": "DEFAULT",
+       "audioSignal": null,
+       "lifeTimeType": "LIMITED",
+       "takeSnapshotWhenExtend": false,
+       "durationKey": null,
+       "remainingTimeKey": null,
+       "lifeTime": 1.100000023841858,
+       "triggerLifeType": "IMMEDIATELY",
+       "triggerCnt": 0,
+       "triggerInterval": -1.0,
+       "waitFirstTriggerInterval": true,
+       "firstTriggerInterval": -1.0,
+       "priority": -1,
+       "priorityBBKeys": [],
+       "stripBlackboardParamsWithBuffKey": false,
+       "blackboard": [],
+       "enableInitDirectionFromSource": false
+      },
+      "_buffOwner": "BUFF_SOURCE",
+      "_useSpecialBuffSource": false,
+      "_specialBuffSource": "BUFF_SOURCE",
+      "_isDerivedBuff": false,
+      "_finishDerivedBuffIfParentFinish": false,
+      "_inherateSourceProjectileFromParentBuff": false,
+      "_hookEffectKeyFromSourceProjectile": false
+     }
+    ]
+   }
+  },
+  "mcreep_t[work_espace_shadow]": {
+   "templateKey": "mcreep_t[work_espace_shadow]",
+   "effectKey": "",
+   "onEventPriority": "DEFAULT",
+   "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+     {
+      "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+      "_conditionNode": {
+       "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+       "_targetType": "BUFF_OWNER",
+       "_buffKeys": [
+        "gyegrd_a[exist]"
+       ],
+       "isAND": true,
+       "_loadFromBlackboard": false,
+       "_checkBuffSource": false,
+       "_buffSourceType": "BUFF_SOURCE",
+       "_checkSourceHost": false
+      },
+      "_succeedNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+        "_decCntIfStack": false,
+        "_updateOverrideMap": true
+       }
+      ],
+      "_failNodes": [
+       {
+        "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+        "_targetType": "BUFF_OWNER",
+        "_buffKeys": [
+         "fear"
+        ],
+        "isAND": true,
+        "_loadFromBlackboard": false,
+        "_checkBuffSource": false,
+        "_buffSourceType": "BUFF_SOURCE",
+        "_checkSourceHost": false
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+       },
+       {
+        "$type": "Torappu.Battle.Action.Nodes+Main16ChangeTileShadowViaRange, Assembly-CSharp",
+        "_target": "BUFF_OWNER",
+        "_rangeId": "x-4",
+        "_useArea": false,
+        "_beginPosition": {
+         "row": 0,
+         "col": 0
+        },
+        "_endPosition": {
+         "row": 0,
+         "col": 0
+        },
+        "_changeTileShadowState": false,
+        "_toShadow": false,
+        "_temporaryEscapeShadowState": true,
+        "_useBbPosAsCenterPos": false,
+        "_centerPosKey": ""
+       }
+      ]
      }
     ]
    }

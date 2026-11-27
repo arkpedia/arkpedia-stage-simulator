@@ -6,6 +6,7 @@ import { PROFESSION_BITS, BUILDABLE_BITS, cardRuleMask } from './stage-card-rule
 import { nativeStageRuleReviewed, STAGE_DYNAMIC_ABILITIES } from './stage-native-rules.js';
 import { compileStageEnvironments } from './stage-environments.js';
 import { ORIGINIUM_BURST_SYSTEM, compileOriginiumBurstRule } from './stage-originium-bursts.js';
+import { MAINLINE16_SYSTEM, MAINLINE16_HIDE, compileMainline16Rule } from './stage-mainline16.js';
 import { compileReedTileRule, compileReedIgnitionRule } from './stage-reeds.js';
 const ATTRIBUTES = Object.freeze({ max_hp: 'maxHp', atk: 'atk', def: 'def', move_speed: 'moveSpeed', attack_speed: 'aspd', magic_resistance: 'res', mass_level: 'massLevel' });
 
@@ -55,6 +56,7 @@ export function compileStageRules(source, receipt) {
     throw Error('Invalid or incompatible variant rule receipt');
   const allyCards = [], forbiddenLocations = [], deviceSkillCost = {}, deviceSkillAdd = {}, enemyReplacements = {};
   let sightSystem = false, revenantBeams = null, prtsControl = false, originiumBursts = null;
+  const mainline16 = { system: false, hide: false };
   const enemyDynamicAbilities = {}, environmentBuffs = [], enemyScopedAdd = {};
   const deploymentDamage = [], predefinedDevices = {}, predefinedOperators = {}, environmentOverrides = {};
   const enemyTalentGlobal = {}, enemyTalentAddScoped = {}, enemyElementalDamage = {};
@@ -126,6 +128,10 @@ export function compileStageRules(source, receipt) {
       // (stage-environments.mjs checks the original level).
       if (keys[0].valueStr === PRTS_CONTROL_SYSTEM && !prtsControl && ['ALL', 3].includes(rune.buildableMask)
         && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { prtsControl = compilePrtsControlRule(rune); continue; }
+      // Chapter 16: the pollution system (stage-mainline16.js); it must come with its global buff, and the level must
+      // give both nothing to act on (stage-environments.mjs checks the original level).
+      if (keys[0].valueStr === MAINLINE16_SYSTEM && !mainline16.system && ['ALL', 3].includes(rune.buildableMask)
+        && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { mainline16.system = compileMainline16Rule(rune, MAINLINE16_SYSTEM); continue; }
       // Six-star 15-14: Originium crystal bursts (stage-originium-bursts.js).
       if (keys[0].valueStr === ORIGINIUM_BURST_SYSTEM && !originiumBursts && ['ALL', 3].includes(rune.buildableMask)
         && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { originiumBursts = compileOriginiumBurstRule(rune); continue; }
@@ -304,6 +310,9 @@ export function compileStageRules(source, receipt) {
         const [compiled] = compileStageEnvironments([{ prefabKey: entry.valueStr, blackboard: rune.blackboard.slice(1) }]);
         environmentOverrides[entry.valueStr] = compiled;
         continue;
+      }
+      if (entry?.valueStr === MAINLINE16_HIDE && !mainline16.hide && ['ALL', 1023].includes(rune.professionMask) && ['ALL', 3].includes(rune.buildableMask)) {
+        mainline16.hide = compileMainline16Rule(rune, MAINLINE16_HIDE); continue;
       }
       if (rune.blackboard?.length !== 1 || entry.key !== 'key' || entry.value !== 0
         || entry.valueStr !== 'common_char_melee_built' || !nativeStageRuleReviewed(entry.valueStr)
@@ -513,11 +522,13 @@ export function compileStageRules(source, receipt) {
       }
     } else throw Error(`Unsupported stage rune: ${rune.key}`);
   }
+  if (mainline16.system !== mainline16.hide) throw Error('Unsupported chapter 16 pollution rule');
   return { variant: source.variant?.kind ?? null, source: receipt.source, battle, enemies, enemyAdd, hiddenGroups,
     ...(sightSystem ? { sightSystem } : {}),
     ...(revenantBeams ? { revenantBeams } : {}),
     ...(prtsControl ? { prtsControl } : {}),
     ...(originiumBursts ? { originiumBursts } : {}),
+    ...(mainline16.system ? { mainline16: true } : {}),
     ...(Object.keys(reedTileParameters).length ? { reedTileParameters } : {}),
     ...(reedIgnitions.length ? { reedIgnitions } : {}),
     ...(deploymentExcludedProfessionMask ? { deploymentExcludedProfessionMask } : {}),

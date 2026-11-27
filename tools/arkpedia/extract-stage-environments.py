@@ -24,7 +24,7 @@ def exact(v, key=''):
     return str(v) if key == 'm_PathID' else v
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 prefabs = {}
-for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_env', 'legion_mode_enemy_boost', 'strife_mode_feature', 'rogue_4_parasitic_buff', 'rogue_4_apoptosis[random_tile]', 'mainline12_sightManager', 'mainline14_enemy_sign_effect']:
+for key in ['periodic_damage', 'kill_to_add_cost', 'character_in_magiccircuit_env', 'legion_mode_enemy_boost', 'strife_mode_feature', 'rogue_4_parasitic_buff', 'rogue_4_apoptosis[random_tile]', 'mainline12_sightManager', 'mainline14_enemy_sign_effect', 'mainline16_enemy_target_free']:
     rows = []
     def walk(go):
         d = go.read_typetree()
@@ -47,7 +47,7 @@ assert len(env_raw) == env_row['abSize'] and hashlib.md5(env_raw).hexdigest() ==
 env_by = {o.path_id: o for o in UnityPy.load(env_raw).objects}
 env_container = UnityPy.load(env_raw).container
 env_systems = {}
-for key in ['env_005_mainline12_sightSystem', 'env_v050_mainline14_lrdeadP2Ctrl', 'env_v060_mainline15_prtsCtrl', 'env_030_random_tile_selector']:
+for key in ['env_005_mainline12_sightSystem', 'env_v050_mainline14_lrdeadP2Ctrl', 'env_v060_mainline15_prtsCtrl', 'env_030_random_tile_selector', 'env_v066_mainline16_ctrl']:
     rows = []
     go = env_container[f'dyn/battle/prefabs/[uc]envsystems/{key.lower()}.prefab'].read_typetree()
     for c in go['m_Component']:

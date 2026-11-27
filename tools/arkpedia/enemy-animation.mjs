@@ -33,16 +33,26 @@ for name,obj in json.loads(sys.argv[3]):
  asset=by[int(obj)].read_typetree()
  assert asset['m_Name']==name+'_SkeletonData'
  ref=asset['skeletonJSON'];assert ref['m_FileID']==0
- text=by[ref['m_PathID']].read();assert text.m_Name==name+'.skel'
+ text=by[ref['m_PathID']].read();assert text.m_Name in (name+'.skel',name)
  raw=text.m_Script.encode('utf8','surrogateescape') if isinstance(text.m_Script,str) else text.m_Script
  out.append({'skeletonPathId':str(ref['m_PathID']),'base64':base64.b64encode(raw).decode()})
 print(json.dumps(out))
 `;
 const extracted=JSON.parse(execFileSync(process.env.ARKPEDIA_PYTHON??'python3',['-c',script,
   join(root,'tools/local-extract'),path,JSON.stringify(specs)],{encoding:'utf8',maxBuffer:16*1024*1024}));
+// A JSON skeleton (newer bundles ship some enemies this way): a clip lasts until its last key; its events are listed.
+function parseJsonSkeleton(bytes){
+  const doc=JSON.parse(bytes.toString('utf8')),exactDurations={},eventPayloads={};
+  const last=v=>Array.isArray(v)?v.reduce((n,x)=>Math.max(n,last(x)),0):v&&typeof v==='object'?Object.entries(v).reduce((n,[k,x])=>Math.max(n,k==='time'&&typeof x==='number'?x:last(x)),0):0;
+  for(const [name,clip] of Object.entries(doc.animations??{})){
+    exactDurations[name]=last(clip);
+    if(clip.events?.length)eventPayloads[name]=clip.events.map(e=>({time:e.time??0,name:e.name,int:e.int??0,float:e.float??0,string:e.string??''}));
+  }
+  return {version:doc.skeleton?.spine,exactDurations,eventPayloads};
+}
 const enemies = Object.fromEntries(specs.map(([enemy, object], i) => {
   const bytes=Buffer.from(extracted[i].base64,'base64');
-  const parsed=parseSkel(bytes,undefined,{includeEventPayloads:true,includeExactDurations:true});
+  const parsed=bytes[0]===0x7b?parseJsonSkeleton(bytes):parseSkel(bytes,undefined,{includeEventPayloads:true,includeExactDurations:true});
   return [enemy, {schemaVersion:1,enemy,
     source:{...CN_NATIVE_PIN,bundle:{path:row.name,bytes:raw.length,md5:row.md5,sha256:hash('sha256',raw)},
       skeletonDataPathId:object,skeletonPathId:extracted[i].skeletonPathId,bytes:bytes.length,sha256:hash('sha256',bytes)},
