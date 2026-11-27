@@ -47,7 +47,7 @@ assert len(env_raw) == env_row['abSize'] and hashlib.md5(env_raw).hexdigest() ==
 env_by = {o.path_id: o for o in UnityPy.load(env_raw).objects}
 env_container = UnityPy.load(env_raw).container
 env_systems = {}
-for key in ['env_005_mainline12_sightSystem', 'env_v050_mainline14_lrdeadP2Ctrl']:
+for key in ['env_005_mainline12_sightSystem', 'env_v050_mainline14_lrdeadP2Ctrl', 'env_v060_mainline15_prtsCtrl']:
     rows = []
     go = env_container[f'dyn/battle/prefabs/[uc]envsystems/{key.lower()}.prefab'].read_typetree()
     for c in go['m_Component']:

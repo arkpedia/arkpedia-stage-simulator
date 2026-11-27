@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { SIGHT_SYSTEM, sightNativeReviewed } from './stage-sight.js';
 import { REVENANT_SYSTEM, compileRevenantBeamRule } from './stage-kindling-revenant-beams.js';
+import { PRTS_CONTROL_SYSTEM, compilePrtsControlRule } from './stage-prts-control.js';
 import { PROFESSION_BITS, BUILDABLE_BITS, cardRuleMask } from './stage-card-rules.js';
 import { nativeStageRuleReviewed, STAGE_DYNAMIC_ABILITIES } from './stage-native-rules.js';
 import { compileStageEnvironments } from './stage-environments.js';
@@ -40,7 +41,7 @@ export function compileStageRules(source, receipt) {
     || ((challenge || sixStar) && !receipt.runes?.length))
     throw Error('Invalid or incompatible variant rule receipt');
   const allyCards = [], forbiddenLocations = [], deviceSkillCost = {}, deviceSkillAdd = {}, enemyReplacements = {};
-  let sightSystem = false, revenantBeams = null;
+  let sightSystem = false, revenantBeams = null, prtsControl = false;
   const enemyDynamicAbilities = {}, environmentBuffs = [], enemyScopedAdd = {};
   const deploymentDamage = [], predefinedDevices = {}, predefinedOperators = {}, environmentOverrides = {};
   const enemyTalentGlobal = {}, enemyTalentAddScoped = {}, enemyElementalDamage = {};
@@ -95,6 +96,10 @@ export function compileStageRules(source, receipt) {
       // 14-18: the Kindling Revenant's beam system (stage-kindling-revenant.js); only its reviewed numbers are accepted.
       if (keys[0].valueStr === REVENANT_SYSTEM && !revenantBeams && ['ALL', 3].includes(rune.buildableMask)
         && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { revenantBeams = compileRevenantBeamRule(rune); continue; }
+      // Chapter 15: the PRTS control system (stage-prts-control.js). The level must give it nothing to act with
+      // (stage-environments.mjs checks the original level).
+      if (keys[0].valueStr === PRTS_CONTROL_SYSTEM && !prtsControl && ['ALL', 3].includes(rune.buildableMask)
+        && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { prtsControl = compilePrtsControlRule(rune); continue; }
       throw Error(`Unsupported stage environment controller: ${keys[0].valueStr}`);
     }
     // 11-14 adverse: every operator's redeployment time +value s (no `char` target; other forms stay refused).
@@ -457,6 +462,7 @@ export function compileStageRules(source, receipt) {
   return { variant: source.variant?.kind ?? null, source: receipt.source, battle, enemies, enemyAdd, hiddenGroups,
     ...(sightSystem ? { sightSystem } : {}),
     ...(revenantBeams ? { revenantBeams } : {}),
+    ...(prtsControl ? { prtsControl } : {}),
     ...(Object.keys(reedTileParameters).length ? { reedTileParameters } : {}),
     ...(reedIgnitions.length ? { reedIgnitions } : {}),
     ...(deploymentExcludedProfessionMask ? { deploymentExcludedProfessionMask } : {}),
