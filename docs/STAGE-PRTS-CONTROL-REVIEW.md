@@ -121,7 +121,8 @@ The simulator publishes the base conditions and does not offer the hypotheses.
 | 15-13 | Ally units' ATK 90% | yes |
 | 15-17 | Enemy ATK 130% on top | yes |
 | 15-18 | Ally units' DEF 80% | yes |
-| 15-3, 15-11, 15-7 | (the level's own drink machines) | no |
+| 15-3 | Enemy move speed 130% | yes |
+| 15-11 | DP recovery interval 150% | yes |
 | 15-6, 15-7 | The Prototype Auto Meal Distributor's summon cooldown 80% (`enemy_skill_cd_mul`) | no |
 | 15-8 | Crystal DEF 150%, fixed crystal 130% | no |
 | 15-14 | Originium crystal bursts (`env_030_random_tile_selector`) | no |
@@ -144,6 +145,23 @@ The simulator publishes the base conditions and does not offer the hypotheses.
 - **In the browser:** six-star 15-9 opens with "1 life", its condition line and the four tiles crossed out; no console errors. The stage list shows the normal and six-star stage under the same name.
 
 
+## Drink machines the level places itself (15-3, 15-7, 15-11)
+
+These levels hold Cold or Hot Drink Machine devices (`trap_229_mpcata`, `trap_230_mpcatab`) as hidden instances, and a wave action at 0 s switches each on by its alias. PRTS lists them as a level-1 stage device that "attacks ally units within 2.5 of itself with Physical damage".
+
+- **Device families** `Cold Drink Machine` and `Hot Drink Machine` (`stage-devices.js`): hidden, switched on by their own alias, level 1, no skill.
+- **Build time:** each instance carries the reviewed fixed-form numbers (`staticForm`, from `stage-prts-static-forms.js`), and the paired enemy's record joins the stage.
+- **Battle:** when the action runs, `placePrtsStatic` puts the paired enemy on the tile as the fixed form the hand's high-ground drops use: device numbers, taunt -1, uncounted, never holding the battle, its tile closed to deployment.
+- **A machine in a hidden group no base rule enables** is left out (15-3's second machine, group `sixstar`; 15-11's three on the left, group `five_star`).
+- **The hidden card** each level also lists (count 0) is never revealed and is ignored.
+
+Publishes 15-3, 15-7, 15-11 and the six-star 15-3 (move speed 130%) and 15-11 (DP recovery interval 150%).
+
+**Checked**
+- **15-3:** one machine on 3,8 from the first tick with 3,000 HP, 350 ATK, 240 DEF; it is not one of the 26 enemies and is still there when the stage clears.
+- **15-7:** three machines on 4,4, 6,1 and 6,4. **15-11:** three Hot Drink Machines on 3,9, 4,9 and 5,9 with 3,800 HP and 400 ATK. Both run to the end without errors.
+- **Six-star 15-3:** the machine has 3,600 HP, 385 ATK and 264 DEF. **Six-star 15-11** runs to the end with a 1.5 s DP interval.
+
 ## Not checked
 
 - In game.
@@ -156,6 +174,6 @@ The simulator publishes the base conditions and does not offer the hypotheses.
   - **The idle system:** that it does nothing without its actor and tile.
 - **More inferences (the node):** after Click the hand flies back to where it appeared; a hand that is called while busy finishes its current order first; the hand's cast does not touch flying ally units (the game data says ground only) or devices.
 - **More inferences (the static forms):** "basically the same abilities" is read as the enemy's own behaviour unchanged; statuses a device would resist still apply.
-- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed squad (TR-26); the levels' own scheduled drink machines (15-3, 15-7, 15-11); the boss stages' follow order (15-20, H15-4).
+- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed squad (TR-26); the boss stages' follow order (15-20, H15-4).
 - **Art:** the hand is drawn with its model; its grab animations are not played.
 - With no player input the enemies leak in all three stages.

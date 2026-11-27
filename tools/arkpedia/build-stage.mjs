@@ -49,6 +49,7 @@ import { lightOfGloryDefinition } from '../../shared/arkpedia/stage-light-of-glo
 import { charlesLynchDefinition } from '../../shared/arkpedia/stage-charles-lynch.js';
 import { revenantCoreDefinition, revenantGunDefinition } from '../../shared/arkpedia/stage-kindling-revenant.js';
 import { weakeningNodeDefinition } from '../../shared/arkpedia/stage-weakening-node.js';
+import { prtsStaticForm } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { PRTS_STATIC_FORMS, prtsStaticFormReviewed } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { bombLoaderDefinition } from '../../shared/arkpedia/stage-bomb-loader.js';
 import { electricCoilDefinition } from '../../shared/arkpedia/stage-electric-coils.js';
@@ -194,6 +195,9 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     conditionalHandled: false,
     devices: devices.map(d => {
       const spec = stageDeviceSpec(d);
+      // A level-placed drink machine (15-3, 15-7, 15-11) carries its reviewed device numbers; the battle places the
+      // paired enemy as its fixed form when the wave action switches it on.
+      if (spec?.prtsStatic) return { ...d, staticForm: prtsStaticForm(spec.prtsStatic) };
       // Excrescent Carapaces carry their original instance too (StageCarapaces reads d.instance).
       if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader && !spec?.bloodThrone && !spec?.lightOfGlory && !spec?.charlesLynch && !spec?.revenantGun && !spec?.revenantCore && !spec?.weakeningNode) return d;
       const instance = deviceInstances[spec.guard ? `${d.key}:${d.alias}` : `${d.key}:${d.row}:${d.col}`];

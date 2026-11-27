@@ -24,7 +24,7 @@ import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '..
 import { Battle } from './BattleCore.js';
 import { RegularDisplacement } from './regular-displacement.js';
 import { StageWaveScheduler, stageWaveSpawns } from './content/arkpedia-stage-waves.js';
-import { StagePrtsControl } from './content/arkpedia-stage-prts-control.js';
+import { StagePrtsControl, placePrtsStatic } from './content/arkpedia-stage-prts-control.js';
 import { StageBranchScheduler } from './content/arkpedia-stage-branches.js';
 import { resolveStageRandomWaves } from './content/arkpedia-stage-random.js';
 import { stageRouteClockWaits } from '../../shared/arkpedia/stage-path.js';
@@ -428,6 +428,12 @@ export class StandardBattle extends Battle {
     // A scheduled artillery: it starts charging from its starting SP when switched on.
     const gun = this.mvpStageDevices?.find(d => d.alias === key && d.scheduledActivation && d.artillery);
     if (gun) { gun.active = true; return; }
+    // A level-placed drink machine (15-3, 15-7, 15-11): its paired enemy appears there as the fixed form.
+    const machine = this.mvpStageDevices?.find(d => d.alias === key && d.scheduledActivation && d.staticForm && stageDeviceSpec(d)?.prtsStatic);
+    if (machine) {
+      if (!machine.active) { machine.active = true; placePrtsStatic(this, stageDeviceSpec(machine).prtsStatic, machine.staticForm, [machine.row, machine.col]); }
+      return;
+    }
     // A hidden Allerdale's Guard (11-19): it appears on its tile and runs its instance's skill (stage-allerdale.js).
     const guard = this.mvpStageDevices?.find(d => d.alias === key && d.hidden && (d.branchActivated || d.scheduledActivation)
       && stageDeviceSpec(d)?.guard);

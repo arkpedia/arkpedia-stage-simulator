@@ -88,18 +88,7 @@ export class StagePrtsControl {
     if (form) this.makeStatic(e, form, job.target);
     b.fx?.('pulse', { x: e.x, y: e.y, id: e.id, kind: 'prtsDeploy' });
   }
-  /** The static form: the same unit, fixed on its highland tile with the device's numbers; it never has to be defeated. */
-  makeStatic(e, form, [row, col]) {
-    const b = this.battle, scale = stageCharacterMultipliers(b.stageCardRules, { id: form.trap, profession: 'TRAP', position: 'NONE', side: 'ENEMY' });
-    Object.assign(e.base, { maxHp: form.hp * (scale.maxHp ?? 1), atk: form.atk * (scale.atk ?? 1), def: form.def * (scale.def ?? 1), res: form.res,
-      tauntLevel: form.taunt, massLevel: form.mass });
-    e.route.legs = []; e.route.legIdx = 0; e.x = col; e.y = row; e.lpr = 0; e.mem.noLeak = true; e.mem.prtsStatic = form.trap;
-    e.profile.holdsBattle = false;
-    b.addBuff(e, { key: 'stage:prtsStatic', persist: true, flags: { noMove: true, noDisplace: true, unblockable: true } });
-    e.markDirty(); e.hp = e.s.maxHp;
-    (b.noDeployZones ??= new Map()).set(e, new Set([`${row},${col}`]));
-    this.staticsPlaced++;
-  }
+  makeStatic(e, form, target) { applyPrtsStaticForm(this.battle, e, form, target); this.staticsPlaced++; }
   fly([row, col], dt) {
     const h = this.hand, speed = h.s.moveSpeed * (this.battle.flags.moveScale ?? MOVE_SCALE);
     const dx = col - h.x, dy = row - h.y, d = Math.hypot(dx, dy), step = speed * dt;
@@ -139,4 +128,25 @@ export class StagePrtsControl {
     if (j.phase === 'angry') { j.t += dt; if (j.t + 1e-9 >= p.angry) j.phase = 'toOrigin'; return; }
     if (this.fly(this.origin, dt)) this.job = null;
   }
+}
+
+/** The static form: the same unit, fixed on its tile with the device's numbers; it never has to be defeated. */
+export function applyPrtsStaticForm(b, e, form, [row, col]) {
+  const scale = stageCharacterMultipliers(b.stageCardRules, { id: form.trap, profession: 'TRAP', position: 'NONE', side: 'ENEMY' });
+  Object.assign(e.base, { maxHp: form.hp * (scale.maxHp ?? 1), atk: form.atk * (scale.atk ?? 1), def: form.def * (scale.def ?? 1), res: form.res,
+    tauntLevel: form.taunt, massLevel: form.mass });
+  e.route.legs = []; e.route.legIdx = 0; e.x = col; e.y = row; e.lpr = 0; e.mem.noLeak = true; e.mem.prtsStatic = form.trap;
+  e.profile.holdsBattle = false;
+  b.addBuff(e, { key: 'stage:prtsStatic', persist: true, flags: { noMove: true, noDisplace: true, unblockable: true } });
+  e.markDirty(); e.hp = e.s.maxHp;
+  (b.noDeployZones ??= new Map()).set(e, new Set([`${row},${col}`]));
+}
+
+/** A device the level placed itself (15-3's Cold Drink Machines): its paired enemy appears on the tile as the fixed form. */
+export function placePrtsStatic(b, enemyKey, form, [row, col]) {
+  const e = b.spawnEnemy(enemyKey, { pos: [row, col], countInTotal: false, route: { start: [row, col], steps: [{ t: 'wait', s: 1e9 }] } });
+  if (!e) return null;
+  e.counted = false;
+  applyPrtsStaticForm(b, e, form, [row, col]);
+  return e;
 }

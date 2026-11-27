@@ -156,6 +156,13 @@ export const STAGE_DEVICES = Object.freeze({
     // enemies (stage-weakening-node.js; runtime arkpedia-stage-weakening-nodes.js).
     keys: Object.freeze(['trap_227_mpweak']), staticLevelReview: true, weakeningNode: true, maxLevel: 1,
   }),
+  // PRTS 冰镇饮料机(装置), 加热饮料机(装置) (15-3, 15-7, 15-11): the level places them hidden and a wave action switches
+  // them on. The battle places the paired enemy as its fixed form (stage-prts-static-forms.js, reviewed at build time;
+  // runtime placePrtsStatic in arkpedia-stage-prts-control.js).
+  'Cold Drink Machine': Object.freeze({ keys: Object.freeze(['trap_229_mpcata']), staticLevelReview: true, activatable: true,
+    prtsStatic: 'enemy_10074_mpcata', spawns: Object.freeze(['enemy_10074_mpcata']), maxLevel: 1, skillIndices: Object.freeze([-1]) }),
+  'Hot Drink Machine': Object.freeze({ keys: Object.freeze(['trap_230_mpcatab']), staticLevelReview: true, activatable: true,
+    prtsStatic: 'enemy_10074_mpcata_2', spawns: Object.freeze(['enemy_10074_mpcata_2']), maxLevel: 1, skillIndices: Object.freeze([-1]) }),
   'Torrent Beam Activator': Object.freeze({
     // PRTS 洪流束激发器 (14-18): the Kindling Revenant's enemy-side beam guns (stage-kindling-revenant.js; runtime
     // arkpedia-stage-kindling-revenant.js).

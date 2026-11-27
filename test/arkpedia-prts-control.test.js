@@ -37,10 +37,10 @@ test('a level is inert only without the Intrusive Call and without a drag tile',
   assert.equal(prtsControlInert({ ...level, mapData: { tiles: [{ tileKey: PRTS_DRAG_TILE }] } }), false);
 });
 
-test('15-4 compiles with the system and runs its 30 enemies; 15-3, with its scheduled device, stays blocked', async () => {
+test('15-4 compiles with the system and runs its 30 enemies; 15-2 stays blocked', async () => {
   const entry = manifest.stages.find(s => s.id === '15-4');
   assert.equal(entry.availability, 'available');
-  assert.equal(manifest.stages.find(s => s.id === '15-3').availability, 'blocked');
+  assert.equal(manifest.stages.find(s => s.id === '15-2').availability, 'blocked');
   const stage = await loader.load(entry);
   assert.equal(stage.rules.prtsControl, true);
   assert.equal(Object.hasOwn(stage.enemies, PRTS_INTRUSIVE_CALL), false);
@@ -75,8 +75,8 @@ test('the Intrusive Call is reviewed; grab orders compile only where every carri
   assert.deepEqual(spawns.filter(s => s.prtsGrab).map(s => [s.enemyKey, s.offset]),
     [['enemy_10073_mpcar_2', 3], ['enemy_10073_mpcar_2', 25], ['enemy_10080_mpiced', 26], ['enemy_10080_mpiced', 39], ['enemy_10080_mpiced', 57]]);
   assert.equal((await open('15-15')).stage.waveProgram.waves.flatMap(w => w.fragments.flatMap(f => f.spawns)).filter(s => s.prtsGrab).length, 2);
-  // A grabbed squad (TR-26) and the levels' own scheduled devices (15-3) are not modelled: those stages stay blocked.
-  for (const id of ['tr-26', '15-3', '15-11']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
+  // A grabbed squad (TR-26) is not modelled: that stage stays blocked.
+  assert.equal(manifest.stages.find(s => s.id === 'tr-26').availability, 'blocked');
 });
 
 test('15-9: a grabbed enemy is held out of play, carried from the drag tile and deployed at its own position', async () => {
@@ -340,4 +340,38 @@ test('six-star 15-13 and 15-18: ally units lose ATK or DEF; an enemy-side fixed 
     until(x.b, () => x.b.finished, 700);
     assert.deepEqual([x.life, x.b.reason, (x.b.errors ?? []).length, x.b.stagePrts.failed], [1, 'cleared', 0, 0], id);
   }
+});
+
+// ----- drink machines the level places itself (15-3, 15-7, 15-11) -----
+const placed = b => b.enemies.filter(e => e.alive && e.mem.prtsStatic).map(e => `${e.y},${e.x}`).sort();
+
+test('15-3: the level switches on one Cold Drink Machine at the start; it is a fixed device, not one of the 26 enemies', async () => {
+  const { b, stage } = await open('15-3');
+  const rows = stage.devices.filter(d => d.key === 'trap_229_mpcata');
+  // The second machine belongs to a hidden group no base rule enables, so it is left out.
+  assert.deepEqual(rows.map(d => [d.row, d.col, d.alias, d.scheduledActivation, d.staticForm.trap, d.staticForm.hp]), [[3, 8, 'trap_229_mpcata#1', true, 'trap_229_mpcata', 3000]]);
+  b.step();
+  assert.deepEqual(placed(b), ['3,8']);
+  const m = b.enemies.find(e => e.mem.prtsStatic);
+  assert.deepEqual([m.def.key, m.s.maxHp, m.s.atk, m.s.def, m.s.taunt, m.counted, m.profile.holdsBattle], ['enemy_10074_mpcata', 3000, 350, 240, -1, false, false]);
+  assert.equal(b.noDeployZones.get(m).has('3,8'), true);
+  const [y, x] = [m.y, m.x];
+  until(b, () => b.finished, 400);
+  assert.deepEqual([b.reason, b.total, (b.errors ?? []).length, m.alive, m.y, m.x], ['cleared', 26, 0, true, y, x]);
+});
+
+test('15-7 and 15-11 place three machines each; the six-star variants scale them by the device rule', async () => {
+  const a = await open('15-7'); a.b.step();
+  assert.deepEqual(placed(a.b), ['4,4', '6,1', '6,4']);
+  const c = await open('15-11'); c.b.step();
+  assert.deepEqual(placed(c.b), ['3,9', '4,9', '5,9']);
+  assert.deepEqual(c.b.enemies.filter(e => e.mem.prtsStatic).map(e => [e.def.key, e.s.maxHp, e.s.atk]), Array(3).fill(['enemy_10074_mpcata_2', 3800, 400]));
+  for (const x of [a, c]) { until(x.b, () => x.b.finished, 600); assert.deepEqual([x.b.reason, (x.b.errors ?? []).length, x.b.stagePrts.failed], ['cleared', 0, 0]); }
+  const six = await openSix('15-3_six_star'); six.b.step();
+  const m = six.b.enemies.find(e => e.mem.prtsStatic);
+  assert.deepEqual([six.life, m.s.maxHp, Math.round(m.s.atk), Math.round(m.s.def)], [1, 3600, 385, 264]);
+  const hot = await openSix('15-11_six_star');
+  assert.equal(hot.stage.rules.battle.dp_recovery_interval_seconds, 1.5);
+  until(hot.b, () => hot.b.finished, 600);
+  assert.deepEqual([hot.b.reason, (hot.b.errors ?? []).length, placed(hot.b).length >= 3], ['cleared', 0, true]);
 });
