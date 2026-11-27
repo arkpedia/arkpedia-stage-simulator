@@ -498,7 +498,8 @@ export class StandardBattle extends Battle {
     if ((this.flags.dpRegenHaltUntil ?? 0) > this.time) return 0;
     const scale = this.allyUnits.filter(u => u.ownerId === ownerId && u.alive && u.deployed && !u.hidden)
       .reduce((n, u) => n * (u.mem.regularDpRegenScale ?? 1), 1);
-    return this.flags.dpPerSec * scale;
+    // A stage boss may shorten the DP interval (the Mimic Machine while it is down: x0.33).
+    return this.flags.dpPerSec * scale / (this.stageDpIntervalScale ?? 1);
   }
   deployedSlots() {
     return this.allyUnits.filter(unit => unit.alive && unit.deployed)

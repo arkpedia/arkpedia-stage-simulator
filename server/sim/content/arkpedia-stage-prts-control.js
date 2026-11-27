@@ -45,18 +45,40 @@ export class StagePrtsControl {
    * before the waiting grab orders. */
   requestActivate(node) {
     if (!this.hand?.alive) return false;
-    this.queue.unshift({ activate: node, target: [node.row, node.col], phase: 'toNode', t: 0, released: false, failed: false });
+    this.enqueue({ activate: node, target: [node.row, node.col], phase: 'toNode', t: 0, released: false, failed: false }, 100);
     return true;
   }
+  /** Orders run by priority, first come first served within one (grab orders 0, a node's call 100, a hold 200). */
+  enqueue(job, priority = 0) {
+    job.priority = priority;
+    const at = this.queue.findIndex(q => (q.priority ?? 0) < priority);
+    if (at < 0) this.queue.push(job); else this.queue.splice(at, 0, job);
+  }
+  /** MOVE_AND_DRAG_SOURCE (priority 200): the hand flies to `unit`, takes hold of it (`onHold` at the clip's event)
+   * and stays with it until releaseHold. False without a hand. */
+  requestHold(unit, onHold) {
+    if (!this.hand?.alive || !this.p?.hold) return false;
+    this.enqueue({ hold: unit, onHold, phase: 'toSource', t: 0, released: false, failed: false, ending: false }, 200);
+    return true;
+  }
+  /** The held unit lands, or its order is dropped (Main15SkipPrtsAction): the hand lets go and moves on. */
+  releaseHold(unit) {
+    this.queue = this.queue.filter(q => q.hold !== unit);
+    const j = this.job;
+    if (j?.hold !== unit || j.ending) return;
+    j.ending = true;
+    if (j.phase === 'holding') { j.phase = 'holdEnd'; j.t = 0; } else j.phase = 'toOrigin';
+  }
+  holding(unit) { return this.job?.hold === unit && this.job.phase === 'holding'; }
   /** The tile the hand is carrying an enemy to (the client marks it). */
-  get marker() { const j = this.job; return j && !j.activate && ['toDrag', 'grab', 'toTarget', 'release'].includes(j.phase) && !j.released ? j.target : null; }
+  get marker() { const j = this.job; return j && !j.activate && !j.hold && ['toDrag', 'grab', 'toTarget', 'release'].includes(j.phase) && !j.released ? j.target : null; }
   hold(e) {
     const b = this.battle;
     e.mem.prtsCarried = true; e.hidden = true; e.pauseUntil = Infinity;
     b.addBuff(e, { key: HELD, persist: true, flags: { noMove: true, untargetable: true, invulnerable: true, disarm: true } });
     const holds = e.profile.holdsBattle; e.profile.holdsBattle = false;
-    this.queue.push({ enemy: e, target: [Math.round(e.y), Math.round(e.x)], holds, phase: 'toDrag', t: 0, released: false, failed: false,
-      node: (e.def?.key ?? e.defId) === PRTS_NODE_ENEMY });
+    this.enqueue({ enemy: e, target: [Math.round(e.y), Math.round(e.x)], holds, phase: 'toDrag', t: 0, released: false, failed: false,
+      node: (e.def?.key ?? e.defId) === PRTS_NODE_ENEMY }, 0);
   }
   free(job) {
     const b = this.battle, e = job.enemy;
@@ -105,8 +127,8 @@ export class StagePrtsControl {
     const b = this.battle, p = this.p;
     if (b.finished) return;
     if (!this.hand?.alive) { // no hand: nothing can carry them
-      if (this.job) { if (!this.job.released && !this.job.activate) this.release(this.job); this.job = null; }
-      for (const job of this.queue.splice(0)) if (!job.activate) this.release(job);
+      if (this.job) { if (!this.job.released && this.job.enemy) this.release(this.job); this.job = null; }
+      for (const job of this.queue.splice(0)) if (job.enemy) this.release(job);
       return;
     }
     if (!this.job) { this.job = this.queue.shift() ?? null; if (!this.job) return; }
@@ -120,6 +142,22 @@ export class StagePrtsControl {
         if (b.stageWeakeningNodes?.prtsActivate(j.activate)) this.activated++; else { j.failed = true; this.failed++; }
       }
       if (j.t + 1e-9 >= p.click.clip) { j.phase = j.failed ? 'angry' : 'toOrigin'; j.t = 0; }
+      return;
+    }
+    // The hold order: fly to the unit, take hold (Grab_Begin_2), stay on it until it lands, let go (Grab_End_2).
+    if (j.hold) {
+      const u = j.hold;
+      if (!u.alive && !j.ending) { j.ending = true; j.phase = 'toOrigin'; }
+      if (j.phase === 'toSource') { if (this.fly([u.y, u.x], dt)) { j.phase = 'holdBegin'; j.t = 0; } return; }
+      if (j.phase === 'holdBegin') {
+        j.t += dt;
+        if (!j.released && j.t + 1e-9 >= p.hold.at) { j.released = true; j.onHold?.(); }
+        if (j.t + 1e-9 >= p.hold.clip) j.phase = 'holding';
+        return;
+      }
+      if (j.phase === 'holding') { this.hand.x = u.x; this.hand.y = u.y; return; }
+      if (j.phase === 'holdEnd') { j.t += dt; if (j.t + 1e-9 >= p.hold.end) j.phase = 'toOrigin'; return; }
+      if (this.fly(this.origin, dt)) this.job = null;
       return;
     }
     if (j.phase === 'toDrag') { if (this.fly(this.drag, dt)) { j.phase = 'grab'; j.t = 0; } return; }

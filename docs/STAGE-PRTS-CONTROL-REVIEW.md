@@ -126,7 +126,7 @@ The simulator publishes the base conditions and does not offer the hypotheses.
 | 15-6, 15-7 | The Prototype Auto Meal Distributor's summon cooldown 80% | yes |
 | 15-8 | Crystal DEF 150%, fixed crystal 130% | yes |
 | 15-14 | Originium crystal bursts (`env_030_random_tile_selector`) | no |
-| 15-20 | (the boss) | no |
+| 15-20 | Enemy and hand move speed 130% (`docs/STAGE-15-20-REVIEW.md`) | yes |
 
 **Three readings**
 - **15-9's tiles** are written with a Caster selector. The stage table says "4 positions on the field cannot hold ally units", and PRTS names no class. The selector is read as unused.
@@ -201,6 +201,6 @@ The hand now flies at move speed x 0.5 in every stage. This also supports the ea
 - **More inferences (the node):** after Click the hand flies back to where it appeared; a hand that is called while busy finishes its current order first; the hand's cast does not touch flying ally units (the game data says ground only) or devices.
 - **H15-3's crystals:** 10,000 or 16,000 HP depends on whether the game honours the misspelt rule.
 - **More inferences (the static forms):** "basically the same abilities" is read as the enemy's own behaviour unchanged; statuses a device would resist still apply.
-- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed random spawn; the boss stages' follow order (15-20, H15-4).
+- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed random spawn.
 - **Art:** the hand is drawn with its model; its grab animations are not played.
 - With no player input the enemies leak in all three stages.

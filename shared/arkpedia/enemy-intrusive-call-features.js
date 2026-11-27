@@ -50,7 +50,9 @@ export function intrusiveCallNative(r, n) {
 
 export const intrusiveCallParams = () => ({
   grab: { clip: clip('Grab_Begin'), at: hit('Grab_Begin') }, release: { clip: clip('Grab_End'), at: hit('Grab_End') },
-  click: { clip: clip('Click'), at: hit('Click') }, angry: clip('Angry') });
+  click: { clip: clip('Click'), at: hit('Click') }, angry: clip('Angry'),
+  // The second clip set holds a unit in the air (the Mimic Machine, enemy-prts-source-features.js).
+  hold: { clip: clip('Grab_Begin_2'), at: hit('Grab_Begin_2'), end: clip('Grab_End_2') } });
 
 export const INTRUSIVE_CALL_FEATURE = Object.freeze({ matchesRecord: isIntrusiveCall, covers: intrusiveCallNative,
   nativeClaim: () => ({ active: 1 }), ability: { kind: 'intrusiveCall', params: () => intrusiveCallParams() },
