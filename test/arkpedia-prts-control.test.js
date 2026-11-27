@@ -37,10 +37,10 @@ test('a level is inert only without the Intrusive Call and without a drag tile',
   assert.equal(prtsControlInert({ ...level, mapData: { tiles: [{ tileKey: PRTS_DRAG_TILE }] } }), false);
 });
 
-test('15-4 compiles with the system and runs its 30 enemies; 15-5, which has the Intrusive Call, stays blocked', async () => {
+test('15-4 compiles with the system and runs its 30 enemies; 15-3, with its scheduled device, stays blocked', async () => {
   const entry = manifest.stages.find(s => s.id === '15-4');
   assert.equal(entry.availability, 'available');
-  assert.equal(manifest.stages.find(s => s.id === '15-5').availability, 'blocked');
+  assert.equal(manifest.stages.find(s => s.id === '15-3').availability, 'blocked');
   const stage = await loader.load(entry);
   assert.equal(stage.rules.prtsControl, true);
   assert.equal(Object.hasOwn(stage.enemies, PRTS_INTRUSIVE_CALL), false);
@@ -75,8 +75,8 @@ test('the Intrusive Call is reviewed; grab orders compile only where every carri
   assert.deepEqual(spawns.filter(s => s.prtsGrab).map(s => [s.enemyKey, s.offset]),
     [['enemy_10073_mpcar_2', 3], ['enemy_10073_mpcar_2', 25], ['enemy_10080_mpiced', 26], ['enemy_10080_mpiced', 39], ['enemy_10080_mpiced', 57]]);
   assert.equal((await open('15-15')).stage.waveProgram.waves.flatMap(w => w.fragments.flatMap(f => f.spawns)).filter(s => s.prtsGrab).length, 2);
-  // The static device forms are not modelled: those stages stay blocked.
-  for (const id of ['15-8', '15-6', 'tr-26']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
+  // A grabbed squad (TR-26) and the levels' own scheduled devices (15-3) are not modelled: those stages stay blocked.
+  for (const id of ['tr-26', '15-3', '15-11']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
 });
 
 test('15-9: a grabbed enemy is held out of play, carried from the drag tile and deployed at its own position', async () => {
@@ -213,4 +213,70 @@ test('15-17 and 15-18 run with their nodes: carried in 15-17, placed by the leve
   assert.ok(c.b.stageWeakeningNodes.entries.size >= 1);
   until(c.b, () => c.b.finished, 500);
   assert.equal((c.b.errors ?? []).length, 0);
+});
+
+// ----- the static forms (15-5, 15-6, 15-8, 15-12, 15-13, 15-14, H15-1, H15-2) -----
+import enemyRecords from '../data/arkpedia-enemy-records.json' with { type: 'json' };
+import { PRTS_STATIC_FORMS, prtsStaticFormReviewed, prtsStaticForm } from '../shared/arkpedia/stage-prts-static-forms.js';
+
+test('the six static forms are reviewed against their enemy records; a different device number is refused', () => {
+  for (const key of Object.keys(PRTS_STATIC_FORMS)) assert.equal(prtsStaticFormReviewed(key), true, key);
+  assert.deepEqual(prtsStaticForm('enemy_10076_mpgrou_2'), { trap: 'trap_232_mpgroub', hp: 9000, atk: 450, def: 1250, res: 60, taunt: -1, mass: 0 });
+  const t = clone(deviceTables); t.devices.trap_229_mpcata.phases[0].attributesKeyFrames[0].data.atk = 400;
+  assert.equal(prtsStaticFormReviewed('enemy_10074_mpcata', deviceNative, t, enemyRecords), false);
+  const t2 = clone(deviceTables); t2.devices.trap_229_mpcata.phases[0].attributesKeyFrames[0].data.tauntLevel = 0;
+  assert.equal(prtsStaticFormReviewed('enemy_10074_mpcata', deviceNative, t2, enemyRecords), false);
+  assert.throws(() => prtsStaticForm('enemy_10073_mpcar'), /Unsupported static form/);
+});
+
+test('15-5: eight Cold Drink Machines are dropped on high ground as fixed devices that fight but need not be defeated', async () => {
+  const { b, stage } = await open('15-5'), P = b.stagePrts;
+  assert.deepEqual(Object.keys(stage.waveProgram.prts.statics), ['enemy_10074_mpcata']);
+  assert.ok(until(b, () => P.staticsPlaced === 1, 60));
+  const m = b.enemies.find(e => e.alive && e.mem.prtsStatic);
+  assert.equal(b.grid.tile(m.y, m.x).height, 'HIGH');
+  assert.deepEqual([m.mem.prtsStatic, m.s.maxHp, m.s.atk, m.s.def, m.s.res, m.s.taunt, m.s.massLevel], ['trap_229_mpcata', 3000, 350, 240, 35, -1, 0]);
+  assert.deepEqual([m.counted, m.profile.holdsBattle, !!m.s.flags.untargetable, m.route.legs.length], [false, false, false, 0]);
+  b.getPlayer('arkpedia').dp = 99; b.setViewport?.('fullscreen-workspace');
+  assert.equal(b.noDeployZones.get(m).has(`${m.y},${m.x}`), true, 'nothing can be deployed on its tile');
+  // An operator within its 2.5 radius is shot (Physical) every 4 s.
+  const myrtle = b._deployOperator('char_151_myrtle', m.y - 1, m.x, 'UP', { fromSkill: true, predefined: true });
+  myrtle.base.maxHp = 1e6; myrtle.markDirty(); myrtle.hp = myrtle.s.maxHp;
+  const shots = [];
+  b.on('damaged', ({ source, target, type }) => { if (source === m && target === myrtle) shots.push([b.time, type]); });
+  const [y, x] = [m.y, m.x];
+  until(b, () => shots.length >= 2, b.time + 12);
+  assert.ok(shots.length >= 2 && shots.every(([, type]) => type === 'phys'), JSON.stringify(shots));
+  assert.ok(Math.abs(shots[1][0] - shots[0][0] - 4) < .2, `${shots[1][0] - shots[0][0]}`);
+  assert.deepEqual([m.y, m.x], [y, x], 'it does not move');
+  assert.ok(m.hp < m.s.maxHp, 'the operator can attack it');
+  m.hp = m.s.maxHp; b.retreat(myrtle, { reason: 'withdraw', permanent: true });
+  until(b, () => b.finished, 500);
+  assert.deepEqual([b.reason, b.total, P.staticsPlaced, P.failed, (b.errors ?? []).length], ['cleared', 48, 8, 0, 0]);
+  assert.equal(b.enemies.filter(e => e.alive && e.mem.prtsStatic).length, 8, 'they stay on the field');
+});
+
+test('H15-1: a static crystal takes the stage rule that names its device id; the other static stages run clean', async () => {
+  const { b } = await open('h15-1'), P = b.stagePrts;
+  assert.ok(until(b, () => P.staticsPlaced >= 1, 400));
+  const c = b.enemies.find(e => e.alive && e.mem.prtsStatic === 'trap_234_mpmageb');
+  assert.deepEqual([c.s.maxHp, Math.round(c.s.atk), Math.round(c.s.def)], [16000, 780, 1560]);
+  for (const id of ['15-6', '15-8', '15-12', '15-13', '15-14', 'h15-2']) {
+    const x = await open(id);
+    until(x.b, () => x.b.finished, 700);
+    assert.deepEqual([(x.b.errors ?? []).length, x.b.stagePrts.failed, x.b.stagePrts.staticsPlaced > 0], [0, 0, true], id);
+  }
+});
+
+test('a stage with ten or more tile types keeps every type (the fifth used to be read as the tenth)', async () => {
+  for (const id of ['h15-1', '14-17', '15-5']) {
+    const { b, stage } = await open(id), g = stage.geometry;
+    assert.ok(g.tileLegend.length >= 10, id);
+    let wrong = 0;
+    for (let r = 0; r < g.rows; r++) for (let c = 0; c < g.cols; c++) {
+      const want = g.tileLegend[g.tileGrid[r][c]], got = b.grid.tile(r, c);
+      if (got.key !== want.key || got.height !== want.height.toUpperCase()) wrong++;
+    }
+    assert.equal(wrong, 0, id);
+  }
 });

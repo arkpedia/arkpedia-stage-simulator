@@ -47,7 +47,8 @@ export function prtsDragTile(level) {
 /** Enemies the Intrusive Call places as a device instead: the Weakening Node anywhere, the others on a highland tile. */
 export const PRTS_NODE_ENEMY = 'enemy_10082_mpweak';
 export const PRTS_STATIC_ENEMIES = Object.freeze(PAIRS.map(p => p[0]).filter(k => k !== PRTS_NODE_ENEMY));
-/** Where a grabbed enemy is deployed: the start of its own route. Device forms are not modelled yet and are refused. */
+/** Where a grabbed enemy is deployed: the start of its own route. `node`: the Weakening Node device is deployed
+ * instead; `static`: the enemy is deployed as its static form (stage-prts-static-forms.js). */
 export function prtsGrabTarget(level, action) {
   const route = level.routes?.[action.routeIndex], p = route?.startPosition, map = level.mapData?.map ?? [];
   const tile = level.mapData?.tiles?.[map[map.length - 1 - p?.row]?.[p?.col]];
@@ -55,6 +56,5 @@ export function prtsGrabTarget(level, action) {
   const highland = ['HIGHLAND', 1].includes(tile.heightType);
   // The Weakening Node enemy only configures the level: the hand deploys a Weakening Node device there (stage-weakening-node.js).
   if (action.key === PRTS_NODE_ENEMY) return { row: p.row, col: p.col, highland, node: true };
-  if (highland && PRTS_STATIC_ENEMIES.includes(action.key)) throw Error(`Unsupported Intrusive Call deploy: a static ${action.key}`);
-  return { row: p.row, col: p.col, highland };
+  return { row: p.row, col: p.col, highland, ...(highland && PRTS_STATIC_ENEMIES.includes(action.key) ? { static: true } : {}) };
 }

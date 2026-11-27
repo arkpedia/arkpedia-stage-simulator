@@ -49,6 +49,7 @@ import { lightOfGloryDefinition } from '../../shared/arkpedia/stage-light-of-glo
 import { charlesLynchDefinition } from '../../shared/arkpedia/stage-charles-lynch.js';
 import { revenantCoreDefinition, revenantGunDefinition } from '../../shared/arkpedia/stage-kindling-revenant.js';
 import { weakeningNodeDefinition } from '../../shared/arkpedia/stage-weakening-node.js';
+import { PRTS_STATIC_FORMS, prtsStaticFormReviewed } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { bombLoaderDefinition } from '../../shared/arkpedia/stage-bomb-loader.js';
 import { electricCoilDefinition } from '../../shared/arkpedia/stage-electric-coils.js';
 import { stunTokenDefinition } from '../../shared/arkpedia/stage-supply-tokens.js';
@@ -97,7 +98,9 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     if (!mvp.operators[id] && !supportOperators.operators[id]) throw Error(`Unknown operator in stage rule: ${id}`);
   for (const rule of compiledRules?.characterAttributes ?? []) for (const id of rule.ids ?? [])
     if (!mvp.operators[id] && !supportOperators.operators[id] && !tokenData.tokens[id] && !devices.some(d => d.key === id)
-      && !Object.keys(STAGE_DEVICES).some(name => STAGE_DEVICES[name].keys?.includes(id) && stageDeviceSpec({name,key:id,hidden:false})))
+      && !Object.keys(STAGE_DEVICES).some(name => STAGE_DEVICES[name].keys?.includes(id) && stageDeviceSpec({name,key:id,hidden:false}))
+      // Chapter 15: the static forms the Intrusive Call deploys (stage-prts-static-forms.js).
+      && !(Object.values(PRTS_STATIC_FORMS).includes(id) && prtsStaticFormReviewed(Object.keys(PRTS_STATIC_FORMS).find(k => PRTS_STATIC_FORMS[k] === id))))
       throw Error(`Unknown character attribute target: ${id}`);
   if (source.stage_type && !STANDARD_STAGE_MODES.has(source.stage_type))
     throw Error(`Unsupported stage mode: ${source.stage_type}`);

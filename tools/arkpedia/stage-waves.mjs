@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { prtsStaticForm } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { PRTS_INTRUSIVE_CALL, prtsGrabTarget, prtsDragTile, prtsControlInert } from '../../shared/arkpedia/stage-prts-control.js';
 import { readOriginalLevel } from './original-level.mjs';
 import { compilePredefinedOperators } from './stage-predefined-operators.mjs';
@@ -169,7 +170,9 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
         if (grabOrder && !grabbed) throw Error('Intrusive Call grab without its enemy');
         if (grabbed) {
           if (random || action.count !== 1) throw Error('Unsupported Intrusive Call grab (a squad or a random spawn)');
-          if (prtsGrabTarget(level, action).node) prts.nodes = true; // refuses the static forms until they are modelled
+          const target = prtsGrabTarget(level, action);
+          if (target.node) prts.nodes = true;
+          if (target.static) (prts.statics ??= {})[action.key] = prtsStaticForm(action.key);
           grabOrder = null;
         }
         spawns.push({ enemyKey: action.key, routeIndex: row.route, count: action.count, offset, interval,
@@ -192,7 +195,7 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
     return { preDelay, postDelay, maxWait, fragments };
   });
   if (prts && !prts.hand) throw Error('PRTS control level without its Intrusive Call');
-  return { schemaVersion: 1, waves, ...(predefined ? { predefined } : {}), ...(prts ? { prts: { drag: prts.drag, ...(prts.nodes ? { nodes: true } : {}) } } : {}) };
+  return { schemaVersion: 1, waves, ...(predefined ? { predefined } : {}), ...(prts ? { prts: { drag: prts.drag, ...(prts.nodes ? { nodes: true } : {}), ...(prts.statics ? { statics: prts.statics } : {}) } } : {}) };
 }
 
 export async function prepareStageWaves({ root, rules, compiledRules, geometry, operators, devices = [], branches }) {

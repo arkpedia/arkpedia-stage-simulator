@@ -11,6 +11,7 @@
 //   [inference] and the hand plays Angry.
 import { MOVE_SCALE } from '../constants.js';
 import { PRTS_NODE_ENEMY } from '../../../shared/arkpedia/stage-prts-control.js';
+import { stageCharacterMultipliers } from '../../../shared/arkpedia/stage-character-attributes.js';
 
 const HELD = 'stage:prtsCarried';
 
@@ -32,6 +33,7 @@ export class StagePrtsControl {
     if (!Number.isInteger(spec?.drag?.row) || !Number.isInteger(spec.drag.col)) throw Error('Invalid PRTS control program');
     this.battle = b; this.drag = [spec.drag.row, spec.drag.col]; this.hand = null; this.p = null; this.origin = null;
     this.queue = []; this.job = null; this.deployed = 0; this.failed = 0; this.activated = 0;
+    this.statics = spec.statics ?? {}; this.staticsPlaced = 0;
     b.on('enemySpawn', ({ enemy }) => { if (b.stageWaveScheduler?.flags.get(enemy.tag)?.prtsGrab) this.hold(enemy); }, { priority: 900 });
     b.on('tick', ({ dt }) => this.tick(dt));
   }
@@ -62,7 +64,7 @@ export class StagePrtsControl {
     if (job.holds === undefined) delete e.profile.holdsBattle; else e.profile.holdsBattle = job.holds;
   }
   occupied([row, col]) {
-    const b = this.battle, highland = b.grid.tile(row, col)?.height === 'HIGHLAND';
+    const b = this.battle, highland = b.grid.tile(row, col)?.height === 'HIGH';
     return b.units.some(u => u.alive && u.deployed && !u.mem.prtsCarried && u.kind !== 'enemy' && u.tileR === row && u.tileC === col
       && (highland || u.kind !== 'device' || u.profile?.characterLikeDevice));
   }
@@ -82,7 +84,21 @@ export class StagePrtsControl {
       return;
     }
     this.free(job); this.deployed++;
+    const form = b.grid.tile(job.target[0], job.target[1])?.height === 'HIGH' ? this.statics[e.def?.key ?? e.defId] : null;
+    if (form) this.makeStatic(e, form, job.target);
     b.fx?.('pulse', { x: e.x, y: e.y, id: e.id, kind: 'prtsDeploy' });
+  }
+  /** The static form: the same unit, fixed on its highland tile with the device's numbers; it never has to be defeated. */
+  makeStatic(e, form, [row, col]) {
+    const b = this.battle, scale = stageCharacterMultipliers(b.stageCardRules, { id: form.trap, profession: 'TRAP', position: 'NONE' });
+    Object.assign(e.base, { maxHp: form.hp * (scale.maxHp ?? 1), atk: form.atk * (scale.atk ?? 1), def: form.def * (scale.def ?? 1), res: form.res,
+      tauntLevel: form.taunt, massLevel: form.mass });
+    e.route.legs = []; e.route.legIdx = 0; e.x = col; e.y = row; e.lpr = 0; e.mem.noLeak = true; e.mem.prtsStatic = form.trap;
+    e.profile.holdsBattle = false;
+    b.addBuff(e, { key: 'stage:prtsStatic', persist: true, flags: { noMove: true, noDisplace: true, unblockable: true } });
+    e.markDirty(); e.hp = e.s.maxHp;
+    (b.noDeployZones ??= new Map()).set(e, new Set([`${row},${col}`]));
+    this.staticsPlaced++;
   }
   fly([row, col], dt) {
     const h = this.hand, speed = h.s.moveSpeed * (this.battle.flags.moveScale ?? MOVE_SCALE);

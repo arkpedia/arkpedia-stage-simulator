@@ -2,7 +2,7 @@
 
 Every chapter 15 stage names the stage system `env_v060_mainline15_prtsCtrl` through its `env_system_new` rune. The system is compiled game code that acts through one enemy, the Intrusive Call `enemy_10072_mpprhd` (PRTS 侵入式调用).
 
-Published so far: 15-4 (the system is idle there), 15-9 and 15-15 (the Intrusive Call carries ordinary enemies), then 15-10, 15-17 and 15-18 (the Weakening Node). 1,189 stages available; main story 457 of 564. Stages where it places a drink machine, echo or crystal as a fixed device stay blocked.
+Published so far: 15-4 (the system is idle there); 15-9 and 15-15 (the Intrusive Call carries ordinary enemies); 15-10, 15-17 and 15-18 (the Weakening Node); then 15-5, 15-6, 15-8, 15-12, 15-13, 15-14, H15-1 and H15-2 (the static forms). 1,197 stages available; main story 463 of 564.
 
 ## The system
 
@@ -25,9 +25,10 @@ PRTS describes the rule; the level data fits it in every stage checked (15-5, 15
 `tools/arkpedia/stage-waves.mjs` compiles this as a contract. The hand's spawn is marked `prtsHand`; a later hand action spawns nothing and marks the next spawn `prtsGrab`. It refuses:
 - a grab order not directly followed by its enemy;
 - a grabbed squad (count above 1) or random spawn;
-- a drink machine, echo or crystal dropped on a highland tile. Those become fixed devices, which are not modelled yet (`prtsGrabTarget`).
 
-A grabbed Weakening Node enemy is accepted: it only stands for the device the hand deploys (below), and the program is marked `prts.nodes`.
+Two kinds of grabbed enemy are deployed as something else (`prtsGrabTarget`):
+- **A Weakening Node enemy** only stands for the device the hand deploys; the program is marked `prts.nodes`.
+- **A drink machine, echo or crystal dropped on a highland tile** becomes its static form; the program carries each form's numbers in `prts.statics`.
 
 ## The Intrusive Call
 
@@ -53,6 +54,24 @@ A grabbed Weakening Node enemy is accepted: it only stands for the device the ha
 - **The player's cast:** while the node is charged the player may activate it from its panel for 10 DP. Every enemy in range then has DEF ×0.5 and RES ×0.5 for 30 s. The hand finds the node already active and plays Angry.
 - **In range only:** a unit keeps the penalty while it stays in range. After either cast the node charges again from 0.
 
+## The static forms
+
+PRTS: a drink machine, echo or crystal the hand drops on high ground becomes a level-1 device of the same name, with basically the same attributes and abilities, taunt -1 and weight 0.
+
+`shared/arkpedia/stage-prts-static-forms.js` (`prtsStaticFormReviewed`) reviews each of the six pairs:
+- **Numbers:** the device's level-1 HP, ATK, DEF, RES and attack interval equal the enemy's; its attack radius equals the enemy's range; taunt -1, weight 0.
+- **Prefab:** enemy side, default category (operators can attack it), firing its family's projectile.
+
+In the battle the grabbed enemy keeps its own unit and behaviour (its attack, the echo's tile denial on death, the crystal's DP halt) and becomes fixed:
+- **It never moves** and cannot be pushed or blocked.
+- **Its numbers** are the device's. A stage rule that names the device id scales them (H15-1: HP ×1.6, ATK and DEF ×1.3); enemy rules do not.
+- **It need not be defeated:** it is not counted and does not hold the battle.
+- **Its tile** takes no deployment while it stands.
+
+## A tile bug found on the way
+
+`server/sim/arkpedia.js` gave each tile type one character, and the tenth type got the same character as the fifth. In a stage with ten or more tile types every tile of the fifth type was read as the tenth: in H15-1 the ranged walls became teleport exits, in 14-17 and 15-5 the roads did. 81 published stages have ten or more tile types. Each type now has its own character.
+
 ## Checked
 
 `test/arkpedia-prts-control.test.js`:
@@ -69,6 +88,11 @@ A grabbed Weakening Node enemy is accepted: it only stands for the device the ha
 - **15-10, PRTS's cast:** the hand deploys a node on 5,7 and the node enemy never appears. 30 s later the node is charged and the hand is called. An operator beside it then has half her DEF and RES for 20 s, and the node starts again from 0.
 - **15-10, the player's cast:** refused while charging and without 10 DP. Cast with 30 DP it leaves 20, halves an enemy's DEF and RES in range for 30 s, and the arriving hand is angry.
 - **15-17 and 15-18** run to the end without errors: nodes carried in 15-17, placed by the level in 15-18.
+- **Static review:** all six pairs pass; another device ATK or taunt is refused; an ordinary enemy has no static form.
+- **15-5:** eight Cold Drink Machines are fixed on high ground with the device's numbers (3,000 HP, 350 ATK, taunt -1, weight 0), uncounted. One shoots an operator beside it with Physical damage every 4 s, can be attacked, does not move, and blocks deployment on its tile. The run ends cleared with 48 targets, as PRTS lists, and the machines still standing.
+- **H15-1:** a static Active Sarkaz Caster Crystal has 16,000 HP, 780 ATK and 1,560 DEF.
+- **The other static stages** (15-6, 15-8, 15-12, 15-13, 15-14, H15-2) run to the end without errors or failed deploys.
+- **Tile types:** in H15-1, 14-17 and 15-5 every battle tile matches its geometry type.
 
 A headless run of 15-15 deploys both Prototype Auto Meal Distributors and ends without errors. The existing enemy test stages still run the Intrusive Call alone (it only hovers).
 
@@ -83,6 +107,7 @@ A headless run of 15-15 deploys both Prototype Auto Meal Distributors and ends w
   - **Flight speed** uses the simulator's ordinary speed scale.
   - **The idle system:** that it does nothing without its actor and tile.
 - **More inferences (the node):** after Click the hand flies back to where it appeared; a hand that is called while busy finishes its current order first; the hand's cast does not touch flying ally units (the game data says ground only) or devices.
-- **Not modelled:** the static device forms; the boss stages' follow order (15-20, H15-4).
+- **More inferences (the static forms):** "basically the same abilities" is read as the enemy's own behaviour unchanged; statuses a device would resist still apply.
+- **Not modelled:** a grabbed squad (TR-26); the levels' own scheduled drink machines (15-3, 15-7, 15-11); the boss stages' follow order (15-20, H15-4).
 - **Art:** the hand is drawn with its model; its grab animations are not played.
 - With no player input the enemies leak in all three stages.

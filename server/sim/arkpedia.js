@@ -68,7 +68,9 @@ export function stageAdapter(source) {
   if (g.rows > 19 || g.cols > 21 || (g.hasConditionalSpawns && !source.conditionalHandled))
     throw new Error("Unsupported stage mechanics");
   const baseChars = ["#", "h", "r", "S", "E"];
-  const chars = g.tileLegend.map((_, i) => baseChars[i] ?? String.fromCharCode(65 + i - baseChars.length));
+  // One distinct character per legend entry. (Letters from 'A' used to collide with the base 'E' at the tenth entry,
+  // so a stage with ten tile types read its fifth type as its tenth.)
+  const chars = g.tileLegend.map((_, i) => baseChars[i] ?? String.fromCharCode(0xd000 + i));
   const legend = Object.fromEntries(
     g.tileLegend.map((t, i) => [
       chars[i],
