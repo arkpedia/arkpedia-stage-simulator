@@ -123,8 +123,8 @@ The simulator publishes the base conditions and does not offer the hypotheses.
 | 15-18 | Ally units' DEF 80% | yes |
 | 15-3 | Enemy move speed 130% | yes |
 | 15-11 | DP recovery interval 150% | yes |
-| 15-6, 15-7 | The Prototype Auto Meal Distributor's summon cooldown 80% (`enemy_skill_cd_mul`) | no |
-| 15-8 | Crystal DEF 150%, fixed crystal 130% | no |
+| 15-6, 15-7 | The Prototype Auto Meal Distributor's summon cooldown 80% | yes |
+| 15-8 | Crystal DEF 150%, fixed crystal 130% | yes |
 | 15-14 | Originium crystal bursts (`env_030_random_tile_selector`) | no |
 | 15-20 | (the boss) | no |
 
@@ -162,6 +162,27 @@ Publishes 15-3, 15-7, 15-11 and the six-star 15-3 (move speed 130%) and 15-11 (D
 - **15-7:** three machines on 4,4, 6,1 and 6,4. **15-11:** three Hot Drink Machines on 3,9, 4,9 and 5,9 with 3,800 HP and 400 ATK. Both run to the end without errors.
 - **Six-star 15-3:** the machine has 3,600 HP, 385 ATK and 264 DEF. **Six-star 15-11** runs to the end with a 1.5 s DP interval.
 
+## TR-26, and what its script says about the hand
+
+TR-26's last grab is a squad: one hand action followed by two Confused Maintenance Helpers 3 s apart. PRTS counts both among the grabbed ("3 Helpers and 3 Cold Drink Machines are grabbed"; 10 counted enemies), so every enemy of a grabbed action is held and carried in turn. A grabbed random spawn is still refused.
+
+**The flight speed.** The tutorial's script is a clock. Its text at 48 s says the deploy can be stopped "by deploying our own operators at those locations in advance", and at 49 s it places Amiya on 2,7, the tile of the machine spawned at 35 s.
+- **At move speed x 0.5** (the game's rule; the level's `moveMultiplier`), with one order ending before the next starts, that machine arrives at 50.0 s. Amiya is there and the deploy fails.
+- **At the battle's walking scale (0.65)**, which the hand used before, it arrived at 44.6 s and Amiya's own deploy failed.
+- **The other lines fit 0.5 too:** the Helper is on the field (24.8 s) before "how did this maintenance helper get here?" (28 s); the node lands at 67.0 s before "PRTS threw something in front of me" (71 s) and is charged about when "Charging complete" appears (99 s).
+
+The hand now flies at move speed x 0.5 in every stage. This also supports the earlier inference that one order ends, with the flight back, before the next starts.
+
+**A fixed form holds its tile.** PRTS: a highland target is taken by a character unit of any kind and either side. A fixed machine already on the tile now makes a second drop there fail (TR-26 sends a third machine to 2,6).
+
+**Checked:** TR-26's grabs compile as six orders, the last with two enemies; the hand's log reads 24.8 s (Helper), 35.7 s (fixed machine), 50.1 s (failed, Amiya on 2,7), 67.0 s (node); the stage clears with 10 counted enemies and no errors. A fixed form's tile reads as occupied.
+
+## More six-star rules (15-6, 15-7, 15-8)
+
+- **`enemy_skill_cd_mul`** (15-6, 15-7): the Prototype Auto Meal Distributor's Spawn recharges in 4 s instead of 5 s. Its first delay (3 s) is unchanged [PRTS: "the periodic cooldown falls to 80%"]. Reviewed for that enemy and skill only (`applyStageEnemySkillPeriod`).
+- **15-8:** the Sarkaz Caster Crystal has 150% DEF on top of the base (1,650); its fixed form 130% on top (1,430). The device rule also carries a stray `enemy=trap_233_mpmage`; it is accepted as a note naming one of the rule's own targets. As written, the rule covers all six fixed devices; 15-8 fixes only crystals.
+- **Checked:** the Distributor's record (5 s and 3 s; 4 s and 3 s in six-star) and more summoned enemies in six-star 15-6; six-star 15-7 and 15-8 run to the end with 1 life point and no errors; the crystal's two DEF values.
+
 ## Not checked
 
 - In game.
@@ -170,10 +191,9 @@ Publishes 15-3, 15-7, 15-11 and the six-star 15-3 (move speed 130%) and 15-11 (D
   - **Order of work:** one order ends before the next starts, and each ends with the flight back. The game data names the sub-steps (to the drag tile, to the origin) but not their scheduling.
   - **A failed deploy removes the enemy.** PRTS says only that the deploy fails.
   - **A carried enemy cannot be hit.**
-  - **Flight speed** uses the simulator's ordinary speed scale.
   - **The idle system:** that it does nothing without its actor and tile.
 - **More inferences (the node):** after Click the hand flies back to where it appeared; a hand that is called while busy finishes its current order first; the hand's cast does not touch flying ally units (the game data says ground only) or devices.
 - **More inferences (the static forms):** "basically the same abilities" is read as the enemy's own behaviour unchanged; statuses a device would resist still apply.
-- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed squad (TR-26); the boss stages' follow order (15-20, H15-4).
+- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed random spawn; the boss stages' follow order (15-20, H15-4).
 - **Art:** the hand is drawn with its model; its grab animations are not played.
 - With no player input the enemies leak in all three stages.

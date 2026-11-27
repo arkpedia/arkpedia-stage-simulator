@@ -75,8 +75,10 @@ test('the Intrusive Call is reviewed; grab orders compile only where every carri
   assert.deepEqual(spawns.filter(s => s.prtsGrab).map(s => [s.enemyKey, s.offset]),
     [['enemy_10073_mpcar_2', 3], ['enemy_10073_mpcar_2', 25], ['enemy_10080_mpiced', 26], ['enemy_10080_mpiced', 39], ['enemy_10080_mpiced', 57]]);
   assert.equal((await open('15-15')).stage.waveProgram.waves.flatMap(w => w.fragments.flatMap(f => f.spawns)).filter(s => s.prtsGrab).length, 2);
-  // A grabbed squad (TR-26) is not modelled: that stage stays blocked.
-  assert.equal(manifest.stages.find(s => s.id === 'tr-26').availability, 'blocked');
+  // TR-26's last grab is a squad: both Helpers of the action are carried.
+  const squad = (await open('tr-26')).stage.waveProgram.waves.flatMap(w => w.fragments.flatMap(f => f.spawns)).filter(s => s.prtsGrab);
+  assert.deepEqual(squad.map(s => [s.enemyKey, s.count, s.offset]), [['enemy_10073_mpcar', 1, 19], ['enemy_10074_mpcata', 1, 25], ['enemy_10074_mpcata', 1, 35],
+    ['enemy_10082_mpweak', 1, 60], ['enemy_10074_mpcata', 1, 105], ['enemy_10073_mpcar', 2, 110]]);
 });
 
 test('15-9: a grabbed enemy is held out of play, carried from the drag tile and deployed at its own position', async () => {
@@ -374,4 +376,58 @@ test('15-7 and 15-11 place three machines each; the six-star variants scale them
   assert.equal(hot.stage.rules.battle.dp_recovery_interval_seconds, 1.5);
   until(hot.b, () => hot.b.finished, 600);
   assert.deepEqual([hot.b.reason, (hot.b.errors ?? []).length, placed(hot.b).length >= 3], ['cleared', 0, true]);
+});
+
+test('six-star 15-6 and 15-7: the Distributor summons every 4 s instead of 5, its first delay unchanged', async () => {
+  const base = await open('15-6'), six = await openSix('15-6_six_star');
+  const spawn = s => s.enemies.enemy_10077_mpbarr.skills.find(k => k.prefabKey === 'Spawn');
+  assert.deepEqual([spawn(base.stage).cooldown, spawn(base.stage).initCooldown], [5, 3]);
+  assert.deepEqual([spawn(six.stage).cooldown, spawn(six.stage).initCooldown], [4, 3]);
+  assert.deepEqual(six.stage.rules.enemySkillPeriodScoped, { enemy_10077_mpbarr: { Spawn: 0.8 } });
+  for (const x of [base, six]) until(x.b, () => x.b.finished, 600);
+  assert.ok(six.b.total > base.b.total, `${six.b.total} > ${base.b.total}`);
+  assert.deepEqual([six.b.reason, (six.b.errors ?? []).length], ['cleared', 0]);
+  const seven = await openSix('15-7_six_star');
+  assert.equal(spawn(seven.stage).cooldown, 4);
+  until(seven.b, () => seven.b.finished, 600);
+  assert.deepEqual([seven.life, seven.b.reason, (seven.b.errors ?? []).length], [1, 'cleared', 0]);
+});
+
+test('six-star 15-8: the crystal has 150% DEF on top, its fixed form 130% on top', async () => {
+  const { b, stage } = await openSix('15-8_six_star');
+  assert.deepEqual(stage.rules.enemyScoped, { enemy_10079_mpmage: { def: 1.5 } });
+  assert.deepEqual(stage.rules.characterAttributes[1].multipliers, { def: 1.3 });
+  const walking = firstOf(b, 'enemy_10079_mpmage', 300);
+  assert.equal(Math.round(stage.enemies.enemy_10079_mpmage.stats.def), 1650);
+  assert.ok(until(b, () => b.stagePrts.staticsPlaced >= 1, 400));
+  const fixed = b.enemies.find(e => e.alive && e.mem.prtsStatic === 'trap_233_mpmage');
+  assert.deepEqual([fixed.s.maxHp, Math.round(fixed.s.atk), Math.round(fixed.s.def)], [9600, 550, 1430]);
+  assert.ok(walking);
+  until(b, () => b.finished, 600);
+  assert.deepEqual([b.reason, (b.errors ?? []).length, b.stagePrts.failed], ['cleared', 0, 0]);
+});
+
+// ----- TR-26: the tutorial's script dates the hand's flight -----
+test('TR-26: the hand flies at move speed x 0.5, so Amiya (placed at 49 s) is on the tile before the second machine arrives', async () => {
+  const { b } = await open('tr-26'), P = b.stagePrts, log = [];
+  let last = '';
+  while (!b.finished && b.time < 70) {
+    b.step();
+    const k = `${P.deployed},${P.failed},${P.staticsPlaced}`;
+    if (k !== last) { last = k; log.push([Math.round(b.time * 10) / 10, P.deployed, P.failed, P.staticsPlaced]); }
+  }
+  // 19 s Helper -> 3,4; 25 s machine -> 2,6 (fixed); 35 s machine -> 2,7, where Amiya stands since 49 s: the deploy
+  // fails; 60 s Weakening Node -> 3,6.
+  assert.deepEqual(log.slice(1), [[24.8, 1, 0, 0], [35.7, 2, 0, 1], [50.1, 2, 1, 1], [67, 3, 1, 1]]);
+  assert.ok(b.allyUnits.some(u => u.defId === 'char_002_amiya' && u.deployed && u.tileR === 2 && u.tileC === 7));
+  until(b, () => b.finished, 400);
+  assert.deepEqual([b.reason, b.total, (b.errors ?? []).length], ['cleared', 10, 0]);
+});
+
+test('a fixed form on high ground stops a second drop on its tile', async () => {
+  const { b } = await open('15-5'), P = b.stagePrts;
+  assert.ok(until(b, () => P.staticsPlaced === 1, 60));
+  const m = b.enemies.find(e => e.alive && e.mem.prtsStatic);
+  assert.equal(P.occupied([m.y, m.x]), true);
+  assert.equal(P.occupied([m.y, m.x + 1]), false);
 });

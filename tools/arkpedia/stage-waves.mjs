@@ -170,7 +170,9 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
         const grabbed = grabOrder && grabOrder.order === order - 1 && grabOrder.group === group;
         if (grabOrder && !grabbed) throw Error('Intrusive Call grab without its enemy');
         if (grabbed) {
-          if (random || action.count !== 1) throw Error('Unsupported Intrusive Call grab (a squad or a random spawn)');
+          // A squad (TR-26: two Helpers 3 s apart) is grabbed whole: every enemy of the action is held and carried in
+          // turn (PRTS counts both among the grabbed).
+          if (random) throw Error('Unsupported Intrusive Call grab (a random spawn)');
           // A stage rule may replace the enemy (six-star 15-5: every Cold Drink Machine is a Hot one); the hand
           // carries, and the static form belongs to, the enemy that actually spawns.
           const key = stageEnemyKey(rules, action.key), target = prtsGrabTarget(level, { ...action, key });

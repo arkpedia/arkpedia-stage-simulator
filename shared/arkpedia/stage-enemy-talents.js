@@ -16,6 +16,21 @@ export function applyStageEnemySkillCooldown(record, scale) {
   return { ...record, stageSkillCooldownScale: scale };
 }
 
+/** `enemy_skill_cd_mul` (six-star 15-6, 15-7): one skill's periodic cooldown, not its first delay (PRTS 技能周期冷却时间).
+ * Reviewed for the Prototype Auto Meal Distributor's Spawn only, which periodicSpawn reads from the record. */
+const SKILL_PERIOD_TARGETS = Object.freeze({ enemy_10077_mpbarr: Object.freeze({ Spawn: 5 }) });
+export function applyStageEnemySkillPeriod(record, scoped) {
+  if (!scoped) return record;
+  const skills = record.skills.map(skill => {
+    const scale = scoped[skill.prefabKey];
+    if (scale == null) return skill;
+    if (SKILL_PERIOD_TARGETS[record.key]?.[skill.prefabKey] !== skill.cooldown) throw Error(`Unsupported enemy skill cooldown rule: ${record.key}.${skill.prefabKey}`);
+    return { ...skill, cooldown: skill.cooldown * scale };
+  });
+  if (Object.keys(scoped).some(key => !record.skills.some(s => s.prefabKey === key))) throw Error(`Unknown enemy skill: ${record.key}`);
+  return { ...record, skills };
+}
+
 /** A stage can scale only parameters explicitly exposed by an implemented
  * feature. It cannot create a talent, change a spawn ID, or register behavior. */
 export function applyStageEnemyTalentMultipliers(record, multipliers, additions = {}) {

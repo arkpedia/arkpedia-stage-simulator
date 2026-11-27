@@ -32,7 +32,7 @@ import { basename, dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
-import { stageEnemyTokenDependencies, applyStageEnemyBlackboard, applyStageEnemySkillCooldown, applyStageEnemyTalentMultipliers, applyStageEnemySkillRadius, applyStageEnemySkillMultipliers } from '../../shared/arkpedia/stage-enemy-talents.js';
+import { stageEnemyTokenDependencies, applyStageEnemyBlackboard, applyStageEnemySkillCooldown, applyStageEnemySkillPeriod, applyStageEnemyTalentMultipliers, applyStageEnemySkillRadius, applyStageEnemySkillMultipliers } from '../../shared/arkpedia/stage-enemy-talents.js';
 import { STAGE_TOKEN_UNITS, STAGE_DEVICES } from '../../shared/arkpedia/stage-devices.js';
 import { stageDeviceSpec } from '../../shared/arkpedia/stage-devices.js';
 import { manualDeviceDefinition } from '../../shared/arkpedia/stage-manual-devices.js';
@@ -328,8 +328,9 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     const multipliers = { ...compiledRules.enemyTalentScoped?.[id] };
     for (const [key, scale] of Object.entries(compiledRules.enemyTalentGlobal ?? {}))
       if (Object.hasOwn(original.talents.bb, key)) multipliers[key] = (multipliers[key] ?? 1) * scale;
-    const record = applyStageEnemySkillCooldown(applyStageEnemySkillRadius(applyStageEnemySkillMultipliers(applyStageEnemyTalentMultipliers(original, multipliers, compiledRules.enemyTalentAddScoped?.[id]), compiledRules.enemySkillScoped?.[id]),
+    let record = applyStageEnemySkillCooldown(applyStageEnemySkillRadius(applyStageEnemySkillMultipliers(applyStageEnemyTalentMultipliers(original, multipliers, compiledRules.enemyTalentAddScoped?.[id]), compiledRules.enemySkillScoped?.[id]),
       compiledRules.enemySkillRadiusScoped?.[id]), compiledRules.enemySkillCooldownScale);
+    if (compiledRules.enemySkillPeriodScoped?.[id]) record = applyStageEnemySkillPeriod(record, compiledRules.enemySkillPeriodScoped[id]);
     for (const [key, multiplier] of Object.entries(compiledRules.enemies)) record.stats[key] *= multiplier;
     for (const [key, multiplier] of Object.entries(compiledRules.enemyScoped?.[id] ?? {})) record.stats[key] *= multiplier;
     for (const [key, amount] of Object.entries(compiledRules.enemyAdd)) record.stats[key] += amount;

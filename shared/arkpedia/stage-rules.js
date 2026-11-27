@@ -16,7 +16,7 @@ export const stageEnemyKey = (rules, id) => rules?.enemyReplacements?.[id] ?? id
 // A six-star rule may carry `rune_alias`: a name by which the level's optional conditions (`optionalRunes`, the
 // `add_other_rune_blackb` rules) add to this rule's numbers. Alone it changes nothing. The optional conditions are not
 // offered, so the name is dropped; only the reviewed names on six-star rules are accepted.
-const SIX_STAR_RUNE_ALIASES = Object.freeze(['sixstar_basic_attribute', 'sixstar_basic_attribute_trap']);
+const SIX_STAR_RUNE_ALIASES = Object.freeze(['sixstar_basic_attribute', 'sixstar_basic_attribute_trap', 'enemy_skill_cd']);
 function withoutSixStarAlias(rune) {
   const tags = (rune.blackboard ?? []).filter(x => x.key === 'rune_alias');
   if (!tags.length || rune.difficultyMask !== 'SIX_STAR') return rune;
@@ -60,6 +60,7 @@ export function compileStageRules(source, receipt) {
   const characterAttributes = [], enemySkillScoped = {};
   const reedTileParameters = {}, reedIgnitions = [];
   let enemySkillCooldownScale = 1;
+  const enemySkillPeriodScoped = {};
   let deploymentExcludedProfessionMask = 0;
   let excludePredefinedTraps = false, predefinedDeckCards = false;
   const battle = {}, enemies = {}, enemyAdd = {}, hiddenGroups = {}, enemyScoped = {}, tokenCountAdd = {}, enemyTalentScoped = {}, enemySkillRadiusScoped = {};
@@ -167,7 +168,7 @@ export function compileStageRules(source, receipt) {
       const additive = rune.key === 'char_attribute_add';
       const professionMask = cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023);
       const buildableMask = cardRuleMask(rune.buildableMask, BUILDABLE_BITS, 3);
-      const multipliers = {}; let ids = null, side = null;
+      const multipliers = {}; let ids = null, side = null, stray = null;
       if (!professionMask || !buildableMask) throw Error('Unsupported character attribute targeting');
       for (const entry of rune.blackboard ?? []) {
         // `side=ALLY` (six-star 15-13, 15-18: "ally units' ATK/DEF is lowered"): the rule skips enemy-side devices.
@@ -177,6 +178,10 @@ export function compileStageRules(source, receipt) {
           side = 'ALLY';
         } else if (['magic_resistance', 'attack_speed'].includes(entry.key) && entry.value === 1 && !entry.valueStr && !additive) {
           continue;
+        } else if (entry.key === 'enemy' && rune.difficultyMask === 'SIX_STAR' && !additive && !stray && entry.value === 0 && /^trap_[a-z0-9_]+$/.test(entry.valueStr ?? '')) {
+          // Six-star 15-8's device rule also carries `enemy=trap_233_mpmage`. A character rule has no such selector;
+          // it is accepted only as a note naming one of the rule's own `char` targets, and the `char` list decides.
+          stray = entry.valueStr;
         } else if (entry.key === 'char') {
           if (ids || entry.value !== 0 || !/^(?:char|token|trap)_[a-z0-9_]+(?:\|(?:char|token|trap)_[a-z0-9_]+)*$/.test(entry.valueStr ?? ''))
             throw Error('Invalid character attribute selector');
@@ -190,6 +195,7 @@ export function compileStageRules(source, receipt) {
         }
       }
       if (!Object.keys(multipliers).length) throw Error('Empty character attribute rule');
+      if (stray && !ids?.includes(stray)) throw Error('Unsupported character attribute: enemy');
       // The reviewed additive use is Turret ATK. Other character attributes
       // require a reviewed modifier-order contract before they can be admitted.
       if (additive && (!ids?.length || ids.some(id => id !== 'trap_007_ballis')
@@ -312,6 +318,15 @@ export function compileStageRules(source, receipt) {
         || from.valueStr === to.valueStr || Object.hasOwn(enemyReplacements, from.valueStr))
         throw Error('Invalid stage enemy replacement');
       enemyReplacements[from.valueStr] = to.valueStr;
+      continue;
+    }
+    // Six-star 15-6 and 15-7: one enemy's one skill recharges faster (PRTS: its periodic cooldown falls to 80%).
+    if (rune.key === 'enemy_skill_cd_mul') {
+      const bb = rune.blackboard ?? [], enemy = bb.find(x => x.key === 'enemy'), skill = bb.find(x => x.key === 'skill'), scale = bb.find(x => x.key === 'scale');
+      if (bb.length !== 3 || enemy?.value !== 0 || !/^enemy_[a-z0-9_]+$/.test(enemy.valueStr ?? '') || skill?.value !== 0
+        || !/^[A-Za-z][A-Za-z0-9_]*$/.test(skill.valueStr ?? '') || !Number.isFinite(scale?.value) || scale.value <= 0 || scale.valueStr
+        || enemySkillPeriodScoped[enemy.valueStr]?.[skill.valueStr] != null) throw Error('Unsupported enemy skill cooldown rule');
+      (enemySkillPeriodScoped[enemy.valueStr] ??= {})[skill.valueStr] = scale.value;
       continue;
     }
     if (rune.key === 'char_skill_cd_mul') {
@@ -494,6 +509,7 @@ export function compileStageRules(source, receipt) {
     ...(excludePredefinedTraps ? { excludePredefinedTraps } : {}),
     ...(predefinedDeckCards ? { predefinedDeckCards } : {}),
     ...(enemySkillCooldownScale !== 1 ? { enemySkillCooldownScale } : {}),
+    ...(Object.keys(enemySkillPeriodScoped).length ? { enemySkillPeriodScoped } : {}),
     ...(Object.keys(predefinedDevices).length ? { predefinedDevices } : {}),
     ...(Object.keys(predefinedOperators).length ? { predefinedOperators } : {}),
     ...(Object.keys(enemyScoped).length ? { enemyScoped } : {}),

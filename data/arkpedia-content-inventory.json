@@ -711,11 +711,11 @@
     "stages": {
       "total": 3892,
       "public": 564,
-      "loadable": 1211,
-      "capabilityBlocked": 2681,
+      "loadable": 1215,
+      "capabilityBlocked": 2677,
       "testOnly": 341,
-      "ready": 357,
-      "blocked": 2630,
+      "ready": 358,
+      "blocked": 2629,
       "nonCombat": 316,
       "catalogue": 905,
       "embedded": 1
@@ -725,10 +725,10 @@
         "total": 564,
         "public": 318,
         "testOnly": 41,
-        "ready": 123,
-        "blocked": 82,
-        "loadable": 477,
-        "capabilityBlocked": 87
+        "ready": 124,
+        "blocked": 81,
+        "loadable": 481,
+        "capabilityBlocked": 83
       },
       "sub": {
         "total": 86,
@@ -15391,13 +15391,7 @@
       "mode": "main",
       "combat": true,
       "status": "public",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "six_star",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.rune_alias"
-        }
-      ],
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_10072_mpprhd",
@@ -15470,14 +15464,8 @@
       "name": "Moment of Truth",
       "mode": "main",
       "combat": true,
-      "status": "blocked",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "six_star",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.rune_alias"
-        }
-      ],
+      "status": "ready",
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_10072_mpprhd",
@@ -15553,13 +15541,7 @@
       "mode": "main",
       "combat": true,
       "status": "public",
-      "blockers": [
-        {
-          "kind": "stage-rules",
-          "id": "six_star",
-          "message": "Unsupported character attribute: enemy"
-        }
-      ],
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_10072_mpprhd",
@@ -57354,7 +57336,7 @@
         {
           "kind": "stage-rules",
           "id": "challenge_mode",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
+          "message": "Invalid rune parameter: enemy_skill_init_cd_mul.enemy"
         },
         {
           "kind": "device",
@@ -72019,7 +72001,7 @@
         {
           "kind": "stage-rules",
           "id": "challenge_mode",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
+          "message": "Unsupported enemy skill cooldown rule"
         },
         {
           "kind": "device",
@@ -116139,7 +116121,7 @@
         {
           "kind": "stage-rules",
           "id": "variation",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
+          "message": "Unsupported enemy skill cooldown rule"
         },
         {
           "kind": "enemy-alias",
@@ -118994,7 +118976,7 @@
         {
           "kind": "stage-rules",
           "id": "variation",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
+          "message": "Unsupported enemy skill cooldown rule"
         },
         {
           "kind": "enemy-alias",
@@ -279119,13 +279101,7 @@
       "mode": "main",
       "combat": true,
       "status": "public",
-      "blockers": [
-        {
-          "kind": "wave-program",
-          "id": "tr-26",
-          "message": "Unsupported Intrusive Call grab (a squad or a random spawn)"
-        }
-      ],
+      "blockers": [],
       "dependencies": {
         "enemies": [
           "enemy_10072_mpprhd",
@@ -279148,6 +279124,10 @@
         {
           "path": ".cache/arkpedia/original-level-blobs/6cd117bad36a1a19ed06af699921a6fa9771a9aa.json",
           "sha256": "b9706f1bb0130174877ab4343aa11ef3ae4f4c64ed91dc7bf560654baf19f247"
+        },
+        {
+          "path": "data/arkpedia-favor-source.json",
+          "sha256": "7a07a19507560ebb8524c670c57f6ff50eeded0e8b1410367fb390fbef3133f4"
         }
       ]
     },
@@ -289589,7 +289569,7 @@
         {
           "kind": "stage-rules",
           "id": "challenge_mode",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
+          "message": "Invalid rune parameter: enemy_skill_init_cd_mul.enemy"
         }
       ],
       "dependencies": {
@@ -294511,7 +294491,7 @@
         {
           "kind": "stage-rules",
           "id": "challenge_mode",
-          "message": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
+          "message": "Unsupported enemy skill cooldown rule"
         },
         {
           "kind": "enemy-alias",
@@ -318345,22 +318325,6 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "stage-rules",
-      "reason": "Invalid rune parameter: enemy_skill_cd_mul.enemy",
-      "stages": [
-        "cv-ex-8_challenge_mode",
-        "ep-ex-8_challenge_mode",
-        "isw-df_level_obt_roguelike_ro5_level_rogue5_b-10-b",
-        "isw-df_level_obt_roguelike_ro5_level_rogue5_b-9-e",
-        "vi-5_challenge_mode",
-        "wr-ex-2_challenge_mode"
-      ],
-      "soleReportedBlockerStages": [
-        "vi-5_challenge_mode"
-      ],
-      "id": "Invalid rune parameter: enemy_skill_cd_mul.enemy"
-    },
-    {
       "kind": "enemy",
       "id": "enemy_10006_trsmgi_2",
       "stages": [
@@ -320378,6 +320342,18 @@
         "iberia_camp_r_29"
       ],
       "soleReportedBlockerStages": []
+    },
+    {
+      "kind": "stage-rules",
+      "reason": "Unsupported enemy skill cooldown rule",
+      "stages": [
+        "ep-ex-8_challenge_mode",
+        "isw-df_level_obt_roguelike_ro5_level_rogue5_b-10-b",
+        "isw-df_level_obt_roguelike_ro5_level_rogue5_b-9-e",
+        "wr-ex-2_challenge_mode"
+      ],
+      "soleReportedBlockerStages": [],
+      "id": "Unsupported enemy skill cooldown rule"
     },
     {
       "kind": "enemy",
@@ -323116,19 +323092,6 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "stage-rules",
-      "reason": "Invalid rune parameter: enemy_skill_cd_mul.rune_alias",
-      "stages": [
-        "15-6_six_star",
-        "15-7_six_star"
-      ],
-      "soleReportedBlockerStages": [
-        "15-6_six_star",
-        "15-7_six_star"
-      ],
-      "id": "Invalid rune parameter: enemy_skill_cd_mul.rune_alias"
-    },
-    {
       "kind": "grid-size",
       "id": "8x30",
       "stages": [
@@ -323433,6 +323396,18 @@
       ],
       "soleReportedBlockerStages": [],
       "id": "Unsupported additive enemy rune attribute: max_hp"
+    },
+    {
+      "kind": "stage-rules",
+      "reason": "Invalid rune parameter: enemy_skill_init_cd_mul.enemy",
+      "stages": [
+        "cv-ex-8_challenge_mode",
+        "vi-5_challenge_mode"
+      ],
+      "soleReportedBlockerStages": [
+        "vi-5_challenge_mode"
+      ],
+      "id": "Invalid rune parameter: enemy_skill_init_cd_mul.enemy"
     },
     {
       "kind": "stage-rules",
@@ -325932,17 +325907,6 @@
         "15-2"
       ],
       "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "stage-rules",
-      "reason": "Unsupported character attribute: enemy",
-      "stages": [
-        "15-8_six_star"
-      ],
-      "soleReportedBlockerStages": [
-        "15-8_six_star"
-      ],
-      "id": "Unsupported character attribute: enemy"
     },
     {
       "kind": "conditional",
@@ -337384,17 +337348,6 @@
       ],
       "soleReportedBlockerStages": [],
       "id": "Unsupported scheduled predefined target: trap_161_lrcage"
-    },
-    {
-      "kind": "wave-program",
-      "reason": "Unsupported Intrusive Call grab (a squad or a random spawn)",
-      "stages": [
-        "tr-26"
-      ],
-      "soleReportedBlockerStages": [
-        "tr-26"
-      ],
-      "id": "Unsupported Intrusive Call grab (a squad or a random spawn)"
     },
     {
       "kind": "conditional",

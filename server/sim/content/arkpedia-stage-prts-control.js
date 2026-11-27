@@ -65,8 +65,11 @@ export class StagePrtsControl {
   }
   occupied([row, col]) {
     const b = this.battle, highland = b.grid.tile(row, col)?.height === 'HIGH';
+    // PRTS: a highland target is taken by a character unit of any kind and either side, so a fixed form already
+    // standing there (itself a device) stops a second drop (TR-26's third machine on 2,6).
     return b.units.some(u => u.alive && u.deployed && !u.mem.prtsCarried && u.kind !== 'enemy' && u.tileR === row && u.tileC === col
-      && (highland || u.kind !== 'device' || u.profile?.characterLikeDevice));
+      && (highland || u.kind !== 'device' || u.profile?.characterLikeDevice))
+      || highland && b.enemies.some(e => e.alive && e.mem.prtsStatic && Math.round(e.y) === row && Math.round(e.x) === col);
   }
   /** Grab_End's event. */
   release(job) {
@@ -90,7 +93,10 @@ export class StagePrtsControl {
   }
   makeStatic(e, form, target) { applyPrtsStaticForm(this.battle, e, form, target); this.staticsPlaced++; }
   fly([row, col], dt) {
-    const h = this.hand, speed = h.s.moveSpeed * (this.battle.flags.moveScale ?? MOVE_SCALE);
+    // The game's own rule: tiles per second = move speed x the level's 0.5. The battle's walking scale (0.65) is not
+    // used: TR-26's script places Amiya on a drop tile at 49 s "in advance", and at 0.5 that delivery lands at 50.0 s
+    // (at 0.65 it would land at 44.6 s, before her).
+    const h = this.hand, speed = h.s.moveSpeed * MOVE_SCALE;
     const dx = col - h.x, dy = row - h.y, d = Math.hypot(dx, dy), step = speed * dt;
     if (d <= step + 1e-9) { h.x = col; h.y = row; return true; }
     h.x += dx / d * step; h.y += dy / d * step; return false;
