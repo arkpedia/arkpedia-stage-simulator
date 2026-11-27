@@ -302,8 +302,6 @@ test('six-star 15-4: 1 life point, enemies at 110% ATK and DEF, 120% HP, 130% sp
   assert.deepEqual([e.s.maxHp, Math.round(e.s.atk), Math.round(e.s.def), Math.round(e.s.moveSpeed * 100)], [2400, 330, 220, 247]);
   until(b, () => b.finished, 400);
   assert.deepEqual([b.reason, b.total, (b.errors ?? []).length], ['cleared', 30, 0]);
-  // A six-star rule under another name (15-14's crystal bursts, `sixstar_basic`) is still refused.
-  assert.equal(manifest.stages.find(s => s.id === '15-14_six_star').availability, 'blocked');
 });
 
 test('six-star 15-5: every Cold Drink Machine is a Hot one, and the hand still fixes it on high ground with the device rule once', async () => {
@@ -442,4 +440,54 @@ test('H15-3: seven level-placed Active Sarkaz Caster Crystals; its misspelt devi
   assert.deepEqual([c.def.key, c.mem.prtsStatic, c.s.maxHp, c.s.atk, c.s.def, b.grid.tile(c.y, c.x).height], ['enemy_10079_mpmage_2', 'trap_234_mpmageb', 10000, 600, 1200, 'HIGH']);
   until(b, () => b.finished, 600);
   assert.deepEqual([b.reason, b.total, (b.errors ?? []).length, b.stagePrts.failed], ['cleared', 32, 0, 0]);
+});
+
+// ----- six-star 15-14: Originium crystal bursts -----
+test('six-star 15-14: every 30 s a crystal bursts 3 s after it appears: 900 Arts in its 3x3, and an empty tile is sealed for 5 s', async () => {
+  const { originiumBurstNativeReviewed, ORIGINIUM_BURST_RANGE, ORIGINIUM_BURST_SYSTEM } = await import('../shared/arkpedia/stage-originium-bursts.js');
+  const deviceSource = JSON.parse(await readFile(new URL('../data/arkpedia-device-source.json', import.meta.url)));
+  assert.equal(originiumBurstNativeReviewed(), true);
+  const other = clone(environments); other.envSystems[ORIGINIUM_BURST_SYSTEM].find(r => '_maxTarget' in r.data).data._maxTarget = 2;
+  assert.equal(originiumBurstNativeReviewed(other), false);
+  assert.deepEqual(ORIGINIUM_BURST_RANGE, deviceSource.ranges['x-4'].grids.map(g => [g.row, g.col]));
+  const { b, stage, life } = await openSix('15-14_six_star'), S = b.stageOriginiumBursts;
+  assert.equal((await open('15-14')).b.stageOriginiumBursts, undefined);
+  assert.deepEqual([life, stage.rules.originiumBursts.tiles, stage.rules.originiumBursts.interval, stage.rules.originiumBursts.delay, stage.rules.originiumBursts.damage,
+    stage.rules.originiumBursts.life, stage.rules.originiumBursts.addWeight], [1, [{ row: 3, col: 9, weight: 100 }, { row: 4, col: 5, weight: 100 }], 30, 3, 900, 5, -20]);
+  // Operators beside both tiles, none on them.
+  const near = [[3, 9], [4, 5]].map(([r, c]) => {
+    for (const [dr, dc] of [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [-1, -1], [1, -1], [-1, 1]]) {
+      try { const u = b._deployOperator(['char_151_myrtle', 'char_002_amiya'].find(id => !b.bench[id]?.unit?.alive && b.bench[id]) ?? 'char_151_myrtle', r + dr, c + dc, 'RIGHT', { fromSkill: true, predefined: true });
+        u.base.maxHp = 1e6; u.markDirty(); u.hp = u.s.maxHp; return u; } catch { /* next tile */ }
+    }
+    return null;
+  });
+  const hits = [];
+  b.on('damaged', c => { if (c.dmg?.tags?.includes('stage:originiumBurst')) hits.push([b.time, c.target, c.type, c.dmg.amount]); });
+  assert.ok(until(b, () => S.pending.length === 1, 40));
+  assert.ok(Math.abs(b.time - 30) < .1, `${b.time}`);
+  const first = S.pending[0], key = `${first.row},${first.col}`;
+  assert.ok(['3,9', '4,5'].includes(key));
+  assert.ok(until(b, () => S.bursts === 1, 40));
+  assert.ok(Math.abs(b.time - 33) < .1, `${b.time}`);
+  const struck = near[key === '3,9' ? 0 : 1];
+  if (struck) assert.deepEqual(hits.filter(h => h[1] === struck).map(h => [h[2], h[3]]), [['arts', 900]]);
+  assert.deepEqual([b.noDeployTiles.has(key), S.markers.sealed], [true, [[first.row, first.col]]], 'nobody stood on it: Sealed Ground');
+  until(b, () => !b.noDeployTiles.has(key), 45);
+  assert.ok(Math.abs(b.time - 38) < .1, `${b.time}`);
+  // Both tiles take their turns.
+  until(b, () => S.picks.length >= 8 || b.finished, 260);
+  const count = k => S.picks.filter(p => p === k).length;
+  assert.ok(S.picks.length >= 6 && Math.abs(count('3,9') - count('4,5')) <= 2, S.picks.join(' '));
+});
+
+test('a crystal on a tile an operator stands on hits them and seals nothing', async () => {
+  const { b } = await openSix('15-14_six_star'), S = b.stageOriginiumBursts;
+  assert.ok(until(b, () => S.pending.length === 1, 40));
+  const { row, col } = S.pending[0], u = b._deployOperator('char_151_myrtle', 6, 8, 'RIGHT', { fromSkill: true, predefined: true });
+  u.base.maxHp = 1e6; u.markDirty(); u.hp = u.s.maxHp; u.x = col; u.y = row; u.tileR = row; u.tileC = col;
+  const hp = u.hp;
+  assert.ok(until(b, () => S.bursts === 1, 40));
+  assert.ok(u.hp < hp);
+  assert.deepEqual([b.noDeployTiles?.has(`${row},${col}`) ?? false, S.sealed.length], [false, 0]);
 });

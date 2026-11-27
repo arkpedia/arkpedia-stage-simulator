@@ -5,6 +5,7 @@ import { PRTS_CONTROL_SYSTEM, compilePrtsControlRule } from './stage-prts-contro
 import { PROFESSION_BITS, BUILDABLE_BITS, cardRuleMask } from './stage-card-rules.js';
 import { nativeStageRuleReviewed, STAGE_DYNAMIC_ABILITIES } from './stage-native-rules.js';
 import { compileStageEnvironments } from './stage-environments.js';
+import { ORIGINIUM_BURST_SYSTEM, compileOriginiumBurstRule } from './stage-originium-bursts.js';
 import { compileReedTileRule, compileReedIgnitionRule } from './stage-reeds.js';
 const ATTRIBUTES = Object.freeze({ max_hp: 'maxHp', atk: 'atk', def: 'def', move_speed: 'moveSpeed', attack_speed: 'aspd', magic_resistance: 'res', mass_level: 'massLevel' });
 
@@ -16,7 +17,7 @@ export const stageEnemyKey = (rules, id) => rules?.enemyReplacements?.[id] ?? id
 // A six-star rule may carry `rune_alias`: a name by which the level's optional conditions (`optionalRunes`, the
 // `add_other_rune_blackb` rules) add to this rule's numbers. Alone it changes nothing. The optional conditions are not
 // offered, so the name is dropped; only the reviewed names on six-star rules are accepted.
-const SIX_STAR_RUNE_ALIASES = Object.freeze(['sixstar_basic_attribute', 'sixstar_basic_attribute_trap', 'enemy_skill_cd']);
+const SIX_STAR_RUNE_ALIASES = Object.freeze(['sixstar_basic_attribute', 'sixstar_basic_attribute_trap', 'enemy_skill_cd', 'sixstar_basic']);
 function withoutSixStarAlias(rune) {
   const tags = (rune.blackboard ?? []).filter(x => x.key === 'rune_alias');
   if (!tags.length || rune.difficultyMask !== 'SIX_STAR') return rune;
@@ -53,7 +54,7 @@ export function compileStageRules(source, receipt) {
     || ((challenge || sixStar) && !receipt.runes?.length))
     throw Error('Invalid or incompatible variant rule receipt');
   const allyCards = [], forbiddenLocations = [], deviceSkillCost = {}, deviceSkillAdd = {}, enemyReplacements = {};
-  let sightSystem = false, revenantBeams = null, prtsControl = false;
+  let sightSystem = false, revenantBeams = null, prtsControl = false, originiumBursts = null;
   const enemyDynamicAbilities = {}, environmentBuffs = [], enemyScopedAdd = {};
   const deploymentDamage = [], predefinedDevices = {}, predefinedOperators = {}, environmentOverrides = {};
   const enemyTalentGlobal = {}, enemyTalentAddScoped = {}, enemyElementalDamage = {};
@@ -125,6 +126,9 @@ export function compileStageRules(source, receipt) {
       // (stage-environments.mjs checks the original level).
       if (keys[0].valueStr === PRTS_CONTROL_SYSTEM && !prtsControl && ['ALL', 3].includes(rune.buildableMask)
         && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { prtsControl = compilePrtsControlRule(rune); continue; }
+      // Six-star 15-14: Originium crystal bursts (stage-originium-bursts.js).
+      if (keys[0].valueStr === ORIGINIUM_BURST_SYSTEM && !originiumBursts && ['ALL', 3].includes(rune.buildableMask)
+        && cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023) === 1023) { originiumBursts = compileOriginiumBurstRule(rune); continue; }
       throw Error(`Unsupported stage environment controller: ${keys[0].valueStr}`);
     }
     // 11-14 adverse: every operator's redeployment time +value s (no `char` target; other forms stay refused).
@@ -513,6 +517,7 @@ export function compileStageRules(source, receipt) {
     ...(sightSystem ? { sightSystem } : {}),
     ...(revenantBeams ? { revenantBeams } : {}),
     ...(prtsControl ? { prtsControl } : {}),
+    ...(originiumBursts ? { originiumBursts } : {}),
     ...(Object.keys(reedTileParameters).length ? { reedTileParameters } : {}),
     ...(reedIgnitions.length ? { reedIgnitions } : {}),
     ...(deploymentExcludedProfessionMask ? { deploymentExcludedProfessionMask } : {}),

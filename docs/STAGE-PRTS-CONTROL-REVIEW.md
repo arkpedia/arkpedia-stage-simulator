@@ -125,7 +125,7 @@ The simulator publishes the base conditions and does not offer the hypotheses.
 | 15-11 | DP recovery interval 150% | yes |
 | 15-6, 15-7 | The Prototype Auto Meal Distributor's summon cooldown 80% | yes |
 | 15-8 | Crystal DEF 150%, fixed crystal 130% | yes |
-| 15-14 | Originium crystal bursts (`env_030_random_tile_selector`) | no |
+| 15-14 | Originium crystal bursts on (3,9) or (4,5) every 30 s | yes |
 | 15-20 | Enemy and hand move speed 130% (`docs/STAGE-15-20-REVIEW.md`) | yes |
 
 **Three readings**
@@ -188,6 +188,17 @@ The hand now flies at move speed x 0.5 in every stage. This also supports the ea
 - **Seven Active Sarkaz Caster Crystals** (`trap_234_mpmageb`) are placed by the level and switched on at 0 s, like the drink machines (device family `Active Sarkaz Caster Crystal`).
 - **A misspelt rule.** The level gives enemies 130% ATK and DEF and 160% HP, and writes the matching device rule as `char_attribute_mulkkk`. No rule of that name exists, so it is read as having no effect [inference]: the crystals keep 10,000 HP, 600 ATK and 1,200 DEF. H15-1 spells the same rule correctly and its crystal has 16,000 HP. PRTS says only that stage bonuses apply to the device "unless stated otherwise".
 - **Checked:** the seven tiles (all high ground), the crystal's numbers, 32 counted enemies as PRTS lists, cleared without errors.
+
+## Six-star 15-14: Originium crystal bursts
+
+The base condition names the environment system `env_030_random_tile_selector` (`shared/arkpedia/stage-originium-bursts.js`; runtime `StageOriginiumBursts`).
+- **Every 30 s** (first at 30 s) a crystal appears on one of the rule's tiles, (3,9) or (4,5).
+- **3 s later it bursts:** 900 Arts damage to everything of the ally side on that tile and the eight around it, devices and summons included.
+- **Sealed Ground:** if nothing of the ally side stands on the tile, it cannot be deployed on for 5 s.
+- **Which tile** is compiled game code. Each tile has weight 100 and the rule gives `add_other_weight` −20; PRTS says the crystals appear "as evenly as possible". Read as a weighted draw after which the drawn tile's weight drops by 20 [inference].
+- **Not built:** the Sealed Ground as a unit enemies could attack; it only closes the tile. The crystal has no drawing of its own beyond the warning and burst effects.
+
+**Checked:** the system's review (another target count is refused) and the 3×3 range against the game's range table; the first crystal at 30 s and its burst at 33 s; 900 Arts to an operator beside it; the empty tile closed until 38 s; a crystal under an operator hits them and seals nothing; over the battle both tiles take their turns; 39 counted enemies as PRTS lists.
 
 ## Not checked
 

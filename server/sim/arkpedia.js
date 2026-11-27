@@ -25,6 +25,7 @@ import { Battle } from './BattleCore.js';
 import { RegularDisplacement } from './regular-displacement.js';
 import { StageWaveScheduler, stageWaveSpawns } from './content/arkpedia-stage-waves.js';
 import { StagePrtsControl, placePrtsStatic } from './content/arkpedia-stage-prts-control.js';
+import { StageOriginiumBursts } from './content/arkpedia-stage-originium-bursts.js';
 import { StageBranchScheduler } from './content/arkpedia-stage-branches.js';
 import { resolveStageRandomWaves } from './content/arkpedia-stage-random.js';
 import { stageRouteClockWaits } from '../../shared/arkpedia/stage-path.js';
@@ -387,6 +388,8 @@ export class StandardBattle extends Battle {
     if (data.stage.waveProgram) this.stageWaveScheduler = new StageWaveScheduler(this, data.stage.waveProgram);
     // Chapter 15: the PRTS control system's hand carries the enemies its grab orders name.
     if (data.stage.waveProgram?.prts) this.stagePrts = new StagePrtsControl(this, data.stage.waveProgram.prts);
+    // Six-star 15-14: Originium crystal bursts on the rule's tiles.
+    if (data.stage.rules?.originiumBursts) this.stageOriginiumBursts = new StageOriginiumBursts(this, data.stage.rules.originiumBursts);
     this.start();
   }
   _processSpawns() {
