@@ -37,6 +37,17 @@ export class StageBranchScheduler {
     if (e) { e.mem.stageWaveUnharmful = true; e.profile.holdsBattle = false; e.counted = false; }
     return e;
   }
+  /** SummonEnemiesFollowBranchRoute with _unharmful for one action of a branch that has several (the Hidden Tunnels:
+   * each tunnel's Miner Guerrillas follow its own action). Uncounted, never holding the battle. */
+  summonUnharmfulAction(key, order) {
+    const action = this.branches[key]?.spawns?.find(a => a.order === order);
+    if (!action || action.count !== 1 || action.offset !== 0) throw Error('Invalid unharmful branch action');
+    const b = this.battle; if (b.finished) return null;
+    const e = b.spawnEnemy(stageEnemyKey(this.rules, action.enemyKey), { routeIndex: action.routeIndex, countInTotal: false,
+      tag: `stage-unharmful:${++this.serial}`, ownerPlayerId: 'arkpedia' });
+    if (e) { e.mem.stageWaveUnharmful = true; e.profile.holdsBattle = false; e.counted = false; }
+    return e;
+  }
   /** The level-branch trigger: true while an activation branch has a phase left. */
   hasNext(key) {
     const branch = this.branches[key];

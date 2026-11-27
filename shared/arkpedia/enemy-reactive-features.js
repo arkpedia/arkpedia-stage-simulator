@@ -2,6 +2,7 @@
 import { INFANTRY_ATTACK, isInfantry } from './enemy-infantry-features.js';
 import { isCityDefender, cityDefenderNative, CITY_DEFENDER_ABILITY, CITY_DEFENDER_EXPLAINS } from './enemy-city-defender-features.js';
 import { isEmperorsBlade, emperorsBladeNative } from './enemy-emperors-blade-features.js';
+import { isArmyInfiltrator, armyInfiltratorNative } from './enemy-army-features.js';
 // Small source-backed families share the regular enemy dispatcher. Registration
 // stays separate from runtime factories and from generated support decisions.
 const signature = (r, group, keys) => JSON.stringify(r.talents.groups[group]) === JSON.stringify([...keys].sort());
@@ -51,8 +52,8 @@ function duck(r, nat) {
 }
 
 export const REACTIVE_ENEMY_FEATURES = Object.freeze({
-  'ability:无法被阻挡': { covers: (r, n) => r.key === 'enemy_2001_duckmi_2' && duck(r, n),
-    trait: { flags: { unblockable: true } }, note: 'Reviewed CN Duck Lord variant: unblockable for life.' },
+  'ability:无法被阻挡': { covers: (r, n) => r.key === 'enemy_2001_duckmi_2' && duck(r, n) || isArmyInfiltrator(r) && armyInfiltratorNative(r, n),
+    trait: { flags: { unblockable: true } }, note: 'Reviewed CN Duck Lord variant and the Army Infiltrator (chapter 16): unblockable for life.' },
   'ability:<$ba.invisible>隐匿</>': { covers: (r, n) => r.key === 'enemy_2034_sythef_2' && cryingThief(r, n),
     trait: { flags: { stealth: true } }, note: 'Reviewed CN Crying Thief variant: shared native invisibility toggle.' },
   'talent:Combat': {

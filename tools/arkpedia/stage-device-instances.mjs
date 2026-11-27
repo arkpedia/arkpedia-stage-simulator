@@ -5,6 +5,7 @@ import { readOriginalLevel } from './original-level.mjs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { MINER_BRANCH } from '../../shared/arkpedia/stage-mainline16-devices.js';
 
 /** Older original levels serialize the same Direction enum as integers. */
 export function originalDeviceDirection(value) {
@@ -113,7 +114,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       && (!stageDeviceSpec(d)?.guard || p.alias === d.alias));
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory || spec.charlesLynch || spec.revenantGun || spec.revenantCore || spec.weakeningNode;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine || spec.artillery || spec.flame || spec.guard || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory || spec.charlesLynch || spec.revenantGun || spec.revenantCore || spec.weakeningNode || spec.mainline16;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -130,6 +131,10 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     const coreBranchId = spec.revenantCore ? (bb == null ? (p.mainSkillLvl === 1 ? 'branch_1' : null)
       : Array.isArray(bb) && bb.length === 1 && branchRow?.value === 0 && typeof branchRow.valueStr === 'string' && branchRow.valueStr !== 'null' ? branchRow.valueStr : undefined) : null;
     if (spec.revenantCore && (coreBranchId === undefined || coreBranchId && !level.branches?.[coreBranchId])) throw Error('Unsupported Core Amplifier branch');
+    // A Hidden Tunnel names its action of the branch (`talent@action_index`); without the override it is the skill's 0.
+    const tunnelAction = spec.hiddenTunnel ? bb == null ? 0 : Array.isArray(bb) && bb.length === 1 && bb[0].key === 'talent@action_index'
+      && bb[0].valueStr == null && Number.isSafeInteger(bb[0].value) && bb[0].value >= 0 ? bb[0].value : undefined : null;
+    if (spec.hiddenTunnel && (tunnelAction === undefined || !level.branches?.[MINER_BRANCH])) throw Error('Unsupported Hidden Tunnel branch action');
     const actionRow=spec.powerArmor&&Array.isArray(bb)?bb.find(row=>row.key==='action_index'):null;
     const actionIndex=actionRow&&(actionRow.valueStr==null||actionRow.valueStr==='')?actionRow.value:null;
     if (spec.powerArmor && (!Number.isSafeInteger(actionIndex)||actionIndex<0)) throw Error('Unsupported Power Armor action index');
@@ -139,7 +144,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if ((spec.scheduled || switched || revealed ? typeof p.hidden !== 'boolean' || !p.alias || all.filter(e => e.alias === p.alias).length !== 1 : p.hidden !== false)
       || !(spec.skillIndices ?? [0]).includes(p.skillIndex) || !(spec.skillLevels ?? [1]).includes(p.mainSkillLvl) || ![0, 'PHASE_0'].includes(p.inst.phase)
       || (instanced ? !Number.isSafeInteger(p.inst.level) || p.inst.level < 1 || p.inst.level > (spec.maxLevel ?? 90) : p.inst.level !== 1)
-      || (spec.mimic || spec.powerArmor || spec.bombLoader || spec.bloodThrone ? !branchId || !level.branches?.[branchId] : spec.bloodAltar ? !altar : !spec.mire && !spec.revenantCore && p.overrideSkillBlackboard != null) || p.overrideTalents != null
+      || (spec.mimic || spec.powerArmor || spec.bombLoader || spec.bloodThrone ? !branchId || !level.branches?.[branchId] : spec.bloodAltar ? !altar : !spec.mire && !spec.revenantCore && !spec.hiddenTunnel && p.overrideSkillBlackboard != null) || p.overrideTalents != null
       || (spec.mine || spec.reward || spec.powerArmor) && (p.inst.potentialRank !== 0 || p.inst.favorPoint !== 0)
       || p.uniEquipIds?.length || p.masterInfos?.length)
       throw Error(`Unimplemented device instance override: ${d.key}`);
@@ -156,6 +161,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
       ...(altar?.branchMissing ? { branchMissing: true } : {}),
       ...(altar?.shadowedBranchIds.length ? { shadowedBranchIds: altar.shadowedBranchIds } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
+      ...(spec.hiddenTunnel ? { actionIndex: tunnelAction } : {}),
       ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit || spec.shieldguard || spec.bloodAltar || spec.bombLoader || spec.bloodThrone || spec.lightOfGlory || spec.charlesLynch || spec.revenantGun ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };
   }

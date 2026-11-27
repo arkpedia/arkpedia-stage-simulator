@@ -52,6 +52,9 @@ export const DEVICE_FAMILIES = {
   lightOfGloryDefinition: { module: 'stage-light-of-glory', variants: keySet([''], { ...standard, direction }) },
   charlesLynchDefinition: { module: 'stage-charles-lynch', variants: keySet([''], { level: [1], skillLevel: [1], direction }) },
   weakeningNodeDefinition: { module: 'stage-weakening-node', variants: keySet([''], { level: [1], skillLevel: [1] }) },
+  pollutedFacilityDefinition: { module: 'stage-mainline16-devices', variants: keySet([''], { level: [1], skillLevel: [1] }) },
+  rockWallDefinition: { module: 'stage-mainline16-devices', variants: keySet([''], { level: [1], skillLevel: [1] }) },
+  hiddenTunnelDefinition: { module: 'stage-mainline16-devices', variants: keySet([''], { level: [1], skillLevel: [1] }, ['actionIndex']) },
   revenantGunDefinition: { module: 'stage-kindling-revenant', variants: keySet([''], { level: [1], skillLevel: [1], direction: ['LEFT'] }) },
   // The skill level is the unlock order; `branchId?` is the core's branch, if it has one.
   revenantCoreDefinition: { module: 'stage-kindling-revenant', variants: keySet([''], { level: [1, 2, 3, 4], skillLevel: [1, 2, 3, 4] }, ['branchId?']) },

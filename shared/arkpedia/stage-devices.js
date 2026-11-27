@@ -23,6 +23,7 @@ import { lightOfGloryNativeReviewed } from './stage-light-of-glory.js';
 import { charlesLynchNativeReviewed } from './stage-charles-lynch.js';
 import { revenantCoreNativeReviewed, revenantGunNativeReviewed } from './stage-kindling-revenant.js';
 import { weakeningNodeNativeReviewed } from './stage-weakening-node.js';
+import { pollutedFacilityNativeReviewed, rockWallNativeReviewed, hiddenTunnelNativeReviewed } from './stage-mainline16-devices.js';
 import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
@@ -166,6 +167,15 @@ export const STAGE_DEVICES = Object.freeze({
   // PRTS 活性态萨卡兹术师结晶(装置) (H15-3): seven level-placed crystals, switched on at 0 s like the drink machines.
   'Active Sarkaz Caster Crystal': Object.freeze({ keys: Object.freeze(['trap_234_mpmageb']), staticLevelReview: true, activatable: true,
     prtsStatic: 'enemy_10079_mpmage_2', spawns: Object.freeze(['enemy_10079_mpmage_2']), maxLevel: 1, skillIndices: Object.freeze([-1]) }),
+  // Chapter 16 (stage-mainline16-devices.js; runtime arkpedia-stage-mainline16.js). PRTS 严重污染设施: pollutes the tiles
+  // around it while it stands. PRTS 阻道岩壁: holds a tile until Miner Guerrillas break it. PRTS 隐蔽矿道: gathers Miner
+  // Guerrillas along its own action of the level's branch; its skill switches them between waiting and setting out.
+  'Heavily Polluted Facility': Object.freeze({ keys: Object.freeze(['trap_271_fowstn']), staticLevelReview: true, pollutedFacility: true,
+    mainline16: true, maxLevel: 1, skillIndices: Object.freeze([-1]) }),
+  'Rock Wall': Object.freeze({ keys: Object.freeze(['trap_272_nomstn']), staticLevelReview: true, rockWall: true, mainline16: true,
+    maxLevel: 1, skillIndices: Object.freeze([-1]) }),
+  'Hidden Tunnel': Object.freeze({ keys: Object.freeze(['trap_270_spawnp']), staticLevelReview: true, hiddenTunnel: true, mainline16: true,
+    maxLevel: 1, spawns: Object.freeze(['enemy_3010_mcreep']) }),
   'Torrent Beam Activator': Object.freeze({
     // PRTS 洪流束激发器 (14-18): the Kindling Revenant's enemy-side beam guns (stage-kindling-revenant.js; runtime
     // arkpedia-stage-kindling-revenant.js).
@@ -223,6 +233,9 @@ export function stageDeviceSpec(device) {
     || spec.lightOfGlory && !lightOfGloryNativeReviewed()
     || spec.charlesLynch && !charlesLynchNativeReviewed()
     || spec.weakeningNode && !weakeningNodeNativeReviewed()
+    || spec.pollutedFacility && !pollutedFacilityNativeReviewed()
+    || spec.rockWall && !rockWallNativeReviewed()
+    || spec.hiddenTunnel && !hiddenTunnelNativeReviewed()
     || spec.revenantGun && !revenantGunNativeReviewed()
     || spec.revenantCore && !revenantCoreNativeReviewed()
     || spec.bombLoader && !bombLoaderNativeReviewed()

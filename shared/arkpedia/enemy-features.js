@@ -29,6 +29,7 @@ import { BLOOD_LORD_FEATURES, isBloodLord, bloodLordNative, isBloodLordTwo, bloo
 import { REVENANT_FEATURES, REVENANT_SHARED_FEATURES, isRevenant, isRevenantSecond, revenantSecondNative } from './enemy-kindling-revenant-features.js';
 import { REVENANT_FIRST, REVENANT_SECOND } from './stage-kindling-revenant-beams.js';
 import { MINER_GUERRILLA_FEATURES } from './enemy-miner-guerrilla-features.js';
+import { ARMY_FEATURES } from './enemy-army-features.js';
 import { PRTS_SOURCE_FEATURES, PRTS_SOURCE_SHARED_FEATURES, isPrtsBoss, PRTS_SOURCE, MIMIC_MACHINE } from './enemy-prts-source-features.js';
 import { INTRUSIVE_CALL_FEATURE } from './enemy-intrusive-call-features.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
@@ -1562,6 +1563,8 @@ export const ENEMY_FEATURES = Object.freeze(withFamily(withFamily({
   ...PRTS_SOURCE_FEATURES,
   // Miner Guerrilla (chapter 16): a neutral route actor.
   ...MINER_GUERRILLA_FEATURES,
+  // Chapter 16's army soldiers that engage Miner Guerrillas.
+  ...ARMY_FEATURES,
 }, isRevenant, REVENANT_SHARED_FEATURES, [REVENANT_FIRST, REVENANT_SECOND]), isPrtsBoss, PRTS_SOURCE_SHARED_FEATURES, [PRTS_SOURCE, MIMIC_MACHINE]));
 
 /** Ability lines that carry a number: matched by pattern, then checked against the record. */

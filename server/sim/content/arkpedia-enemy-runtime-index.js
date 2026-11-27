@@ -16,6 +16,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-stage-prts-control',load:()=>import('./arkpedia-stage-prts-control.js'),exports:{intrusiveCall:'intrusiveCall'}},
   {key:'arkpedia-enemy-kindling-revenant',load:()=>import('./arkpedia-enemy-kindling-revenant.js'),exports:{revenantFirst:'revenantFirst',revenantSecond:'revenantSecond'}},
   {key:'arkpedia-enemy-miner-guerrilla',load:()=>import('./arkpedia-enemy-miner-guerrilla.js'),exports:{minerGuerrilla:'minerGuerrilla'}},
+  {key:'arkpedia-enemy-army',load:()=>import('./arkpedia-enemy-army.js'),exports:{minerEngage:'minerEngage'}},
   {key:'arkpedia-enemy-prts-source',load:()=>import('./arkpedia-enemy-prts-source.js'),exports:{prtsSource:'prtsSource',mimicMachine:'mimicMachine'}},
   {key:'arkpedia-enemy-talulah-fighter',load:()=>import('./arkpedia-enemy-talulah-fighter.js'),exports:{talulahFighter:'talulahFighter',neutralShot:'neutralShot',neutralPreference:'neutralPreference'}},
   {key:'arkpedia-enemy-frostnova',load:()=>import('./arkpedia-enemy-frostnova.js'),exports:{frostNova:'frostNova'}},

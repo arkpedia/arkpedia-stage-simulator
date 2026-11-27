@@ -49,6 +49,7 @@ import { lightOfGloryDefinition } from '../../shared/arkpedia/stage-light-of-glo
 import { charlesLynchDefinition } from '../../shared/arkpedia/stage-charles-lynch.js';
 import { revenantCoreDefinition, revenantGunDefinition } from '../../shared/arkpedia/stage-kindling-revenant.js';
 import { weakeningNodeDefinition } from '../../shared/arkpedia/stage-weakening-node.js';
+import { pollutedFacilityDefinition, rockWallDefinition, hiddenTunnelDefinition } from '../../shared/arkpedia/stage-mainline16-devices.js';
 import { prtsStaticForm } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { PRTS_STATIC_FORMS, prtsStaticFormReviewed } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { bombLoaderDefinition } from '../../shared/arkpedia/stage-bomb-loader.js';
@@ -199,7 +200,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
       // paired enemy as its fixed form when the wave action switches it on.
       if (spec?.prtsStatic) return { ...d, staticForm: prtsStaticForm(spec.prtsStatic) };
       // Excrescent Carapaces carry their original instance too (StageCarapaces reads d.instance).
-      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader && !spec?.bloodThrone && !spec?.lightOfGlory && !spec?.charlesLynch && !spec?.revenantGun && !spec?.revenantCore && !spec?.weakeningNode) return d;
+      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader && !spec?.bloodThrone && !spec?.lightOfGlory && !spec?.charlesLynch && !spec?.revenantGun && !spec?.revenantCore && !spec?.weakeningNode && !spec?.mainline16) return d;
       const instance = deviceInstances[spec.guard ? `${d.key}:${d.alias}` : `${d.key}:${d.row}:${d.col}`];
       if (spec.carapace) carapaceDefinition(instance);
       else if (spec.twigs) twigsDefinition(instance);
@@ -220,6 +221,9 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
       else if (spec.charlesLynch) charlesLynchDefinition(instance);
       else if (spec.revenantGun) revenantGunDefinition(instance);
       else if (spec.weakeningNode) weakeningNodeDefinition(instance);
+      else if (spec.pollutedFacility) pollutedFacilityDefinition(instance);
+      else if (spec.rockWall) rockWallDefinition(instance);
+      else if (spec.hiddenTunnel) hiddenTunnelDefinition(instance);
       else if (spec.revenantCore) revenantCoreDefinition(instance);
       else if (spec.gramophone) gramophoneDefinition(instance);
       else if (spec.flowGenerator) flowGeneratorDefinition(instance);

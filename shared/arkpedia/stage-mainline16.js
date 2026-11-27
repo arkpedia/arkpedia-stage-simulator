@@ -4,9 +4,9 @@
 // - The system keeps a shadow state for each tile (`in_sight` / `out_sight`) and draws it.
 // - The buff checks every enemy each 0.3 s: on a shadowed tile and not blocked it is INVISIBLE
 //   (`mainline16_enemy_target_free[core]`); blocked, or off such a tile, the flag goes.
-// Tiles are shadowed by the chapter's devices and enemies (not built yet). Reviewed so far: a level with no device or
-// card and only enemies known to shadow nothing gives both pieces nothing to do, and they compile to no behaviour
-// (16-2). Any other level is refused until the shadow sources are modelled.
+// Tiles are shadowed by the Heavily Polluted Facility and cleared for a while by Miner Guerrillas
+// (stage-mainline16-devices.js; runtime arkpedia-stage-mainline16.js). A level is accepted only when every device and
+// enemy in it is one whose part in this is built (`mainline16Supported`).
 import environments from '../../data/arkpedia-environment-native-source.json' with { type: 'json' };
 
 export const MAINLINE16_SYSTEM = 'env_v066_mainline16_ctrl', MAINLINE16_HIDE = 'mainline16_enemy_target_free';
@@ -34,11 +34,21 @@ export function compileMainline16Rule(rune, key) {
   return true;
 }
 
-/** True when the original level has nothing that can shadow a tile: no device, no card, and only the plain enemies. */
-export function mainline16Inert(level) {
-  const p = [level.predefines, level.hardPredefines].flatMap(x => [...(x?.tokenInsts ?? []), ...(x?.tokenCards ?? [])]);
+/** Devices and enemies of the chapter whose part in the pollution is built (stage-mainline16-devices.js,
+ * enemy-army-features.js). */
+export const MAINLINE16_DEVICES = Object.freeze(['trap_270_spawnp', 'trap_271_fowstn', 'trap_272_nomstn']);
+export const MAINLINE16_ENEMIES = Object.freeze([...MAINLINE16_PLAIN_ENEMIES, 'enemy_1109_uabone', 'enemy_10120_uaghst']);
+const ORDINARY_TILES = ['tile_forbidden', 'tile_start', 'tile_road', 'tile_floor', 'tile_wall', 'tile_end', 'tile_telin', 'tile_telout', 'tile_fence', 'tile_fence_bound', 'tile_hole', 'tile_empty'];
+
+/** True when everything in the original level that touches the pollution is built: only the three reviewed devices
+ * (none hidden: a facility a wave action switches on is not built), no supplied card, only reviewed enemies, and only
+ * ordinary tiles. */
+export function mainline16Supported(level) {
+  const insts = [level.predefines, level.hardPredefines].flatMap(x => x?.tokenInsts ?? []);
+  const cards = [level.predefines, level.hardPredefines].flatMap(x => x?.tokenCards ?? []);
   const ids = new Set([...(level.enemyDbRefs ?? []).map(r => r.id), ...(level.waves ?? []).flatMap(w => (w.fragments ?? []).flatMap(f => (f.actions ?? [])
     .filter(a => ['SPAWN', 0].includes(a.actionType)).map(a => a.key))), ...Object.values(level.branches ?? {}).flatMap(br => (br.phases ?? []).flatMap(ph => (ph.actions ?? []).map(a => a.key)))]);
-  return !p.length && [...ids].every(id => MAINLINE16_PLAIN_ENEMIES.includes(id))
-    && !(level.mapData?.tiles ?? []).some(t => !['tile_forbidden', 'tile_start', 'tile_road', 'tile_floor', 'tile_wall', 'tile_end', 'tile_telin', 'tile_telout', 'tile_fence', 'tile_fence_bound', 'tile_hole', 'tile_empty'].includes(t.tileKey));
+  return !cards.length && insts.every(p => MAINLINE16_DEVICES.includes(p.inst?.characterKey) && p.hidden === false)
+    && [...ids].every(id => MAINLINE16_ENEMIES.includes(id))
+    && !(level.mapData?.tiles ?? []).some(t => !ORDINARY_TILES.includes(t.tileKey));
 }

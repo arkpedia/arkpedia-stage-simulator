@@ -116,7 +116,7 @@ const summonIcon = id => {
   throw Error('Missing original summon avatar: ' + id);
 };
 function selectedEntry(id = selected) {
-  const device = battle?.manualStageDevices?.entries.get(id) ?? battle?.stageBombLoaders?.entries.get(id) ?? battle?.capturableStageDevices?.entries.get(id) ?? battle?.electricCoils?.entries.get(id) ?? battle?.stageTurrets?.entries.get(id) ?? battle?.stageMagicCircuit?.entries.get(id) ?? battle?.stageFlowGenerators?.entries.get(id) ?? battle?.stageGramophones?.entries.get(id) ?? battle?.stageScenery?.entries.get(id) ?? battle?.stageRevenant?.entries?.get(id) ?? battle?.stageWeakeningNodes?.entries.get(id);
+  const device = battle?.manualStageDevices?.entries.get(id) ?? battle?.stageBombLoaders?.entries.get(id) ?? battle?.capturableStageDevices?.entries.get(id) ?? battle?.electricCoils?.entries.get(id) ?? battle?.stageTurrets?.entries.get(id) ?? battle?.stageMagicCircuit?.entries.get(id) ?? battle?.stageFlowGenerators?.entries.get(id) ?? battle?.stageGramophones?.entries.get(id) ?? battle?.stageScenery?.entries.get(id) ?? battle?.stageRevenant?.entries?.get(id) ?? battle?.stageWeakeningNodes?.entries.get(id) ?? battle?.stageMainline16?.entries?.get(id);
   if (device && !device.supplied) return { ...device, kind: 'stage-device', record: { rangeGrid: device.spec.range } };
   const supply = typeof id === 'string' && id.startsWith('stage-supply:')
     ? battle?.units.find(u => u.mem.stageSupplyId === id) : null;
@@ -1042,6 +1042,7 @@ function drawHud() {
           else if (selectedEntry()?.spec.kind === 'loader') battle.stageBombLoaders.activate(selected);
           else if (selectedEntry()?.spec.kind === 'core-amplifier') battle.stageRevenant.activate(selected);
           else if (selectedEntry()?.spec.kind === 'weakening-node') battle.stageWeakeningNodes.activate(selected);
+          else if (selectedEntry()?.spec.kind === 'hidden-tunnel') battle.stageMainline16.activate(selected);
           else battle.manualStageDevices.activate(selected);
           battleError = '';
         } catch (e) { battleError = e.message; }
@@ -1058,16 +1059,16 @@ function drawHud() {
       : b.spec.kind === 'flow-generator' ? `Flowing ${b.spec.direction.toLowerCase()}`
       : b.spec.kind === 'turret' ? `${Math.floor(b.sp)} / ${b.spec.spCost} SP · Fires ${b.spec.direction.toLowerCase()}`
       : b.spec.kind === 'electric-coil' ? (b.linked ? 'Linked · firing every 2.3s' : 'Needs another coil in range') : `${b.unit.side === 'ally' ? 'Allied' : 'Enemy'} control · Restores SP nearby`
-      : b.spec.kind === 'core-amplifier' || b.spec.kind === 'weakening-node' ? b.spec.statusLabel
+      : b.spec.kind === 'core-amplifier' || b.spec.kind === 'weakening-node' || b.spec.kind === 'hidden-tunnel' ? b.spec.statusLabel
       : b.state === 'spent' ? 'Used' : b.state === 'active'
       ? b.spec.permanent ? 'Active · permanent' : `Active · ${Math.max(0, Math.ceil((b.spec.duration || b.spec.finish) - (battle.time - b.activeAt)))}s`
       : `${Math.floor(b.sp)} / ${b.spec.spCost} SP`;
     command.querySelector('.device-status').textContent = status;
     const retreat = supply ? b.spec.retreatable !== false : b.spec.retreatable;
-    const button = command.querySelector('#device-activate'), error = retreat ? b.unit.alive ? null : 'Used' : b.spec.passive ? 'Passive device' : b.spec.kind === 'loader' ? battle.stageBombLoaders.error(selected) : b.spec.kind === 'core-amplifier' ? battle.stageRevenant.error(selected) : b.spec.kind === 'weakening-node' ? battle.stageWeakeningNodes.error(selected) : battle.manualStageDevices.error(selected);
+    const button = command.querySelector('#device-activate'), error = retreat ? b.unit.alive ? null : 'Used' : b.spec.passive ? 'Passive device' : b.spec.kind === 'loader' ? battle.stageBombLoaders.error(selected) : b.spec.kind === 'core-amplifier' ? battle.stageRevenant.error(selected) : b.spec.kind === 'weakening-node' ? battle.stageWeakeningNodes.error(selected) : b.spec.kind === 'hidden-tunnel' ? battle.stageMainline16.error(selected) : battle.manualStageDevices.error(selected);
     button.hidden = !retreat && !!b.spec.passive;
     button.disabled = !!error; button.title = error ?? 'Activate device';
-    button.textContent = b.state === 'spent' ? 'Used' : retreat ? 'Retreat' : b.spec.dpCost ? `Activate · ${b.spec.dpCost} DP` : 'Activate';
+    button.textContent = b.state === 'spent' ? 'Used' : retreat ? 'Retreat' : b.spec.dpCost ? `Activate · ${b.spec.dpCost} DP` : b.spec.actionLabel ?? 'Activate';
   } else if (b) {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;

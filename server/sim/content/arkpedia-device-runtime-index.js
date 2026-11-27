@@ -26,6 +26,8 @@ export const DEVICE_RUNTIME_INDEX=Object.freeze([
     selected:stage=>has(stage,'weakeningNode')||stage.waveProgram?.prts?.nodes===true},
   {...ordinary('kindlingRevenant','revenantCore','StageKindlingRevenant',()=>import('./arkpedia-stage-kindling-revenant.js')),
     create:(m,b,stage)=>new m.StageKindlingRevenant(b,devices(stage),stage.geometry,stage)},
+  {...ordinary('mainline16','mainline16','StageMainline16',()=>import('./arkpedia-stage-mainline16.js')),
+    create:(m,b,stage)=>new m.StageMainline16(b,devices(stage),stage.geometry,stage)},
   ordinary('magicCircuit','magicCircuit','StageMagicCircuit',()=>import('./arkpedia-stage-magic-circuit.js')),
   ordinary('flow','flowGenerator','StageFlowGenerators',()=>import('./arkpedia-stage-flow-generators.js')),
   ordinary('gramophones','gramophone','StageGramophones',()=>import('./arkpedia-stage-gramophones.js')),

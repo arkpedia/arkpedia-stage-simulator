@@ -354,6 +354,7 @@ export class StandardBattle extends Battle {
     this.stageCharlesLynch = deviceRuntime.create('charlesLynch', this, data.stage);
     this.stageRevenant = deviceRuntime.create('kindlingRevenant', this, data.stage);
     this.stageWeakeningNodes = deviceRuntime.create('weakeningNodes', this, data.stage);
+    this.stageMainline16 = deviceRuntime.create('mainline16', this, data.stage);
     this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
     this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
     this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);
@@ -584,6 +585,7 @@ export class StandardBattle extends Battle {
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
     if (this.noDeployTiles?.has(`${row},${col}`)) return "Tile is unavailable for deployment.";
+    if (this.stageMainline16?.polluted(row, col)) return "Toxic Pollution covers this tile.";
     // Zones that follow a living owner (the Kazdel fire elemental's enemy_vcblva_t_tile).
     for (const [owner, tiles] of this.noDeployZones ?? []) if (owner.alive && tiles.has(`${row},${col}`)) return "Tile is unavailable for deployment.";
     if (!fromSkill && !canSpendDp(this, 'arkpedia', this.cost(id))) return "Not enough DP.";

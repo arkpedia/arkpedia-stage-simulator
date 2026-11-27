@@ -7,7 +7,7 @@ import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 import environments from '../data/arkpedia-environment-native-source.json' with { type: 'json' };
 import { nativeComponents } from '../shared/arkpedia/enemy-support.js';
 import { MINER_GUERRILLA, minerGuerrillaNative, minerGuerrillaParams } from '../shared/arkpedia/enemy-miner-guerrilla-features.js';
-import { mainline16NativeReviewed, mainline16Inert, MAINLINE16_SYSTEM } from '../shared/arkpedia/stage-mainline16.js';
+import { mainline16NativeReviewed, mainline16Supported, MAINLINE16_SYSTEM } from '../shared/arkpedia/stage-mainline16.js';
 import { createStageLibraryLoader } from '../shared/arkpedia/stage-library.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
@@ -30,7 +30,7 @@ const open = async (id, operators = ['char_151_myrtle']) => {
 const miners = b => b.neutralUnits.filter(u => u.alive && u.def?.key === MINER_GUERRILLA);
 const strike = (b, unit, amount) => b.dealDamage(null, unit, { amount, type: 'true', applyWay: 'none', tags: ['test'] });
 
-test('the Miner Guerrilla and the pollution system are reviewed; a level with pollution sources is refused', () => {
+test('the Miner Guerrilla and the pollution system are reviewed; a level with an unbuilt pollution source is refused', () => {
   const level = Object.values(records[MINER_GUERRILLA].levels)[0], view = nativeComponents(evidence, MINER_GUERRILLA);
   assert.equal(minerGuerrillaNative(level, view), true);
   assert.equal(support.enemies[MINER_GUERRILLA].policy, 'stats-attacks-and-features');
@@ -42,10 +42,11 @@ test('the Miner Guerrilla and the pollution system are reviewed; a level with po
   const e = clone(environments); e.envSystems[MAINLINE16_SYSTEM].find(r => '_tileInside' in r.data).data._tileInside = 'x';
   assert.equal(mainline16NativeReviewed(e), false);
   const plain = { enemyDbRefs: [{ id: 'enemy_1107_uoffcr' }, { id: MINER_GUERRILLA }], waves: [], predefines: {}, mapData: { tiles: [{ tileKey: 'tile_road' }] } };
-  assert.equal(mainline16Inert(plain), true);
-  assert.equal(mainline16Inert({ ...plain, predefines: { tokenInsts: [{ inst: { characterKey: 'trap_271_fowstn' } }] } }), false);
-  assert.equal(mainline16Inert({ ...plain, enemyDbRefs: [{ id: 'enemy_10120_uaghst' }] }), false);
-  for (const id of ['16-3', '16-9', 'tr-27']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
+  assert.equal(mainline16Supported(plain), true);
+  // A device or an enemy whose part in the pollution is not built is refused (the built ones: test/arkpedia-stage-16-3.test.js).
+  assert.equal(mainline16Supported({ ...plain, predefines: { tokenInsts: [{ inst: { characterKey: 'trap_001_crate' }, hidden: false }] } }), false);
+  assert.equal(mainline16Supported({ ...plain, enemyDbRefs: [{ id: 'enemy_10124_uashld' }] }), false);
+  for (const id of ['16-4', '16-9', 'tr-27']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
 });
 
 test('16-2: eight Miner Guerrillas walk through as neutral units; they are not counted and their exit costs nothing', async () => {

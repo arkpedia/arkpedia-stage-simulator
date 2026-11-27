@@ -7,6 +7,8 @@ import { STAGE_DEVICES } from '../../shared/arkpedia/stage-devices.js';
 import { damaztiBranchBindings } from '../../shared/arkpedia/enemy-damazti-features.js';
 import { BLOOD_THRONE, BLOOD_LORD, BLOOD_LORD_TWO, bloodThroneDefinition } from '../../shared/arkpedia/stage-blood-throne.js';
 import { REVENANT_CORE } from '../../shared/arkpedia/stage-kindling-revenant.js';
+import { HIDDEN_TUNNEL, MINER_BRANCH } from '../../shared/arkpedia/stage-mainline16-devices.js';
+import { MINER_GUERRILLA } from '../../shared/arkpedia/enemy-miner-guerrilla-features.js';
 // The Throne's branch ids are fixed by sktok_bldore, not by the instance.
 const THRONE = bloodThroneDefinition({ level: 1, skillLevel: 1, direction: 'UP', branchId: 'bldore' });
 
@@ -123,6 +125,8 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     .concat(devices.some(d => d.key === BLOOD_THRONE) ? [THRONE.rebornBranchId, THRONE.formTwoBranchId] : [])
     // 14-18: a Core Amplifier's branch (its next phase runs each time one of its cores is broken).
     .concat(devices.filter(d => d.key === REVENANT_CORE).map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId).filter(Boolean))
+    // Chapter 16: the Hidden Tunnels summon Miner Guerrillas along their own action of one shared branch.
+    .concat(devices.some(d => d.key === HIDDEN_TUNNEL) ? [MINER_BRANCH] : [])
     // 12-20: the 'Damazti Cluster' and its decoy summon their fragments through the level's branches.
     .concat(damaztiBranchBindings(level));
   // A level can keep the Twigs payload branches (one Corrupted Seed each) without placing any Twigs (11-20 and its
@@ -164,6 +168,14 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     const spawns = compiled.branches[id]?.spawns;
     if (!(spawns?.length === 1 && spawns[0].enemyKey === enemy && spawns[0].count === 1 && spawns[0].offset === 0))
       throw Error('Unsupported Throne of Blood branch');
+  }
+  const tunnels = devices.filter(d => d.key === HIDDEN_TUNNEL);
+  if (tunnels.length) {
+    const spawns = compiled.branches[MINER_BRANCH]?.spawns ?? [], orders = tunnels.map(d => instances[`${d.key}:${d.row}:${d.col}`]?.actionIndex);
+    // One single Miner Guerrilla per action, and one action per tunnel.
+    if (level.branches[MINER_BRANCH]?.phases?.length !== 1 || spawns.length !== tunnels.length || new Set(orders).size !== orders.length
+      || orders.some(o => !spawns.some(a => a.order === o && a.enemyKey === MINER_GUERRILLA && a.count === 1 && a.offset === 0)))
+      throw Error('Unsupported Hidden Tunnel branch binding');
   }
   for (const d of devices.filter(d=>d.key==='trap_086_larva')) {
     const instance=instances[`${d.key}:${d.row}:${d.col}`], branch=compiled.branches[instance.branchId];
