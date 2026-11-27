@@ -22,6 +22,8 @@ export const DEVICE_RUNTIME_INDEX=Object.freeze([
   {...ordinary('lightOfGlory','lightOfGlory','StageLightOfGlory',()=>import('./arkpedia-stage-light-of-glory.js')),
     create:(m,b,stage)=>new m.StageLightOfGlory(b,devices(stage),stage.geometry,stage)},
   ordinary('charlesLynch','charlesLynch','StageCharlesLynch',()=>import('./arkpedia-stage-charles-lynch.js')),
+  {...ordinary('weakeningNodes','weakeningNode','StageWeakeningNodes',()=>import('./arkpedia-stage-weakening-nodes.js')),
+    selected:stage=>has(stage,'weakeningNode')||stage.waveProgram?.prts?.nodes===true},
   {...ordinary('kindlingRevenant','revenantCore','StageKindlingRevenant',()=>import('./arkpedia-stage-kindling-revenant.js')),
     create:(m,b,stage)=>new m.StageKindlingRevenant(b,devices(stage),stage.geometry,stage)},
   ordinary('magicCircuit','magicCircuit','StageMagicCircuit',()=>import('./arkpedia-stage-magic-circuit.js')),

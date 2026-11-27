@@ -75,8 +75,8 @@ test('the Intrusive Call is reviewed; grab orders compile only where every carri
   assert.deepEqual(spawns.filter(s => s.prtsGrab).map(s => [s.enemyKey, s.offset]),
     [['enemy_10073_mpcar_2', 3], ['enemy_10073_mpcar_2', 25], ['enemy_10080_mpiced', 26], ['enemy_10080_mpiced', 39], ['enemy_10080_mpiced', 57]]);
   assert.equal((await open('15-15')).stage.waveProgram.waves.flatMap(w => w.fragments.flatMap(f => f.spawns)).filter(s => s.prtsGrab).length, 2);
-  // The Weakening Node device and the static forms are not modelled: those stages stay blocked.
-  for (const id of ['15-10', '15-6', 'tr-26']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
+  // The static device forms are not modelled: those stages stay blocked.
+  for (const id of ['15-8', '15-6', 'tr-26']) assert.equal(manifest.stages.find(s => s.id === id).availability, 'blocked', id);
 });
 
 test('15-9: a grabbed enemy is held out of play, carried from the drag tile and deployed at its own position', async () => {
@@ -127,4 +127,90 @@ test('an occupied target makes the deploy fail (the enemy is lost, the hand is a
   assert.ok(perch);
   assert.ok(until(b, () => P.deployed >= 2, 110), 'second ground enemy, then the first flying one');
   assert.equal(P.failed, 1);
+});
+
+// ----- the Weakening Node (15-10, 15-17, 15-18) -----
+import deviceNative from '../data/arkpedia-device-native-source.json' with { type: 'json' };
+import deviceTables from '../data/arkpedia-device-source.json' with { type: 'json' };
+import { weakeningNodeNativeReviewed } from '../shared/arkpedia/stage-weakening-node.js';
+
+test('the Weakening Node is reviewed; another cost, duration or modifier is refused', () => {
+  assert.equal(weakeningNodeNativeReviewed(), true);
+  const t = clone(deviceTables); t.skills.sktok_mpweak_1.levels[0].blackboard[0].value = 5;
+  assert.equal(weakeningNodeNativeReviewed(deviceNative, t), false, 'a cheaper cast');
+  const t2 = clone(deviceTables); t2.skills.sktok_mpweak_1.levels[0].blackboard[1].value = 40;
+  assert.equal(weakeningNodeNativeReviewed(deviceNative, t2), false, 'a longer PRTS cast');
+  const t3 = clone(deviceTables); t3.devices.trap_227_mpweak.talents[0].candidates[0].blackboard[1].value = .2;
+  assert.equal(weakeningNodeNativeReviewed(deviceNative, t3), false, 'a stronger penalty');
+});
+
+test('15-10: the hand deploys a node, the node charges 30 s and calls the hand, which weakens operators for 20 s', async () => {
+  const { b, stage } = await open('15-10'), P = b.stagePrts, N = b.stageWeakeningNodes;
+  assert.deepEqual(stage.waveProgram.prts, { drag: { row: 1, col: 5 }, nodes: true });
+  assert.ok(until(b, () => N.entries.size === 1, 30));
+  const node = [...N.entries.values()][0], placed = b.time;
+  assert.deepEqual([node.row, node.col, node.sp, node.state, node.unit.side], [5, 7, 0, 'charging', 'ally']);
+  assert.deepEqual([node.unit.s.flags.untargetable, node.unit.s.taunt, P.deployed], [true, -1, 1]);
+  assert.equal(b.enemies.some(e => e.alive && (e.def?.key ?? e.defId) === 'enemy_10082_mpweak'), false, 'the node enemy itself never fights');
+  // An operator beside the node.
+  b.getPlayer('arkpedia').dp = 99; b.setViewport?.('fullscreen-workspace');
+  // (No tile around this node takes a card, so she is placed as a preset unit would be.)
+  const myrtle = b._deployOperator('char_151_myrtle', node.row, node.col - 1, 'LEFT', { fromSkill: true, predefined: true });
+  assert.ok(myrtle?.alive);
+  myrtle.base.maxHp = 1e6; myrtle.markDirty(); myrtle.hp = myrtle.s.maxHp;
+  const def = myrtle.s.def, res = myrtle.s.res;
+  assert.ok(until(b, () => node.state === 'ready', placed + 31));
+  assert.ok(Math.abs(b.time - placed - 30) < .1, `${b.time - placed}`);
+  assert.match(N.error(node.id) ?? '', /^$/, 'the player could cast it now');
+  assert.equal(P.job?.activate ?? P.queue[0]?.activate, node, 'the hand is called');
+  assert.ok(until(b, () => node.state === 'active', b.time + 15));
+  const cast = b.time;
+  assert.deepEqual([node.mode, P.activated], ['enemy', 1]);
+  b.step();
+  assert.ok(Math.abs(myrtle.s.def - def * .5) < 1e-6 && Math.abs(myrtle.s.res - res * .5) < 1e-6, `${myrtle.s.def} ${myrtle.s.res}`);
+  assert.match(N.error(node.id), /already active/);
+  assert.ok(until(b, () => node.state === 'charging', cast + 21));
+  assert.ok(Math.abs(b.time - cast - 20) < .1, `${b.time - cast}`);
+  b.step();
+  assert.deepEqual([myrtle.s.def, myrtle.s.res, node.sp < 1], [def, res, true]);
+});
+
+test('the player casts a charged node first: 10 DP, enemies in range lose half their DEF and RES for 30 s, and the hand is angry', async () => {
+  const { b } = await open('15-10'), P = b.stagePrts, N = b.stageWeakeningNodes;
+  assert.ok(until(b, () => N.entries.size === 1, 30));
+  const node = [...N.entries.values()][0];
+  assert.match(N.error(node.id), /charging/);
+  assert.ok(until(b, () => node.state === 'ready', 60));
+  b.getPlayer('arkpedia').dp = 5;
+  assert.match(N.error(node.id), /Not enough DP/);
+  b.getPlayer('arkpedia').dp = 30;
+  N.activate(node.id);
+  assert.deepEqual([b.dp, node.mode, node.state], [20, 'ally', 'active']);
+  const cast = b.time;
+  const foe = b.spawnEnemy('enemy_10073_mpcar', { pos: [node.row, node.col - 1], countInTotal: false });
+  b.addBuff(foe, { key: 'test:hold', persist: true, flags: { noMove: true, disarm: true } });
+  foe.base.maxHp = 1e9; foe.markDirty(); foe.hp = foe.s.maxHp;
+  const def = foe.s.def, res = foe.s.res;
+  b.step(); b.step();
+  assert.ok(Math.abs(foe.s.def - def * .5) < 1e-6 && Math.abs(foe.s.res - res * .5) < 1e-6);
+  // The hand arrives, finds it active, and is angry.
+  assert.ok(until(b, () => P.failed === 1, cast + 15));
+  assert.equal(P.activated, 0);
+  assert.ok(until(b, () => P.job?.phase === 'angry', b.time + 2));
+  assert.ok(until(b, () => node.state === 'charging', cast + 31));
+  assert.ok(Math.abs(b.time - cast - 30) < .1, `${b.time - cast}`);
+  b.step();
+  assert.equal(foe.s.def, def);
+});
+
+test('15-17 and 15-18 run with their nodes: carried in 15-17, placed by the level in 15-18', async () => {
+  const a = await open('15-17');
+  until(a.b, () => a.b.finished, 500);
+  assert.deepEqual([(a.b.errors ?? []).length, a.b.stagePrts.failed, a.b.stageWeakeningNodes.entries.size >= 2], [0, 0, true]);
+  const c = await open('15-18');
+  assert.ok(c.stage.devices.some(d => d.key === 'trap_227_mpweak'));
+  c.b.step();
+  assert.ok(c.b.stageWeakeningNodes.entries.size >= 1);
+  until(c.b, () => c.b.finished, 500);
+  assert.equal((c.b.errors ?? []).length, 0);
 });

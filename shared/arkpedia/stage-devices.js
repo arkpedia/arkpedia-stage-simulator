@@ -22,6 +22,7 @@ import { bloodThroneNativeReviewed } from './stage-blood-throne.js';
 import { lightOfGloryNativeReviewed } from './stage-light-of-glory.js';
 import { charlesLynchNativeReviewed } from './stage-charles-lynch.js';
 import { revenantCoreNativeReviewed, revenantGunNativeReviewed } from './stage-kindling-revenant.js';
+import { weakeningNodeNativeReviewed } from './stage-weakening-node.js';
 import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
@@ -150,6 +151,11 @@ export const STAGE_DEVICES = Object.freeze({
     // (stage-charles-lynch.js; runtime arkpedia-stage-charles-lynch.js).
     keys: Object.freeze(['trap_158_lrsteam']), staticLevelReview: true, activatable: true, charlesLynch: true, maxLevel: 30,
   }),
+  'Weakening Node': Object.freeze({
+    // PRTS 弱化节点(装置) (chapter 15): an ally-side trap PRTS activates against operators, or the player first against
+    // enemies (stage-weakening-node.js; runtime arkpedia-stage-weakening-nodes.js).
+    keys: Object.freeze(['trap_227_mpweak']), staticLevelReview: true, weakeningNode: true, maxLevel: 1,
+  }),
   'Torrent Beam Activator': Object.freeze({
     // PRTS 洪流束激发器 (14-18): the Kindling Revenant's enemy-side beam guns (stage-kindling-revenant.js; runtime
     // arkpedia-stage-kindling-revenant.js).
@@ -206,6 +212,7 @@ export function stageDeviceSpec(device) {
     || spec.bloodThrone && !bloodThroneNativeReviewed()
     || spec.lightOfGlory && !lightOfGloryNativeReviewed()
     || spec.charlesLynch && !charlesLynchNativeReviewed()
+    || spec.weakeningNode && !weakeningNodeNativeReviewed()
     || spec.revenantGun && !revenantGunNativeReviewed()
     || spec.revenantCore && !revenantCoreNativeReviewed()
     || spec.bombLoader && !bombLoaderNativeReviewed()

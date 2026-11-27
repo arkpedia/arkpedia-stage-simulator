@@ -51,6 +51,7 @@ export const DEVICE_FAMILIES = {
   bloodThroneDefinition: { module: 'stage-blood-throne', variants: keySet([''], { ...standard, direction }, ['branchId']) },
   lightOfGloryDefinition: { module: 'stage-light-of-glory', variants: keySet([''], { ...standard, direction }) },
   charlesLynchDefinition: { module: 'stage-charles-lynch', variants: keySet([''], { level: [1], skillLevel: [1], direction }) },
+  weakeningNodeDefinition: { module: 'stage-weakening-node', variants: keySet([''], { level: [1], skillLevel: [1] }) },
   revenantGunDefinition: { module: 'stage-kindling-revenant', variants: keySet([''], { level: [1], skillLevel: [1], direction: ['LEFT'] }) },
   // The skill level is the unlock order; `branchId?` is the core's branch, if it has one.
   revenantCoreDefinition: { module: 'stage-kindling-revenant', variants: keySet([''], { level: [1, 2, 3, 4], skillLevel: [1, 2, 3, 4] }, ['branchId?']) },

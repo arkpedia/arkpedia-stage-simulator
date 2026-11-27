@@ -53,7 +53,8 @@ export function prtsGrabTarget(level, action) {
   const tile = level.mapData?.tiles?.[map[map.length - 1 - p?.row]?.[p?.col]];
   if (!tile || !Number.isInteger(p.row) || !Number.isInteger(p.col)) throw Error('Intrusive Call grab without a target tile');
   const highland = ['HIGHLAND', 1].includes(tile.heightType);
-  if (action.key === PRTS_NODE_ENEMY) throw Error('Unsupported Intrusive Call deploy: the Weakening Node device');
+  // The Weakening Node enemy only configures the level: the hand deploys a Weakening Node device there (stage-weakening-node.js).
+  if (action.key === PRTS_NODE_ENEMY) return { row: p.row, col: p.col, highland, node: true };
   if (highland && PRTS_STATIC_ENEMIES.includes(action.key)) throw Error(`Unsupported Intrusive Call deploy: a static ${action.key}`);
   return { row: p.row, col: p.col, highland };
 }

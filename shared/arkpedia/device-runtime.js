@@ -55,6 +55,7 @@ export const bloodThroneDefinition = single('bloodThroneDefinition');
 export const lightOfGloryDefinition = single('lightOfGloryDefinition');
 export const charlesLynchDefinition = single('charlesLynchDefinition');
 export const revenantGunDefinition = single('revenantGunDefinition');
+export const weakeningNodeDefinition = single('weakeningNodeDefinition');
 export const revenantCoreDefinition = single('revenantCoreDefinition');
 export const magicCircuitDefinition = (instance, id = 'trap_062_magicstart') => compiledDeviceDefinition('magicCircuitDefinition', id, instance);
 export const electricCoilDefinition = instance => compiledDeviceDefinition('electricCoilDefinition', '', instance && {

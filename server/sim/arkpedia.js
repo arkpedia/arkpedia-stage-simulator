@@ -350,6 +350,7 @@ export class StandardBattle extends Battle {
     this.stageLightOfGlory = deviceRuntime.create('lightOfGlory', this, data.stage);
     this.stageCharlesLynch = deviceRuntime.create('charlesLynch', this, data.stage);
     this.stageRevenant = deviceRuntime.create('kindlingRevenant', this, data.stage);
+    this.stageWeakeningNodes = deviceRuntime.create('weakeningNodes', this, data.stage);
     this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
     this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
     this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);
