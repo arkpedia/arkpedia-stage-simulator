@@ -320,6 +320,17 @@ export class StageRenderer {
       polygon(tile.row, tile.col, tile.mode === 1 ? 0xef6d38 : tile.mode === 2 ? 0x69b1c1 : 0x7b9a53,
         tile.mode === 1 ? .34 : .15, tile.mode === 1 ? 2 : 1, .06);
     }
+    // 14-18: the Kindling Revenant's beams (red from the left, gold from the guns) and a firing gun's row.
+    const revenant = this.currentBattle?.stageRevenant;
+    if (revenant?.rows) {
+      const reach = revenant.beamReach;
+      for (const row of revenant.rows) {
+        for (let col = reach.red?.[0]; col <= reach.red?.[1]; col++) polygon(row, col, 0xe5433a, .3, 0, .08);
+        for (let col = reach.gold?.[0]; col <= reach.gold?.[1]; col++) polygon(row, col, 0xf2c24e, .3, 0, .08);
+      }
+      for (const gun of revenant.guns) if (gun.firing && this.currentBattle.time >= gun.firing.at)
+        for (let col = 0; col < gun.col; col++) if (this.currentBattle.grid.inRect(gun.row, col)) polygon(gun.row, col, 0xe5433a, .2, 0, .2);
+    }
     for (const tile of this.currentBattle?.stageEpoch?.tiles.values() ?? [])
       polygon(tile.row, tile.col, 0x9877d5, .22, 1, .04);
     for (const e of this.currentBattle?.stageMagicCircuit?.entries.values() ?? []) {
@@ -483,6 +494,7 @@ export class StageRenderer {
       battle?.inesState?.sentry ? 'Shadow Sentry artwork: temporary marker' : '',
       battle?.projectiles.list.some(p => p.data?.enemyTileTrigger) ? 'Enemy trap artwork: temporary markers' : '',
       battle?.stageEpoch?.tiles.size ? 'Mark of Epoch artwork: temporary tile overlay' : '',
+      battle?.stageRevenant?.rows ? 'Beam artwork: temporary tile overlay' : '',
     ].filter(Boolean).join(' · ');
     if (battle) {
       const live = new Set();

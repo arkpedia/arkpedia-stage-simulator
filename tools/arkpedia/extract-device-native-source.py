@@ -30,11 +30,11 @@ def digest(value):
 prefabs, bundles = {}, []
 for path, group, keys in [
     ('pkgrps/btl_pfb_tokens_0.ab', 'tokens', ['trap_087_allady', 'trap_021_flame', 'trap_025_prison', 'trap_086_larva', 'trap_075_bgarmn', 'trap_076_bgarms', 'trap_077_rmtarmn', 'trap_078_rmtarms', 'trap_050_blizzard', 'trap_002_emp', 'trap_005_sensor', 'trap_008_farm', 'trap_057_wpnsts', 'trap_018_bomb', 'trap_019_electric', 'trap_007_ballis', 'trap_013_blower', 'trap_014_tower', 'trap_009_battery', 'trap_006_antidr', 'trap_043_dupilr', 'trap_044_duruin', 'trap_045_dublst', 'trap_001_crate', 'trap_015_tree', 'trap_016_peon', 'trap_017_wooden_broke', 'trap_012_mine', 'trap_011_ore', 'trap_062_magicstart', 'trap_063_magicturn', 'trap_064_magiccircle', 'trap_024_npcsld']),
-    ('pkgrps/btl_pfb_tokens_1.ab', 'tokens', ['trap_156_dsshell', 'trap_161_lrcage', 'trap_098_mire', 'trap_125_bonore', 'trap_126_outset', 'trap_127_bldore', 'trap_164_lrsiege', 'trap_158_lrsteam']),
+    ('pkgrps/btl_pfb_tokens_1.ab', 'tokens', ['trap_156_dsshell', 'trap_161_lrcage', 'trap_098_mire', 'trap_125_bonore', 'trap_126_outset', 'trap_127_bldore', 'trap_164_lrsiege', 'trap_158_lrsteam', 'trap_159_lrcore', 'trap_160_lrlgun']),
     ('pkgrps/btl_pfb_tokens_3.ab', 'tokens', ['trap_757_skzbox', 'trap_758_skzmbx', 'trap_759_skzwyx', 'trap_760_skztzs']),
-    ('battle/prefabs/[uc]skills.ab', 'skills', ['sktok_allady', 'sktok_allady_2', 'sktok_flame', 'sktok_prison', 'sktok_dsshell', 'sktok_larva', 'sktok_bgarmn_1', 'sktok_bgarms_1', 'sktok_rmtarmn_1', 'sktok_rmtarms_1', 'sktok_blizzard', 'sktok_blizzard_2', 'sktok_emp', 'sktok_sensor', 'sktok_farm', 'sktok_wpnsts_1', 'sktok_wpnsts_2', 'sktok_bomb', 'sktok_electric', 'sktok_ballis', 'sktok_blower', 'sktok_tower', 'sktok_antidr', 'sktok_dupilr', 'sktok_dublst', 'sktok_tree', 'sktok_mine', 'sktok_ore', 'sktok_magiccircle', 'sktok_skzmbx', 'sktok_mire', 'sktok_npcsld', 'sktok_bonore', 'sktok_outset', 'sktok_bldore', 'sktok_lrsteam']),
+    ('battle/prefabs/[uc]skills.ab', 'skills', ['sktok_allady', 'sktok_allady_2', 'sktok_flame', 'sktok_prison', 'sktok_dsshell', 'sktok_larva', 'sktok_bgarmn_1', 'sktok_bgarms_1', 'sktok_rmtarmn_1', 'sktok_rmtarms_1', 'sktok_blizzard', 'sktok_blizzard_2', 'sktok_emp', 'sktok_sensor', 'sktok_farm', 'sktok_wpnsts_1', 'sktok_wpnsts_2', 'sktok_bomb', 'sktok_electric', 'sktok_ballis', 'sktok_blower', 'sktok_tower', 'sktok_antidr', 'sktok_dupilr', 'sktok_dublst', 'sktok_tree', 'sktok_mine', 'sktok_ore', 'sktok_magiccircle', 'sktok_skzmbx', 'sktok_mire', 'sktok_npcsld', 'sktok_bonore', 'sktok_outset', 'sktok_bldore', 'sktok_lrsteam', 'sktok_lrcore']),
     ('battle/prefabs/[uc]tiles.ab', 'tiles', ['tile_mire', 'tile_reed', 'tile_reedf', 'tile_reedw']),
-    ('battle/prefabs/[uc]projectiles.ab', 'projectiles', ['projectile_trap_allady', 'projectile_flame', 'projectile_chr_electric_shock', 'projectile_chr_electric_shock_effect', 'projectile_ballis', 'projectile_chr_tower_1', 'projectile_chr_tower_2', 'projectile_trap_bonore', 'projectile_enemy_blord_s[fog]', 'projectile_enemy_blord_s[stun]', 'projectile_trap_lrsteam']),
+    ('battle/prefabs/[uc]projectiles.ab', 'projectiles', ['projectile_trap_allady', 'projectile_flame', 'projectile_chr_electric_shock', 'projectile_chr_electric_shock_effect', 'projectile_ballis', 'projectile_chr_tower_1', 'projectile_chr_tower_2', 'projectile_trap_bonore', 'projectile_enemy_blord_s[fog]', 'projectile_enemy_blord_s[stun]', 'projectile_trap_lrsteam', 'projectile_enemy_lrdead_p1', 'projectile_enemy_lrdead_p1_2']),
 ]:
     raw = (ROOT / '.cache/arkpedia/cn-native-source/bundles' / path).read_bytes()
     row = rows[path]
@@ -49,7 +49,7 @@ for path, group, keys in [
             for ref in data['m_Component']:
                 obj = by[ref['component']['m_PathID']]
                 value = obj.read_typetree()
-                if obj.type.name == 'MonoBehaviour' or (group == 'projectiles' or key in ('trap_012_mine', 'sktok_mine', 'trap_086_larva', 'sktok_larva', 'trap_125_bonore', 'sktok_bldore', 'trap_126_outset', 'trap_164_lrsiege', 'sktok_lrsteam')) and obj.type.name in ('BoxCollider2D', 'CircleCollider2D'):
+                if obj.type.name == 'MonoBehaviour' or (group == 'projectiles' or key in ('trap_012_mine', 'sktok_mine', 'trap_086_larva', 'sktok_larva', 'trap_125_bonore', 'sktok_bldore', 'trap_126_outset', 'trap_164_lrsiege', 'sktok_lrsteam', 'trap_159_lrcore')) and obj.type.name in ('BoxCollider2D', 'CircleCollider2D'):
                     value = exact(value)
                     components.append({'pathId': str(obj.path_id), 'object': data['m_Name'], 'data': value, 'sha256': digest(value)})
                 elif obj.type.name == 'Transform':

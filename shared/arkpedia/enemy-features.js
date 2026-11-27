@@ -26,12 +26,14 @@ import { BLOOD_COLLECTOR_FEATURES } from './enemy-blood-collector-features.js';
 import { BONEGUARD_FEATURES, isBoneguard, boneguardNative, boneguardParams } from './enemy-boneguard-features.js';
 import { PILOT_CHARGE, PILOT_REBORN, isPilot } from './enemy-pilot-features.js';
 import { BLOOD_LORD_FEATURES, isBloodLord, bloodLordNative, isBloodLordTwo, bloodLordTwoNative } from './enemy-blood-lord-features.js';
+import { REVENANT_FEATURES, REVENANT_SHARED_FEATURES, isRevenant, isRevenantSecond, revenantSecondNative } from './enemy-kindling-revenant-features.js';
+import { REVENANT_FIRST, REVENANT_SECOND } from './stage-kindling-revenant-beams.js';
 import {FROSTNOVA_FEATURES,isFrostNova,frostNovaNative} from './enemy-frostnova-features.js';
 import {PHANTOM_MIDBOSS_FEATURES,isLostColossus,lostColossusNative,LOST_COLOSSUS_STUN_ATTACK,LOST_COLOSSUS_EXPLAINS} from './enemy-phantom-midboss-features.js';
 /** Bosses whose own contract implements their forms and revive: the shared form/reborn keys defer to it. */
-const FORM_BOSSES=[[isDamaztiCluster,damaztiNative],[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative],[isSteamKnightS,steamKnightSNative],[isBloodLord,bloodLordNative]];
+const FORM_BOSSES=[[isRevenantSecond,revenantSecondNative],[isDamaztiCluster,damaztiNative],[isEmperorsBlade,emperorsBladeNative],[isAndoain,andoainNative],[isTheLeader,theLeaderNative],[isMandragora,mandragoraNative],[isAwaken,awakenBossNative],[isMephisto,mephistoNative],[isBigUglyThing,bigUglyThingNative],[isManfred,manfredNative],[isTheresa,theresaNative],[isPatriot,patriotNative],[isFrostNova,frostNovaNative],[isWintersScar,wintersScarNative],[isBlackSnake,blackSnakeNative],[isSteamKnight,steamKnightNative],[isSteamKnightS,steamKnightSNative],[isBloodLord,bloodLordNative]];
 const formBoss=r=>FORM_BOSSES.find(([is])=>is(r))?.[1]??null;
-const FORM_BOSS_ROOTS=['enemy_1542_wdslm','enemy_1542_wdslm_2','enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt','enemy_1547_blord'];
+const FORM_BOSS_ROOTS=[REVENANT_SECOND,'enemy_1542_wdslm','enemy_1542_wdslm_2','enemy_1520_empgrd','enemy_1527_martyr','enemy_1536_ncrmcr','enemy_1523_mandra','enemy_1531_bbrain','enemy_1514_smephi','enemy_1512_mcmstr','enemy_1528_manfri','enemy_1554_lrtsia','enemy_1506_patrt','enemy_1505_frstar','enemy_1533_stmkgt','enemy_1547_blord'];
 import {isIcefieldArts,icefieldArtsNative,icefieldBlastParams,ICEFIELD_BLAST_DESCRIPTION} from './enemy-icefield-arts-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
@@ -497,7 +499,27 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_10082_mpweak: 'native:prtsProp', enemy_10082_mpweak_2: 'native:prtsProp',
 });
 
-export const ENEMY_FEATURES = Object.freeze({
+/** A family whose records reuse feature keys other families own: for the family's records its entry answers; every
+ * other record keeps the existing entry (a key only the family uses is added as it is). */
+function withFamily(base, is, shared, rootKeys) {
+  const out = { ...base };
+  for (const [key, f] of Object.entries(shared)) {
+    const g = base[key];
+    if (!g) { out[key] = f; continue; }
+    if (g.unitProperties || g.trait || g.stageOverrides || g.stageInjectedParameters) throw Error(`Cannot share enemy feature: ${key}`);
+    const resolve = (ability, r) => typeof ability === 'function' ? ability(r) : ability ?? null;
+    out[key] = { ...g,
+      matchesRecord: r => is(r) ? f.matchesRecord(r) : g.matchesRecord ? g.matchesRecord(r) : true,
+      covers: (r, n) => is(r) ? f.covers(r, n) : g.covers(r, n),
+      ability: r => is(r) ? resolve(f.ability, r) : resolve(g.ability, r),
+      ...(g.nativeClaim ? { nativeClaim: (p, n) => rootKeys.some(k => n?.[k]) ? {} : g.nativeClaim(p, n) } : {}),
+      ...(g.explains ? { explains: (text, r) => !is(r) && (typeof g.explains === 'function' ? g.explains(text, r) : g.explains.test(text)) } : {}),
+      ...(g.dependsOn ? { dependsOn: r => is(r) ? [] : g.dependsOn(r) } : {}),
+      note: `${g.note ?? ''} / ${f.note}` };
+  }
+  return out;
+}
+export const ENEMY_FEATURES = Object.freeze(withFamily({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
@@ -1530,7 +1552,9 @@ export const ENEMY_FEATURES = Object.freeze({
     stageMultipliers: { 'EpDamage.attack@ep_damage_ratio': value => Number.isFinite(value) && value >= 0, 'EpDamage.ep_damage_ratio': value => Number.isFinite(value) && value >= 0 },
     note: 'splash erosion is attached by the handbook-line feature; the Burn slugs own their shot' },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
-});
+  // Kindling Revenant (14-18): both forms; talent:Passive, skill:Laser and skill:LaserS1 are shared keys (below).
+  ...REVENANT_FEATURES,
+}, isRevenant, REVENANT_SHARED_FEATURES, [REVENANT_FIRST, REVENANT_SECOND]));
 
 /** Ability lines that carry a number: matched by pattern, then checked against the record. */
 export const ENEMY_FEATURE_PATTERNS = Object.freeze([

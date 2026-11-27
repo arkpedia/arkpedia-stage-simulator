@@ -47,6 +47,7 @@ import { bloodAltarDefinition } from '../../shared/arkpedia/stage-blood-altar.js
 import { bloodThroneDefinition } from '../../shared/arkpedia/stage-blood-throne.js';
 import { lightOfGloryDefinition } from '../../shared/arkpedia/stage-light-of-glory.js';
 import { charlesLynchDefinition } from '../../shared/arkpedia/stage-charles-lynch.js';
+import { revenantCoreDefinition, revenantGunDefinition } from '../../shared/arkpedia/stage-kindling-revenant.js';
 import { bombLoaderDefinition } from '../../shared/arkpedia/stage-bomb-loader.js';
 import { electricCoilDefinition } from '../../shared/arkpedia/stage-electric-coils.js';
 import { stunTokenDefinition } from '../../shared/arkpedia/stage-supply-tokens.js';
@@ -133,7 +134,10 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
   // synthesize the same chain so the stage can still be played; the original path is preferred.
   const syntheticRoutes = [];
   const usedRoutes = new Set(geometry.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
-  for (const branch of Object.values(waveProgram?.branches ?? {})) for (const spawn of branch.spawns) usedRoutes.add(spawn.routeIndex);
+  // Every phase of a branch: `spawns` is only its first phase. A random-phase branch (the Bloodcalling Altar, the
+  // Throne of Blood) and a sequence branch (the Core Amplifiers) run the others too, on their own routes.
+  const branchSpawns = branch => [...branch.spawns, ...(branch.randomPhases ?? []).flat(), ...(branch.sequencePhases ?? []).flat()];
+  for (const branch of Object.values(waveProgram?.branches ?? {})) for (const spawn of branchSpawns(branch)) usedRoutes.add(spawn.routeIndex);
   for (const [index, route] of geometry.routes.entries()) {
     if (!route || paths[index] || route.placeholder || !usedRoutes.has(index)) continue;
     paths[index] = syntheticRoutePath(route);
@@ -187,7 +191,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
     devices: devices.map(d => {
       const spec = stageDeviceSpec(d);
       // Excrescent Carapaces carry their original instance too (StageCarapaces reads d.instance).
-      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader && !spec?.bloodThrone && !spec?.lightOfGlory && !spec?.charlesLynch) return d;
+      if (!spec?.carapace && !spec?.twigs && !spec?.powerArmor && !spec?.reward && !spec?.magicCircuit && !spec?.manual && !spec?.capturable && !spec?.electricCoil && !spec?.turret && !spec?.flowGenerator && !spec?.gramophone && !spec?.scenery && !spec?.demolition && !spec?.mine && !spec?.artillery && !spec?.flame && !spec?.guard && !spec?.shieldguard && !spec?.bloodAltar && !spec?.bombLoader && !spec?.bloodThrone && !spec?.lightOfGlory && !spec?.charlesLynch && !spec?.revenantGun && !spec?.revenantCore) return d;
       const instance = deviceInstances[spec.guard ? `${d.key}:${d.alias}` : `${d.key}:${d.row}:${d.col}`];
       if (spec.carapace) carapaceDefinition(instance);
       else if (spec.twigs) twigsDefinition(instance);
@@ -206,6 +210,8 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
       else if (spec.bloodThrone) bloodThroneDefinition(instance);
       else if (spec.lightOfGlory) lightOfGloryDefinition(instance);
       else if (spec.charlesLynch) charlesLynchDefinition(instance);
+      else if (spec.revenantGun) revenantGunDefinition(instance);
+      else if (spec.revenantCore) revenantCoreDefinition(instance);
       else if (spec.gramophone) gramophoneDefinition(instance);
       else if (spec.flowGenerator) flowGeneratorDefinition(instance);
       else if (spec.turret) turretDefinition(instance);
@@ -286,7 +292,7 @@ export function compileStage({ source, geometry: inputGeometry, playback = {}, m
   // still contain every candidate a different battle seed can select.
   for (const wave of waveProgram?.waves ?? []) for (const fragment of wave.fragments) for (const spawn of fragment.spawns)
     addEnemy(stageEnemyKey(compiledRules, spawn.enemyKey));
-  for (const branch of Object.values(waveProgram?.branches ?? {})) for (const spawn of branch.spawns)
+  for (const branch of Object.values(waveProgram?.branches ?? {})) for (const spawn of branchSpawns(branch))
     addEnemy(stageEnemyKey(compiledRules, spawn.enemyKey));
   for (const token of tokens) for (const child of STAGE_TOKEN_UNITS[token.unitId]?.spawns ?? []) addEnemy(child);
   for (const child of stageEnvironmentEnemyDependencies(environment)) addEnemy(child);

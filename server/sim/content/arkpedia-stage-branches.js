@@ -55,6 +55,17 @@ export class StageBranchScheduler {
     for (const alias of branch.phases[i]) b.activateStagePredefined(alias);
     return true;
   }
+  /** MoveNextLevelBranch on a spawn branch (the Core Amplifiers' branch): start its next phase's spawns. Past the last
+   * phase nothing happens. */
+  advanceSpawns(key) {
+    const branch = this.branches[key];
+    if (!Array.isArray(branch?.sequencePhases)) throw Error(`Unknown sequence branch: ${key}`);
+    this.phaseIndex ??= {};
+    const i = this.phaseIndex[key] ?? 0;
+    if (this.battle.finished || i >= branch.sequencePhases.length) return false;
+    this.phaseIndex[key] = i + 1;
+    return this._startSpawns(branch.sequencePhases[i]);
+  }
   /** PickRandomBranchPhase with _notRepeatInOneLoop: a random phase not yet run in this loop (seeded battle RNG). A
    * single-phase branch is ordinary start(). */
   startRandomPhase(key, { blockGameFinish = false } = {}) {

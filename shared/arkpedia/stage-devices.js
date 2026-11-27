@@ -21,6 +21,7 @@ import { bloodAltarNativeReviewed } from './stage-blood-altar.js';
 import { bloodThroneNativeReviewed } from './stage-blood-throne.js';
 import { lightOfGloryNativeReviewed } from './stage-light-of-glory.js';
 import { charlesLynchNativeReviewed } from './stage-charles-lynch.js';
+import { revenantCoreNativeReviewed, revenantGunNativeReviewed } from './stage-kindling-revenant.js';
 import { bombLoaderNativeReviewed } from './stage-bomb-loader.js';
 
 // Reviewed stage devices. The source data only carries position and name; the
@@ -149,6 +150,17 @@ export const STAGE_DEVICES = Object.freeze({
     // (stage-charles-lynch.js; runtime arkpedia-stage-charles-lynch.js).
     keys: Object.freeze(['trap_158_lrsteam']), staticLevelReview: true, activatable: true, charlesLynch: true, maxLevel: 30,
   }),
+  'Torrent Beam Activator': Object.freeze({
+    // PRTS 洪流束激发器 (14-18): the Kindling Revenant's enemy-side beam guns (stage-kindling-revenant.js; runtime
+    // arkpedia-stage-kindling-revenant.js).
+    keys: Object.freeze(['trap_160_lrlgun']), staticLevelReview: true, revenantGun: true, maxLevel: 1,
+  }),
+  'Core Amplifier': Object.freeze({
+    // PRTS 核心增幅器 (14-18): the cores the first form dwells in; in the second form their manual skill pushes the gold
+    // beams. Its level is its skill level; `branch_id` names the branch whose next phase runs when it is broken.
+    keys: Object.freeze(['trap_159_lrcore']), staticLevelReview: true, revenantCore: true, maxLevel: 4,
+    skillLevels: Object.freeze([1, 2, 3, 4]), spawns: Object.freeze(['enemy_1553_lrdead']),
+  }),
   'Bomb Loading Point': Object.freeze({
     // PRTS 炸弹载荷点 (chapter 13): spend 10 DP to send an Anti-Witchcraft bomb along its own branch route, one at a time
     // (stage-bomb-loader.js; runtime arkpedia-stage-bomb-loaders.js).
@@ -194,6 +206,8 @@ export function stageDeviceSpec(device) {
     || spec.bloodThrone && !bloodThroneNativeReviewed()
     || spec.lightOfGlory && !lightOfGloryNativeReviewed()
     || spec.charlesLynch && !charlesLynchNativeReviewed()
+    || spec.revenantGun && !revenantGunNativeReviewed()
+    || spec.revenantCore && !revenantCoreNativeReviewed()
     || spec.bombLoader && !bombLoaderNativeReviewed()
     || spec.electricCoil && !electricCoilNativeReviewed()) return null;
   return spec;

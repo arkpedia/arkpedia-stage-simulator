@@ -89,6 +89,8 @@ SCOPED_OBJECTS = {
     'enemy_1368_spilot': ['enemy_1368_spilot','Default','ChargeOre','DebuffAura','Attack','Charge','Aura','Reborn'],
     'enemy_1547_blord': ['enemy_1547_blord','Default','Attack','Selector','BloodFog','BloodFountain','BldoreMark'],
     'enemy_1547_blord_2': ['enemy_1547_blord_2','Default','Combat','Attack','BloodFog2','BloodFountain1','BloodFountain2','BloodFountain3','FountainDamage','FountainAlarm','FountainMark','FountainHint','FountainKillSelector','HpAuraCtrl','HpAura','Resistance','HpRecover','KillBmbcar'],
+    'enemy_1553_lrdead': ['enemy_1553_lrdead','Default','S1','Attack','Trigger','Laser','LaserS1','LaserHalfHp','Suicide','Selector','SelectP1','SelectCore','Immunes','Fx'],
+    'enemy_1553_lrdead_2': ['enemy_1553_lrdead_2','Default','S1','S2','S3','Empty','Trigger','LaserDefault','LaserS1','LaserS2','LaserS3','Passive','CtrlGuns','Selector','SelectCore','SelectGun'],
     'enemy_1369_bmbcar1': ['enemy_1369_bmbcar1','Default','Attack','Selector','Explosion','Summon','SpCtrl','MoveBackwards','Passive'],
     'enemy_1370_bmbcar2': ['enemy_1370_bmbcar2','Default','Attack','Passive'],
     'enemy_1109_uabone': ['enemy_1109_uabone','Default','Attack','Combat','Trigger'],
@@ -685,6 +687,8 @@ for bundle in sorted(wanted):
             'enemy_1368_spilot': {'ChargeOre','DebuffAura','Attack','Charge','Aura','Reborn','Selector'},
             'enemy_1547_blord': {'Attack','Selector','BloodFog','BloodFountain','BldoreMark'},
             'enemy_1547_blord_2': {'Combat','BloodFog2','BloodFountain1','BloodFountain2','BloodFountain3','FountainDamage','FountainAlarm','FountainMark','FountainHint','FountainKillSelector','HpAuraCtrl','HpAura','Resistance','HpRecover','KillBmbcar','Selector'},
+            'enemy_1553_lrdead': {'Attack','Trigger','Laser','LaserS1','LaserHalfHp','Suicide','Selector','SelectP1','SelectCore','Immunes','Fx'},
+            'enemy_1553_lrdead_2': {'Empty','Trigger','LaserDefault','LaserS1','LaserS2','LaserS3','Passive','CtrlGuns','Selector','SelectCore','SelectGun'},
             'enemy_1369_bmbcar1': {'Attack','Selector','Explosion','Summon','SpCtrl','MoveBackwards','Passive'},
             'enemy_1370_bmbcar2': {'Attack','Passive'},
             'enemy_1109_uabone': {'Attack','Combat','Trigger'},
@@ -924,6 +928,7 @@ for bundle in sorted(wanted):
         # Geometry scopes complement MonoBehaviour sibling scopes. A family's
         # contact contract can retain its original colliders without a new branch.
         geometry_names = {
+            'enemy_1553_lrdead': {'enemy_1553_lrdead'},
             'enemy_1128_spmage': {'Trigger'},
             'enemy_1128_spmage_2': {'Trigger'},
 

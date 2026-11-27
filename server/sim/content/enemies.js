@@ -556,6 +556,7 @@ export const featureAbilities = Object.freeze({
     spawn(b, e) {
       b.on('damaged', c => {
         if (!e.alive || c.target === e || c.target?.side !== 'enemy' || c.target.isFlying || !(c.hpLoss > 0)) return;
+        if (c.target.s.flags.isolated) return; // ALLY_TARGET_FREE: its own side cannot select it (the Core Amplifiers)
         if (Math.hypot(c.target.x - e.x, c.target.y - e.y) > range) return;
         b.dealDamage(e, e, { amount: c.hpLoss * scale, type: 'true', sourceless: true, tags: ['share'] });
       });

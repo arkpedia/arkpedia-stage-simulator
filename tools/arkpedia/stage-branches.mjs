@@ -6,6 +6,7 @@ import { validateStaticDeviceInstances } from './stage-device-instances.mjs';
 import { STAGE_DEVICES } from '../../shared/arkpedia/stage-devices.js';
 import { damaztiBranchBindings } from '../../shared/arkpedia/enemy-damazti-features.js';
 import { BLOOD_THRONE, BLOOD_LORD, BLOOD_LORD_TWO, bloodThroneDefinition } from '../../shared/arkpedia/stage-blood-throne.js';
+import { REVENANT_CORE } from '../../shared/arkpedia/stage-kindling-revenant.js';
 // The Throne's branch ids are fixed by sktok_bldore, not by the instance.
 const THRONE = bloodThroneDefinition({ level: 1, skillLevel: 1, direction: 'UP', branchId: 'bldore' });
 
@@ -15,16 +16,20 @@ const delay = n => Number.isFinite(n) && n >= 0;
 /** Explicitly bound, single-phase spawn branches. Never flatten a trigger into
  * the main wave or silently discard an unknown branch/controller. */
 /** `randomKeys`: branches run by PickRandomBranchPhase (the Bloodcalling Altar); only they may have several phases. */
-export function compileStageBranches(level, input, conditional, bindings, randomKeys = new Set()) {
+/** `sequenceKeys`: branches run one phase at a time by MoveNextLevelBranch (the Core Amplifiers); they keep every phase. */
+export function compileStageBranches(level, input, conditional, bindings, randomKeys = new Set(), sequenceKeys = new Set()) {
   const geometry = structuredClone(input), branches = {}, remaining = conditional.filter(e => e.source === 'branch' || e.branch);
   const names = Object.keys(level.branches ?? {}), bound = new Set(bindings);
   if (bound.has(undefined) || bound.has('') || names.some(key => !bound.has(key)) || [...bound].some(key => !names.includes(key)))
     throw Error('Missing or unsupported stage branch binding');
   for (const key of names) {
     const branch = level.branches[key];
-    if (!(branch.phases?.length === 1 || randomKeys.has(key) && branch.phases?.length > 1) || Object.keys(branch).some(k => k !== 'phases'))
+    if (!(branch.phases?.length === 1 || (randomKeys.has(key) || sequenceKeys.has(key)) && branch.phases?.length > 1) || Object.keys(branch).some(k => k !== 'phases'))
       throw Error(`Unsupported branch phase selection: ${key}`);
     const phaseSpawns = [];
+    // The viewer lists a sequence branch's phases one after another: each phase's times follow the previous phase's
+    // last spawn. The compiled offsets stay relative to their own phase.
+    let viewerBase = 0;
     for (const [phaseIndex, phase] of branch.phases.entries()) {
     const spawns = [];
     if (!delay(phase.preDelay) || !Array.isArray(phase.actions)) throw Error('Invalid branch phase');
@@ -66,7 +71,7 @@ export function compileStageBranches(level, input, conditional, bindings, random
       const offset = phase.preDelay + action.preDelay;
       const i = remaining.findIndex(e => e.source === 'branch' && e.branch === key && e.phase === phaseIndex
         && !e.condition && e.enemy_id === action.key && e.count === action.count && e.route === action.routeIndex
-        && near(e.time, offset) && (action.count === 1 || near(e.interval ?? 0, action.interval)));
+        && near(e.time, offset + (sequenceKeys.has(key) ? viewerBase : 0)) && (action.count === 1 || near(e.interval ?? 0, action.interval)));
       if (i < 0) throw Error('Original/viewer branch spawn mismatch');
       remaining.splice(i, 1);
       let routeIndex = geometry.routes.findIndex(r => JSON.stringify(r) === JSON.stringify(route));
@@ -74,8 +79,10 @@ export function compileStageBranches(level, input, conditional, bindings, random
       spawns.push({ enemyKey: action.key, routeIndex, count: action.count, offset, interval: action.interval, order });
     }
     phaseSpawns.push(spawns);
+    viewerBase += Math.max(0, ...spawns.map(a => a.offset + (a.count - 1) * a.interval));
     }
-    branches[key] = { spawns: phaseSpawns[0], ...(randomKeys.has(key) ? { randomPhases: phaseSpawns } : {}) };
+    branches[key] = { spawns: phaseSpawns[0], ...(randomKeys.has(key) ? { randomPhases: phaseSpawns } : {}),
+      ...(sequenceKeys.has(key) ? { sequencePhases: phaseSpawns } : {}) };
   }
   if (remaining.length) throw Error('Unmatched viewer branch spawn');
   return { geometry, branches };
@@ -114,6 +121,8 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     .concat(devices.filter(d => d.key === 'trap_125_bonore').map(d => instances[`${d.key}:${d.row}:${d.col}`]?.pilotBranchId).filter(Boolean))
     // The Throne of Blood's own branches (sktok_bldore: blordreborn.branch_id, killbmbcar.branch_id): Duq'arael's two forms.
     .concat(devices.some(d => d.key === BLOOD_THRONE) ? [THRONE.rebornBranchId, THRONE.formTwoBranchId] : [])
+    // 14-18: a Core Amplifier's branch (its next phase runs each time one of its cores is broken).
+    .concat(devices.filter(d => d.key === REVENANT_CORE).map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId).filter(Boolean))
     // 12-20: the 'Damazti Cluster' and its decoy summon their fragments through the level's branches.
     .concat(damaztiBranchBindings(level));
   // A level can keep the Twigs payload branches (one Corrupted Seed each) without placing any Twigs (11-20 and its
@@ -133,7 +142,13 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     return i?.branchMissing?[]:[i?.branchId,...(i?.shadowedBranchIds??[])];}).filter(Boolean));
   // The Throne's Blood Amber branch (SummonEnemiesFollowBranchRoute; a random phase where it has several).
   for (const d of devices.filter(d => d.key === BLOOD_THRONE)) randomKeys.add(instances[`${d.key}:${d.row}:${d.col}`]?.branchId);
-  const compiled=compileStageBranches(level, geometry, conditional, bindings, randomKeys);
+  // Core Amplifier branches: one phase for each core that names the branch, in unlock order.
+  const sequenceKeys = new Set(devices.filter(d => d.key === REVENANT_CORE).map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId).filter(Boolean));
+  for (const key of sequenceKeys) {
+    const cores = devices.filter(d => d.key === REVENANT_CORE && instances[`${d.key}:${d.row}:${d.col}`]?.branchId === key);
+    if (randomKeys.has(key) || level.branches[key]?.phases?.length !== cores.length) throw Error('Unsupported Core Amplifier branch phases');
+  }
+  const compiled=compileStageBranches(level, geometry, conditional, [...new Set(bindings)], randomKeys, sequenceKeys);
   for(const d of [...devices.filter(d=>POWER_ARMOR_DEVICE_KEYS.includes(d.key)), ...inactiveDevices]){
     const key=`${d.key}:${d.row}:${d.col}`,instance=instances[key]??inactiveInstances[key],branch=compiled.branches[instance.branchId];
     const action=branch?.spawns.find(a=>a.order===instance.actionIndex),route=compiled.geometry.routes[action?.routeIndex];
