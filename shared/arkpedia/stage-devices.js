@@ -163,6 +163,9 @@ export const STAGE_DEVICES = Object.freeze({
     prtsStatic: 'enemy_10074_mpcata', spawns: Object.freeze(['enemy_10074_mpcata']), maxLevel: 1, skillIndices: Object.freeze([-1]) }),
   'Hot Drink Machine': Object.freeze({ keys: Object.freeze(['trap_230_mpcatab']), staticLevelReview: true, activatable: true,
     prtsStatic: 'enemy_10074_mpcata_2', spawns: Object.freeze(['enemy_10074_mpcata_2']), maxLevel: 1, skillIndices: Object.freeze([-1]) }),
+  // PRTS 活性态萨卡兹术师结晶(装置) (H15-3): seven level-placed crystals, switched on at 0 s like the drink machines.
+  'Active Sarkaz Caster Crystal': Object.freeze({ keys: Object.freeze(['trap_234_mpmageb']), staticLevelReview: true, activatable: true,
+    prtsStatic: 'enemy_10079_mpmage_2', spawns: Object.freeze(['enemy_10079_mpmage_2']), maxLevel: 1, skillIndices: Object.freeze([-1]) }),
   'Torrent Beam Activator': Object.freeze({
     // PRTS 洪流束激发器 (14-18): the Kindling Revenant's enemy-side beam guns (stage-kindling-revenant.js; runtime
     // arkpedia-stage-kindling-revenant.js).

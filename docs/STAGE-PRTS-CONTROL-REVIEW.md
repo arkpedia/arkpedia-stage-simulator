@@ -183,6 +183,12 @@ The hand now flies at move speed x 0.5 in every stage. This also supports the ea
 - **15-8:** the Sarkaz Caster Crystal has 150% DEF on top of the base (1,650); its fixed form 130% on top (1,430). The device rule also carries a stray `enemy=trap_233_mpmage`; it is accepted as a note naming one of the rule's own targets. As written, the rule covers all six fixed devices; 15-8 fixes only crystals.
 - **Checked:** the Distributor's record (5 s and 3 s; 4 s and 3 s in six-star) and more summoned enemies in six-star 15-6; six-star 15-7 and 15-8 run to the end with 1 life point and no errors; the crystal's two DEF values.
 
+## H15-3
+
+- **Seven Active Sarkaz Caster Crystals** (`trap_234_mpmageb`) are placed by the level and switched on at 0 s, like the drink machines (device family `Active Sarkaz Caster Crystal`).
+- **A misspelt rule.** The level gives enemies 130% ATK and DEF and 160% HP, and writes the matching device rule as `char_attribute_mulkkk`. No rule of that name exists, so it is read as having no effect [inference]: the crystals keep 10,000 HP, 600 ATK and 1,200 DEF. H15-1 spells the same rule correctly and its crystal has 16,000 HP. PRTS says only that stage bonuses apply to the device "unless stated otherwise".
+- **Checked:** the seven tiles (all high ground), the crystal's numbers, 32 counted enemies as PRTS lists, cleared without errors.
+
 ## Not checked
 
 - In game.
@@ -193,6 +199,7 @@ The hand now flies at move speed x 0.5 in every stage. This also supports the ea
   - **A carried enemy cannot be hit.**
   - **The idle system:** that it does nothing without its actor and tile.
 - **More inferences (the node):** after Click the hand flies back to where it appeared; a hand that is called while busy finishes its current order first; the hand's cast does not touch flying ally units (the game data says ground only) or devices.
+- **H15-3's crystals:** 10,000 or 16,000 HP depends on whether the game honours the misspelt rule.
 - **More inferences (the static forms):** "basically the same abilities" is read as the enemy's own behaviour unchanged; statuses a device would resist still apply.
 - **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed random spawn; the boss stages' follow order (15-20, H15-4).
 - **Art:** the hand is drawn with its model; its grab animations are not played.

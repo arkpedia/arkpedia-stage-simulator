@@ -431,3 +431,15 @@ test('a fixed form on high ground stops a second drop on its tile', async () => 
   assert.equal(P.occupied([m.y, m.x]), true);
   assert.equal(P.occupied([m.y, m.x + 1]), false);
 });
+
+test('H15-3: seven level-placed Active Sarkaz Caster Crystals; its misspelt device rule changes nothing', async () => {
+  const { b, stage } = await open('h15-3');
+  assert.equal(stage.rules.characterAttributes, undefined);
+  assert.deepEqual(stage.rules.enemies, { atk: 1.3, def: 1.3, maxHp: 1.6 });
+  b.step();
+  assert.deepEqual(placed(b), ['3,9', '4,4', '4,6', '4,8', '5,10', '5,7', '6,9']);
+  const c = b.enemies.find(e => e.mem.prtsStatic);
+  assert.deepEqual([c.def.key, c.mem.prtsStatic, c.s.maxHp, c.s.atk, c.s.def, b.grid.tile(c.y, c.x).height], ['enemy_10079_mpmage_2', 'trap_234_mpmageb', 10000, 600, 1200, 'HIGH']);
+  until(b, () => b.finished, 600);
+  assert.deepEqual([b.reason, b.total, (b.errors ?? []).length, b.stagePrts.failed], ['cleared', 32, 0, 0]);
+});

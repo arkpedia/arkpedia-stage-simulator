@@ -84,6 +84,16 @@ export function compileStageRules(source, receipt) {
     // group decisions so the wave compiler can explicitly exclude those groups.
     if (!active && rune.key !== 'level_hidden_group_enable') continue;
     rune = withoutSixStarAlias(rune);
+    // H15-3 misspells its device rule (`char_attribute_mulkkk`, x1.6 HP, x1.3 ATK and DEF for the six fixed devices).
+    // No rule of that name exists, so it is read as having no effect [inference; PRTS does not say]. Only this exact
+    // rule is accepted.
+    if (rune.key === 'char_attribute_mulkkk') {
+      const bb = Object.fromEntries((rune.blackboard ?? []).map(x => [x.key, x.valueStr ?? x.value]));
+      if (rune.blackboard?.length !== 4 || bb.max_hp !== 1.6 || bb.atk !== 1.3 || bb.def !== 1.3
+        || bb.char !== 'trap_229_mpcata|trap_230_mpcatab|trap_231_mpgrou|trap_232_mpgroub|trap_233_mpmage|trap_234_mpmageb'
+        || rune.professionMask !== 1023 || !['ALL', 3].includes(rune.buildableMask)) throw Error('Unsupported stage rune: char_attribute_mulkkk');
+      continue;
+    }
     if (rune.key === 'map_tile_blackb_add') {
       const cells = compileReedIgnitionRule(rune);
       if (cells.some(cell => reedIgnitions.some(other => cell.row === other.row && cell.col === other.col)))
