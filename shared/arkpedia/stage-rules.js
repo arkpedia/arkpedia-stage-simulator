@@ -13,6 +13,18 @@ export const stageEnemyKey = (rules, id) => rules?.enemyReplacements?.[id] ?? id
 
 /** Only reviewed, per-stage rule receipts can enable a variant. Unknown rune
  * keys, targeting masks and parameters fail before compilation writes files. */
+// A six-star rule may carry `rune_alias`: a name by which the level's optional conditions (`optionalRunes`, the
+// `add_other_rune_blackb` rules) add to this rule's numbers. Alone it changes nothing. The optional conditions are not
+// offered, so the name is dropped; only the reviewed names on six-star rules are accepted.
+const SIX_STAR_RUNE_ALIASES = Object.freeze(['sixstar_basic_attribute', 'sixstar_basic_attribute_trap']);
+function withoutSixStarAlias(rune) {
+  const tags = (rune.blackboard ?? []).filter(x => x.key === 'rune_alias');
+  if (!tags.length || rune.difficultyMask !== 'SIX_STAR') return rune;
+  if (tags.length !== 1 || tags[0].value !== 0 || !SIX_STAR_RUNE_ALIASES.includes(tags[0].valueStr))
+    throw Error(`Invalid rune parameter: ${rune.key}.rune_alias`);
+  return { ...rune, blackboard: rune.blackboard.filter(x => x.key !== 'rune_alias') };
+}
+
 export function compileStageRules(source, receipt) {
   if (!source.variant && !receipt) return null;
   if (!source.variant && receipt?.parentStageId) throw Error('Variant rules attached to a normal stage');
@@ -57,9 +69,10 @@ export function compileStageRules(source, receipt) {
       throw Error('Unsupported original level options');
     battle.max_play_time = receipt.options.maxPlayTime;
   }
-  for (const rune of receipt.runes ?? []) {
-    if (Object.keys(rune).sort().join() !== 'blackboard,buildableMask,difficultyMask,key,professionMask')
-      throw Error(`Unsupported rune fields: ${rune.key}`);
+  for (const sourceRune of receipt.runes ?? []) {
+    if (Object.keys(sourceRune).sort().join() !== 'blackboard,buildableMask,difficultyMask,key,professionMask')
+      throw Error(`Unsupported rune fields: ${sourceRune.key}`);
+    let rune = sourceRune;
     if (!['ALL', 'NORMAL', 'FOUR_STAR', 'EASY', 'SIX_STAR', 'NONE', 0, 2].includes(rune.difficultyMask))
       throw Error(`Unsupported rune targeting: ${rune.key}`);
     const active = rune.difficultyMask === 'ALL'
@@ -69,6 +82,7 @@ export function compileStageRules(source, receipt) {
     // An inactive difficulty's rules cannot affect this stage. Retain hidden
     // group decisions so the wave compiler can explicitly exclude those groups.
     if (!active && rune.key !== 'level_hidden_group_enable') continue;
+    rune = withoutSixStarAlias(rune);
     if (rune.key === 'map_tile_blackb_add') {
       const cells = compileReedIgnitionRule(rune);
       if (cells.some(cell => reedIgnitions.some(other => cell.row === other.row && cell.col === other.col)))
@@ -153,10 +167,17 @@ export function compileStageRules(source, receipt) {
       const additive = rune.key === 'char_attribute_add';
       const professionMask = cardRuleMask(rune.professionMask, PROFESSION_BITS, 1023);
       const buildableMask = cardRuleMask(rune.buildableMask, BUILDABLE_BITS, 3);
-      const multipliers = {}; let ids = null;
+      const multipliers = {}; let ids = null, side = null;
       if (!professionMask || !buildableMask) throw Error('Unsupported character attribute targeting');
       for (const entry of rune.blackboard ?? []) {
-        if (entry.key === 'char') {
+        // `side=ALLY` (six-star 15-13, 15-18: "ally units' ATK/DEF is lowered"): the rule skips enemy-side devices.
+        // Those two rules also list RES and attack speed at exactly 1, which change nothing.
+        if (entry.key === 'side') {
+          if (side || additive || entry.value !== 0 || entry.valueStr !== 'ALLY') throw Error('Unsupported character attribute side');
+          side = 'ALLY';
+        } else if (['magic_resistance', 'attack_speed'].includes(entry.key) && entry.value === 1 && !entry.valueStr && !additive) {
+          continue;
+        } else if (entry.key === 'char') {
           if (ids || entry.value !== 0 || !/^(?:char|token|trap)_[a-z0-9_]+(?:\|(?:char|token|trap)_[a-z0-9_]+)*$/.test(entry.valueStr ?? ''))
             throw Error('Invalid character attribute selector');
           ids = entry.valueStr.split('|');
@@ -174,7 +195,7 @@ export function compileStageRules(source, receipt) {
       if (additive && (!ids?.length || ids.some(id => id !== 'trap_007_ballis')
         || ![1023, PROFESSION_BITS.TRAP].includes(professionMask) || buildableMask !== 3
         || Object.keys(multipliers).join() !== 'atk')) throw Error('Unsupported additive character attribute rule');
-      characterAttributes.push({ professionMask, buildableMask, ...(ids ? { ids } : {}),
+      characterAttributes.push({ professionMask, buildableMask, ...(ids ? { ids } : {}), ...(side ? { side } : {}),
         [additive ? 'additions' : 'multipliers']: multipliers });
       continue;
     }
@@ -222,8 +243,12 @@ export function compileStageRules(source, receipt) {
     }
     // Original enemy-attribute runes also encode NONE/NONE for the unused
     // character selector. Their enemy IDs remain the explicit target selector.
-    const unusedCharacterMask = rune.key === 'enemy_attribute_mul'
-      && ['NONE', 0].includes(rune.professionMask) && ['NONE', 0].includes(rune.buildableMask);
+    // Six-star 15-9 writes its four blocked tiles with a Caster selector. The stage's own text (stage_table: "4
+    // positions on the field cannot hold ally units") and PRTS give no class, so the selector is read as unused.
+    const unusedCharacterMask = (rune.key === 'enemy_attribute_mul'
+      && ['NONE', 0].includes(rune.professionMask) && ['NONE', 0].includes(rune.buildableMask))
+      || (rune.key === 'global_forbid_location' && rune.difficultyMask === 'SIX_STAR'
+        && rune.professionMask === 'CASTER' && ['ALL', 3].includes(rune.buildableMask));
     if (!unusedCharacterMask && (rune.professionMask !== 1023 || !['ALL', 3].includes(rune.buildableMask)))
       throw Error(`Unsupported rune targeting: ${rune.key}`);
     if (rune.key === 'level_predefines_enable') {

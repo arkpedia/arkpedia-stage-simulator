@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { prtsStaticForm } from '../../shared/arkpedia/stage-prts-static-forms.js';
 import { PRTS_INTRUSIVE_CALL, prtsGrabTarget, prtsDragTile, prtsControlInert } from '../../shared/arkpedia/stage-prts-control.js';
+import { stageEnemyKey } from '../../shared/arkpedia/stage-rules.js';
 import { readOriginalLevel } from './original-level.mjs';
 import { compilePredefinedOperators } from './stage-predefined-operators.mjs';
 import { stageDeviceSpec, STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
@@ -170,9 +171,11 @@ export function compileStageWaves(level, geometry, rules = {}, predefined = null
         if (grabOrder && !grabbed) throw Error('Intrusive Call grab without its enemy');
         if (grabbed) {
           if (random || action.count !== 1) throw Error('Unsupported Intrusive Call grab (a squad or a random spawn)');
-          const target = prtsGrabTarget(level, action);
+          // A stage rule may replace the enemy (six-star 15-5: every Cold Drink Machine is a Hot one); the hand
+          // carries, and the static form belongs to, the enemy that actually spawns.
+          const key = stageEnemyKey(rules, action.key), target = prtsGrabTarget(level, { ...action, key });
           if (target.node) prts.nodes = true;
-          if (target.static) (prts.statics ??= {})[action.key] = prtsStaticForm(action.key);
+          if (target.static) (prts.statics ??= {})[key] = prtsStaticForm(key);
           grabOrder = null;
         }
         spawns.push({ enemyKey: action.key, routeIndex: row.route, count: action.count, offset, interval,

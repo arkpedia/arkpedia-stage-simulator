@@ -90,7 +90,7 @@ export class StagePrtsControl {
   }
   /** The static form: the same unit, fixed on its highland tile with the device's numbers; it never has to be defeated. */
   makeStatic(e, form, [row, col]) {
-    const b = this.battle, scale = stageCharacterMultipliers(b.stageCardRules, { id: form.trap, profession: 'TRAP', position: 'NONE' });
+    const b = this.battle, scale = stageCharacterMultipliers(b.stageCardRules, { id: form.trap, profession: 'TRAP', position: 'NONE', side: 'ENEMY' });
     Object.assign(e.base, { maxHp: form.hp * (scale.maxHp ?? 1), atk: form.atk * (scale.atk ?? 1), def: form.def * (scale.def ?? 1), res: form.res,
       tauntLevel: form.taunt, massLevel: form.mass });
     e.route.legs = []; e.route.legIdx = 0; e.x = col; e.y = row; e.lpr = 0; e.mem.noLeak = true; e.mem.prtsStatic = form.trap;

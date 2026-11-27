@@ -280,3 +280,64 @@ test('a stage with ten or more tile types keeps every type (the fifth used to be
     assert.equal(wrong, 0, id);
   }
 });
+
+// ----- six-star ("险地") variants: the base conditions only (level 0); the optional hypotheses are not offered -----
+const openSix = async id => {
+  const entry = manifest.stages.find(s => s.id === id); assert.equal(entry.availability, 'available', id);
+  const stage = await loader.load(entry);
+  const b = new StandardBattle({ ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } },
+    { operators: [defaultBuild(mvp.operators.char_151_myrtle)] }, { seed: 1 });
+  const life = b.life; b.life = 999;
+  return { b, stage, life };
+};
+const firstOf = (b, key, limit = 200) => { let e; until(b, () => (e = b.enemies.find(x => (x.def?.key ?? x.defId) === key)), limit); return e; };
+
+test('six-star 15-4: 1 life point, enemies at 110% ATK and DEF, 120% HP, 130% speed; the alias name changes nothing', async () => {
+  const { b, stage, life } = await openSix('15-4_six_star');
+  assert.equal(life, 1);
+  assert.deepEqual(stage.rules.enemies, { atk: 1.1, def: 1.1, maxHp: 1.2, moveSpeed: 1.3 });
+  const e = firstOf(b, 'enemy_10073_mpcar');
+  assert.deepEqual([e.s.maxHp, Math.round(e.s.atk), Math.round(e.s.def), Math.round(e.s.moveSpeed * 100)], [2400, 330, 220, 247]);
+  until(b, () => b.finished, 400);
+  assert.deepEqual([b.reason, b.total, (b.errors ?? []).length], ['cleared', 30, 0]);
+  // A six-star rule under another name (15-14's crystal bursts, `sixstar_basic`) is still refused.
+  assert.equal(manifest.stages.find(s => s.id === '15-14_six_star').availability, 'blocked');
+});
+
+test('six-star 15-5: every Cold Drink Machine is a Hot one, and the hand still fixes it on high ground with the device rule once', async () => {
+  const { b, stage } = await openSix('15-5_six_star'), P = b.stagePrts;
+  assert.deepEqual(stage.rules.enemyReplacements, { enemy_10074_mpcata: 'enemy_10074_mpcata_2' });
+  assert.deepEqual(Object.keys(stage.waveProgram.prts.statics), ['enemy_10074_mpcata_2']);
+  assert.ok(until(b, () => P.staticsPlaced === 1, 60));
+  const m = b.enemies.find(e => e.alive && e.mem.prtsStatic);
+  // Hot Drink Machine device: 3,800 HP, 400 ATK, 240 DEF; the six-star device rule gives x1.2, x1.1, x1.1 (not the enemy rule on top).
+  assert.deepEqual([m.mem.prtsStatic, m.s.maxHp, Math.round(m.s.atk), Math.round(m.s.def)], ['trap_230_mpcatab', 4560, 440, 264]);
+  until(b, () => b.finished, 500);
+  assert.deepEqual([b.reason, b.total, P.staticsPlaced, P.failed, (b.errors ?? []).length], ['cleared', 48, 8, 0, 0]);
+});
+
+test('six-star 15-9: its four tiles cannot be deployed on by any class', async () => {
+  const { b, stage } = await openSix('15-9_six_star');
+  assert.deepEqual(stage.rules.forbiddenLocations, [{ row: 3, col: 7 }, { row: 2, col: 6 }, { row: 3, col: 4 }, { row: 4, col: 5 }]);
+  assert.deepEqual([...b.stageForbiddenTiles].sort(), ['2,6', '3,4', '3,7', '4,5']);
+  assert.equal((await open('15-9')).stage.rules.forbiddenLocations, undefined);
+});
+
+test('six-star 15-13 and 15-18: ally units lose ATK or DEF; an enemy-side fixed device does not', async () => {
+  const a = await openSix('15-13_six_star');
+  assert.deepEqual(a.stage.rules.characterAttributes[0], { professionMask: 1023, buildableMask: 3, side: 'ALLY', multipliers: { maxHp: 1, atk: 0.9, def: 1 } });
+  assert.ok(until(a.b, () => a.b.stagePrts.staticsPlaced >= 1, 400));
+  const g = a.b.enemies.find(e => e.alive && e.mem.prtsStatic === 'trap_231_mpgrou');
+  assert.deepEqual([g.s.maxHp, Math.round(g.s.atk), Math.round(g.s.def)], [8400, 495, 1210], 'device numbers x 1.2 / 1.1 / 1.1, without the ally rule');
+  const plain = (await open('15-13')).b, six = (await openSix('15-13_six_star')).b;
+  const spot = b => { for (let r = 0; r < b.grid.rows; r++) for (let c = 0; c < b.grid.cols; c++) { try { const u = b._deployOperator('char_151_myrtle', r, c, 'RIGHT', { fromSkill: true, predefined: true }); if (u) return u; } catch { /* next tile */ } } };
+  const [u0, u1] = [spot(plain), spot(six)];
+  assert.ok(Math.abs(u1.s.atk / u0.s.atk - 0.9) < 1e-9 && u1.s.def === u0.s.def && u1.s.maxHp === u0.s.maxHp);
+  const d = await openSix('15-18_six_star'), v = spot(d.b), w = spot((await open('15-18')).b);
+  assert.ok(Math.abs(v.s.def / w.s.def - 0.8) < 1e-9 && v.s.atk === w.s.atk);
+  for (const id of ['15-10_six_star', '15-12_six_star', '15-15_six_star', '15-17_six_star', '15-18_six_star']) {
+    const x = await openSix(id);
+    until(x.b, () => x.b.finished, 700);
+    assert.deepEqual([x.life, x.b.reason, (x.b.errors ?? []).length, x.b.stagePrts.failed], [1, 'cleared', 0, 0], id);
+  }
+});

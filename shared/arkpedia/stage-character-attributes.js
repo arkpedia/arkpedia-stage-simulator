@@ -3,16 +3,18 @@ import { PROFESSION_BITS, BUILDABLE_BITS } from './stage-card-rules.js';
 
 /** Character rules use the character's own class/placement, including traps;
  * tokens do not inherit their owner's selector. Values stay out of shared data. */
-export function stageCharacterMultipliers(rules, { id, profession, position }) {
-  return characterValues(rules, { id, profession, position }, 'multipliers', 1, (a, b) => a * b);
+export function stageCharacterMultipliers(rules, { id, profession, position, side }) {
+  return characterValues(rules, { id, profession, position, side }, 'multipliers', 1, (a, b) => a * b);
 }
 export function stageCharacterAdditions(rules, { id, profession, position }) {
   return characterValues(rules, { id, profession, position }, 'additions', 0, (a, b) => a + b);
 }
-function characterValues(rules, { id, profession, position }, field, initial, combine) {
+// `side`: pass 'ENEMY' for an enemy-side device; a rule limited to the ally side then skips it.
+function characterValues(rules, { id, profession, position, side }, field, initial, combine) {
   const result = {};
   for (const rule of rules?.characterAttributes ?? []) {
     if (rule.ids && !rule.ids.includes(id)) continue;
+    if (rule.side === 'ALLY' && side === 'ENEMY') continue;
     if (!(rule.professionMask & PROFESSION_BITS[profession])
       || (rule.buildableMask !== 3 && !(rule.buildableMask & BUILDABLE_BITS[position]))) continue;
     for (const [key, value] of Object.entries(rule[field] ?? {})) result[key] = combine(result[key] ?? initial, value);

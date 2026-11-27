@@ -96,6 +96,54 @@ In the battle the grabbed enemy keeps its own unit and behaviour (its attack, th
 
 A headless run of 15-15 deploys both Prototype Auto Meal Distributors and ends without errors. The existing enemy test stages still run the Intrusive Call alone (it only hovers).
 
+## Six-star variants (the base conditions)
+
+Chapter 15 gives 16 stages a six-star variant (PRTS 险地). Its level holds two layers:
+- **`runes` with the six-star mask:** the base conditions (PRTS "险地作战 Lv.0"). They are always on.
+- **`optionalRunes`:** four hypotheses (PRTS 沙盘推演: level 1 and level 2, two choices each). The player may add one of each level. PRTS: a run started at Lv.0 uses the base conditions alone.
+
+The simulator publishes the base conditions and does not offer the hypotheses.
+
+**`rune_alias`.** A base rule may carry `rune_alias` (for example `sixstar_basic_attribute`). It is the name by which a hypothesis's `add_other_rune_blackb` rule adds to that rule's numbers (ATK +0.1, DEF +0.1, HP +0.2). Alone it changes nothing, so `stage-rules.js` drops it (`withoutSixStarAlias`). Only `sixstar_basic_attribute` and `sixstar_basic_attribute_trap` on active six-star rules are accepted.
+
+**What the base conditions are** (the level, checked against each stage's PRTS 险地 page and the stage table's condition text):
+- **Every stage:** 1 life point; enemies at 110% ATK, 110% DEF and 120% HP.
+- **The six drink machine, echo and crystal devices** (the fixed forms): 120% HP, 110% ATK and DEF, where the level names them.
+- **Per stage:**
+
+| Stage | Extra base condition | Built |
+|---|---|---|
+| 15-4 | Enemy move speed 130% | yes |
+| 15-5 | Every Cold Drink Machine is a Hot Drink Machine | yes |
+| 15-9 | Tiles (3,7) (2,6) (3,4) (4,5) cannot be deployed on | yes |
+| 15-10 | Enemy DEF 130% on top | yes |
+| 15-12, 15-15 | Every Translation Base α is a β | yes |
+| 15-13 | Ally units' ATK 90% | yes |
+| 15-17 | Enemy ATK 130% on top | yes |
+| 15-18 | Ally units' DEF 80% | yes |
+| 15-3, 15-11, 15-7 | (the level's own drink machines) | no |
+| 15-6, 15-7 | The Prototype Auto Meal Distributor's summon cooldown 80% (`enemy_skill_cd_mul`) | no |
+| 15-8 | Crystal DEF 150%, fixed crystal 130% | no |
+| 15-14 | Originium crystal bursts (`env_030_random_tile_selector`) | no |
+| 15-20 | (the boss) | no |
+
+**Three readings**
+- **15-9's tiles** are written with a Caster selector. The stage table says "4 positions on the field cannot hold ally units", and PRTS names no class. The selector is read as unused.
+- **`side=ALLY`** (15-13, 15-18): the rule reaches ally units and skips an enemy-side fixed device. Those rules also list RES and attack speed at exactly 1.
+- **"130% on top"** (15-10 DEF, 15-17 ATK): the two enemy rules multiply (1.1 x 1.3 = 1.43), as the simulator reads every pair of enemy attribute rules [not checked in game]. PRTS's "额外提升至130%" could also mean 130% in total.
+
+**A fix found on the way.** The wave compiler keyed a fixed form by the enemy the level names. Six-star 15-5 replaces that enemy, so its Hot Drink Machines were carried to high ground and left as walking enemies. The form now belongs to the enemy that actually spawns (`stage-waves.mjs`).
+
+**Checked** (`test/arkpedia-prts-control.test.js`)
+- **15-4:** 1 life point; a Carefree Cargo Helper has 2,400 HP, 330 ATK, 220 DEF and 130% speed; 30 enemies, cleared. 15-14's six-star variant, whose burst rule has another name, stays blocked.
+- **15-5:** eight Hot Drink Machines are fixed with 4,560 HP, 440 ATK and 264 DEF (the device rule once, not the enemy rule on top); 48 enemies, cleared.
+- **15-9:** the four tiles are in the battle's forbidden set; the normal stage has none.
+- **15-13, 15-18:** Myrtle has 90% ATK or 80% DEF against the normal stage; a fixed Sarkaz echo keeps the device numbers (8,400 HP, 495 ATK, 1,210 DEF).
+- **The others** (15-10, 15-12, 15-15, 15-17, 15-18) run to the end with 1 life point, no errors and no failed deploys.
+- **Counts:** 15-4 (30), 15-5 (48), 15-12 (28) and 15-17 (40) match PRTS. 15-9, 15-10, 15-13, 15-15 and 15-18 add the enemies their Distributors summon, as the normal stages do.
+- **In the browser:** six-star 15-9 opens with "1 life", its condition line and the four tiles crossed out; no console errors. The stage list shows the normal and six-star stage under the same name.
+
+
 ## Not checked
 
 - In game.
@@ -108,6 +156,6 @@ A headless run of 15-15 deploys both Prototype Auto Meal Distributors and ends w
   - **The idle system:** that it does nothing without its actor and tile.
 - **More inferences (the node):** after Click the hand flies back to where it appeared; a hand that is called while busy finishes its current order first; the hand's cast does not touch flying ally units (the game data says ground only) or devices.
 - **More inferences (the static forms):** "basically the same abilities" is read as the enemy's own behaviour unchanged; statuses a device would resist still apply.
-- **Not modelled:** a grabbed squad (TR-26); the levels' own scheduled drink machines (15-3, 15-7, 15-11); the boss stages' follow order (15-20, H15-4).
+- **Not modelled:** the six-star hypotheses (`optionalRunes`); a grabbed squad (TR-26); the levels' own scheduled drink machines (15-3, 15-7, 15-11); the boss stages' follow order (15-20, H15-4).
 - **Art:** the hand is drawn with its model; its grab animations are not played.
 - With no player input the enemies leak in all three stages.
